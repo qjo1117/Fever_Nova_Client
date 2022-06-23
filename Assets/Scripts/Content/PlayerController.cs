@@ -14,22 +14,26 @@ public class PlayerController : MonoBehaviour
         Evasion,
     }
 
+    public enum PlayerAbility {
+        Evasion,
+        Boom,
+	}
+
     [SerializeField]
-    private PlayerState m_state = PlayerState.Idle;             // 현재 상태
-    private PlayerState m_beState = PlayerState.Idle;           // 이전 상태
+    private PlayerState         m_state = PlayerState.Idle;             // 현재 상태
+    private PlayerState         m_beState = PlayerState.Idle;           // 이전 상태
 
-    private float       m_moveSpeed = 10.0f;
-    private Vector3     m_move = Vector3.zero;
+    private float               m_moveSpeed = 10.0f;
+    private Vector3             m_move = Vector3.zero;
 
-    private float       m_evasionSpeed = 500.0f;
-    private Vector3     m_evasionTarget = Vector3.zero;
+    private float               m_evasionSpeed = 500.0f;
+    private Vector3             m_evasionTarget = Vector3.zero;
 
-    private int         m_id = -1;                      // 몬스터가 인식할 수 있게 할려고 발급 받는 아이디
-    private bool        m_isMain = false;               // 메인이여야 키보드 입력을 받을 수 있기 때문
+    private int                 m_id = -1;                              // 몬스터가 인식할 수 있게 할려고 발급 받는 아이디
+    private bool                m_isMain = false;                       // 메인이여야 키보드 입력을 받을 수 있기 때문
 
-    private Rigidbody   m_rigid = null;
-    private Ability     m_evasionAbility = null;                // 회피 체크
-    private Ability     m_boomAbility = null;                   // 폭탄 체크
+    private Rigidbody           m_rigid = null;
+    private AbilitySystem       m_ability = null;                       // 회피 체크
 
 	#region 프로퍼티
 	public Rigidbody Rigid { get { return m_rigid; } }
@@ -40,10 +44,12 @@ public class PlayerController : MonoBehaviour
 	private void Start()
 	{
         m_rigid = GetComponent<Rigidbody>();
-        m_evasionAbility = GetComponent<Ability>();
-        m_evasionAbility.Init(2.0f, "Evasion");
-        m_boomAbility.Init(0.3f, "Boom");
+        m_ability = GetComponent<AbilitySystem>();
 
+        // 회피
+        m_ability.AddAbility(PlayerAbility.Evasion.ToString(), 1.0f);
+        // 폭탄
+        m_ability.AddAbility(PlayerAbility.Boom.ToString(), 0.5f);
     }
 
     private void Update()
@@ -164,10 +170,10 @@ public class PlayerController : MonoBehaviour
         // 키를 누르고
         if(Managers.Input.GetKeyDown(UserKey.Evasion)) {
             // 스페이스바와 방향키가 입력된다면
-            if (m_evasionAbility.IsAction() == true && m_move != Vector3.zero) {
+            if (m_ability.Ability[(int)PlayerAbility.Evasion].IsAction == true && m_move != Vector3.zero) {
                 // 움직인다.
                 m_state = PlayerState.Evasion;
-                m_evasionAbility.Action();
+                m_ability.Ability[(int)PlayerAbility.Evasion].InitAction();
             }
 		}
 	}

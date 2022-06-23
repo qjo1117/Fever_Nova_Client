@@ -9,6 +9,10 @@ public class GameManager
 
     public PlayerManager Player { get { return m_player; } }
 
+    private MonsterManager m_monster = null;
+
+    public MonsterManager Monster { get { return m_monster; } }
+
     public void Init()
     {
         // 이건 조금 생각해야할게 객체로 들고 있을 필요가 있을지가 의문
@@ -16,6 +20,11 @@ public class GameManager
         {
             GameObject obj = new GameObject { name = "PlayerManager" };
             m_player = obj.AddComponent<PlayerManager>();
+        }
+
+        {
+            GameObject obj = new GameObject { name = "MonsterManager" };
+            m_monster = obj.AddComponent<MonsterManager>();
         }
 
 

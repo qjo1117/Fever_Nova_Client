@@ -7,11 +7,11 @@ namespace Define
 {
 
 	public enum Layer {
-		Ground = 1 << 6,
-		Bullet = 1 << 7,
-		Player = 1 << 8,
-		Monster = 1 << 9,
-		Block = 1 << 10,
+		Ground = 6,
+		Monster = 7,
+		Player = 8,
+		Block = 9,
+
 	}
 
 	public enum Scene {
