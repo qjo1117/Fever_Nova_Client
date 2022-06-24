@@ -45,6 +45,7 @@ public class InputManager
 		AddKey(UserKey.Left, KeyCode.A);
 		AddKey(UserKey.Left, KeyCode.LeftArrow);
 		AddKey(UserKey.Evasion, KeyCode.Space);
+		AddKey(UserKey.Shoot, KeyCode.Mouse0);
 
 	}
 

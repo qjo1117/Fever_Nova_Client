@@ -5,13 +5,15 @@ using UnityEngine;
 // ¶«»§
 public class TargetData 
 {
-    public TargetData(int p_id, int p_attack)
+    public TargetData(int p_id, int p_attack, Vector3 p_force)
     {
         id = p_id;
         attack = p_attack;
+        force = p_force;
     }
     public int id = -1;
     public int attack = 0;
+    public Vector3 force = Vector3.zero;
 }
 
 public class MonsterGroup 
@@ -53,9 +55,9 @@ public class MonsterManager : MonoBehaviour
 
 
 	// TODO : Server
-	public void Attack(int p_id, int p_attack)
+	public void Attack(int p_id, int p_attack, Vector3 p_force)
 	{
-        m_listTargetData.Add(new TargetData(p_id, p_attack));
+        m_listTargetData.Add(new TargetData(p_id, p_attack, p_force));
     }
 
     public void Attack(List<TargetData> p_listTargetData)

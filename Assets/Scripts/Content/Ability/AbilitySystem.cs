@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,44 +20,41 @@ using UnityEngine;
 [System.Serializable]
 public class Ability 
 {
-
-	private float m_currentTime = 0.0f;         // 현재시간
+	protected float m_currentTime = 0.0f;         // 현재시간
 	[SerializeField]
-	private string m_name = "Unkown";
+	protected string m_name = "Unkown";
 	[SerializeField]
-	private float m_maxTime = 0.0f;             // 최대시간
+	protected float m_maxTime = 0.0f;             // 최대시간
 	[SerializeField]
-	private bool m_isAction = false;            // 체크
+	protected bool m_isAction = false;            // 체크
 
 	public float MaxTime { get => m_maxTime; set => m_maxTime = value; }
 	public string Name { get => m_name; set => m_name = value; }
 	public bool IsAction { get => m_isAction; set => m_isAction = value; }
 
-	public void Init(float p_maxTime, string p_name)
+	virtual public void Init(float p_maxTime, string p_name)
 	{
 		m_maxTime = p_maxTime;
 		m_name = p_name;
 	}
 
 	// 행동을 했으면 호출해주자.
-	public void InitAction()
+	virtual public void Action()
 	{
 		m_isAction = false;
 		m_currentTime = 0.0f;
 	}
 
-	public void Update()
+	virtual public void Update()
 	{
-		if (m_isAction == true)
-		{
+		if (m_isAction == true) {
 			return;
 		}
 
 		// 시간체크해야할때만 체크하자.
 		m_currentTime += Time.deltaTime;
 
-		if (m_currentTime < m_maxTime)
-		{
+		if (m_currentTime < m_maxTime) {
 			return;
 		}
 
@@ -99,10 +97,18 @@ public class AbilitySystem : MonoBehaviour
 	{
 		Ability ability = new Ability();
 
-		ability.Name = p_name;
-		ability.MaxTime = p_maxTime;
+		ability.Init(p_maxTime, p_name);
 
 		m_listAbility.Add(ability);
+	}
+
+	public void AddSkill(string p_name, float p_maxTime,  Action p_action, string p_particle = "None")
+	{
+		Skill skill = new Skill();
+
+		skill.Init(p_maxTime, p_name, p_action, p_particle);
+
+		m_listAbility.Add(skill);
 	}
 
 	public void DelAbility(string p_name)

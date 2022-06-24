@@ -5,6 +5,10 @@ using Define;
 
 // 기획자쪽에서 스탯 조절할 목록을 받으면 Class로 따로 스피드 체력 등등을 나눈다.
 
+class Json {
+
+}
+
 public class PlayerController : MonoBehaviour
 {
     public enum PlayerState {
@@ -23,8 +27,11 @@ public class PlayerController : MonoBehaviour
     private PlayerState         m_state = PlayerState.Idle;             // 현재 상태
     private PlayerState         m_beState = PlayerState.Idle;           // 이전 상태
 
+    private Vector3 m_move = Vector3.zero;
+
+    private float               m_boomSpeed = 100.0f;
     private float               m_moveSpeed = 10.0f;
-    private Vector3             m_move = Vector3.zero;
+    private int                 m_hp = 100;
 
     private float               m_evasionSpeed = 500.0f;
     private Vector3             m_evasionTarget = Vector3.zero;
@@ -35,16 +42,21 @@ public class PlayerController : MonoBehaviour
     private Rigidbody           m_rigid = null;
     private AbilitySystem       m_ability = null;                       // 회피 체크
 
+    private Boom                m_boom = null;
+
 	#region 프로퍼티
 	public Rigidbody Rigid { get { return m_rigid; } }
     public PlayerState State { get { return m_state; } }
     public int ID { get { return m_id; } }
+    public int HP { get { return m_hp; } set => m_hp = value; }
 	#endregion
 
 	private void Start()
 	{
         m_rigid = GetComponent<Rigidbody>();
         m_ability = GetComponent<AbilitySystem>();
+
+        m_boom = Managers.Resource.NewPrefab("Boom").GetComponent<Boom>();
 
         // 회피
         m_ability.AddAbility(PlayerAbility.Evasion.ToString(), 1.0f);
@@ -144,7 +156,8 @@ public class PlayerController : MonoBehaviour
 
     private void ShootEnterState()
     {
-
+        m_boom.Create(transform.forward, this);
+        m_state = PlayerState.Idle;
     }
 
     private void EvasionEnterState()
@@ -153,7 +166,10 @@ public class PlayerController : MonoBehaviour
         // 그리고 RigidBody때문에 완벽하게 목표 지점까지는 못감 (감속 운동 덕분에 방향이 틀어짐)
         m_evasionTarget = m_move * m_evasionSpeed;
         m_rigid.AddForce(m_evasionTarget);
-	}
+
+        // TODO : 막바로 바꾸면 안되긴함
+        m_state = PlayerState.Idle;
+    }
 
     private void EvasionPressState()
     {
@@ -168,31 +184,38 @@ public class PlayerController : MonoBehaviour
     private void InputAction()
 	{
         // 키를 누르고
-        if(Managers.Input.GetKeyDown(UserKey.Evasion)) {
+        if(Managers.Input.GetKeyDown(UserKey.Evasion) == true) {
             // 스페이스바와 방향키가 입력된다면
             if (m_ability.Ability[(int)PlayerAbility.Evasion].IsAction == true && m_move != Vector3.zero) {
                 // 움직인다.
                 m_state = PlayerState.Evasion;
-                m_ability.Ability[(int)PlayerAbility.Evasion].InitAction();
+                m_ability.Ability[(int)PlayerAbility.Evasion].Action();
             }
 		}
-	}
+        
+        if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
+            if (m_ability.Ability[(int)PlayerAbility.Boom].IsAction == true) {
+                m_state = PlayerState.Shoot;
+                m_ability.Ability[(int)PlayerAbility.Boom].Action();
+            }
+        }
+    }
 
     // 현재 고민인거 서버로 실시간통신을 이용해서 좌표를 얻을 것인지 움직이는 힘을 줄 것인지
     private void InputMove()
     {
         m_move = Vector3.zero;
-
-        if (Managers.Input.GetKey(UserKey.Forward)) {
+        
+        if (Managers.Input.GetKey(UserKey.Forward) == true) {
             m_move.z += 1.0f;
         }
-        if (Managers.Input.GetKey(UserKey.Backward)) {
+        if (Managers.Input.GetKey(UserKey.Backward) == true) {
             m_move.z -= 1.0f;
         }
-        if (Managers.Input.GetKey(UserKey.Right)) {
+        if (Managers.Input.GetKey(UserKey.Right) == true) {
             m_move.x += 1.0f;
         }
-        if (Managers.Input.GetKey(UserKey.Left)) {
+        if (Managers.Input.GetKey(UserKey.Left) == true) {
             m_move.x -= 1.0f;
         }
 
@@ -222,17 +245,9 @@ public class PlayerController : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		switch(m_state) {
-            case PlayerState.Evasion:
-                EvasionGizmos();
-                break;
-		}
-	}
-
-    private void EvasionGizmos()
-	{
         Gizmos.color = Color.red;
 
         Gizmos.DrawLine(transform.position, m_evasionTarget);
-	}
+    }
+
 }

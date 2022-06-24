@@ -26,6 +26,7 @@ namespace Define
 		Right,
 		Left,
 		Evasion,
+		Shoot,
 		Esc,
 		End
 	}

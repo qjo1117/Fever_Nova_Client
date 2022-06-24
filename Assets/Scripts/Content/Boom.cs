@@ -26,8 +26,11 @@ public class Boom : MonoBehaviour
 
     public void Create(Vector3 p_dir, PlayerController p_player)
 	{
+        gameObject.SetActive(true);
         m_player = p_player;
-
+        transform.position = p_player.transform.position + p_dir;
+        m_explosionDelayTime = 0.0f;
+        m_isExplosion = false;
         m_rigid.AddForce(p_dir * m_moveSpeed);
     }
 
@@ -53,7 +56,7 @@ public class Boom : MonoBehaviour
         m_isExplosion = true;
     }
 
-
+    
 
     private void Explosion()
 	{
@@ -68,22 +71,27 @@ public class Boom : MonoBehaviour
         List<TargetData> listMonster = new List<TargetData>();
         List<TargetData> listPlayer = new List<TargetData>();
 
-        foreach(Collider collider in colliders) {    
+        // 폭발 범위에 들어온 오브젝트의 ID, 대미지, 폭발로 인한 힘을 저장한다.
+        foreach(Collider collider in colliders) {
+            Vector3 dist = transform.position - collider.transform.position;        // 현재 몬스터 거리를 체크
+            dist = dist.normalized;
             // 몬스터 레이어인지
-            if((collider.gameObject.layer & (int)Layer.Monster) == (int)Layer.Monster) {
+            if (Layer.Monster.HasFlag((Layer)collider.gameObject.layer) == true) {
                 MonsterController monster = collider.GetComponent<MonsterController>();
-                listMonster.Add(new TargetData(monster.ID, monster.Attack));
+                listMonster.Add(new TargetData(monster.ID, monster.Attack, dist / 2.0f));
             }
             // 플레이어 레이어인지
-            else if ((collider.gameObject.layer & (int)Layer.Player) == (int)Layer.Player) {
+            else if (Layer.Player.HasFlag((Layer)collider.gameObject.layer) == true) {
+                // 왜 Cube (Ground)가 들어오냐
                 PlayerController player = collider.GetComponent<PlayerController>();
-                listPlayer.Add(new TargetData(player.ID, 30));
+                Managers.Game.Player.Attack(player.ID, 30, dist);
 
             }
         }
 
-        foreach(TargetData data in listMonster) {
-            Managers.Game.Monster.Attack(data.id, data.attack);
+        // 일단 정리식으로 만든거라 이렇게 리스트로 보낼껀 아님
+        if (listMonster.Count != 0) {
+            Managers.Game.Monster.Attack(listMonster);
         }
 
         gameObject.SetActive(false);

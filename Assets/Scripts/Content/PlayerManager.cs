@@ -6,8 +6,8 @@ using Define;
 
 public class PlayerManager : MonoBehaviour
 {
-    private List<PlayerController> m_listPlayers = new List<PlayerController>();
-    private PlayerController m_mainPlayer = null;
+    private List<PlayerController>  m_listPlayers = new List<PlayerController>();
+    private PlayerController        m_mainPlayer = null;
 
     void Update()
     {
@@ -51,6 +51,12 @@ public class PlayerManager : MonoBehaviour
         // √ ±‚»≠
         m_listPlayers.Clear();
 
+    }
+
+    public void Attack(int p_id, int p_attack, Vector3 p_force)
+	{
+        m_listPlayers[p_id].HP -= p_attack;
+        m_listPlayers[p_id].Rigid.AddForce(p_force);
     }
 
 

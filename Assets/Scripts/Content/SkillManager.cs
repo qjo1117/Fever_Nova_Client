@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+
+
+public class SkillManager : MonoBehaviour
 {
+    // 등록된 스킬 목록
 
+    // 팝 id
 
+    // Start is called before the first frame update
     void Start()
     {
         
