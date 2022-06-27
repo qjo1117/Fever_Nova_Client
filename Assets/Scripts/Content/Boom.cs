@@ -84,7 +84,7 @@ public class Boom : MonoBehaviour
             else if (Layer.Player.HasFlag((Layer)collider.gameObject.layer) == true) {
                 // 왜 Cube (Ground)가 들어오냐
                 PlayerController player = collider.GetComponent<PlayerController>();
-                Managers.Game.Player.Attack(player.ID, 30, dist);
+                Managers.Game.Player.Demege(player.ID, 30, dist);
 
             }
         }

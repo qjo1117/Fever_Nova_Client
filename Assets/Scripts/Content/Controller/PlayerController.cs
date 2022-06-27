@@ -4,11 +4,6 @@ using UnityEngine;
 using Define;
 
 // 기획자쪽에서 스탯 조절할 목록을 받으면 Class로 따로 스피드 체력 등등을 나눈다.
-
-class Json {
-
-}
-
 public class PlayerController : MonoBehaviour
 {
     public enum PlayerState {
@@ -27,17 +22,19 @@ public class PlayerController : MonoBehaviour
     private PlayerState         m_state = PlayerState.Idle;             // 현재 상태
     private PlayerState         m_beState = PlayerState.Idle;           // 이전 상태
 
-    private Vector3 m_move = Vector3.zero;
+    private Vector3             m_move = Vector3.zero;
 
     private float               m_boomSpeed = 100.0f;
     private float               m_moveSpeed = 10.0f;
     private int                 m_hp = 100;
+
 
     private float               m_evasionSpeed = 500.0f;
     private Vector3             m_evasionTarget = Vector3.zero;
 
     private int                 m_id = -1;                              // 몬스터가 인식할 수 있게 할려고 발급 받는 아이디
     private bool                m_isMain = false;                       // 메인이여야 키보드 입력을 받을 수 있기 때문
+    private bool                m_isDead = false;
 
     private Rigidbody           m_rigid = null;
     private AbilitySystem       m_ability = null;                       // 회피 체크
@@ -49,6 +46,7 @@ public class PlayerController : MonoBehaviour
     public PlayerState State { get { return m_state; } }
     public int ID { get { return m_id; } }
     public int HP { get { return m_hp; } set => m_hp = value; }
+    public bool IsDead { get => m_isDead; set => m_isDead = value; }
 	#endregion
 
 	private void Start()
@@ -74,6 +72,15 @@ public class PlayerController : MonoBehaviour
 	{
 
     }
+
+    // 대미지를 입었을경우 Manager에서 호출할 생각
+    public void Demege(int p_demege)
+	{
+        m_hp -= p_demege;
+        if(m_hp <= 0) {
+            IsDead = true;
+		}
+	}
 
 	// 시작하기 전에 초기화를 꼭 해서 아이디를 재 발급하자.
 	public void Init(int p_id, bool p_isMain)
@@ -103,7 +110,8 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void UpdateState()
+	#region 상태변화
+	private void UpdateState()
 	{
         // 상태 검사를 굳이 안해도 될때
         if(m_beState == m_state) {
@@ -181,7 +189,10 @@ public class PlayerController : MonoBehaviour
         m_rigid.AddRelativeForce(m_move);
     }
 
-    private void InputAction()
+	#endregion
+
+	#region 입력
+	private void InputAction()
 	{
         // 키를 누르고
         if(Managers.Input.GetKeyDown(UserKey.Evasion) == true) {
@@ -228,6 +239,8 @@ public class PlayerController : MonoBehaviour
 
 
     }
+
+	#endregion
 
 	// 귀찮으닌깐 재탕을 하자
 	private void InputMouseRotation()

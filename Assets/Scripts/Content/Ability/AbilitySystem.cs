@@ -102,14 +102,7 @@ public class AbilitySystem : MonoBehaviour
 		m_listAbility.Add(ability);
 	}
 
-	public void AddSkill(string p_name, float p_maxTime,  Action p_action, string p_particle = "None")
-	{
-		Skill skill = new Skill();
 
-		skill.Init(p_maxTime, p_name, p_action, p_particle);
-
-		m_listAbility.Add(skill);
-	}
 
 	public void DelAbility(string p_name)
 	{

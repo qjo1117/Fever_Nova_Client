@@ -16,30 +16,18 @@ public class TargetData
     public Vector3 force = Vector3.zero;
 }
 
-public class MonsterGroup 
-{
-    private Spawn m_spawn = null;
-    private List<int> m_listID = new List<int>();
-
-    public Spawn Spawn { get => m_spawn; }
-    public List<int> MonsterID { get => m_listID; }
-}
-
 public class MonsterManager : MonoBehaviour
 {
-    private Dictionary<string, MonsterGroup> m_dicGroup = new Dictionary<string, MonsterGroup>();
 
     private List<MonsterController> m_listMonster = new List<MonsterController>();
 
     private List<TargetData> m_listTargetData = new List<TargetData>();             // 정보 전달용
 
-    // Start is called before the first frame update
     void Start()
     {
         Init();
     }
 
-    // Update is called once per frame
     void Update()
     {
         AttackUpdate();
@@ -48,9 +36,7 @@ public class MonsterManager : MonoBehaviour
 
 	public void Init()
 	{
-        MonsterController monster = Managers.Resource.NewPrefab("Monster").GetComponent<MonsterController>();
-        monster.ID = 0;
-        m_listMonster.Add(monster);
+
     }
 
 
@@ -73,7 +59,6 @@ public class MonsterManager : MonoBehaviour
 		foreach(TargetData data in m_listTargetData) {
             Debug.Log(data.id);
             m_listMonster[data.id].Hp -= data.attack;
-
 		}
 
         m_listTargetData.Clear();

@@ -9,6 +9,10 @@ public class PlayerManager : MonoBehaviour
     private List<PlayerController>  m_listPlayers = new List<PlayerController>();
     private PlayerController        m_mainPlayer = null;
 
+    // 이름 추천 받음
+    public List<PlayerController>   List { get => m_listPlayers; }
+
+
     void Update()
     {
 
@@ -53,12 +57,18 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    public void Attack(int p_id, int p_attack, Vector3 p_force)
+    // 대미지를 입힐때 쓰인다.
+    public void Demege(int p_id, int p_attack, Vector3 p_force)
 	{
-        m_listPlayers[p_id].HP -= p_attack;
+        m_listPlayers[p_id].Demege(p_attack);
         m_listPlayers[p_id].Rigid.AddForce(p_force);
     }
 
+    public void Demege(PlayerController p_player, int p_attack, Vector3 p_force)
+	{
+        // 위에 있는 함수 호출
+        Demege(p_player.ID, p_attack, p_force);
+    }
 
 
 

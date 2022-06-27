@@ -3,20 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+// 등록된 트리를 가지고 있는다.
 
 public class SkillManager : MonoBehaviour
 {
-    // 등록된 스킬 목록
-
-    // 팝 id
-
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
