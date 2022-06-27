@@ -5,21 +5,17 @@ using UnityEngine;
 
 public class ResourceManager
 {
-
     public T Load<T>(string path) where T : Object
     {
-        if (typeof(T) == typeof(GameObject))
-        {
+        if (typeof(T) == typeof(GameObject)) {
             // ObjectPoolManager에 있는 녀석인지 확인한다.
             string name = path;
             int index = name.LastIndexOf('/');
-            if (index >= 0)
-            {
+            if (index >= 0) {
                 name = name.Substring(index + 1);
             }
             GameObject go = Managers.Pool.GetOriginal(name);
-            if (go != null)
-            {
+            if (go != null) {
                 return go as T;
             }
         }
@@ -52,15 +48,13 @@ public class ResourceManager
 
     public void DelPrefab(GameObject go)
     {
-        if (go == null)
-        {
+        if (go == null) {
             return;
         }
 
         // 만약에 풀링이 필요한 아이라면 -> 풀링 매니저한테 맡겨진다.
         Poolable poolable = go.GetComponent<Poolable>();
-        if (poolable != null)
-        {
+        if (poolable != null){
             Managers.Pool.Push(poolable);
             return;
         }

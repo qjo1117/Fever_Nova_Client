@@ -14,14 +14,14 @@ public class DataSystem
     public static readonly string SAVE_FOLDER = Application.dataPath + "/Data/";
 
     const string codeTemplate = @"
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-public class $CLASS
-{
-$ROW_MEMBER_CODE
-}";
+        using UnityEngine;
+        using System.Collections;
+        using System.Collections.Generic;
+        
+        public class $CLASS
+        {
+        $ROW_MEMBER_CODE
+        }";
 
     static public List<Dictionary<string, object>> Load(string file)
 	{

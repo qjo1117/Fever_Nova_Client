@@ -24,6 +24,8 @@ public class Boom : MonoBehaviour
 
     private int                 m_layer = 1 << (int)Layer.Monster | 1 << (int)Layer.Player;
 
+    private bool                m_isDelayState = false;
+
     public void Create(Vector3 p_dir, PlayerController p_player)
 	{
         gameObject.SetActive(true);
@@ -41,11 +43,11 @@ public class Boom : MonoBehaviour
 
     void Update()
     {
-        ExplosionDaleyCheck();
+        DaleyCheck();
         Explosion();
     }
 
-    private void ExplosionDaleyCheck()
+    private void DaleyCheck()
 	{
         m_explosionDelayTime += Time.deltaTime;
 
@@ -53,11 +55,11 @@ public class Boom : MonoBehaviour
             return;
 		}
 
-        m_isExplosion = true;
+        m_isDelayState = true;
     }
 
     
-
+    // TODO : °¥¾Æ¾þÀÚ.
     private void Explosion()
 	{
         if(m_isExplosion == false) {

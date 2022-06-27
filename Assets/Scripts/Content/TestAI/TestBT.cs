@@ -1,53 +1,50 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class TestBT : SkillTree 
+public class TestBT : BehaviorTree
 {
-    // 인스펙터에서 값을 지정해준다. 이유 : 기획쪽에서 조절하겠다고 한다.
     [SerializeField]
     private Vector3[] m_wayPoints;
-    [SerializeField]
-    private float m_range = 5.0f;
 
-    protected override SkillNode SetupTree()
-    {
-        // 데이터 미리 셋팅
-        SetData("MoveSpeed", (float)5.0f);
-        SetData("CheckRange", m_range);
+    [SerializeField]
+    private float m_moveSpeed = 5.0f;
+
+    [SerializeField]
+    private float m_checkRange = 5.0f;
+
+    // Start, Update는 따로 호출 안해줘도 됨
+    protected override BehaviorNode SetupTree()
+	{
+        // 이때 데이터 셋팅을 해준다.
+        SetData("MoveSpeed", m_moveSpeed);
+        SetData("CheckRange", m_checkRange);
 
         // Sequence : 전부 순회해서 실행
         // Selector : 한녀석만 실행
-        SkillNode root = new Selector(new List<SkillNode>
+        BehaviorNode root = new Selector(new List<BehaviorNode>
         {
-            new Sequence(new List<SkillNode> {
-                new TestCheckEnemy(transform),              // 위치 체크후
-                new TestTargetToRun(transform),             // 추격 (공격 준비)
-                new TaskAttack(transform),                  // 공격
-            }),
-            new TaskPatrol(transform, m_wayPoints),
+            new Sequence(new List<BehaviorNode>
+			{
+                new TestCheckRange(this),
+                new TestMoveToTarget(this),
+                new Inverter(new TestAttack(this)),
+			}),
+            new TestPatrol(this, m_wayPoints),
+        });
 
-		});
-        
         return root;
     }
 
 
 	private void OnDrawGizmos()
-    { 
+	{
         DrawWayPoint();
         DrawCheckRange();
-
     }
 
-    private void DrawCheckRange()
-	{
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, m_range);
-	}
-
-    private void DrawWayPoint()
-	{
+	private void DrawWayPoint()
+    {
         Gizmos.color = Color.red;
 
         if (m_wayPoints.Length == 0) {
@@ -60,4 +57,12 @@ public class TestBT : SkillTree
         }
         Gizmos.DrawSphere(m_wayPoints[size - 1], 0.5f);
     }
+
+    private void DrawCheckRange()
+	{
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawWireSphere(transform.position, m_checkRange);
+    }
+
 }
