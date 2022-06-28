@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Define;
+using System;
 
 /*
  * InputManager는 입력을 제어 받는 것도 있지만 해당하는 
@@ -17,6 +18,9 @@ class KeyInfo
 	public bool down = false;
 	public bool press = false;
 	public bool up = false;
+	public List<Action> listDownEvent = new List<Action>();
+	public List<Action> listPressEvent = new List<Action>();
+	public List<Action> listUpEvent = new List<Action>();
 }
 
 // 나중에 Json으로 저장할 용도
@@ -64,10 +68,18 @@ public class InputManager
 				if(info.down == false && info.press == false) {
 					info.down = true;
 					info.press = true;
+
+					foreach(Action action in info.listDownEvent) {
+						action.Invoke();
+					}
 				}
 				// 계속 누르고 있었을때
 				else {
 					info.down = false;
+
+					foreach (Action action in info.listPressEvent) {
+						action.Invoke();
+					}
 				}
 			}
 			// 안눌렸을때
@@ -77,6 +89,10 @@ public class InputManager
 					info.up = true;
 					info.down = false;
 					info.press = false;
+
+					foreach (Action action in info.listUpEvent) {
+						action.Invoke();
+					}
 				}
 				// 전에 키를 땠을때
 				else if(info.up == true) {
@@ -183,6 +199,81 @@ public class InputManager
 
 		// 없을 경우
 		info.listKey.Add(p_keycode);
+	}
+
+
+	public void AddDownListner(UserKey p_key, Action p_action)
+	{
+		if (m_dicKeys.ContainsKey(p_key) == false) {
+			return;
+		}
+
+		// 배열 접근 쓰기 귀찮
+		KeyInfo info = m_dicKeys[p_key];
+		// 없을 경우
+		info.listDownEvent.Add(p_action);
+	}
+
+	public void AddPressListner(UserKey p_key, Action p_action)
+	{
+		if (m_dicKeys.ContainsKey(p_key) == false) {
+			return;
+		}
+
+		// 배열 접근 쓰기 귀찮
+		KeyInfo info = m_dicKeys[p_key];
+		// 없을 경우
+		info.listPressEvent.Add(p_action);
+	}
+
+
+	public void AddUpListner(UserKey p_key, Action p_action)
+	{
+		if (m_dicKeys.ContainsKey(p_key) == false) {
+			return;
+		}
+
+		// 배열 접근 쓰기 귀찮
+		KeyInfo info = m_dicKeys[p_key];
+		// 없을 경우
+		info.listUpEvent.Add(p_action);
+	}
+
+	public void DelUpListner(UserKey p_key, Action p_action)
+	{
+		if (m_dicKeys.ContainsKey(p_key) == false) {
+			return;
+		}
+
+		// 배열 접근 쓰기 귀찮
+		KeyInfo info = m_dicKeys[p_key];
+		// 없을 경우
+		info.listUpEvent.Remove(p_action);
+	}
+
+	public void DelPressListner(UserKey p_key, Action p_action)
+	{
+		if (m_dicKeys.ContainsKey(p_key) == false) {
+			return;
+		}
+
+		// 배열 접근 쓰기 귀찮
+		KeyInfo info = m_dicKeys[p_key];
+		// 없을 경우
+		info.listPressEvent.Remove(p_action);
+	}
+
+
+	public void DelDownListner(UserKey p_key, Action p_action)
+	{
+		if (m_dicKeys.ContainsKey(p_key) == false) {
+			return;
+		}
+
+		// 배열 접근 쓰기 귀찮
+		KeyInfo info = m_dicKeys[p_key];
+		// 없을 경우
+		info.listDownEvent.Remove(p_action);
 	}
 
 	public void DelKey(UserKey p_key, KeyCode p_keycode = KeyCode.None)

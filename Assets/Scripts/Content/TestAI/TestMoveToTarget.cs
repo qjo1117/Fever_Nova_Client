@@ -25,14 +25,17 @@ public class TestMoveToTarget : Exacution
 			return m_status;
 		}
 
+		// 타겟의 위치를 가져오는 구문이 길어서 단축 시킴
 		Vector3 pos = m_target.transform.position;
-		Vector3 dist = pos - m_transform.position;
+		Vector3 dist = pos - m_transform.position;			// 거리를 알아보고
 
+		// 타겟과의 거리를 비교한다.
 		if (dist.sqrMagnitude <= m_range * m_range) {
 			m_status = BehaviorStatus.Success;
 			return m_status;
 		}
 
+		// 타겟이 범위 밖이라면 그쪽으로 간다.
 		m_transform.position = Vector3.MoveTowards(m_transform.position, pos, m_moveSpeed * Time.deltaTime);
 		m_transform.LookAt(pos);
 

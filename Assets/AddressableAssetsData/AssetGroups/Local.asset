@@ -1,0 +1,280 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Local
+  m_EditorClassIdentifier: 
+  m_GroupName: Local
+  m_Data:
+    m_SerializedData: []
+  m_GUID: be1a4b364f6756c4284271e1625b7317
+  m_SerializeEntries:
+  - m_GUID: feab87b186d156146bef8f45f4295f58
+    m_Address: Assets/06FX/FX/FX_Dust_Large_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 004c0bf81fbf1a342af7262f965b564f
+    m_Address: Assets/06FX/FX/Rain_FX.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 81ecd218ad64d78478c5b09889c1b958
+    m_Address: Assets/06FX/FX/FX_Hologram_Base.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 9bf323e9a8a9e1343b22cc60086bca27
+    m_Address: Assets/06FX/FX/FX_Core_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: de0fb8fabb4497b4fb140cddb057abbf
+    m_Address: Assets/06FX/FX/FX_Steam.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: d5ce998a883f5c346a3f1260c8f66176
+    m_Address: Assets/06FX/FX/FX_Scrap_Floating_Card_Full_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 2974555caa7a6704eb8f549d99367f35
+    m_Address: Assets/06FX/FX/FX_Electricity.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 715fb1c24c0d87a49bc80d35328e4827
+    m_Address: Assets/06FX/FX/FX_Snow_Blizzard_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: f65b497ff807d95439b38e7da2fab667
+    m_Address: Assets/06FX/FX/Fire_02_FX.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 4fcbae4f82696734a9d1556059c9e943
+    m_Address: Assets/06FX/FX/FX_Alien_Insects_02.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: a79ec8b373198d74f9ea6d1eaa4ec7f3
+    m_Address: Assets/06FX/FX/SkyDome.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 2b1da70d0d9608446a69a24c0ea64734
+    m_Address: Assets/06FX/FX/FX_Laser_Blast_Small_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: bb99be5be94d000498eb6da4c25586ea
+    m_Address: Assets/06FX/FX/FX_Snow_Heavy_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: ca91aba3576339847bb9eede6f040b07
+    m_Address: Assets/06FX/FX/Smoke_Drift_FX.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 42e227b1c80c09a4d847427380f80790
+    m_Address: Assets/06FX/FX/FX_Laser_Shotgun.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 8f56ae14b8f4a354fb70cda8eb08d80d
+    m_Address: Assets/06FX/FX/FX_Ships_Flying_02.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: dd921a27daf6fec4f8950761bc64d260
+    m_Address: Assets/06FX/FX/FX_Ship_Hover_Dust_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: dab5d5d8b7a949249a512b4a79eb68e4
+    m_Address: Assets/06FX/FX/FX_Smoke_Small_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: fabff3cbe4a4be24a90f7b23e155e025
+    m_Address: Assets/06FX/FX/Fire_01_FX.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 96d552a8e852c4f4cb86811030351699
+    m_Address: Assets/06FX/FX/FX_Crystal_Floating_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 1fe74e8d4d42faa46a86f627726b289f
+    m_Address: Assets/06FX/FX/FX_Fog_Flat_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 7ee1c1c3fe7e243459a50f601c12fc71
+    m_Address: Assets/06FX/FX/FX_Smoke_Large_White_02.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: e421cbe6c4a05084f878ebbdd9aace47
+    m_Address: Assets/06FX/FX/FX_Laser_Blast_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: ebb19478ca7d2d64b9683153a5eb0b4f
+    m_Address: Assets/06FX/FX/FX_Scrap_Floating_Mesh_Full_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 88458a60107da3140a2e173fe916bbfb
+    m_Address: Assets/06FX/FX/Smoke_Small_Light_FX.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 3babc164494b72a4d9e846da28803ae3
+    m_Address: Assets/06FX/FX/FX_Exhaust_Trail_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: b22a8556d083fa44c990ed50e9c42227
+    m_Address: Assets/06FX/FX/FX_Beacon.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 2c972e71385c0864eb7949460cee3eaa
+    m_Address: Assets/06FX/FX/FX_Smoke_Large_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 07bee576df5b5e049a39f20f65b6ddb1
+    m_Address: Assets/06FX/FX/FX_LightRayCube.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 48369741a316b9345970b11fcca0c683
+    m_Address: Assets/06FX/FX/FX_Alien_Insects_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: ee788b58eb574124b9c7ebdfd8178ce4
+    m_Address: Assets/06FX/FX/FX_Dust_Blowing_Explorer_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 11d3116dc35caba44afd0272e2a3ad7a
+    m_Address: Assets/06FX/FX/FX_Radioactive_Bubbles_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 111fa6d5ebb72664c9bfca8c1e7be5b1
+    m_Address: Assets/06FX/FX/FX_Ships_Flying_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: b5b28bfa5c3fef44caaac12b6aca9ec4
+    m_Address: Assets/06FX/FX/FX_Laser_Bullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 2c51ed4e970740543bbbefd591f8cb2f
+    m_Address: Assets/06FX/FX/FX_Blackhole.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 6e1ac1786b73ae8429067b310fd5021d
+    m_Address: Assets/06FX/FX/FX_Laser_Blast_Large_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: a76312018252afe4aa1c787c0889497b
+    m_Address: Assets/06FX/FX/FX_WarpTunnel_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 35778eb422327f048a941c724ceb3556
+    m_Address: Assets/06FX/FX/SM_Prop_Holosign_SynKyng_01_Preset.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: d7786caaf9ad4b44988ff1c5ac5c10c0
+    m_Address: Assets/06FX/FX/Exhaust_Trail.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 50f39950257e78546af9f4dd8af274e1
+    m_Address: Assets/06FX/FX/FX_Snow_Soft_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: fe4eaecf641871c4dbdc5de4529a1e9c
+    m_Address: Assets/06FX/FX/FX_Smoke_Large_White_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: fd2a371acf6072b409b610b5a9503925
+    m_Address: Assets/06FX/FX/FX_Dust_Blowing_Scav_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 3a173660a5c9e2044a8c74e8e7068ec8
+    m_Address: Assets/06FX/FX/FX_Dust_Blowing_Snow_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 10719f104ece0ac4891ff8aaf5041b45
+    m_Address: Assets/06FX/FX/FX_Laser_Shot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: dc0578fb1fa6bc64aaae0838655a32f0
+    m_Address: Assets/06FX/FX/FX_Radioactive_Fog_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 99c88631d6b128b41ac566c841aebc5a
+    m_Address: Assets/06FX/FX/FX_Flame_Booster_Square.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 152aaf0661d249942b17cc2758dfc03d
+    m_Address: Assets/06FX/FX/FX_RingLight.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 55c86e0c7bf19d545acec6387f8704db
+    m_Address: Assets/06FX/FX/FX_Flame.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: c3ef8cb5c23f37b439f55fc218032488
+    m_Address: Assets/06FX/FX/FX_Flame_Booster.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: c571738f3df2a2840a17eb884d895d36
+    m_Address: Assets/06FX/FX/FX_Smoke_Large_02.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  - m_GUID: 928062eb89ec91c4aa2e29a6d23f63fe
+    m_Address: Assets/06FX/FX/FX_Flame_Booster_Round_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fx
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: aa1c45dd9f67c694eb5b8e4a529c5a60, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3aff7eae424e32a4ca0771b65b423f03, type: 2}
+    - {fileID: 11400000, guid: 32b40af7c02b7e646996c55862e29d95, type: 2}

@@ -68,6 +68,7 @@ public class Managers : MonoBehaviour
 	{
 		_instance._pool.Clear();
 		_instance._scene.Clear();
+		_instance._resource.Clear();
 	}
 }
 

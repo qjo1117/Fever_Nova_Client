@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/* ----------------------------------------------------------------
+ *	  전부 실행후 가장 큰 비중을 가진 결과로 현재 상태를 수정한다.
+---------------------------------------------------------------- */
+
 public class Parallel : Composite
 {
 	private bool m_isAllSuccessFail = false;

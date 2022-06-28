@@ -45,6 +45,8 @@ public class Boom : MonoBehaviour
     {
         DaleyCheck();
         Explosion();
+
+        
     }
 
     private void DaleyCheck()

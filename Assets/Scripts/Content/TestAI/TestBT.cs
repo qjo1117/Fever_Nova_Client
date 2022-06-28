@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TestBT : BehaviorTree
 {
+    // 굳이 Dictional에 있는 데이터를 가져와서 쓰지않아도 된다.
+    // 모든 Exacution노드는 Tree를 가져오기 때문에 Tree에 있는 값(프로퍼티)를 참조해도 상관없어진다.
+
     [SerializeField]
     private Vector3[] m_wayPoints;
 
@@ -22,16 +25,18 @@ public class TestBT : BehaviorTree
 
         // Sequence : 전부 순회해서 실행
         // Selector : 한녀석만 실행
+
         BehaviorNode root = new Selector(new List<BehaviorNode>
         {
             new Sequence(new List<BehaviorNode>
 			{
                 new TestCheckRange(this),
                 new TestMoveToTarget(this),
-                new Inverter(new TestAttack(this)),
+                new Inverter(new TestAttack(this)),         // 테스트
 			}),
             new TestPatrol(this, m_wayPoints),
         });
+
 
         return root;
     }
@@ -39,8 +44,8 @@ public class TestBT : BehaviorTree
 
 	private void OnDrawGizmos()
 	{
-        DrawWayPoint();
-        DrawCheckRange();
+        DrawWayPoint();         // 현재 웨이포인트를 보여준다.
+        DrawCheckRange();       // 인식 범위를 보여준다.
     }
 
 	private void DrawWayPoint()

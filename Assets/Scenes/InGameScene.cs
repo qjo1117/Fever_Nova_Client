@@ -11,6 +11,8 @@ public class InGameScene : BaseScene
 
         Managers.Game.Player.Init();
 
+        Managers.Resource.RegisterPoolGameObject("Monster");
+
         Managers.Log("InGame Start");
     }
 

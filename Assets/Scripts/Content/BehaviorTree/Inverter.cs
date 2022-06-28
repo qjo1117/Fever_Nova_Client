@@ -8,19 +8,8 @@ public class Inverter : Decorator
 
 	public override BehaviorStatus Update()
 	{
-		BehaviorStatus status = m_child.Update();
-
-		// 하위노드의 결과를 Not연산한다.
-		if(status == BehaviorStatus.Failure) {
-			m_status = BehaviorStatus.Success;
-		}
-		else if (status == BehaviorStatus.Success) {
-			m_status = BehaviorStatus.Failure;
-		}
-		else {
-			m_status = BehaviorStatus.Running;
-		}
-
+		// 실패일 경우는 성공 / 성공일 경우는 실패
+		m_status = base.Update() == BehaviorStatus.Failure ? BehaviorStatus.Success : BehaviorStatus.Failure;
 		return m_status;
 	}
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class BehaviorTree : MonoBehaviour
 {
+    // 이러는 이유는 통합적으로 변수를 가져오는 방식이 귀찮기 때문
     private Dictionary<string, object>  m_dicData = new Dictionary<string, object>();
     private BehaviorNode                m_root = null;
 

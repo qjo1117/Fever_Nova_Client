@@ -36,7 +36,9 @@ public class TestPatrol : Exacution {
                 return BehaviorStatus.Failure;
             }
 
+            // 웨이포인트를 가져와서 검사를 한다.
             Vector3 wayPoint = m_wayPoints[m_currentWayIndex];
+            // 웨이포인트에 도착할 경우 포인트 인덱스를 교체해준다.
             if (Vector3.Distance(m_transform.position, wayPoint) < 0.01f) {
                 m_transform.position = wayPoint;
                 m_waitCount = 0f;
@@ -44,13 +46,14 @@ public class TestPatrol : Exacution {
 
                 m_currentWayIndex = (m_currentWayIndex + 1) % m_wayPoints.Length;
             }
+            // 아닐경우 웨이포인트쪽으로 간다.
             else {
                 m_transform.position = Vector3.MoveTowards(m_transform.position, wayPoint, m_speed * Time.deltaTime);
                 m_transform.LookAt(wayPoint);
             }
         }
 
-
+        // 현재 상태는 실패또는 성공이게 된다.
         m_status = BehaviorStatus.Running;
         return m_status;
 

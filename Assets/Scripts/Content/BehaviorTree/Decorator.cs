@@ -12,5 +12,9 @@ public class Decorator : BehaviorNode
 		m_child = p_child;
 	}
 
-	public override BehaviorStatus Update() => BehaviorStatus.Invaild;
+	public override BehaviorStatus Update()
+	{
+		m_status = m_child.Update();
+		return m_status;
+	}
 }
