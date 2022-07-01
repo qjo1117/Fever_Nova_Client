@@ -32,7 +32,7 @@ public class TestAttack : Exacution
 		// 거리 체크
 		Vector3 dist = target.transform.position - m_transform.position;
 		if (dist.sqrMagnitude <= m_range * m_range) {
-			target.Demege(10);            // 일단 Manager통해서 말고 직접적으로 때리게 만듬
+			//target.Demege(10);            // 일단 Manager통해서 말고 직접적으로 때리게 만듬
 			Debug.Log("때림");
 		}
 

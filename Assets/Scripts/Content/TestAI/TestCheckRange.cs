@@ -8,7 +8,6 @@ public class TestCheckRange : Exacution
 
     public TestCheckRange(BehaviorTree p_tree) : base(p_tree)
 	{
-
 		m_range = m_tree.GetData<float>("CheckRange");
 	}
 
@@ -20,9 +19,6 @@ public class TestCheckRange : Exacution
 		if (target == null) {
 			// 리스트를 순회해서 거리를 비교한다.
 			foreach(PlayerController player in Managers.Game.Player.List) {
-				if(player.IsDead == true){
-					continue;
-				}
 
 				Vector3 dist = player.transform.position - m_transform.position;
 				// Sphere닌깐

@@ -20,7 +20,7 @@ public class TestMoveToTarget : Exacution
 		m_target = m_tree.GetData<PlayerController>("Target");
 
 		// 타겟이 없을 경우 실패
-		if (m_target == null || m_target.IsDead == true) {
+		if (m_target == null) {
 			m_status = BehaviorStatus.Failure;
 			return m_status;
 		}

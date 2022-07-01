@@ -64,49 +64,12 @@ public class Boom : MonoBehaviour
     // TODO : 갈아엎자.
     private void Explosion()
 	{
-        if(m_isExplosion == false) {
-            return;
-		}
 
-        // 이 부분은 벽체크 할지 여부가 결정되면 할꺼
-        Collider[] colliders = Physics.OverlapSphere(transform.position, m_explosionRange, (int)m_layer);
-
-        // 이부분은 스탯이 확정나면 변경될꺼
-        List<TargetData> listMonster = new List<TargetData>();
-        List<TargetData> listPlayer = new List<TargetData>();
-
-        // 폭발 범위에 들어온 오브젝트의 ID, 대미지, 폭발로 인한 힘을 저장한다.
-        foreach(Collider collider in colliders) {
-            Vector3 dist = transform.position - collider.transform.position;        // 현재 몬스터 거리를 체크
-            dist = dist.normalized;
-            // 몬스터 레이어인지
-            if (Layer.Monster.HasFlag((Layer)collider.gameObject.layer) == true) {
-                MonsterController monster = collider.GetComponent<MonsterController>();
-                listMonster.Add(new TargetData(monster.ID, monster.Attack, dist / 2.0f));
-            }
-            // 플레이어 레이어인지
-            else if (Layer.Player.HasFlag((Layer)collider.gameObject.layer) == true) {
-                // 왜 Cube (Ground)가 들어오냐
-                PlayerController player = collider.GetComponent<PlayerController>();
-                Managers.Game.Player.Demege(player.ID, 30, dist);
-
-            }
-        }
-
-        // 일단 정리식으로 만든거라 이렇게 리스트로 보낼껀 아님
-        if (listMonster.Count != 0) {
-            Managers.Game.Monster.Attack(listMonster);
-        }
-
-        gameObject.SetActive(false);
     }
 
 
 	private void OnDrawGizmos()
 	{
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, m_explosionRange);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, m_detectRange);
+
     }
 }

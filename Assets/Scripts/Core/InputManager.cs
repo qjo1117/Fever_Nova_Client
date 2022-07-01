@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Define;
 using System;
+using UnityEngine.EventSystems;
 
 /*
  * InputManager는 입력을 제어 받는 것도 있지만 해당하는 
@@ -18,9 +19,6 @@ class KeyInfo
 	public bool down = false;
 	public bool press = false;
 	public bool up = false;
-	public List<Action> listDownEvent = new List<Action>();
-	public List<Action> listPressEvent = new List<Action>();
-	public List<Action> listUpEvent = new List<Action>();
 }
 
 // 나중에 Json으로 저장할 용도
@@ -33,6 +31,12 @@ class KeyInfoJson
 public class InputManager
 {
     private Dictionary<UserKey, KeyInfo> m_dicKeys = new Dictionary<UserKey, KeyInfo>();
+
+	public Action KeyEvent = null;
+	public Action<Define.Mouse> MouseEvent = null;
+
+	private bool m_isPressed = false;
+	private float m_pressTime = 0.5f;
 
 	#region 프레임 워크
 	public void Init()
@@ -56,7 +60,7 @@ public class InputManager
 	public void Update()
 	{
 		// 순회
-		foreach(var pair in m_dicKeys) {
+		foreach (var pair in m_dicKeys) {
 			KeyInfo info = pair.Value;
 
 			// 코드가 눌렸는지 체크한다.
@@ -68,18 +72,10 @@ public class InputManager
 				if(info.down == false && info.press == false) {
 					info.down = true;
 					info.press = true;
-
-					foreach(Action action in info.listDownEvent) {
-						action.Invoke();
-					}
 				}
 				// 계속 누르고 있었을때
 				else {
 					info.down = false;
-
-					foreach (Action action in info.listPressEvent) {
-						action.Invoke();
-					}
 				}
 			}
 			// 안눌렸을때
@@ -89,10 +85,6 @@ public class InputManager
 					info.up = true;
 					info.down = false;
 					info.press = false;
-
-					foreach (Action action in info.listUpEvent) {
-						action.Invoke();
-					}
 				}
 				// 전에 키를 땠을때
 				else if(info.up == true) {
@@ -101,6 +93,34 @@ public class InputManager
 			}
 		}
 
+
+		if (EventSystem.current.IsPointerOverGameObject()) {
+			return;
+		}
+
+		if (Input.anyKey == true && KeyEvent != null) {
+			KeyEvent.Invoke();
+		}
+
+		if (MouseEvent != null) {
+			if (Input.GetMouseButton(0) == true) {
+				if (m_isPressed == false) {
+					MouseEvent.Invoke(Define.Mouse.PointerDown);
+					m_pressTime = Time.time;
+				}
+				MouseEvent.Invoke(Define.Mouse.Press);
+				m_isPressed = true;
+			}
+			else {
+				if (m_isPressed == true) {
+					if (Time.time < m_pressTime + 0.2f)
+						MouseEvent.Invoke(Define.Mouse.Click);
+					MouseEvent.Invoke(Define.Mouse.PointerUp);
+				}
+				m_isPressed = false;
+				m_pressTime = 0;
+			}
+		}
 	}
 
 	public void End()
@@ -114,6 +134,19 @@ public class InputManager
 		// TODO : 로드할 파일이 있는지 여부를 체크하고
 		// 있으면 로드하고 없으면 없는대로 살자.
 	}
+
+	public void RegisterKeyEvent(Action p_keyEvent)
+	{
+		KeyEvent -= p_keyEvent;
+		KeyEvent += p_keyEvent;
+	}
+
+	public void RegisterMouseEvent(Action<Define.Mouse> p_mouseEvent)
+	{
+		MouseEvent -= p_mouseEvent;
+		MouseEvent += p_mouseEvent;
+	}
+
 	#endregion
 
 	#region 기능 함수
@@ -200,82 +233,6 @@ public class InputManager
 		// 없을 경우
 		info.listKey.Add(p_keycode);
 	}
-
-
-	public void AddDownListner(UserKey p_key, Action p_action)
-	{
-		if (m_dicKeys.ContainsKey(p_key) == false) {
-			return;
-		}
-
-		// 배열 접근 쓰기 귀찮
-		KeyInfo info = m_dicKeys[p_key];
-		// 없을 경우
-		info.listDownEvent.Add(p_action);
-	}
-
-	public void AddPressListner(UserKey p_key, Action p_action)
-	{
-		if (m_dicKeys.ContainsKey(p_key) == false) {
-			return;
-		}
-
-		// 배열 접근 쓰기 귀찮
-		KeyInfo info = m_dicKeys[p_key];
-		// 없을 경우
-		info.listPressEvent.Add(p_action);
-	}
-
-
-	public void AddUpListner(UserKey p_key, Action p_action)
-	{
-		if (m_dicKeys.ContainsKey(p_key) == false) {
-			return;
-		}
-
-		// 배열 접근 쓰기 귀찮
-		KeyInfo info = m_dicKeys[p_key];
-		// 없을 경우
-		info.listUpEvent.Add(p_action);
-	}
-
-	public void DelUpListner(UserKey p_key, Action p_action)
-	{
-		if (m_dicKeys.ContainsKey(p_key) == false) {
-			return;
-		}
-
-		// 배열 접근 쓰기 귀찮
-		KeyInfo info = m_dicKeys[p_key];
-		// 없을 경우
-		info.listUpEvent.Remove(p_action);
-	}
-
-	public void DelPressListner(UserKey p_key, Action p_action)
-	{
-		if (m_dicKeys.ContainsKey(p_key) == false) {
-			return;
-		}
-
-		// 배열 접근 쓰기 귀찮
-		KeyInfo info = m_dicKeys[p_key];
-		// 없을 경우
-		info.listPressEvent.Remove(p_action);
-	}
-
-
-	public void DelDownListner(UserKey p_key, Action p_action)
-	{
-		if (m_dicKeys.ContainsKey(p_key) == false) {
-			return;
-		}
-
-		// 배열 접근 쓰기 귀찮
-		KeyInfo info = m_dicKeys[p_key];
-		// 없을 경우
-		info.listDownEvent.Remove(p_action);
-	}
-
 	public void DelKey(UserKey p_key, KeyCode p_keycode = KeyCode.None)
 	{
 		// 맵핑

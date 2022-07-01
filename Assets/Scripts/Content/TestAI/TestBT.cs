@@ -30,11 +30,11 @@ public class TestBT : BehaviorTree
         {
             new Sequence(new List<BehaviorNode>
 			{
-                new TestCheckRange(this),
-                new TestMoveToTarget(this),
-                new Inverter(new TestAttack(this)),         // 테스트
+                new TestCheckRange(this),                   // 범위체크
+                new TestMoveToTarget(this),                 // 타겟으로 움직임
+                new Inverter(new TestAttack(this)),         // 공격
 			}),
-            new TestPatrol(this, m_wayPoints),
+            new TestPatrol(this, m_wayPoints),              // 순찰
         });
 
 

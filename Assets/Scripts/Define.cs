@@ -30,4 +30,11 @@ namespace Define
 		Esc,
 		End
 	}
+
+	public enum Mouse {
+		PointerDown,
+		Click,
+		Press,
+		PointerUp
+	}
 }
