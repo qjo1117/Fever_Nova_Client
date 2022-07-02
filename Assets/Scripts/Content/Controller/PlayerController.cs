@@ -70,7 +70,7 @@ public class PlayerController : BaseController
     public void InputAddForce()
 	{
         if(Managers.Input.GetKeyDown(UserKey.Evasion) == true) {
-            AddForce(Vector3.right * 100.0f);
+            AddForce(Vector3.right * 5.0f);
 		}
 	}
 

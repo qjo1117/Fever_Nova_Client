@@ -17,17 +17,18 @@ public class MonsterController : MonoBehaviour
     public int Attack { get => m_attack; }
     public int Hp { get => m_hp; set => m_hp = value; }
 
-    // Start is called before the first frame update
+
     void Start()
     {
-    }
 
+    }
+    
     public void PlayerAttack()
 	{
         Debug.Log("¶§¸²");
 	}
 
-    // Update is called once per frame
+
     void Update()
     {
     }

@@ -12,12 +12,15 @@ public class Managers : MonoBehaviour
 	PoolManager			_pool = new PoolManager();
 	SceneManagerEx		_scene = new SceneManagerEx();
 	InputManager		_input = new InputManager();
+	UIManager			_ui = new UIManager();
 
 	public static ResourceManager Resource {  get { return Instance._resource; } }
 	public static PoolManager Pool {  get { return Instance._pool; } }
 	public static SceneManagerEx Scene {  get { return Instance._scene; } }
 
 	public static InputManager Input { get { return Instance._input; } }
+
+	public static UIManager UI { get => Instance._ui; }
 	#endregion
 
 	#region Content

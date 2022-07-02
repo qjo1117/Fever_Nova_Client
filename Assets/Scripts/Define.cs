@@ -37,4 +37,9 @@ namespace Define
 		Press,
 		PointerUp
 	}
+
+	public enum UIEvent {
+		Click,
+		Drag,
+	}
 }

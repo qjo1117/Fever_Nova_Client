@@ -10,6 +10,7 @@ public class InGameScene : BaseScene
         base.Init();
 
         Managers.Game.Player.Init();
+        Managers.Game.Monster.Init();
 
         //Managers.Resource.RegisterPoolGameObject("Monster");
 

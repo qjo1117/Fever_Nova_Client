@@ -1011,7 +1011,7 @@ Transform:
   m_GameObject: {fileID: 1366032593}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.6383078, y: 1.01, z: -12.03}
-  m_LocalScale: {x: 22.75, y: 10.82, z: 1}
+  m_LocalScale: {x: 22.75, y: 10.82, z: 5.9755216}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1171,7 +1171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785f7126e0911bd4db63c903af9a3b26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_state:
+  m_groundCheckDistance: 0.5
+  m_rigidState:
     IsGround: 0
     IsForwardBlocked: 0
     IsVelocityBlocked: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 땜빵
+// 언제나 말하지만 땜빵
 public class TargetData 
 {
     public TargetData(int p_id, int p_attack, Vector3 p_force)
@@ -18,15 +18,10 @@ public class TargetData
 
 public class MonsterManager : MonoBehaviour
 {
-
+    // 현재 사용하고 있는 몬스터의 수를 알아낸다.
     private List<MonsterController> m_listMonster = new List<MonsterController>();
+    private List<TargetData> m_listTargetData = new List<TargetData>();                 // 정보 전달용
 
-    private List<TargetData> m_listTargetData = new List<TargetData>();             // 정보 전달용
-
-    void Start()
-    {
-        Init();
-    }
 
     void Update()
     {
@@ -34,19 +29,21 @@ public class MonsterManager : MonoBehaviour
         DieUpdate();
     }
 
+    // InGameScene에서 호출합니다.
 	public void Init()
 	{
+        // 몬스터의 데이터를 셋팅합니다.
 
     }
 
 
 	// TODO : Server
-	public void Attack(int p_id, int p_attack, Vector3 p_force)
+	public void Damege(int p_id, int p_attack, Vector3 p_force)
 	{
         m_listTargetData.Add(new TargetData(p_id, p_attack, p_force));
     }
 
-    public void Attack(List<TargetData> p_listTargetData)
+    public void Damege(List<TargetData> p_listTargetData)
     {
         foreach(TargetData data in p_listTargetData) {
             m_listTargetData.Add(data);
@@ -56,6 +53,10 @@ public class MonsterManager : MonoBehaviour
     // Attack기록이 있는 녀석들에게 대미지를 입힌다.
 	private void AttackUpdate()
 	{
+        if(m_listTargetData.Count == 0) {
+            return;
+		}
+
 		foreach(TargetData data in m_listTargetData) {
             Debug.Log(data.id);
             m_listMonster[data.id].Hp -= data.attack;
