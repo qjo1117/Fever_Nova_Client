@@ -13,7 +13,6 @@ public class Boom : MonoBehaviour
     [SerializeField]
     private float               m_detectRange = 2.0f;               // 감지 반경
 
-    // 이것만 필요할꺼같아서 어빌리티는 안씀
     private float               m_explosionDelayTime = 0.0f;        // 현재 지연 시간
     [SerializeField]
     private float               m_explosionMaxDelayTime = 5.0f;     // 최대 지연 시간
@@ -25,6 +24,10 @@ public class Boom : MonoBehaviour
     private int                 m_layer = 1 << (int)Layer.Monster | 1 << (int)Layer.Player;
 
     private bool                m_isDelayState = false;
+
+    private bool                m_isGround = false;
+    private Vector3             m_groundPoint = Vector3.zero;
+    private Vector3             m_reflectionNormal = Vector3.zero;
 
     public void Create(Vector3 p_dir, PlayerController p_player)
 	{
@@ -43,29 +46,23 @@ public class Boom : MonoBehaviour
 
     void Update()
     {
-        DaleyCheck();
-        Explosion();
-
         
     }
 
-    private void DaleyCheck()
+    private void CheckGround()
 	{
-        m_explosionDelayTime += Time.deltaTime;
+        m_isGround = false;
 
-        if(m_explosionMaxDelayTime > m_explosionDelayTime) {
-            return;
-		}
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, 0.5f, Vector3.up, out hit, 1.0f,
+            m_layer, QueryTriggerInteraction.Ignore) == true) {
+            m_isGround = true;
+            m_groundPoint = hit.point;
+            m_reflectionNormal = hit.normal;
+        }
 
-        m_isDelayState = true;
     }
 
-    
-    // TODO : 갈아엎자.
-    private void Explosion()
-	{
-
-    }
 
 
 	private void OnDrawGizmos()

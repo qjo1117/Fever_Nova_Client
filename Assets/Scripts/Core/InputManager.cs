@@ -12,6 +12,7 @@ using UnityEngine.EventSystems;
  * 굳이 안만들어도 될꺼같은데 그냥 GetKey 눌렸을지 확인하는 것 까지 다시 제작했습니다.
 */
 
+[System.Serializable]
 class KeyInfo 
 {
 	public UserKey key = UserKey.End;
@@ -24,9 +25,15 @@ class KeyInfo
 // 나중에 Json으로 저장할 용도
 class KeyInfoJson 
 {
-	public UserKey key = UserKey.End;
-	public List<KeyCode> listKey = new List<KeyCode>();
+	[System.Serializable]
+	public class KeyInfos {
+		public UserKey key;
+		public List<KeyCode> listKey = new List<KeyCode>();
+	}
+
+	public List<KeyInfos> keyInfos = new List<KeyInfos>();
 }
+
 
 public class InputManager
 {
@@ -123,10 +130,21 @@ public class InputManager
 		}
 	}
 
-	public void End()
+	public void Clear()
 	{
 		// TODO : 저장 만들기
 		// 아직은 귀찮
+
+		KeyInfoJson json = new KeyInfoJson();
+		foreach(var item in m_dicKeys) {
+			json.keyInfos.Add(new KeyInfoJson.KeyInfos { key = item.Value.key, listKey = item.Value.listKey });
+		}
+
+		string strJson = JsonUtility.ToJson(json);
+		Debug.Log(strJson);
+
+
+		m_dicKeys.Clear();
 	}
 
 	public void Load()

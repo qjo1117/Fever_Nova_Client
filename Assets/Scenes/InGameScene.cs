@@ -9,12 +9,14 @@ public class InGameScene : BaseScene
 	{
         base.Init();
 
-        Managers.Game.Player.Init();
-        Managers.Game.Monster.Init();
+        Managers.Game.InGameInit();
 
-        //Managers.Resource.RegisterPoolGameObject("Monster");
+
+        Managers.Resource.RegisterPoolGameObject("Boom");
 
         Managers.Log("InGame Start");
+
+
     }
 
     void Update()
@@ -24,6 +26,7 @@ public class InGameScene : BaseScene
 
     public override void Clear()
     {
+
         Managers.Log("InGame Clear");
     }
 }

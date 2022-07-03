@@ -42,4 +42,16 @@ namespace Define
 		Click,
 		Drag,
 	}
+
+	public enum BoomState {
+		Default,
+		Daley,
+		Player
+	}
+
+	public enum SpawnType {
+		Player,
+		Monster
+	}
+
 }

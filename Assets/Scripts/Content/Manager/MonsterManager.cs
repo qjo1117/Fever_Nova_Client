@@ -32,9 +32,16 @@ public class MonsterManager : MonoBehaviour
     // InGameScene에서 호출합니다.
 	public void Init()
 	{
-        // 몬스터의 데이터를 셋팅합니다.
 
     }
+
+    [ContextMenu("TestSpawn")]
+    public void TestSpawn()
+	{
+        for (int i = 0; i < 100; ++i) {
+            Managers.Resource.Instantiate("Monster", transform);
+        }
+	}
 
 
 	// TODO : Server
@@ -59,7 +66,7 @@ public class MonsterManager : MonoBehaviour
 
 		foreach(TargetData data in m_listTargetData) {
             Debug.Log(data.id);
-            m_listMonster[data.id].Hp -= data.attack;
+            m_listMonster[data.id].Stat.Hp -= data.attack;
 		}
 
         m_listTargetData.Clear();

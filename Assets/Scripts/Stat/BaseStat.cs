@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class BaseStat : ScriptableObject
+public class BaseStat
 {
     public int      Id = -1;
     public string   Name = "Unkown";

@@ -3,31 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MonsterController : MonoBehaviour
+public class MonsterController : BaseController
 {
 
-    private int                 m_id = -1;
-    private int                 m_attack = 30;
-    private int                 m_hp = 100;
+    [SerializeField]
+    private MonsterStat         m_stat = new MonsterStat();
 
-    // 아마 추가 될꺼같은거
-    private int m_playerId = -1;
+    private BehaviorTree        m_behaviorTree = null;
 
-    public int ID { get => m_id; set => m_id = value; }
-    public int Attack { get => m_attack; }
-    public int Hp { get => m_hp; set => m_hp = value; }
-
+    public MonsterStat          Stat { get => m_stat; set => m_stat = value; }
 
     void Start()
     {
+        Init();
 
+        m_behaviorTree = GetComponent<BehaviorTree>();
     }
-    
-    public void PlayerAttack()
+
+	public void FixedUpdate()
+	{
+        OnUpdate();
+	}
+
+	public void PlayerAttack()
 	{
         Debug.Log("때림");
 	}
 
+
+    // 대미지를 입었을때 근데 피격 노드가 따로 들어가므로 어떻게 할지 고민중
+    public void Damege(int p_hp, Vector3 p_force)
+    {
+
+    }
+    
+    public void Damege(int p_hp)
+	{
+
+	}
 
     void Update()
     {

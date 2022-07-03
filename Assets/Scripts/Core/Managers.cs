@@ -4,29 +4,30 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
-	private static Managers _instance = null;
-	public static Managers Instance { get { Init(); return _instance; } }
+	private static Managers m_instance = null;
+	public static Managers Instance { get { Init(); return m_instance; } }
 
 	#region Core
-	ResourceManager		_resource = new ResourceManager();
-	PoolManager			_pool = new PoolManager();
-	SceneManagerEx		_scene = new SceneManagerEx();
-	InputManager		_input = new InputManager();
-	UIManager			_ui = new UIManager();
+	ResourceManager		m_resource = new ResourceManager();
+	PoolManager			m_pool = new PoolManager();
+	SceneManagerEx		m_scene = new SceneManagerEx();
+	InputManager		m_input = new InputManager();
+	UIManager			m_ui = new UIManager();
 
-	public static ResourceManager Resource {  get { return Instance._resource; } }
-	public static PoolManager Pool {  get { return Instance._pool; } }
-	public static SceneManagerEx Scene {  get { return Instance._scene; } }
+	public static ResourceManager Resource {  get { return Instance.m_resource; } }
+	public static PoolManager Pool {  get { return Instance.m_pool; } }
+	public static SceneManagerEx Scene {  get { return Instance.m_scene; } }
 
-	public static InputManager Input { get { return Instance._input; } }
+	public static InputManager Input { get { return Instance.m_input; } }
 
-	public static UIManager UI { get => Instance._ui; }
+	public static UIManager UI { get => Instance.m_ui; }
 	#endregion
 
 	#region Content
 
-	GameManager _game = new GameManager();
-	public static GameManager Game { get { return Instance._game; } }
+	GameManager m_game = new GameManager();
+	public static GameManager Game { get { return Instance.m_game; } }
+
 	#endregion
 
 	private void Start()
@@ -43,7 +44,7 @@ public class Managers : MonoBehaviour
 
 	static void Init()
 	{
-		if(_instance == null) {
+		if(m_instance == null) {
 			GameObject go = GameObject.Find("@Managers");
 			if(go == null) {
 				go = new GameObject { name = "@Managers" };
@@ -52,26 +53,27 @@ public class Managers : MonoBehaviour
 
 			// 삭제 방지
 			DontDestroyOnLoad(go);
-			_instance = go.GetComponent<Managers>();
+			m_instance = go.GetComponent<Managers>();
 
-			_instance._input.Init();
-			_instance._pool.Init();
-			_instance._game.Init();
+			m_instance.m_input.Init();
+			m_instance.m_pool.Init();
+			m_instance.m_game.Init();
 		}
 
 	}
 
 	private void Update()
 	{
-		_instance._input.Update();
+		m_instance.m_input.Update();
 	}
 
 
 	public static void Clear()
 	{
-		_instance._pool.Clear();
-		_instance._scene.Clear();
-		_instance._resource.Clear();
+		m_instance.m_input.Clear();
+		m_instance.m_pool.Clear();
+		m_instance.m_scene.Clear();
+		m_instance.m_resource.Clear();
 	}
 }
 
