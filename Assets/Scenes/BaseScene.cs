@@ -11,7 +11,6 @@ public abstract class BaseScene : MonoBehaviour
         Init();
 	}
 
-
 	public Define.Scene SceneType { get; protected set; } = Define.Scene.Unknown;
 
 	protected virtual void Init()

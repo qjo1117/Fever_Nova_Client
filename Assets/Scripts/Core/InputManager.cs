@@ -132,11 +132,17 @@ public class InputManager
 
 	public void Clear()
 	{
+
+	}
+
+	public void Load()
+	{
 		// TODO : 저장 만들기
 		// 아직은 귀찮
 
 		KeyInfoJson json = new KeyInfoJson();
-		foreach(var item in m_dicKeys) {
+		foreach (var item in m_dicKeys)
+		{
 			json.keyInfos.Add(new KeyInfoJson.KeyInfos { key = item.Value.key, listKey = item.Value.listKey });
 		}
 
@@ -145,12 +151,6 @@ public class InputManager
 
 
 		m_dicKeys.Clear();
-	}
-
-	public void Load()
-	{
-		// TODO : 로드할 파일이 있는지 여부를 체크하고
-		// 있으면 로드하고 없으면 없는대로 살자.
 	}
 
 	public void RegisterKeyEvent(Action p_keyEvent)

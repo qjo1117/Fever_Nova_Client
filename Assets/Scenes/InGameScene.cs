@@ -11,17 +11,15 @@ public class InGameScene : BaseScene
 
         Managers.Game.InGameInit();
 
-
         Managers.Resource.RegisterPoolGameObject("Boom");
 
+
         Managers.Log("InGame Start");
-
-
     }
 
     void Update()
     {
-        
+
     }
 
     public override void Clear()

@@ -1,11 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ResourceManager
 {
+
+	public int DataAsyncCount = 0;
+	public int DataMaxAsyncCount = 0;
+
+	public void Init()
+	{
+		DataAsyncCount = 0;
+	}
+
 	#region Resource Folder
 
 	public T Load<T>(string path) where T : Object
@@ -97,21 +107,21 @@ public class ResourceManager
 		// ObjectPoolManager에 있는 녀석인지 확인한다.
 		string name = p_key;
 		int index = name.LastIndexOf('/');
-		if (index >= 0)
-		{
+		if (index >= 0) {
 			name = name.Substring(index + 1);
 		}
 
 		// 오브젝트에 등록이 되어있는지 확인한다.
 		GameObject obj = Managers.Pool.GetOriginal(name);
 
+		DataMaxAsyncCount += 1;
+
 		// 풀에 등록이 안되어있다면 호출을 한다.
-		if (obj == null)
-		{
+		if (obj == null) {
 			Addressables.InstantiateAsync(p_key, p_parent).Completed +=
-				(AsyncOperationHandle<GameObject> p_obj) =>
-				{
+				(AsyncOperationHandle<GameObject> p_obj) => {
 					obj = p_obj.Result;
+					DataAsyncCount += 1;
 				};
 		}
 
@@ -121,15 +131,13 @@ public class ResourceManager
 
 	public void Destroy(GameObject p_obj)
 	{
-		if (p_obj == null)
-		{
+		if (p_obj == null) {
 			return;
 		}
 
 		// 만약에 풀링이 필요한 아이라면 -> 풀링 매니저한테 맡겨진다.
 		Poolable poolable = p_obj.GetComponent<Poolable>();
-		if (poolable != null)
-		{
+		if (poolable != null) {
 			Managers.Pool.Push(poolable);
 			return;
 		}
@@ -141,8 +149,7 @@ public class ResourceManager
 	public void RegisterPoolGameObject(string p_key)
 	{
 		Addressables.LoadAssetAsync<GameObject>(p_key).Completed +=
-			(AsyncOperationHandle<GameObject> p_obj) =>
-			{
+			(AsyncOperationHandle<GameObject> p_obj) => {
 				GameObject result = p_obj.Result;
 				Managers.Pool.CreatePool(result);
 				m_listAddressable.Add(p_obj);               // Ref카운딩
