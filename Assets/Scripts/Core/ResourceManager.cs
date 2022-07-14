@@ -97,6 +97,8 @@ public class ResourceManager
 
 	public void Clear()
 	{
+		DataAsyncCount = 0;
+		DataMaxAsyncCount = 0;
 		foreach (AsyncOperationHandle handle in m_listAddressable) {
 			Addressables.Release(handle);
 		}
@@ -148,11 +150,14 @@ public class ResourceManager
 	// 등록만 하기 때문에 생성은 되지않는다.
 	public void RegisterPoolGameObject(string p_key)
 	{
+		DataMaxAsyncCount += 1;
 		Addressables.LoadAssetAsync<GameObject>(p_key).Completed +=
 			(AsyncOperationHandle<GameObject> p_obj) => {
 				GameObject result = p_obj.Result;
 				Managers.Pool.CreatePool(result);
 				m_listAddressable.Add(p_obj);               // Ref카운딩
+
+				DataAsyncCount += 1;
 			};
 	}
 

@@ -5,22 +5,22 @@ using UnityEngine;
 public class InGameScene : BaseScene
 {
 
-    protected override void Init()
+    protected override void LoadGameObject()
 	{
-        base.Init();
+        Managers.Resource.RegisterPoolGameObject("Boom");
+        Managers.Resource.RegisterPoolGameObject("Monster");
+        Managers.Resource.RegisterPoolGameObject("Asset/Prefabs/Player");
+	}
 
+	protected override void Init()
+	{
         Managers.Game.InGameInit();
 
-        Managers.Resource.RegisterPoolGameObject("Boom");
-
-
-        Managers.Log("InGame Start");
+        Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform);
+        Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform);
+        Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform);
     }
 
-    void Update()
-    {
-
-    }
 
     public override void Clear()
     {
