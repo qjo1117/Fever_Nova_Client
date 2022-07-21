@@ -11,11 +11,18 @@ public class MonsterController : BaseController
 
     private BehaviorTree        m_behaviorTree = null;
 
+    private UI_MonsterHPBar     m_monsterHPBar;
+
     public MonsterStat          Stat { get => m_stat; set => m_stat = value; }
 
     void Start()
     {
         Init();
+
+        // 몬스터 hp바 생성
+        m_monsterHPBar = Managers.UI.ShowSceneUI<UI_MonsterHPBar>("UI_MonsterHPBar");
+        m_monsterHPBar.Target = this;
+        Managers.UI.SetCanvas(m_monsterHPBar.gameObject, false);
 
         m_behaviorTree = GetComponent<BehaviorTree>();
     }
@@ -23,7 +30,12 @@ public class MonsterController : BaseController
 	public void FixedUpdate()
 	{
         OnUpdate();
-	}
+
+        if (m_monsterHPBar != null)
+        {
+            m_monsterHPBar.HpBarPositionUpdate();
+        }
+    }
 
 	public void PlayerAttack()
 	{
@@ -39,11 +51,34 @@ public class MonsterController : BaseController
     
     public void Damege(int p_hp)
 	{
+        if (m_stat.Hp <= 0)
+        {
+            // 사망 처리
+            return;
+        }
 
-	}
+        m_stat.Hp -= p_hp;
+        m_monsterHPBar.HpBarUpdate();
+    }
 
     void Update()
     {
+        // 몬스터 체력바 테스트 대미지 주기
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            Damege(10);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            if (m_stat.Hp >= m_stat.MaxHp)
+            {
+                return;
+            }
+
+            m_stat.Hp += 10;
+            m_monsterHPBar.HpBarUpdate();
+        }
     }
 
 

@@ -8,6 +8,7 @@ public class PlayerStat
 {
     public int      id = 1;
     public int      hp = 100;
+    public int      maxHp = 100;
     public int      attack = 70;
     public float    moveSpeed = 50.0f;
     public float    evasionSpeed = 10.0f;
@@ -71,9 +72,31 @@ public class PlayerController : BaseController
         base.OnUpdate();
     }
 
-	#region 상태 업데이트
+    public void Demege(int p_attack)
+    {
+        if (m_stat.hp <= 0)
+        {
+            // 사망 처리
+            return;
+        }
 
-	public void UpdateState()
+        m_stat.hp -= p_attack;
+    }
+
+    // 체력회복 체력바 test위한 함수
+    public void Recover(int p_recoverHp)
+    {
+        if (m_stat.hp >= m_stat.maxHp)
+        {
+            return;
+        }
+
+        m_stat.hp += p_recoverHp;
+    }
+
+    #region 상태 업데이트
+
+    public void UpdateState()
 	{
         switch(m_state) {
             case PlayerState.Evasion:

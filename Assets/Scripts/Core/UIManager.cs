@@ -102,6 +102,17 @@ public class UIManager {
         return popup;
     }
 
+    // 몬스터 사망시 체력바 ui가 사라져야하므로 Close함수 필요하다고 생각함
+    public void CloseSceneUI(UI_Scene scene)
+    {
+        Managers.Resource.Destroy(scene.gameObject);
+
+        if (m_sceneUI == scene)
+        {
+            m_sceneUI = null;
+        }
+    }
+
     public void ClosePopupUI(UI_Popup popup)
     {
         if (m_stackPopup.Count == 0) {

@@ -1130,6 +1130,7 @@ MonoBehaviour:
   m_stat:
     id: 1
     hp: 100
+    maxHp: 100
     attack: 70
     moveSpeed: 10
     evasionSpeed: 10

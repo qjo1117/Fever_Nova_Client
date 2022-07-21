@@ -29,6 +29,54 @@ MonoBehaviour:
     m_Address: Monster
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 437a872a37fe952449ebea5a89870275
+    m_Address: UI/Scene/UI_Aim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 799d33f9bfdccf447bf3adca0ebf8423
+    m_Address: UI/Scene/UI_BombDropPoint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cb11bab05ef29654aaf513ffd312d568
+    m_Address: UI/Scene/UI_BombJumpRange
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 318a93e151ec748428dbbc0a2a1eb4b0
+    m_Address: UI/Scene/UI_BombRange
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8d74857b066b51f4687bdb84f4a64973
+    m_Address: UI/Popup/UI_Button
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2c207d58607cda94ebaf120452cf3118
+    m_Address: UI/Scene/UI_Goal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fd7a3f0ac0f442142b354f6f55d24290
+    m_Address: UI/Scene/UI_MonsterHPBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b200fa546498b7e46b09b82d4bc2b188
+    m_Address: UI/Scene/UI_Pause
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fdd426797f1f13c4a94c7bc37f045f8d
+    m_Address: UI/Scene/UI_PlayerHPBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 366b979734bf5ea49900d46b1fa17e3e
+    m_Address: UI/Popup/UI_PopupMsg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fab695b312fda67429c58c369720d21c
+    m_Address: UI/Scene/UI_Score
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 34c4d277bc8fd0b40b32d8422b5fa650
+    m_Address: UI/Popup/UI_Toggle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aa1c45dd9f67c694eb5b8e4a529c5a60, type: 2}
   m_SchemaSet:
