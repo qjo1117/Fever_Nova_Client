@@ -7,13 +7,37 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ResourceManager
 {
+	public class DestroyObject
+	{
+		public GameObject obj = null;
+		public float delayTime = 0.0f;
+		public float currentDelayTime = 0.0f;
+	}
+
 
 	public int DataAsyncCount = 0;
 	public int DataMaxAsyncCount = 0;
 
+	private List<DestroyObject> m_destroys = new List<DestroyObject>();
+	private Stack<DestroyObject> m_destroyPool = new Stack<DestroyObject>();
+
 	public void Init()
 	{
 		DataAsyncCount = 0;
+	}
+
+	public void Update()
+	{
+		float l_deltatime = Time.deltaTime;
+		foreach(DestroyObject destory in m_destroys) {
+			destory.currentDelayTime += l_deltatime;
+			if (destory.currentDelayTime > destory.delayTime) {
+				Destroy(destory.obj);
+				m_destroyPool.Push(destory);
+				m_destroys.Remove(destory);
+				break;
+			}
+		}
 	}
 
 	#region Resource Folder
@@ -69,15 +93,6 @@ public class ResourceManager
         Poolable poolable = go.GetComponent<Poolable>();
         if (poolable != null){
             Managers.Pool.Push(poolable);
-            return;
-        }
-
-        Object.Destroy(go);
-    }
-
-    public void Destroy(GameObject go, float time)
-    {
-        if (go == null) {
             return;
         }
 
@@ -147,13 +162,31 @@ public class ResourceManager
 		Addressables.ReleaseInstance(p_obj);
 	}
 
+	public void Destroy(GameObject p_obj, float _delayTime)
+	{
+		if(m_destroyPool.Count == 0) {
+			m_destroyPool.Push(new DestroyObject());
+		}
+		DestroyObject l_destroy = m_destroyPool.Pop();
+		l_destroy.obj = p_obj;
+		l_destroy.delayTime = _delayTime;
+		l_destroy.currentDelayTime = 0.0f;
+		m_destroys.Add(l_destroy);
+	}
+
 	// 등록만 하기 때문에 생성은 되지않는다.
 	public void RegisterPoolGameObject(string p_key)
 	{
 		DataMaxAsyncCount += 1;
 		Addressables.LoadAssetAsync<GameObject>(p_key).Completed +=
 			(AsyncOperationHandle<GameObject> p_obj) => {
+				string name = p_key;
+				int index = name.LastIndexOf('/');
+				if (index >= 0) {
+					name = name.Substring(index + 1);
+				}
 				GameObject result = p_obj.Result;
+				result.name = name;
 				Managers.Pool.CreatePool(result);
 				m_listAddressable.Add(p_obj);               // Ref카운딩
 

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+/* -----------------------------------
+ *      생산성 떨어지는 것 같아서 폐기
+ ----------------------------------- */
+
+
 /* -----------------------------------------------------------------------------
  *                  주요 목표
  *          힘과 움직임을 이동 방식을 나눈다.
@@ -96,7 +101,6 @@ public abstract class BaseController : MonoBehaviour
         m_capsuleTopCenterPoint = new Vector3(transform.position.x, transform.position.y + m_capsule.height - m_capsule.radius, transform.position.z);
         m_capsuleBottomCenterPoint = new Vector3(transform.position.x, transform.position.y + m_capsule.radius, transform.position.z);
 
-        // 요약
         CheckForward();             
         CheckForce();               
         CheckVelocity();            
@@ -266,9 +270,9 @@ public abstract class BaseController : MonoBehaviour
             else {
                 if (m_velocityDistance >= m_capsule.radius) {
                     // 최대 지점을 제한한다.
-                    Vector3 temp = m_velocityPoint - transform.position;
-                    temp.y = 0.0f;
-                    Vector3 force = temp + (-m_rigidValue.Force.normalized * m_capsule.radius);
+                    Vector3 subVec = m_velocityPoint - transform.position;
+                    subVec.y = 0.0f;
+                    Vector3 force = subVec + (-m_rigidValue.Force.normalized * m_capsule.radius);
                     m_rigidValue.Velocity = force / m_mass;
                 }
                 m_rigidValue.Force = Vector3.zero;

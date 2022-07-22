@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 6804512841060743540}
   - component: {fileID: 4330061600181299752}
   - component: {fileID: 4863138827342863933}
-  - component: {fileID: 2088198741236914722}
+  - component: {fileID: 4725855260800991036}
   - component: {fileID: -3804869872146704344}
   m_Layer: 5
   m_Name: UI_BossMonsterHPBar
@@ -863,7 +863,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2088198741236914722
+--- !u!114 &4725855260800991036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -872,12 +872,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3275079619997648380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee1680201dc7e64db52aa20979d54b6, type: 3}
+  m_Script: {fileID: 11500000, guid: b9d571d7c5f74f2409261d1cd812145e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_unitHp: 120
   m_mainCamera: {fileID: 0}
-  m_verticalOffset: 20
+  m_unitHp: 120
 --- !u!114 &-3804869872146704344
 MonoBehaviour:
   m_ObjectHideFlags: 0

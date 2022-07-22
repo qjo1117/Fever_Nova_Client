@@ -7,48 +7,59 @@ using Define;
 public class PlayerStat 
 {
     public int      id = 1;
+    public string   name = "Hello_Player";
     public int      hp = 100;
     public int      maxHp = 100;
     public int      attack = 70;
-    public float    moveSpeed = 50.0f;
+    public float    moveSpeed = 100.0f;
     public float    evasionSpeed = 10.0f;
     public int      score = 0;
 }
 
-// ±âÈ¹ÀÚÂÊ¿¡¼­ ½ºÅÈ Á¶ÀıÇÒ ¸ñ·ÏÀ» ¹ŞÀ¸¸é Class·Î µû·Î ½ºÇÇµå Ã¼·Â µîµîÀ» ³ª´«´Ù.
-public class PlayerController : BaseController
+// ê¸°íšììª½ì—ì„œ ìŠ¤íƒ¯ ì¡°ì ˆí•  ëª©ë¡ì„ ë°›ìœ¼ë©´ Classë¡œ ë”°ë¡œ ìŠ¤í”¼ë“œ ì²´ë ¥ ë“±ë“±ì„ ë‚˜ëˆˆë‹¤.
+public class PlayerController : MonoBehaviour
 {
     public enum PlayerState {
-        Idle,
-        Run,
-        Shoot,
-        Evasion,
+        Idle,               // ì•„ì´ë“¤
+        Run,                // ì›€ì§ì„
+        Shoot,              // ìƒ·
+        Evasion,            // íšŒí”¼
+        Jump,               // ì í”„ í•˜ê¸°ì „
+        Jumping,            // ì í”„ì¤‘
     }
 
-
-    #region º¯¼ö
+    #region ë³€ìˆ˜
 
     [SerializeField]
     private PlayerStat      m_stat = new PlayerStat();
+
     [SerializeField]
     private PlayerState     m_state = PlayerState.Idle;
 
     private Vector3         m_move = Vector3.zero;
+    private Vector3         m_mousePos = Vector3.zero;
 
     private float           m_lookRotation = 0.0f;
     private float           m_explosionDelayTime = 0.5f;
     private float           m_explosionTime = 0.0f;
     private bool            m_isExplosion = false;
 
-    [SerializeField]
-    private float           m_evasionDelayTime = 1.0f;      // ´ë±â ½Ã°£
-    private float           m_evasionTime = 0.0f;           // ÇöÀç ½Ã°£
+    private float           m_explosionJumpRadius = 4.0f;
 
-    private List<Boom>      m_listBoom = new List<Boom>();
+    [SerializeField]
+    private float           m_evasionDelayTime = 1.0f;      // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    private float           m_evasionTime = 0.0f;           // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+
+    private Boom            m_boom = null;
+
+    private Rigidbody       m_rigid = null;
+    private Animator        m_anim = null;
+
+    private Transform       m_handler = null;
 
     #endregion
 
-    #region ÇÁ·ÎÆÛÆ¼
+    #region í”„ë¡œí¼í‹°
 
     public PlayerStat Stat { get => m_stat; set => m_stat = value; }
     public PlayerState State { get => m_state; set => m_state = value; }
@@ -58,7 +69,9 @@ public class PlayerController : BaseController
 
     private void Start()
 	{
-        base.Init();
+        m_rigid  = GetComponent<Rigidbody>();
+        m_anim = GetComponent<Animator>();
+        m_handler = Util.FindChild(gameObject, "@Handler", true).transform;
     }
 
     private void Update()
@@ -69,21 +82,22 @@ public class PlayerController : BaseController
 
 	private void FixedUpdate()
 	{
-        base.OnUpdate();
+
     }
+
 
     public void Demege(int p_attack)
     {
         if (m_stat.hp <= 0)
         {
-            // »ç¸Á Ã³¸®
+            // ì‚¬ë§ì²˜ë¦¬
             return;
         }
 
         m_stat.hp -= p_attack;
     }
 
-    // Ã¼·ÂÈ¸º¹ Ã¼·Â¹Ù testÀ§ÇÑ ÇÔ¼ö
+    // í”Œë ˆì´ì–´ hp ì²´ë ¥ë°” íšŒë³µ í…ŒìŠ¤íŠ¸ìš©
     public void Recover(int p_recoverHp)
     {
         if (m_stat.hp >= m_stat.maxHp)
@@ -94,7 +108,7 @@ public class PlayerController : BaseController
         m_stat.hp += p_recoverHp;
     }
 
-    #region »óÅÂ ¾÷µ¥ÀÌÆ®
+    #region ìƒíƒœ ì—…ë°ì´íŠ¸
 
     public void UpdateState()
 	{
@@ -102,79 +116,158 @@ public class PlayerController : BaseController
             case PlayerState.Evasion:
                 EvasionState();
                 break;
+            case PlayerState.Jump:
+                JumpState();
+                break;
+            case PlayerState.Run:
+                RunState();
+                break;
+            case PlayerState.Idle:
+                IdleUpdate();
+                break;
 		}
 	}
+
+    public void IdleUpdate()
+	{
+        m_anim.SetInteger("Vertical", 0);
+        m_anim.SetInteger("Horizontal", 0);
+
+    }
+
+    public void RunState()
+	{
+        m_anim.SetInteger("Vertical",   (int)(transform.position.z - m_mousePos.z));
+        m_anim.SetInteger("Horizontal", (int)(transform.position.x - m_mousePos.x));
+        
+    }
+
+
 
     public void EvasionState()
 	{
-        if(m_rigidValue.Velocity == Vector3.zero) {
-            m_state = PlayerState.Idle;
-		}
+
 	}
 
-	#endregion
+    public void JumpState()
+    {
+
+    }
+
+    #endregion
 
 
-	#region ÀÔ·Â ¾÷µ¥ÀÌÆ®
+    #region ì…ë ¥ ì—…ë°ì´íŠ¸
 
-	public void InputMouse()
+    public void InputMouse()
 	{
         InputMouseRotation();
         InputShoot();
     }
 
     private void InputMouseRotation()
-    {
-        Vector3 playerToScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+	{
+		Vector3 playerToScreenPos = Camera.main.WorldToScreenPoint(transform.position);
 
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 tempPos = mousePos - playerToScreenPos;
-        m_lookRotation = Mathf.Atan2(tempPos.y, tempPos.x);
+		Vector3 mousePos = Input.mousePosition;
+		Vector3 tempPos = mousePos - playerToScreenPos;
+		m_lookRotation = Mathf.Atan2(tempPos.y, tempPos.x);
 
-        transform.rotation = Quaternion.Euler(0f , (-m_lookRotation * Mathf.Rad2Deg) + 90f , 0f);
+		transform.rotation = Quaternion.Euler(0f, (-m_lookRotation * Mathf.Rad2Deg) + 90f, 0f);
+
+        // ----------------------------------------------------------
+        // í­íƒ„ ì í”„ì— ëŒ€í•œ ê²ƒìœ¼ë¡œ ì• ë‹ˆë©”ì´ì…˜ ì „í™˜ì„ ì¼ë‹¨ì€ ì—¬ê¸°ì„œ í•˜ëŠ” ê²ƒ
+        // TODO : ê´œì°®ì€ ìœ„ì¹˜ë¥¼ ì°¾ìœ¼ë©´ í•¨ìˆ˜ë¥¼ ë”°ë¡œ íŒŒì„œ ë°°ì¹˜í•  ê²ƒ
+        // ----------------------------------------------------------
+        Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit l_hit;
+        Physics.Raycast(l_ray, out l_hit);
+        Vector3 l_position = l_hit.point - transform.position;
+        l_position.y = 0.0f;
+        m_mousePos = l_hit.point;
+
+        // í­íƒ„ ë°˜ê²½ë³´ë‹¤ ì¢ìœ¼ë©´
+        if (l_position.sqrMagnitude <= m_explosionJumpRadius * m_explosionJumpRadius) {
+            m_anim.SetBool("Jump", true);
+            m_state = PlayerState.Jump;
+        }
+        else {
+            m_anim.SetBool("Jump", false);
+        }
+
+        Debug.DrawRay(Camera.main.transform.position, l_ray.direction * 1000.0f, Color.red);
     }
 
     public void InputShoot()
 	{
-        if(Managers.Input.GetKeyDown(UserKey.Shoot) == true){
-            Managers.Resource.Instantiate("Boom", Managers.Game.Player.transform);
+        if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
+            if (m_state == PlayerState.Jump) {
+                ShotEnd();
+            }
+            else {
+                m_anim.CrossFade("Player-Aiming-CM", 0.1f);
+            }
 		}
 
-        // Å¬¸¯ÇßÀ»¶§
+        // í˜„ì¬ í­íƒ„ì„ ê°€ì§€ê³  ìˆì§€ ì•ŠëŠ”ë‹¤ë©´ ë„˜ì–´ê°€ì.
+        if (m_boom?.gameObject.IsValid() == false) {
+            return;
+		}
+
+        // í˜„ì¬ Pressì¤‘ì¼ë•Œ ì¹´ìš´íŠ¸ë¥¼ ì„¸ì–´ì„œ í˜„ì¬ ìƒíƒœê°’ì„ ì „í™˜ì‹œí‚¨ë‹¤.
         if (Managers.Input.GetKey(UserKey.Shoot) == true) {
             m_isExplosion = true;
             m_explosionTime += Time.deltaTime;
-            
         }
 
-        // ¶§¾úÀ»¶§
+        // Upì„ í–ˆì„ë•Œ í˜„ì¬ ìƒíƒœë¥¼ ì „ë¶€ ì´ˆê¸°í™”í•´ì¤€ë‹¤.
         if (Managers.Input.GetKeyUp(UserKey.Shoot) == true) {
-            // TODO : ºĞ±âÇØ¼­ Áö¿¬»óÅÂÀÏ¶§´Â ´Ù¸¥ °æ¿ìµµ Ã¼Å©ÇØÁØ´Ù.
+            // TODO : ë¶„ê¸°í•´ì„œ ì§€ì—°ìƒíƒœì¼ë•ŒëŠ” ë‹¤ë¥¸ ê²½ìš°ë„ ì²´í¬í•´ì¤€ë‹¤.
+            if (m_boom?.State == Boom.BoomState.Delay) {
+                m_boom.Explosion();
+            }
+
             m_explosionTime = 0.0f;
             m_isExplosion = false;
         }
 
 
-        // ÆøÅºÀÌ ÀÖÀ» °æ¿ì
+        // í­íƒ„ì´ ìˆì„ ê²½ìš°
         if (m_isExplosion == true) {
-            // Á¤ÇØÁø ½Ã°£À» ÃÊ°úÇÒ °æ¿ì
-            if(m_explosionTime <= m_explosionDelayTime) {
-                // TODO : ÆøÅºÀÇ »óÅÂ¸¦ º¯È¯½ÃÅ²´Ù.
-
-			}
+            // ì •í•´ì§„ ì‹œê°„ì„ ì´ˆê³¼í•  ê²½ìš°
+            if (m_explosionTime >= m_explosionDelayTime) {
+                // í­íƒ„ì˜ ìƒíƒœë¥¼ ë³€í™˜ì‹œí‚¨ë‹¤.
+                m_boom.State = Boom.BoomState.Delay;
+            }
 		}
+    }
+
+    // Animation Player-Shooting-CM / Event
+    public void ShotEnd()
+	{
+        m_boom = Managers.Resource.Instantiate("Boom", Managers.Game.Boom.transform).GetComponent<Boom>();
+
+        // í˜„ì¬ ì í”„ ìƒíƒœì´ë©´ ì•„ë˜ë¡œ í­íƒ„ì„ ì˜ì
+        if (m_state == PlayerState.Jump) {
+            m_boom.JumpShoot(m_handler.position, -Vector3.up);
+        }
+        else {
+            // ê°€ì¥ ìµœì‹ ì˜ í­íƒ„ì„ ê°€ì§€ê³  ìˆëŠ”ë‹¤.      TODO : ì§€ê¸ˆ ë²¡í„°ë¡œ ì²˜ë¦¬í•´ì„œ ë²”ìœ„ ì²´í¬ë¥¼ ì–´ë–»ê²Œ í•´ì•¼í• ì§€ ëª¨ë¥´ê² ë‹¤.
+            m_boom.Shoot(m_handler.position, transform.forward, 100000.0f);
+        }
     }
 
     public void UpdateInput()
 	{
-        // È¸ÇÇÁßÀÏ¶§´Â ´Ù¸¥ »óÅÂ´Â ºÒ°¡´É
+
+        // íšŒí”¼ì¤‘ì¼ë•ŒëŠ” ë‹¤ë¥¸ ìƒíƒœëŠ” ë¶ˆê°€ëŠ¥
         if (m_state == PlayerState.Evasion) {
             return;
         }
+        m_state = PlayerState.Idle;
 
         InputMouse();
 
-        m_state = PlayerState.Idle;
         if (Input.anyKey == false) {
             return;
 		}
@@ -191,11 +284,11 @@ public class PlayerController : BaseController
             return;
 		}
 
-        if(Managers.Input.GetKeyDown(UserKey.Evasion) == true && m_state == PlayerState.Run) {
-            AddForce(m_move * m_stat.evasionSpeed);
-            m_evasionTime = 0.0f;
-            m_state = PlayerState.Evasion;
-        }
+		if (Managers.Input.GetKeyDown(UserKey.Evasion) == true && m_state == PlayerState.Run) {
+            m_rigid.AddForce(m_move * m_stat.evasionSpeed);
+			m_evasionTime = 0.0f;
+			m_state = PlayerState.Evasion;
+		}
 	}
 
     public void InputMove()
@@ -217,10 +310,21 @@ public class PlayerController : BaseController
 
         if(m_move != Vector3.zero) {
             m_state = PlayerState.Run;
+            m_rigid.AddForce(m_stat.moveSpeed * m_move.normalized);
         }
-
-        AddMovement(m_move.normalized * m_stat.moveSpeed);
-    }
+	}
 
 	#endregion
+
+	private void OnDrawGizmosSelected()
+	{
+        Vector3 l_position = transform.position;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(l_position, m_explosionJumpRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, transform.forward * (transform.position - m_mousePos).magnitude);
+
+    }
 }
