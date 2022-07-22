@@ -67,6 +67,12 @@ public class Managers : MonoBehaviour
 	private void Update()
 	{
 		m_instance.m_input.Update();
+		m_instance.m_resource.Update();
+	}
+
+	private void FixedUpdate()
+	{
+		
 	}
 
 

@@ -82,7 +82,15 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: f3ce8b1c3e6cf2746ba2c278bc99f65b
-    m_Address: UI/Scene/UI_MonsterHPBar
+    m_Address: UI/WorldSpace/UI_MonsterHPBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 83b7d91550ef8174cbff5321343c5509
+    m_Address: Assets/05Prefabs/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0595d41ce59907e49a1470b1c5b66176
+    m_Address: Assets/05Prefabs/Boom_Particle
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
