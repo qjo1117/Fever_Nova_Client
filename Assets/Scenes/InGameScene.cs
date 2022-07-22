@@ -42,6 +42,7 @@ public class InGameScene : BaseScene
         Managers.UI.ShowSceneUI<UI_Aim>("UI_Aim");
 
         Managers.UI.ShowSceneUI<UI_Goal>("UI_Goal");
+        // 점수 ui 생성
         Managers.UI.ShowSceneUI<UI_Score>("UI_Score");
         Managers.UI.ShowSceneUI<UI_Pause>("UI_Pause");
 

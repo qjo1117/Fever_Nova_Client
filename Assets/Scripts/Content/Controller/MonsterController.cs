@@ -12,6 +12,7 @@ public class MonsterController : BaseController
     private BehaviorTree        m_behaviorTree = null;
 
     private UI_MonsterHPBar     m_monsterHPBar;
+    private UI_Score            m_score;
 
     public MonsterStat          Stat { get => m_stat; set => m_stat = value; }
 
@@ -22,7 +23,8 @@ public class MonsterController : BaseController
         // 몬스터 hp바 생성
         m_monsterHPBar = Managers.UI.ShowSceneUI<UI_MonsterHPBar>("UI_MonsterHPBar");
         m_monsterHPBar.Target = this;
-        Managers.UI.SetCanvas(m_monsterHPBar.gameObject, false);
+
+        m_score = Managers.UI.Root.GetComponentInChildren<UI_Score>();
 
         m_behaviorTree = GetComponent<BehaviorTree>();
     }
@@ -51,14 +53,19 @@ public class MonsterController : BaseController
     
     public void Damege(int p_hp)
 	{
+        m_stat.Hp -= p_hp;
+        m_monsterHPBar.HpBarUpdate();
+
         if (m_stat.Hp <= 0)
         {
             // 사망 처리
+            Managers.Resource.Destroy(gameObject);
+            m_monsterHPBar.CloseSceneUI();
+
+            m_score.CurrentScoreUpdate(m_stat.Score);
+            m_score.ScoreLogCreate(m_stat.Score);
             return;
         }
-
-        m_stat.Hp -= p_hp;
-        m_monsterHPBar.HpBarUpdate();
     }
 
     void Update()
