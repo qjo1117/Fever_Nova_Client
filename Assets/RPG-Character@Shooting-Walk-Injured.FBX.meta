@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 58267a743beb6c84ab7f7d52527f1665
+guid: 94230a14cb4f51744b3fc47e21adcba6
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
@@ -716,7 +716,7 @@ ModelImporter:
     second: Pistol
   - first:
       74: 7400000
-    second: Shooting-Walk-Backward-Right
+    second: Shooting-Walk-Injured
   - first:
       95: 9500000
     second: //RootNode
@@ -747,21 +747,9 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'B_Spine' has translation animation that will
-      be discarded.\n"
-    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tLeftUpperArm
-      average position error 9.3 mm and maximum position error 20.1 mm at time 0:12
-      (50.0%) Frame 12\n\tLeftLowerArm average position error 9.3 mm and maximum position
-      error 20.1 mm at time 0:12 (50.0%) Frame 12\n\tLeftHand average position error
-      9.3 mm and maximum position error 20.1 mm at time 0:12 (50.0%) Frame 12\n\tRightUpperArm
-      average position error 9.3 mm and maximum position error 20.1 mm at time 0:12
-      (50.0%) Frame 12\n\tRightLowerArm average position error 9.3 mm and maximum
-      position error 20.2 mm at time 0:12 (50.0%) Frame 12\n\tRightHand average position
-      error 9.3 mm and maximum position error 20.1 mm at time 0:12 (50.0%) Frame 12\n\tHead
-      average position error 9.3 mm and maximum position error 20.1 mm at time 0:12
-      (50.0%) Frame 12\n"
+    animationImportWarnings: 
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tRetargeting
+      quality is good. No significant differences with original animation were found.\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -774,7 +762,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Shooting-Walk-Backward-Right
+      name: Shooting-Walk-Injured
       takeName: Take 001
       internalID: 7400000
       firstFrame: 0
@@ -798,14 +786,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.24240509
+      - time: 0.4170066
         functionName: FootR
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.82637185
+      - time: 0.8996442
         functionName: FootL
         data: 
         objectReferenceParameter: {instanceID: 0}

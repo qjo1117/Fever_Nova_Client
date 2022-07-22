@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2063447852, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_Drag
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063447852, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_Mass
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063447852, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1832574453826720, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
       propertyPath: m_Name
       value: Player
@@ -53,6 +65,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4148635591152110, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95786743544921876, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 95786743544921876, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: cb63045380f0d3a408e2d32c12ef9197, type: 2}
+    - target: {fileID: 95786743544921876, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

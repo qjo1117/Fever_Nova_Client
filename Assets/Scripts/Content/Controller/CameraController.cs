@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void LateUpdate()
@@ -30,9 +30,9 @@ public class CameraController : MonoBehaviour
              transform.position = m_player.transform.position + m_delta.normalized * dist;
          }
          else {
-            transform.position = Vector3.Lerp(transform.position, m_player.transform.position + m_delta, 0.7f);
-            //transform.LookAt(m_player.transform);
-		 }
+            transform.position = m_player.transform.position + m_delta;
+            transform.LookAt(m_player.transform);
+        }
     }
 
     public void SetQuarterView(Vector3 p_delta)

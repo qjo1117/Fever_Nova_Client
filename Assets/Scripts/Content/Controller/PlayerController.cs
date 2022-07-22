@@ -10,7 +10,7 @@ public class PlayerStat
     public string   name = "Hello_Player";
     public int      hp = 100;
     public int      attack = 70;
-    public float    moveSpeed = 300.0f;
+    public float    moveSpeed = 100.0f;
     public float    evasionSpeed = 10.0f;
     public int      score = 0;
 }
@@ -19,23 +19,24 @@ public class PlayerStat
 public class PlayerController : MonoBehaviour
 {
     public enum PlayerState {
-        Idle,
-        Run,
-        Shoot,
-        Evasion,
-        Jump,
+        Idle,               // 아이들
+        Run,                // 움직임
+        Shoot,              // 샷
+        Evasion,            // 회피
+        Jump,               // 점프 하기전
+        Jumping,            // 점프중
     }
-
-
 
     #region 변수
 
     [SerializeField]
     private PlayerStat      m_stat = new PlayerStat();
+
     [SerializeField]
     private PlayerState     m_state = PlayerState.Idle;
 
     private Vector3         m_move = Vector3.zero;
+    private Vector3         m_mousePos = Vector3.zero;
 
     private float           m_lookRotation = 0.0f;
     private float           m_explosionDelayTime = 0.5f;
@@ -92,20 +93,50 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Evasion:
                 EvasionState();
                 break;
+            case PlayerState.Jump:
+                JumpState();
+                break;
+            case PlayerState.Run:
+                RunState();
+                break;
+            case PlayerState.Idle:
+                IdleUpdate();
+                break;
 		}
 	}
+
+    public void IdleUpdate()
+	{
+        m_anim.SetInteger("Vertical", 0);
+        m_anim.SetInteger("Horizontal", 0);
+
+    }
+
+    public void RunState()
+	{
+        m_anim.SetInteger("Vertical",   (int)(transform.position.z - m_mousePos.z));
+        m_anim.SetInteger("Horizontal", (int)(transform.position.x - m_mousePos.x));
+        
+    }
+
+
 
     public void EvasionState()
 	{
 
 	}
 
-	#endregion
+    public void JumpState()
+    {
+
+    }
+
+    #endregion
 
 
-	#region 입력 업데이트
+    #region 입력 업데이트
 
-	public void InputMouse()
+    public void InputMouse()
 	{
         InputMouseRotation();
         InputShoot();
@@ -124,15 +155,22 @@ public class PlayerController : MonoBehaviour
         // ----------------------------------------------------------
         // 폭탄 점프에 대한 것으로 애니메이션 전환을 일단은 여기서 하는 것
         // TODO : 괜찮은 위치를 찾으면 함수를 따로 파서 배치할 것
+        // ----------------------------------------------------------
         Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit l_hit;
         Physics.Raycast(l_ray, out l_hit);
         Vector3 l_position = l_hit.point - transform.position;
+        l_position.y = 0.0f;
+        m_mousePos = l_hit.point;
 
         // 폭탄 반경보다 좁으면
-        if (l_position.sqrMagnitude < m_explosionJumpRadius * m_explosionJumpRadius) {
-            Managers.Log("Animation Change");
-		}
+        if (l_position.sqrMagnitude <= m_explosionJumpRadius * m_explosionJumpRadius) {
+            m_anim.SetBool("Jump", true);
+            m_state = PlayerState.Jump;
+        }
+        else {
+            m_anim.SetBool("Jump", false);
+        }
 
         Debug.DrawRay(Camera.main.transform.position, l_ray.direction * 1000.0f, Color.red);
     }
@@ -140,17 +178,19 @@ public class PlayerController : MonoBehaviour
     public void InputShoot()
 	{
         if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
-            // 현재 점프 상태이면 아래로 폭탄을 쏘자
-            if(m_state == PlayerState.Jump) {
+            if (m_state == PlayerState.Jump) {
+                ShotEnd();
+            }
+            else {
+                m_anim.CrossFade("Player-Aiming-CM", 0.1f);
+            }
+		}
 
-			}
-
-			// 가장 최신의 폭탄을 가지고 있는다.
-			m_boom = Managers.Resource.Instantiate("Boom", Managers.Game.Boom.transform).GetComponent<Boom>();
-            m_boom.Shoot(m_handler.position, transform.forward);
+        // 현재 폭탄을 가지고 있지 않는다면 넘어가자.
+        if(m_boom?.gameObject.IsValid() == false) {
+            return;
 		}
         
-
         // 현재 Press중일때 카운트를 세어서 현재 상태값을 전환시킨다.
         if (Managers.Input.GetKey(UserKey.Shoot) == true) {
             m_isExplosion = true;
@@ -160,9 +200,9 @@ public class PlayerController : MonoBehaviour
         // Up을 했을때 현재 상태를 전부 초기화해준다.
         if (Managers.Input.GetKeyUp(UserKey.Shoot) == true) {
             // TODO : 분기해서 지연상태일때는 다른 경우도 체크해준다.
-            if(m_boom.State == Boom.BoomState.Delay) {
+            if(m_boom?.State == Boom.BoomState.Delay) {
                 m_boom.Explosion();
-			}
+            }
 
             m_explosionTime = 0.0f;
             m_isExplosion = false;
@@ -179,16 +219,32 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
+    // Animation Player-Shooting-CM / Event
+    public void ShotEnd()
+	{
+        m_boom = Managers.Resource.Instantiate("Boom", Managers.Game.Boom.transform).GetComponent<Boom>();
+        
+        // 현재 점프 상태이면 아래로 폭탄을 쏘자
+        if (m_state == PlayerState.Jump) {
+            m_boom.JumpShoot(m_handler.position, -Vector3.up);
+        }
+        else {
+            // 가장 최신의 폭탄을 가지고 있는다.      TODO : 지금 벡터로 처리해서 범위 체크를 어떻게 해야할지 모르겠다.
+            m_boom.Shoot(m_handler.position, transform.forward, 100000.0f);
+        }
+    }
+
     public void UpdateInput()
 	{
+
         // 회피중일때는 다른 상태는 불가능
         if (m_state == PlayerState.Evasion) {
             return;
         }
+        m_state = PlayerState.Idle;
 
         InputMouse();
 
-        m_state = PlayerState.Idle;
         if (Input.anyKey == false) {
             return;
 		}
@@ -243,5 +299,9 @@ public class PlayerController : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(l_position, m_explosionJumpRadius);
-	}
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, transform.forward * (transform.position - m_mousePos).magnitude);
+
+    }
 }

@@ -60,16 +60,20 @@ public class Boom : MonoBehaviour
     }
 
     // 발사를 했을때 필요한 정보를 수집중
-    public void Shoot(Vector3 _position, Vector3 _direction)
+    public void Shoot(Vector3 _position, Vector3 _direction, float _dist)
+	{
+        if(_dist >= m_moveSpeed) {
+            _dist = m_moveSpeed;
+        }
+
+        transform.position = _position;
+        m_rigid.AddForce(_direction * _dist);
+	}
+
+    public void JumpShoot(Vector3 _position, Vector3 _direction)
 	{
         transform.position = _position;
         m_rigid.AddForce(_direction * m_moveSpeed);
-	}
-
-    public void Jump(Vector3 _position)
-	{
-        transform.position = _position;
-        m_rigid.AddForce(-Vector3.up * m_moveSpeed);
         m_state = BoomState.Jump;
     }
 
@@ -83,15 +87,13 @@ public class Boom : MonoBehaviour
 
             // 현재 몬스터와 폭탄간의 거리를 알아낸다.
             Vector3 l_subVec = l_trans.position - transform.position;
-            l_subVec.y = 0;           // 2D로써의 거리만 계산한다.
-            l_subVec /= l_hit.collider.GetComponent<Rigidbody>().mass;         // 몬스터의 질량을 참고해서 계산한다.
-            l_subVec *= l_subVec.magnitude;             // 거리가 멀 수록 더 크게 힘을 받는다.
+            l_subVec *= m_explosionForce / l_subVec.magnitude;             // 거리가 멀 수록 더 적게 힘을 받는다.
 
             // TODO : 대미지 히트 값을 전달하면 됨
             int l_layer = l_hit.collider.gameObject.layer;
             if (l_layer == (int)Define.Layer.Player) {
                 PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.collider.gameObject.GetInstanceID());
-                l_player.GetComponent<Rigidbody>().AddForce(m_explosionForce * l_subVec);
+                l_player.GetComponent<Rigidbody>().AddExplosionForce(l_subVec.magnitude, transform.position, 100.0f);
 
             }
             else if (l_layer == (int)Define.Layer.Monster) {
@@ -111,6 +113,43 @@ public class Boom : MonoBehaviour
         Managers.Resource.Destroy(gameObject);
     }
 
+    public void JumpExplosion()
+	{
+        RaycastHit[] l_colliders = Physics.SphereCastAll(transform.position, m_explosionRange, Vector3.up, 1.0f, m_layer);
+
+        // 순회를 하여 체크를 진행
+        foreach (RaycastHit l_hit in l_colliders) {
+            Transform l_trans = l_hit.transform;
+
+            // 현재 몬스터와 폭탄간의 거리를 알아낸다.
+            Vector3 l_subVec = l_trans.position - transform.position;
+            l_subVec.y += 10.0f;
+            l_subVec *= m_explosionForce / l_subVec.magnitude;             // 거리가 멀 수록 더 적게 힘을 받는다.
+
+
+            // TODO : 대미지 히트 값을 전달하면 됨
+            int l_layer = l_hit.collider.gameObject.layer;
+            if (l_layer == (int)Define.Layer.Player) {
+                PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.collider.gameObject.GetInstanceID());
+                l_player.GetComponent<Rigidbody>().AddForce(l_subVec);
+
+            }
+            else if (l_layer == (int)Define.Layer.Monster) {
+                BehaviorTree l_monster = l_hit.collider.GetComponent<BehaviorTree>();
+            }
+        }
+
+        m_state = BoomState.Default;
+        m_explosionDelayTime = 0.0f;
+        m_rigid.velocity = Vector3.zero;
+
+        // 파티클
+        GameObject particle = Managers.Resource.Instantiate(Path.Boom_Particle, Managers.Game.Boom.transform);
+        particle.transform.position = transform.position;
+        Managers.Resource.Destroy(particle, 7.0f);
+
+        Managers.Resource.Destroy(gameObject);
+    }
 
     // 현재 폭발이 될 것인지를 카운팅한다.
     private void CheckExplosionTime()
@@ -129,11 +168,10 @@ public class Boom : MonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		if(collision.collider.gameObject.layer != (int)Define.Layer.Monster) {
-            return;
-		}
+		if(m_state == BoomState.Jump && collision.collider.gameObject.layer == (int)Define.Layer.Ground) {
+            JumpExplosion();
+        }
 
-        Explosion();
 	}
 
 	private void OnDrawGizmos()

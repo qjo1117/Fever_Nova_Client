@@ -108,9 +108,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479547004798354857}
   serializedVersion: 2
-  m_Mass: 0.3
+  m_Mass: 0.7
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.01
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -129,11 +129,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_state: 0
-  m_explosionForce: 1000
-  m_moveSpeed: 400
+  m_explosionForce: 4000
+  m_moveSpeed: 600
   m_explosionRange: 5
   m_detectRange: 2
-  m_explosionMaxDelayTime: 5
+  m_explosionMaxDelayTime: 3
 --- !u!114 &-206134500718372266
 MonoBehaviour:
   m_ObjectHideFlags: 0
