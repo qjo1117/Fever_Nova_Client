@@ -29,6 +29,14 @@ MonoBehaviour:
     m_Address: Monster
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 83b7d91550ef8174cbff5321343c5509
+    m_Address: Assets/05Prefabs/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0595d41ce59907e49a1470b1c5b66176
+    m_Address: Assets/05Prefabs/Boom_Particle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aa1c45dd9f67c694eb5b8e4a529c5a60, type: 2}
   m_SchemaSet:

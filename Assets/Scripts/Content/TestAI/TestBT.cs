@@ -23,8 +23,8 @@ public class TestBT : BehaviorTree
         SetData("MoveSpeed", m_moveSpeed);
         SetData("CheckRange", m_checkRange);
 
-        // Sequence : 전부 순회해서 실행
-        // Selector : 한녀석만 실행
+        // Sequence : 노드중 실패가 생기면 순회 X
+        // Selector : 노드중 성공이 생이면 순회 X
 
         BehaviorNode root = new Selector(new List<BehaviorNode>
         {

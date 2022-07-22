@@ -19,9 +19,11 @@ public class TargetData
 public class MonsterManager : MonoBehaviour
 {
     // 현재 사용하고 있는 몬스터의 수를 알아낸다.
-    private List<MonsterController> m_listMonster = new List<MonsterController>();
+    private List<BehaviorTree> m_listMonster = new List<BehaviorTree>();
     private List<TargetData> m_listTargetData = new List<TargetData>();                 // 정보 전달용
 
+
+    public List<BehaviorTree> ListMonster { get => m_listMonster; }
 
     void Update()
     {
@@ -65,8 +67,8 @@ public class MonsterManager : MonoBehaviour
 		}
 
 		foreach(TargetData data in m_listTargetData) {
-            Debug.Log(data.id);
-            m_listMonster[data.id].Stat.Hp -= data.attack;
+            //Debug.Log(data.id);
+            //m_listMonster[data.id].Stat.Hp -= data.attack;
 		}
 
         m_listTargetData.Clear();

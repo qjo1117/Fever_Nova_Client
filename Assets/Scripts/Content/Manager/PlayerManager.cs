@@ -18,32 +18,35 @@ public class PlayerManager : MonoBehaviour
 
     }
 
+    public PlayerController FindPlayer(int _id)
+	{
+        foreach(PlayerController l_player in m_listPlayers) {
+            // 아이디 검출을 인스턴스 아이디로 검출한다.
+            if(l_player.gameObject.GetInstanceID() == _id) {
+                return l_player;
+			}
+		}
+
+        return null;
+	}
+
+    // 스폰을 시킨다.
+    public PlayerController Spawn(Vector3 _position, PlayerStat _stat)
+	{
+        PlayerController l_player = Managers.Resource.Instantiate(Path.Player, transform).GetComponent<PlayerController>();
+        l_player.transform.position = _position;        // 좌표 반영
+        l_player.Stat.id = m_listPlayers.Count;         // 아이디 발급
+        l_player.Stat = _stat;                          // 스텟 반영
+        m_listPlayers.Add(l_player);                    // 매니저 추가
+
+        return l_player;
+    }
+
     // 초기화 작업을 한다.
     public void Init()
     {
-        //// TODO : 서버일 경우 플레이어접속을 확인해서 추가하자.
+        // 데이터 셋팅을 진행한다.
 
-        //// 해당하는 플레이어 프리팹을 생성한다.
-        //// 다중 접속으로 변경할 경우 Pool등록하면 된다.
-        //PlayerController player = Managers.Resource.NewPrefab("Player", transform).GetComponent<PlayerController>();
-
-        //// 리스트에 넣어주고 처음 생성한 녀석은 메인으로 등록시킨다.
-        //m_listPlayers.Add(player);
-        //m_mainPlayer = player;
-
-        //// 아이디 발급을 해준다.
-
-        //// 순회하면서 초기화 작업을 해준다.
-        //int size = m_listPlayers.Count;
-        //for (int i = 0; i < size; ++i) {
-        //    // 살짝 수정하는게 나을꺼같긴한데 일단 판별을 이렇게
-        //    if(m_mainPlayer == m_listPlayers[i]) {
-        //        m_listPlayers[i].Init(i, true);
-        //    }
-        //    else {
-        //        m_listPlayers[i].Init(i, false);
-        //    }
-        //}
     }
 
     public void Clear()

@@ -6,19 +6,22 @@ public class InGameScene : BaseScene
 {
 
     protected override void LoadGameObject()
-	{
-        Managers.Resource.RegisterPoolGameObject("Boom");
-        Managers.Resource.RegisterPoolGameObject("Monster");
-        Managers.Resource.RegisterPoolGameObject("Asset/Prefabs/Player");
+    {
+        // Pool를 등록하는 방식이 필요함
+        Managers.Resource.RegisterPoolGameObject(Path.Boom);
+        Managers.Resource.RegisterPoolGameObject(Path.Boom_Particle);
+        Managers.Resource.RegisterPoolGameObject(Path.Monster);
+        Managers.Resource.RegisterPoolGameObject(Path.Player);
 	}
 
 	protected override void Init()
 	{
         Managers.Game.InGameInit();
 
-        Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform);
-        Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform);
-        Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform);
+        Managers.Game.Player.Spawn(Vector3.zero, new PlayerStat { id = 0, name = "Sample_Player" });
+        Managers.Resource.Instantiate(Path.Monster, Managers.Game.Monster.transform);
+        Managers.Resource.Instantiate(Path.Monster, Managers.Game.Monster.transform);
+        Managers.Resource.Instantiate(Path.Monster, Managers.Game.Monster.transform);
     }
 
 

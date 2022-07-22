@@ -224,7 +224,7 @@ public class InputManager
 	private bool GetKeyCode(List<KeyCode> p_keycode)
 	{
 		foreach (KeyCode code in p_keycode) {
-			if (Input.GetKey(code)) {
+			if (Input.GetKey(code) == true) {
 				return true;
 			}
 		}
