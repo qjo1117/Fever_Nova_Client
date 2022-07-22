@@ -9,10 +9,10 @@ public class PlayerManager : MonoBehaviour
     private List<PlayerController>  m_listPlayers = new List<PlayerController>();
     private PlayerController        m_mainPlayer = null;
 
-
+    // ÇÃ·¹ÀÌ¾î Ã¼·Â¹Ù ¾÷µ¥ÀÌÆ® ÇÔ¼ö È£Ãâ½Ã »ç¿ë
     private UI_PlayerHPBar m_playerHPBar = null;
 
-    // ì´ë¦„ ì¶”ì²œ ë°›ìŒ
+    // ÀÌ¸§ ÃßÃµ ¹ŞÀ½
     public List<PlayerController>   List { get => m_listPlayers; }
 
     public PlayerController MainPlayer { get => m_mainPlayer; }
@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        
+        // ÇÃ·¹ÀÌ¾î Ã¼·Â¹Ù Å×½ºÆ®¿ë µ¥¹ÌÁö ÁÖ±â
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             m_mainPlayer.Demege(10);
@@ -34,56 +34,54 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public PlayerController FindPlayer(int _id)
-	{
-        foreach(PlayerController l_player in m_listPlayers) {
-            // ì•„ì´ë”” ê²€ì¶œì„ ì¸ìŠ¤í„´ìŠ¤ ì•„ì´ë””ë¡œ ê²€ì¶œí•œë‹¤.
-            if (l_player.gameObject.GetInstanceID() == _id) {
-                return l_player;
-			}
-		}
-
-        return null;
-	}
-
-    // ìŠ¤í°ì„ ì‹œí‚¨ë‹¤.
-    public PlayerController Spawn(Vector3 _position, PlayerStat _stat)
-	{
-        PlayerController l_player = Managers.Resource.Instantiate(Path.Player, transform).GetComponent<PlayerController>();
-        l_player.transform.position = _position;        // ì¢Œí‘œ ë°˜ì˜
-        l_player.Stat.id = m_listPlayers.Count;         // ì•„ì´ë”” ë°œê¸‰
-        l_player.Stat = _stat;                          // ìŠ¤í…Ÿ ë°˜ì˜
-        m_listPlayers.Add(l_player);                    // ë§¤ë‹ˆì € ì¶”ê°€
-
-        // ë©”ì¸ í”Œë ˆì´ì–´ ì„¤ì •
+    // ÃÊ±âÈ­ ÀÛ¾÷À» ÇÑ´Ù.
+    public void Init()
+    {
+        PlayerController l_player;
+        l_player = FindObjectOfType<PlayerController>();
         m_mainPlayer = l_player;
 
-        return l_player;
-    }
-
-    // ì´ˆê¸°í™” ì‘ì—…ì„ í•œë‹¤.
-    public void Init()
-    {    
+        // ÇÃ·¹ÀÌ¾î hp ¹Ù »ı¼º
         m_playerHPBar = Managers.UI.ShowSceneUI<UI_PlayerHPBar>("UI_PlayerHPBar");
         Managers.UI.SetCanvas(m_playerHPBar.gameObject, false);
 
+        //// TODO : ¼­¹öÀÏ °æ¿ì ÇÃ·¹ÀÌ¾îÁ¢¼ÓÀ» È®ÀÎÇØ¼­ Ãß°¡ÇÏÀÚ.
 
-        // ë°ì´í„° ì…‹íŒ…ì„ ì§„í–‰í•œë‹¤.
+        //// ÇØ´çÇÏ´Â ÇÃ·¹ÀÌ¾î ÇÁ¸®ÆÕÀ» »ı¼ºÇÑ´Ù.
+        //// ´ÙÁß Á¢¼ÓÀ¸·Î º¯°æÇÒ °æ¿ì Poolµî·ÏÇÏ¸é µÈ´Ù.
+        //PlayerController player = Managers.Resource.NewPrefab("Player", transform).GetComponent<PlayerController>();
 
+        //// ¸®½ºÆ®¿¡ ³Ö¾îÁÖ°í Ã³À½ »ı¼ºÇÑ ³à¼®Àº ¸ŞÀÎÀ¸·Î µî·Ï½ÃÅ²´Ù.
+        //m_listPlayers.Add(player);
+        //m_mainPlayer = player;
+
+        //// ¾ÆÀÌµğ ¹ß±ŞÀ» ÇØÁØ´Ù.
+
+        //// ¼øÈ¸ÇÏ¸é¼­ ÃÊ±âÈ­ ÀÛ¾÷À» ÇØÁØ´Ù.
+        //int size = m_listPlayers.Count;
+        //for (int i = 0; i < size; ++i) {
+        //    // »ìÂ¦ ¼öÁ¤ÇÏ´Â°Ô ³ªÀ»²¨°°±äÇÑµ¥ ÀÏ´Ü ÆÇº°À» ÀÌ·¸°Ô
+        //    if(m_mainPlayer == m_listPlayers[i]) {
+        //        m_listPlayers[i].Init(i, true);
+        //    }
+        //    else {
+        //        m_listPlayers[i].Init(i, false);
+        //    }
+        //}
     }
 
     public void Clear()
 	{
-        //      // ë§Œì•½ í•˜ì´ë¼í‚¤ì— í”Œë ˆì´ì–´ê°€ ìƒì¡´í•´ ìˆìœ¼ë©´ ì‚­ì œ ì‹œì¼œë²„ë¦°ë‹¤.
-        //      foreach(PlayerController player in m_listPlayers) {
-        //          Managers.Resource.DelPrefab(player.gameObject);
-        //}
-        //      // ì´ˆê¸°í™”
-        //      m_listPlayers.Clear();
+  //      // ¸¸¾à ÇÏÀÌ¶óÅ°¿¡ ÇÃ·¹ÀÌ¾î°¡ »ıÁ¸ÇØ ÀÖÀ¸¸é »èÁ¦ ½ÃÄÑ¹ö¸°´Ù.
+  //      foreach(PlayerController player in m_listPlayers) {
+  //          Managers.Resource.DelPrefab(player.gameObject);
+		//}
+  //      // ÃÊ±âÈ­
+  //      m_listPlayers.Clear();
 
     }
 
-    // ëŒ€ë¯¸ì§€ë¥¼ ì…íë•Œ ì“°ì¸ë‹¤.
+    // ´ë¹ÌÁö¸¦ ÀÔÈú¶§ ¾²ÀÎ´Ù.
     public void Demege(int p_id, int p_attack, Vector3 p_force)
 	{
         //m_listPlayers[p_id].Demege(p_attack);
@@ -92,7 +90,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Demege(PlayerController p_player, int p_attack, Vector3 p_force)
 	{
-        //// ìœ„ì— ìˆëŠ” í•¨ìˆ˜ í˜¸ì¶œ
+        //// À§¿¡ ÀÖ´Â ÇÔ¼ö È£Ãâ
         //Demege(p_player.ID, p_attack, p_force);
     }
 

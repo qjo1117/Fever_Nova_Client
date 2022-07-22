@@ -7,15 +7,11 @@ public class GameManager
 {
     private PlayerManager m_player = null;
 
-    public PlayerManager Player { get => m_player; }
+    public PlayerManager Player { get { return m_player; } }
 
     private MonsterManager m_monster = null;
 
-    public MonsterManager Monster { get => m_monster; }
-
-    private BoomManager m_boom = null;
-
-    public BoomManager Boom { get => m_boom; }
+    public MonsterManager Monster { get { return m_monster; } }
 
 
     // 몬스터들에 대한 프리팹을 들고 있는다.
@@ -32,6 +28,7 @@ public class GameManager
         // Prefab에 등록 및 풀링 신청(비동기이기 때문)
 
         // 몬스터의 데이터를 셋팅합니다.
+        Managers.Resource.RegisterPoolGameObject("Monster");
 
     }
 
@@ -61,15 +58,6 @@ public class GameManager
                 obj = new GameObject { name = "@MonsterManager" };
             }
             m_monster = obj.GetOrAddComponent<MonsterManager>();
-        }
-
-        {
-            GameObject obj = GameObject.Find("@BoomManager");
-            if (obj == null)
-            {
-                obj = new GameObject { name = "@BoomManager" };
-            }
-            m_boom = obj.GetOrAddComponent<BoomManager>();
         }
 
         Managers.Game.Player.Init();

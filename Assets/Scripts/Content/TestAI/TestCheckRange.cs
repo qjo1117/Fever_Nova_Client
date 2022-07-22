@@ -20,6 +20,13 @@ public class TestCheckRange : Exacution
 			// 리스트를 순회해서 거리를 비교한다.
 			foreach(PlayerController player in Managers.Game.Player.List) {
 
+				Vector3 dist = player.transform.position - m_transform.position;
+				// Sphere닌깐
+				if(dist.sqrMagnitude <= m_range * m_range) {
+					m_tree.SetData("Target", player);
+					m_status = BehaviorStatus.Success;
+					return m_status;
+				}
 			}
 
 			// 타겟이 아직도 없으면 실패

@@ -18,43 +18,9 @@ public class TargetData
 
 public class MonsterManager : MonoBehaviour
 {
-
     // 현재 사용하고 있는 몬스터의 수를 알아낸다.
-    private List<BehaviorTree>  m_listMonster = new List<BehaviorTree>();
-    private List<TargetData>    m_listTargetData = new List<TargetData>();                 // 정보 전달용
-
-    private UI_Goal             m_goal;
-
-    private int                 m_remainCount = 0;
-    private int                 m_killCount = 0;
-
-    public List<BehaviorTree>   ListMonster { get => m_listMonster; }
-
-    public int RemainCount
-    {
-        get 
-        {
-            return m_remainCount;
-        }
-        set
-        {
-            m_remainCount = value;
-            m_goal.AllMonsterCount = m_remainCount;
-        }
-    }
-
-    public int KillCount
-    {
-        get
-        {
-            return m_killCount;
-        }
-        set
-        {
-            m_killCount = value;
-            m_goal.MonsterKillCount = m_killCount;
-        }
-    }
+    private List<MonsterController> m_listMonster = new List<MonsterController>();
+    private List<TargetData> m_listTargetData = new List<TargetData>();                 // 정보 전달용
 
 
     void Update()
@@ -66,9 +32,8 @@ public class MonsterManager : MonoBehaviour
     // InGameScene에서 호출합니다.
 	public void Init()
 	{
-        m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
-    }
 
+    }
 
     [ContextMenu("TestSpawn")]
     public void TestSpawn()
@@ -100,8 +65,8 @@ public class MonsterManager : MonoBehaviour
 		}
 
 		foreach(TargetData data in m_listTargetData) {
-            //Debug.Log(data.id);
-            //m_listMonster[data.id].Stat.Hp -= data.attack;
+            Debug.Log(data.id);
+            m_listMonster[data.id].Stat.Hp -= data.attack;
 		}
 
         m_listTargetData.Clear();
