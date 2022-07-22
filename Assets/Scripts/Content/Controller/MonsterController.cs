@@ -12,13 +12,25 @@ public class MonsterController : BaseController
     private BehaviorTree        m_behaviorTree = null;
 
     private UI_MonsterHPBar     m_monsterHPBar;
+    private UI_MonsterHPBar     m_bossMonsterHPBar;
     private UI_Score            m_score;
 
+    // boss 몬스터 체력바 테스트용
+    private bool                m_isBoss;
+
     public MonsterStat          Stat { get => m_stat; set => m_stat = value; }
+
+    public bool                 IsBoss { get => m_isBoss; set => m_isBoss = value; }
 
     void Start()
     {
         Init();
+
+        if (m_isBoss)
+        {
+            m_bossMonsterHPBar = Managers.UI.ShowSceneUI<UI_MonsterHPBar>("UI_BossMonsterHPBar");
+            m_bossMonsterHPBar.Target = this;
+        }
 
         // 몬스터 hp바 생성
         m_monsterHPBar = Managers.UI.ShowSceneUI<UI_MonsterHPBar>("UI_MonsterHPBar");
@@ -54,12 +66,21 @@ public class MonsterController : BaseController
     public void Damege(int p_hp)
 	{
         m_stat.Hp -= p_hp;
+
+        if(m_isBoss)
+        {
+            m_bossMonsterHPBar.HpBarUpdate();
+        }
         m_monsterHPBar.HpBarUpdate();
 
         if (m_stat.Hp <= 0)
         {
             // 사망 처리
             Managers.Resource.Destroy(gameObject);
+            if(m_isBoss)
+            {
+                m_bossMonsterHPBar.CloseSceneUI();
+            }
             m_monsterHPBar.CloseSceneUI();
 
             m_score.ScoreLogCreate(m_stat.Score);
@@ -83,6 +104,11 @@ public class MonsterController : BaseController
             }
 
             m_stat.Hp += 10;
+
+            if (m_isBoss)
+            {
+                m_bossMonsterHPBar.HpBarUpdate();
+            }
             m_monsterHPBar.HpBarUpdate();
         }
     }

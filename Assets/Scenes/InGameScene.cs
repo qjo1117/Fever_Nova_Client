@@ -19,6 +19,7 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_BombJumpArrow");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_BombDropPoint");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_MonsterHPBar");
+        Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_BossMonsterHPBar");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_PlayerHPBar");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_Goal");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_Score");
@@ -32,6 +33,9 @@ public class InGameScene : BaseScene
         Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform);
         Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform);
         Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform);
+
+        // boss 몬스터 피통 테스트용
+        Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform).GetComponent<MonsterController>().IsBoss = true;
 
         UIInit();
     }
