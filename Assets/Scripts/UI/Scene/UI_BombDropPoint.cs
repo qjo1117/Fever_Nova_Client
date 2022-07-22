@@ -6,10 +6,12 @@ public class UI_BombDropPoint : UI_Scene
 {
     private Camera              m_mainCam;
     private Ray                 m_testRay;
-    private UI_BombRange        m_bombRange;
 
+    private UI_BombRange        m_bombRange;
+    private UI_BombJumpRange    m_bombJumpRange;
 
     public UI_BombRange BombRange { get => m_bombRange; set => m_bombRange = value; }
+    public UI_BombJumpRange BombJumpRange { get => m_bombJumpRange; set => m_bombJumpRange = value; }
 
     public override void Init()
     {
@@ -34,6 +36,8 @@ public class UI_BombDropPoint : UI_Scene
             {
                 transform.position = l_hit.point;
             }
+
+            m_bombJumpRange.BombJumpRangeInnerCheck(l_hit.point);
         }
     }
 

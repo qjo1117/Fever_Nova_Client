@@ -5,7 +5,7 @@ using UnityEngine;
 public class UI_BombRange : UI_Scene
 {
     [SerializeField]
-    private float       m_rangeRadius = 0.5f;
+    protected float       m_rangeRadius = 0.5f;
 
     public float RangeRadius
     {
@@ -16,19 +16,24 @@ public class UI_BombRange : UI_Scene
         set
         {
             m_rangeRadius = value;
-            UIScaleUpdate();
+            SetUIScale();
         }
     }
 
 
     public override void Init()
     {
-        
     }
 
     private void Update()
     {
         PositionUpdate();
+    }
+
+    private void SetUIScale()
+    {
+        // scale 1,1,1 기준 반지름 0.5f;
+        transform.localScale = Vector3.one * (m_rangeRadius / 0.5f);
     }
 
     private void PositionUpdate()
@@ -38,11 +43,6 @@ public class UI_BombRange : UI_Scene
         transform.position = new Vector3(l_player.transform.position.x, l_player.transform.position.y + 0.1f, l_player.transform.position.z);
     }
 
-    private void UIScaleUpdate()
-    {
-        // scale 1,1,1 기준 반지름 0.5f;
-        transform.localScale = Vector3.one * (m_rangeRadius / 0.5f);
-    }
 
     private void OnDrawGizmos()
     {

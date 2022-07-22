@@ -30,12 +30,7 @@ public class UI_MonsterHPBar : UI_HPBar
         m_isReady = true;
     }
 
-    public void HpBarUpdate()
-    {
-        Get<Image>((int)Images.hpBar).fillAmount = m_target.Stat.Hp / (float)m_target.Stat.MaxHp;
-    }
-
-    public void HpBarPositionUpdate()
+    public void SetHpBarPosition()
     {
         if (!m_isReady)
         {
@@ -45,5 +40,10 @@ public class UI_MonsterHPBar : UI_HPBar
         Vector3 l_screenPos = m_mainCamera.WorldToScreenPoint(m_target.transform.position);
         RectTransform l_sliderRectTrans = Get<Image>((int)Images.hpBarFrame).GetComponent<RectTransform>();
         l_sliderRectTrans.position = new Vector2(l_screenPos.x, l_screenPos.y + m_verticalOffset);
+    }
+
+    public void HpBarUpdate()
+    {
+        Get<Image>((int)Images.hpBar).fillAmount = m_target.Stat.Hp / (float)m_target.Stat.MaxHp;
     }
 }

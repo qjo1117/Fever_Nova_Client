@@ -77,6 +77,10 @@ MonoBehaviour:
     m_Address: UI/Popup/UI_Toggle
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 20d6dffa8f907454e85eac917d2f0297
+    m_Address: UI/Scene/UI_BombJumpArrow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aa1c45dd9f67c694eb5b8e4a529c5a60, type: 2}
   m_SchemaSet:

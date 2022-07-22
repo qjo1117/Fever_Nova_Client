@@ -16,6 +16,7 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_Aim");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_BombRange");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_BombJumpRange");
+        Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_BombJumpArrow");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_BombDropPoint");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_MonsterHPBar");
         Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_PlayerHPBar");
@@ -37,7 +38,7 @@ public class InGameScene : BaseScene
 
     private void UIInit()
     {
-        Managers.UI.ShowPopupUI<UI_PopupMsg>("UI_PopupMsg");
+        UI_PopupMsg l_popupMsg = Managers.UI.ShowPopupUI<UI_PopupMsg>("UI_PopupMsg");
 
         Managers.UI.ShowSceneUI<UI_Aim>("UI_Aim");
 
@@ -50,12 +51,13 @@ public class InGameScene : BaseScene
         UI_BombRange l_bombRange = Managers.UI.ShowSceneUI<UI_BombRange>("UI_BombRange");
         l_bombRange.RangeRadius = 5.0f; // ?
 
-        UI_BombRange l_bombJumpRange = Managers.UI.ShowSceneUI<UI_BombRange>("UI_BombJumpRange");
+        UI_BombJumpRange l_bombJumpRange = Managers.UI.ShowSceneUI<UI_BombJumpRange>("UI_BombJumpRange");
         l_bombJumpRange.RangeRadius = 2.0f;
 
         // ÂøÅºÁöÁ¡ ui »ý¼º 
         UI_BombDropPoint l_dropPoint = Managers.UI.ShowSceneUI<UI_BombDropPoint>("UI_BombDropPoint");
         l_dropPoint.BombRange = l_bombRange;
+        l_dropPoint.BombJumpRange = l_bombJumpRange;
     }
 
 

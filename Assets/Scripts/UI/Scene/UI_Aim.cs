@@ -10,6 +10,9 @@ public class UI_Aim : UI_Scene
     public override void Init()
     {
         m_mainCam = Camera.main;
+
+        Material l_material = GetComponent<MeshRenderer>().material;
+        l_material.color = Color.red;
     }
 
     private void Update()
@@ -25,7 +28,6 @@ public class UI_Aim : UI_Scene
 
         if (Physics.Raycast(m_testRay, out hit, 100f))
         {
-            //Debug.Log($"hit x {hit.point.x}, y {hit.point.y} , z {hit.point.z}");
             if(transform.position!= hit.point)
             {
                 transform.position = hit.point;

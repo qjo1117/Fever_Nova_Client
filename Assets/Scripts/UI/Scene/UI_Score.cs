@@ -16,8 +16,10 @@ public class UI_Score : UI_Scene
         Background
     }
 
-    public float            m_deleteDelay = 5.0f;
+    private bool            m_timerIsRun = false;
+    private List<int>       m_killScoreList;
 
+    public float            m_deleteDelay = 5.0f;
 
     public override void Init()
     {
@@ -25,29 +27,71 @@ public class UI_Score : UI_Scene
 
         Bind<Text>(typeof(Texts));
         Bind<Image>(typeof(Images));
+
+        m_killScoreList = new List<int>();
     }
 
-    public void CurrentScoreUpdate(int _score)
+    public void SetScoreText()
     {
-        Managers.Game.Player.MainPlayer.Stat.score += _score;
-
         Get<Text>((int)Texts.CurrentScoreText).text = $"Á¡¼ö : {Managers.Game.Player.MainPlayer.Stat.score}";
     }
 
     public void ScoreLogCreate(int _score)
     {
-        Text l_logText = Get<Text>((int)Texts.ScoreLogText);
+        m_killScoreList.Add(_score);
 
-        if (l_logText.text.Length == 0)
+        if (!m_timerIsRun)
         {
-            l_logText.text = $"Kill + {_score}\n";
+            StartCoroutine(ScoreLogTimer());
+        }
+    }
+
+    IEnumerator ScoreLogTimer()
+    {
+        m_timerIsRun = true;
+        yield return new WaitForSeconds(0.5f);
+
+        Text l_logText = Get<Text>((int)Texts.ScoreLogText);
+        PlayerController l_player = Managers.Game.Player.MainPlayer;
+
+        if(m_killScoreList.Count <= 1)
+        {
+            if (l_logText.text.Length == 0)
+            {
+                l_logText.text = $"Kill + {m_killScoreList[0]}\n";
+            }
+            else
+            {
+                l_logText.text = l_logText.text.Insert(l_logText.text.Length, $"Kill + {m_killScoreList[0]}\n");
+            }
+
+            l_player.Stat.score += m_killScoreList[0];
         }
         else
         {
-            l_logText.text = l_logText.text.Insert(l_logText.text.Length, $"Kill + {_score}\n");
+            int l_scoreSum = 0;
+
+            foreach (int item in m_killScoreList) 
+            {
+                l_scoreSum += item;
+            }
+
+            if (l_logText.text.Length == 0)
+            {
+                l_logText.text = $"MultiKill + {l_scoreSum}\n";
+            }
+            else
+            {
+                l_logText.text = l_logText.text.Insert(l_logText.text.Length, $"MultiKill + {l_scoreSum}\n");
+            }
+
+            l_player.Stat.score += l_scoreSum;
         }
 
+        SetScoreText();
         StartCoroutine(ScoreLogDelete());
+        m_killScoreList.Clear();
+        m_timerIsRun = false;
     }
 
     IEnumerator ScoreLogDelete()

@@ -93,8 +93,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5867244150807242038}
-  - component: {fileID: 559699707249862367}
   - component: {fileID: -4813312400181891828}
+  - component: {fileID: 8853568254624927583}
   m_Layer: 0
   m_Name: UI_BombRange
   m_TagString: Untagged
@@ -118,19 +118,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &559699707249862367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6724659818571676516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 774589a92d3775744b4ea3da1579c08d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_rangeRadius: 0.5
 --- !u!114 &-4813312400181891828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,3 +131,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
+--- !u!114 &8853568254624927583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6724659818571676516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372b485906073b04a91c45439f586a1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rangeRadius: 0.5

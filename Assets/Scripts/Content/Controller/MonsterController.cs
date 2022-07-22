@@ -35,7 +35,7 @@ public class MonsterController : BaseController
 
         if (m_monsterHPBar != null)
         {
-            m_monsterHPBar.HpBarPositionUpdate();
+            m_monsterHPBar.SetHpBarPosition();
         }
     }
 
@@ -62,7 +62,6 @@ public class MonsterController : BaseController
             Managers.Resource.Destroy(gameObject);
             m_monsterHPBar.CloseSceneUI();
 
-            m_score.CurrentScoreUpdate(m_stat.Score);
             m_score.ScoreLogCreate(m_stat.Score);
             return;
         }
