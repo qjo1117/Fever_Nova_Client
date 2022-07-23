@@ -16,12 +16,28 @@ public class TestBT : BehaviorTree
     [SerializeField]
     private float m_checkRange = 5.0f;
 
+    [SerializeField]
+    private int m_hp = 100;
+
+    [SerializeField]
+    private int m_maxHp = 100;
+
+    // 몬스터 hp바 출력 test
+    private UI_MonsterHPBar m_monsterHPBar;
+
     // Start, Update는 따로 호출 안해줘도 됨
     protected override BehaviorNode SetupTree()
 	{
         // 이때 데이터 셋팅을 해준다.
         SetData("MoveSpeed", m_moveSpeed);
         SetData("CheckRange", m_checkRange);
+        SetData("HP", m_hp);
+        SetData("MaxHP", m_maxHp);
+
+        // 몬스터 hp바 생성
+        m_monsterHPBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(transform,"UI_MonsterHPBar");
+        m_monsterHPBar.HP = m_hp;
+        m_monsterHPBar.MaxHP = m_maxHp;
 
         // Sequence : 노드중 실패가 생기면 순회 X
         // Selector : 노드중 성공이 생이면 순회 X

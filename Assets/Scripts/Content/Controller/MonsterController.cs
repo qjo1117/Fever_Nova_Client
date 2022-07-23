@@ -35,7 +35,6 @@ public class MonsterController : BaseController
 
         // 몬스터 hp바 생성
         m_monsterHPBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(transform,"UI_MonsterHPBar");
-        m_monsterHPBar.Target = this;
 
         // 이미 생성되어있는 UI_Score ui 가져옴
         m_score = Managers.UI.Root.GetComponentInChildren<UI_Score>();
