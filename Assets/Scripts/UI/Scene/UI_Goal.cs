@@ -48,8 +48,11 @@ public class UI_Goal : UI_Scene
         }
         set
         {
-            m_monsterKillCount = value;
-            UpdateGoalText();
+            if (value >= 0 && value <= m_allMonsterCount) 
+            {
+                m_monsterKillCount = value;
+                UpdateGoalText();
+            }
         }
     }
     #endregion
@@ -66,7 +69,7 @@ public class UI_Goal : UI_Scene
         // 실행되므로 지금상황에서는 UI 컴포넌트들이 Bind되기전 RemainCount에 접근하게 된다.
         //  => 해당 문제는 후에, Monster Controller에 Spawn함수를 만들어서 거기서 몹을 스폰하게 될텐데 그 경우에는 UI 컴포넌트들의 Bind가 완료되어있으니 해결될것)
 
-        Managers.Game.Monster.AllMonsterCount = 4;
+        Managers.Game.Monster.AllMonsterCount = 20;
     }
 
     // 목표 UI 상태 갱신하는 함수

@@ -44,11 +44,15 @@ public class PlayerController : MonoBehaviour
     private float           m_explosionTime = 0.0f;
     private bool            m_isExplosion = false;
 
+    // 폭탄 쿨타임 테스트용
+    public float m_coolTime = 2.0f;
+    private bool m_isCoolTime = false;
+
     private float           m_explosionJumpRadius = 4.0f;
 
     [SerializeField]
-    private float           m_evasionDelayTime = 1.0f;      // ��� �ð�
-    private float           m_evasionTime = 0.0f;           // ���� �ð�
+    private float           m_evasionDelayTime = 1.0f;      // 대기 시간
+    private float           m_evasionTime = 0.0f;           // 현재 시간
 
     private Boom            m_boom = null;
 
@@ -200,6 +204,11 @@ public class PlayerController : MonoBehaviour
 
     public void InputShoot()
 	{
+        // 쿨타임 테스트용
+        if (m_isCoolTime)
+            return;
+
+
         if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
             if (m_state == PlayerState.Jump) {
                 ShotEnd();
@@ -207,7 +216,7 @@ public class PlayerController : MonoBehaviour
             else {
                 m_anim.CrossFade("Player-Aiming-CM", 0.1f);
             }
-		}
+        }
 
         // 현재 폭탄을 가지고 있지 않는다면 넘어가자.
         if (m_boom?.gameObject.IsValid() == false) {
@@ -229,6 +238,20 @@ public class PlayerController : MonoBehaviour
 
             m_explosionTime = 0.0f;
             m_isExplosion = false;
+
+
+ 
+            // 쿨타임 테스트용
+            m_isCoolTime = true;
+            Managers.UI.Root.GetComponentInChildren<UI_Aim>().ColorChange(Color.red);
+            Managers.UI.Root.GetComponentInChildren<UI_BombDropPoint>().ColorChange(Color.red);
+            StartCoroutine(BombCoolTimeTimer());
+
+            // 점수 UI 테스트용
+            Managers.UI.Root.GetComponentInChildren<UI_Score>().ScoreLogCreate(10);
+
+            // 목표 UI 테스트용
+            Managers.UI.Root.GetComponentInChildren<UI_Goal>().MonsterKillCount++;
         }
 
 
@@ -314,9 +337,20 @@ public class PlayerController : MonoBehaviour
         }
 	}
 
-	#endregion
+    #endregion
 
-	private void OnDrawGizmosSelected()
+    // 쿨타임 테스트용
+    IEnumerator BombCoolTimeTimer()
+    {
+        yield return new WaitForSeconds(m_coolTime);
+
+        Managers.UI.Root.GetComponentInChildren<UI_Aim>().ColorChange(Color.green);
+        Managers.UI.Root.GetComponentInChildren<UI_BombDropPoint>().ColorChange(Color.green);
+        m_isCoolTime = false;
+    }
+
+
+    private void OnDrawGizmosSelected()
 	{
         Vector3 l_position = transform.position;
 
