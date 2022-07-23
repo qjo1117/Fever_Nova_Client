@@ -60,7 +60,8 @@ public class PlayerManager : MonoBehaviour
 
         // 플레이어 HP바 생성
         m_playerHPBar = Managers.UI.ShowSceneUI<UI_PlayerHPBar>("UI_PlayerHPBar");
-        m_playerHPBar.Target = l_player;
+        m_playerHPBar.HP = l_player.Stat.hp;
+        m_playerHPBar.MaxHP = l_player.Stat.maxHp;
         Managers.UI.SetCanvas(m_playerHPBar.gameObject, false);
 
         return l_player;

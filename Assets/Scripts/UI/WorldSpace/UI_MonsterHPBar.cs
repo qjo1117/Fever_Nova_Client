@@ -74,11 +74,10 @@ public class UI_MonsterHPBar : UI_Base
         {
             m_mainCamera = Camera.main;
         }
+        m_isReady = true;
 
         HpBarUpdate();
         CanvasScaleChange();
-
-        m_isReady = true;
     }
 
     private void Update()

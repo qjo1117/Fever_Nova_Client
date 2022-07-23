@@ -65,6 +65,7 @@ public class UI_BossMonsterHPBar : UI_Scene
     {
         Bind<Image>(typeof(Images));
         Bind<GameObject>(typeof(GameObjects));
+        m_isReady = true;
 
         GetHpBoost();
         if (m_mainCamera == null)
@@ -72,8 +73,6 @@ public class UI_BossMonsterHPBar : UI_Scene
             m_mainCamera = Camera.main;
         }
         HpBarUpdate();
-
-        m_isReady = true;
     }
 
     // 최대 체력량에 따라 하얀색 사각 프레임 크기 조정하는 함수
