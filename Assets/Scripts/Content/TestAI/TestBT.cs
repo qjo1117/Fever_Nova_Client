@@ -24,6 +24,7 @@ public class TestBT : BehaviorTree
 
     // 몬스터 hp바 출력 test
     private UI_MonsterHPBar m_monsterHPBar;
+    private UI_BossMonsterHPBar m_bossMonsterHPBar;
 
     // Start, Update는 따로 호출 안해줘도 됨
     protected override BehaviorNode SetupTree()
@@ -38,6 +39,11 @@ public class TestBT : BehaviorTree
         m_monsterHPBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(transform,"UI_MonsterHPBar");
         m_monsterHPBar.HP = m_hp;
         m_monsterHPBar.MaxHP = m_maxHp;
+
+        // 보스 몬스터 hp바 생성 (현재는 보스몹이 따로 없기떄문에 Test를 위해 일반몹에도 보스몹 체력바를 추가함)
+        m_bossMonsterHPBar = Managers.UI.ShowSceneUI<UI_BossMonsterHPBar>();
+        m_bossMonsterHPBar.HP = m_hp;
+        m_bossMonsterHPBar.MaxHP = m_maxHp;
 
         // Sequence : 노드중 실패가 생기면 순회 X
         // Selector : 노드중 성공이 생이면 순회 X

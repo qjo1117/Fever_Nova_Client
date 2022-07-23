@@ -21,14 +21,15 @@ public class UI_BossMonsterHPBar : UI_Scene
     #region 변수
     [SerializeField]
     private Camera              m_mainCamera;
-    private MonsterController   m_target;                       // 대상 몬스터
     private int                 m_hp;                           // hp바 출력에 사용될 hp값
-    public int m_unitHp;                                        // 단위 hp 
+    private int                 m_maxHp;
+    private bool                m_isReady;
+
+    public int                  m_unitHp;                       // 단위 hp 
                                                                 // (단위 hp가 낮을수록 최대 체력이 증가했을떄 하얀색 사각형이 촘촘하개 배열됨)
     #endregion
 
     #region 프로퍼티
-    public MonsterController Target { get => m_target; set => m_target = value; }
 
     // 프로퍼티를 통해 hp값을 변경하면 자동으로 HP바 상태 갱신하도록함
     public int HP
@@ -40,6 +41,20 @@ public class UI_BossMonsterHPBar : UI_Scene
         set
         {
             m_hp = value;
+            HpBarUpdate();
+        }
+    }
+
+    public int MaxHP
+    {
+        get
+        {
+            return m_maxHp;
+        }
+        set
+        {
+            m_maxHp = value;
+            GetHpBoost();
             HpBarUpdate();
         }
     }
@@ -57,13 +72,18 @@ public class UI_BossMonsterHPBar : UI_Scene
             m_mainCamera = Camera.main;
         }
         HpBarUpdate();
+
+        m_isReady = true;
     }
 
     // 최대 체력량에 따라 하얀색 사각 프레임 크기 조정하는 함수
     public void GetHpBoost()
     {
+        if (!m_isReady)
+            return;
+
         // (단위 hp / 최대체력) 계산하여 하얀색 사각 프레임의 스케일값 구함
-        float l_scaleX = (float)m_unitHp / m_target.Stat.MaxHp;
+        float l_scaleX = (float)m_unitHp / m_maxHp;
 
         // hpLine 오브젝트의 자식들 (하얀색 사각 프레임들)의 스케일값을 변경
         // (HorizontalLayoutGroup 컴포넌트가 활성화 되어있으면 Scale이 제대로 적용이 안되므로 적용전에 잠시 비활성화 시켜줌)
@@ -80,6 +100,9 @@ public class UI_BossMonsterHPBar : UI_Scene
     // hp 바의 상태 갱신하는 함수
     private void HpBarUpdate()
     {
-        Get<Image>((int)Images.hpBar).fillAmount = m_target.Stat.Hp / (float)m_target.Stat.MaxHp;
+        if (!m_isReady)
+            return;
+
+        Get<Image>((int)Images.hpBar).fillAmount = m_hp / (float)m_maxHp;
     }
 }

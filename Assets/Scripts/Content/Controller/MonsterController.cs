@@ -30,7 +30,6 @@ public class MonsterController : BaseController
         if (m_isBoss)
         {
             m_bossMonsterHPBar = Managers.UI.MakeWorldSpaceUI<UI_BossMonsterHPBar>(transform,"UI_BossMonsterHPBar");
-            m_bossMonsterHPBar.Target = this;
         }
 
         // 몬스터 hp바 생성

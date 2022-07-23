@@ -44,7 +44,6 @@ public class UI_MonsterHPBar : UI_Base
             HpBarUpdate();
         }
     }
-    #endregion
 
     public int MaxHP
     {
@@ -59,6 +58,9 @@ public class UI_MonsterHPBar : UI_Base
             HpBarUpdate();
         }
     }
+    #endregion
+
+
 
 
     public override void Init()
