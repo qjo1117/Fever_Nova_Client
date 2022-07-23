@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class UI_Inven : UI_Scene
 {
+    #region UI컴포넌트_ENUM
     enum GameObjects
     {
         GridPanel
     }
+    #endregion
 
     public override void Init()
     {

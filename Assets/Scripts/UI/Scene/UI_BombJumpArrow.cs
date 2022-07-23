@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 public class UI_BombJumpArrow : UI_Scene
 {
+    #region UI컴포넌트_ENUM
     enum Images
     {
-        Arrow
+        Arrow                                       // 화살표 이미지
     }
+    #endregion
 
-    private bool                m_isReady = false;
+    #region 변수
+    private bool                m_isReady = false;  // Init함수 실행 여부
+    #endregion
 
     public override void Init()
     {
@@ -21,6 +25,8 @@ public class UI_BombJumpArrow : UI_Scene
         m_isReady = true;
     }
 
+     
+    // 폭탄점프 화살표 UI 위치 Set
     public void SetPosition(Vector2 _position)
     {
         if (!m_isReady)

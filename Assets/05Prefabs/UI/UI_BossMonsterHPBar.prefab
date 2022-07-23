@@ -872,7 +872,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3275079619997648380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9d571d7c5f74f2409261d1cd812145e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dc5b621028094f458219863645aaaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_mainCamera: {fileID: 0}
@@ -2213,7 +2213,7 @@ GameObject:
   - component: {fileID: 5682400079312371996}
   - component: {fileID: 6327000341189598120}
   m_Layer: 5
-  m_Name: hpBarFrame
+  m_Name: hpBarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2240,7 +2240,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 70}
   m_SizeDelta: {x: 1400, y: 74}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &3440048077257915677
 CanvasRenderer:
   m_ObjectHideFlags: 0

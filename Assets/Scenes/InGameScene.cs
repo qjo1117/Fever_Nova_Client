@@ -38,14 +38,11 @@ public class InGameScene : BaseScene
         Managers.Resource.Instantiate(Path.Monster, Managers.Game.Monster.transform);
         Managers.Resource.Instantiate(Path.Monster, Managers.Game.Monster.transform);
 
-        //Managers.Resource.Instantiate("Monster", Managers.Game.Monster.transform).GetComponent<MonsterController>().IsBoss = true;
     }
 
     private void UIInit()
     {
         UI_PopupMsg l_popupMsg = Managers.UI.ShowPopupUI<UI_PopupMsg>("UI_PopupMsg");
-        l_popupMsg.Message = "적 출현!!";
-        l_popupMsg.DelayDeleteTime = 5.0f;
 
         Managers.UI.ShowSceneUI<UI_Aim>("UI_Aim");
 
@@ -56,7 +53,7 @@ public class InGameScene : BaseScene
 
 
         UI_BombRange l_bombRange = Managers.UI.ShowSceneUI<UI_BombRange>("UI_BombRange");
-        l_bombRange.RangeRadius = 5.0f; // ?
+        l_bombRange.RangeRadius = 5.0f; 
 
         UI_BombJumpRange l_bombJumpRange = Managers.UI.ShowSceneUI<UI_BombJumpRange>("UI_BombJumpRange");
         l_bombJumpRange.RangeRadius = 2.0f;

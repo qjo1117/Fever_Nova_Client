@@ -720,7 +720,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3275079619997648380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb26a9db1aaef9f4a908fe6a99c97797, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d2ee5aff4ac55149ab1ef862d257eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_unitHp: 120
@@ -1756,7 +1756,7 @@ GameObject:
   - component: {fileID: 5682400079312371996}
   - component: {fileID: 6327000341189598120}
   m_Layer: 5
-  m_Name: hpBarFrame
+  m_Name: hpBarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

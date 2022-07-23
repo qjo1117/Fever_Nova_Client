@@ -5,22 +5,24 @@ using UnityEngine.UI;
 
 public class UI_Pause : UI_Scene
 {
+    #region UI컴포넌트_ENUM
     enum Buttons
     {
-        PauseButton
+        PauseButton             // 일시정지 버튼
     }
 
 
-    enum Texts
+    enum Images
     {
-        PauseText
+        PauseImage              // 일시정지 버튼 이미지
     }
+    #endregion
 
     public override void Init()
     {
         base.Init();
 
         Bind<Button>(typeof(Buttons));
-        Bind<Text>(typeof(Texts));
+        Bind<Image>(typeof(Images));
     }
 }

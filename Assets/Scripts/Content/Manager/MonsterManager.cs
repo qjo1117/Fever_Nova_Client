@@ -23,27 +23,28 @@ public class MonsterManager : MonoBehaviour
     private List<BehaviorTree>  m_listMonster = new List<BehaviorTree>();
     private List<TargetData>    m_listTargetData = new List<TargetData>();                 // 정보 전달용
 
-    private UI_Goal             m_goal;
+    // 목표 표시 UI Test위해 임시로 생성
+    private UI_Goal m_goal;
 
-    private int                 m_remainCount = 0;
-    private int                 m_killCount = 0;
+    private int m_allMonsterCount;     // 생성할 몬스터의 총 수
+    private int m_killCount;           // 죽인 몬스터의 총 수
 
     public List<BehaviorTree>   ListMonster { get => m_listMonster; }
 
-    public int RemainCount
+    public int AllMonsterCount
     {
-        get 
+        get
         {
-            return m_remainCount;
+            return m_allMonsterCount;
         }
         set
         {
-            m_remainCount = value;
-            m_goal.AllMonsterCount = m_remainCount;
+            m_allMonsterCount = value;
+            m_goal.AllMonsterCount = m_allMonsterCount;
         }
     }
 
-    public int KillCount
+    public int MonsterKillCount
     {
         get
         {

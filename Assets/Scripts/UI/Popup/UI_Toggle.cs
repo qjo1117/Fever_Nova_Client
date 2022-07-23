@@ -6,21 +6,27 @@ using UnityEngine.EventSystems;
 
 public class UI_Toggle : UI_Popup
 {
+    #region UI컴포넌트_ENUM
     enum Images
     {
-        BackGround,
-        CheckFrame,
-        CheckBox,
-        LabelFrame
+        BackGround,        
+        CheckFrame,         
+        CheckBox,           
+        LabelFrame         
     }
+    
 
     enum Texts
     {
         ToggleLabel
     }
+    #endregion
 
+    #region 변수
     private bool m_isOn = false;
+    #endregion
 
+    #region 프로퍼티
     public bool OnOff
     {
         get 
@@ -41,6 +47,7 @@ public class UI_Toggle : UI_Popup
             }
         }
     }
+    #endregion
 
     public override void Init()
     {
@@ -49,6 +56,7 @@ public class UI_Toggle : UI_Popup
         Bind<Image>(typeof(Images));
         Bind<Text>(typeof(Texts));
 
+        // 체크박스 이미지 클릭 이벤트 등록
         GameObject go = Get<Image>((int)Images.CheckBox).gameObject;
         go.BindEvent((PointerEventData data) => 
         {
@@ -64,17 +72,23 @@ public class UI_Toggle : UI_Popup
         , Define.UIEvent.Click);
     }
 
+    // on상태로 변경시
     private void FlagOnFunction()
     {
         Get<Image>((int)Images.CheckBox).color = Color.black;
         // flag on시 호출할 함수
+
+        //
         Debug.Log("Toggle On");
     }
 
+    // off상태로 변경시
     private void FlagOffFunction()
     {
         Get<Image>((int)Images.CheckBox).color = Color.white;
         // flag off시 호출할 함수
+
+        // 
         Debug.Log("Toggle false");
     }
 }

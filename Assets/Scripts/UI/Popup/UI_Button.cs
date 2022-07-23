@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+//  --- 현재 사용되지 않음 --
 public class UI_Button : UI_Popup
 {
     enum Buttons
