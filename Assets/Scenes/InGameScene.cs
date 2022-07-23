@@ -43,6 +43,8 @@ public class InGameScene : BaseScene
     private void UIInit()
     {
         UI_PopupMsg l_popupMsg = Managers.UI.ShowPopupUI<UI_PopupMsg>("UI_PopupMsg");
+        l_popupMsg.Message = "Àû ÃâÇö";
+        l_popupMsg.DelayDeleteTime = 3.0f;
 
         Managers.UI.ShowSceneUI<UI_Aim>("UI_Aim");
 

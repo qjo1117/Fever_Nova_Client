@@ -57,7 +57,6 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         AttackUpdate();
@@ -74,10 +73,12 @@ public class MonsterManager : MonoBehaviour
     [ContextMenu("TestSpawn")]
     public void TestSpawn()
 	{
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 100; ++i)
+        {
             Managers.Resource.Instantiate("Monster", transform);
         }
-	}
+
+    }
 
 
 	// TODO : Server

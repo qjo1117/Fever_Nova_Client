@@ -3,13 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 현재 프레임워크에서는 작동 안함, 지연 삭제 함수가 존재하지 않음
-// 다음 버전 프레임워크에서는 정상적으로 작동함
+// ShowPopupUI로 화면을 띄우고, 프로퍼티를 이용해서 message와, delete delay time을 설정하여 사용하면된다.
 
-// 주의점! Ingame Scene내의 Init함수에서 PopupMsgSetting 함수를 호출할경우
-// UI 컴포넌트 Bind가 완료되지 않은 상태므로 오류가 발생함
-
-// 이것은 후에 MonsterManager에서 Monster 스폰시킬때 PopupMsg를 띄우면 해결됨
 public class UI_PopupMsg : UI_Popup
 {
     #region UI컴포넌트_ENUM
@@ -25,8 +20,8 @@ public class UI_PopupMsg : UI_Popup
     #endregion
 
     #region 프로퍼티
-    public string   Message { get => m_message;}
-    public float    DelayDeleteTime { get => m_delayDeleteTime;}
+    public string   Message { get => m_message; set => m_message = value; }
+    public float    DelayDeleteTime { get => m_delayDeleteTime; set => m_delayDeleteTime = value; }
     #endregion
 
     public override void Init()
@@ -36,13 +31,15 @@ public class UI_PopupMsg : UI_Popup
         Bind<Text>(typeof(Texts));
     }
 
-    private void PopupMsgSetting(string _message, float _delayDeleteTime)
+    private void Update()
     {
-        m_message = _message;
-        m_delayDeleteTime = _delayDeleteTime;
+        PopupMsgUpdate();
+    }
 
-        Get<Text>((int)Texts.PopupMsg).text = _message;
-        Managers.Resource.Destroy(gameObject, _delayDeleteTime);
+    private void PopupMsgUpdate()
+    {
+        Get<Text>((int)Texts.PopupMsg).text = m_message;
+        Managers.Resource.Destroy(gameObject, m_delayDeleteTime);
     }
 
 }
