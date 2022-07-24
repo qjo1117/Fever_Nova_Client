@@ -22,7 +22,7 @@ public class UI_BombDropPoint : UI_Scene
         m_mainCam = Camera.main;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         PositionUpdate();
     }

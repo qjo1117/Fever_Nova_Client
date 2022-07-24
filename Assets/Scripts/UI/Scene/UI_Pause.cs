@@ -25,4 +25,6 @@ public class UI_Pause : UI_Scene
         Bind<Button>(typeof(Buttons));
         Bind<Image>(typeof(Images));
     }
+
+   
 }

@@ -1765,11 +1765,13 @@ MonoBehaviour:
     id: 1
     name: Hello_Player
     hp: 100
+    maxHp: 100
     attack: 70
     moveSpeed: 300
     evasionSpeed: 10
     score: 0
   m_state: 0
+  m_coolTime: 2
   m_evasionDelayTime: 1
 --- !u!114 &1137142772580367471
 MonoBehaviour:
@@ -1990,31 +1992,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.15833093
+      value: 0.198
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05905334
+      value: 0.059
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.081958294
+      value: -0.101
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.4516365
+      value: 0.36609846
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.61519843
+      value: -0.6899456
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.43885228
+      value: 0.51238537
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.47430375
+      value: -0.3569429
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2022,7 +2024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -81.747986
+      value: -61.195007
       objectReference: {fileID: 0}
     - target: {fileID: 4424435494630020, guid: 4140508019e090f499e30b79bb83db5a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

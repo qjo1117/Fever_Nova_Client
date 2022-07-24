@@ -8,9 +8,10 @@ public abstract class BehaviorTree : MonoBehaviour
     private Dictionary<string, object>  m_dicData = new Dictionary<string, object>();
     private BehaviorNode                m_root = null;
 
-    protected void Start()
+    public void Init()
     {
         m_root = SetupTree();
+        gameObject.SetActive(true);
     }
 
     protected void Update()

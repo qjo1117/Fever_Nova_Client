@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¾ğÁ¦³ª ¸»ÇÏÁö¸¸ ¶«»§
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 public class TargetData 
 {
     public TargetData(int p_id, int p_attack, Vector3 p_force)
@@ -18,18 +18,19 @@ public class TargetData
 
 public class MonsterManager : MonoBehaviour
 {
+	#region ï¿½ï¿½ï¿½ï¿½
 
-    // ÇöÀç »ç¿ëÇÏ°í ÀÖ´Â ¸ó½ºÅÍÀÇ ¼ö¸¦ ¾Ë¾Æ³½´Ù.
+	// --------- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ---------
+	[SerializeField]
     private List<BehaviorTree>  m_listMonster = new List<BehaviorTree>();
-    private List<TargetData>    m_listTargetData = new List<TargetData>();                 // Á¤º¸ Àü´Ş¿ë
+    private List<TargetData>    m_listTargetData = new List<TargetData>();                 // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ş¿ï¿½
 
-    // ¸ñÇ¥ Ç¥½Ã UI TestÀ§ÇØ ÀÓ½Ã·Î »ı¼º
+    // --------- UI Test ---------
     private UI_Goal m_goal;
 
-    private int m_allMonsterCount;     // »ı¼ºÇÒ ¸ó½ºÅÍÀÇ ÃÑ ¼ö
-    private int m_killCount;           // Á×ÀÎ ¸ó½ºÅÍÀÇ ÃÑ ¼ö
+    private int m_allMonsterCount;     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
+    private int m_killCount;           // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
 
-    public List<BehaviorTree>   ListMonster { get => m_listMonster; }
 
     public int AllMonsterCount
     {
@@ -57,17 +58,31 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
-    void Update()
+    // --------- Spawner ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ---------
+    public Transform           m_parentSpawner = null;
+	[SerializeField]
+    private List<Spawner>       m_listSpawner = new List<Spawner>();
+
+	#endregion
+
+	void Update()
     {
         AttackUpdate();
         DieUpdate();
     }
 
-    // InGameScene¿¡¼­ È£ÃâÇÕ´Ï´Ù.
+    // InGameSceneì—ì„œ í˜¸ì¶œí•˜ë„ë¡ í•œë‹¤.
 	public void Init()
 	{
         m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
+        // BehaviorTree êµ¬ì„±
+
+
+        // ì‹œì‘í• ë•Œ ìŠ¤í¬ë„ˆì— ìˆëŠ” ë°ì´í„°ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+        InitSpawner();
     }
+
+
 
 
     [ContextMenu("TestSpawn")]
@@ -81,8 +96,21 @@ public class MonsterManager : MonoBehaviour
     }
 
 
-	// TODO : Server
-	public void Damege(int p_id, int p_attack, Vector3 p_force)
+	public BehaviorTree Spawn(int _index)
+	{
+        // -------------------
+        m_listMonster.Add(Managers.Resource.Instantiate("Monster", transform).GetOrAddComponent<TestBT>());
+        return m_listMonster[m_listMonster.Count - 1];
+    }
+
+    public void Register(BehaviorTree _monster)
+    {
+        m_listMonster.Add(_monster);
+    }
+
+
+    // TODO : Server
+    public void Damege(int p_id, int p_attack, Vector3 p_force)
 	{
         m_listTargetData.Add(new TargetData(p_id, p_attack, p_force));
     }
@@ -94,7 +122,7 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
-    // Attack±â·ÏÀÌ ÀÖ´Â ³à¼®µé¿¡°Ô ´ë¹ÌÁö¸¦ ÀÔÈù´Ù.
+
 	private void AttackUpdate()
 	{
         if(m_listTargetData.Count == 0) {
@@ -110,7 +138,6 @@ public class MonsterManager : MonoBehaviour
 
     }
 
-    // ¾ÆÁ÷Àº ±»ÀÌ?
     private void DieUpdate()
 	{
    //     List<MonsterController> listDie = new List<MonsterController>();
@@ -124,4 +151,22 @@ public class MonsterManager : MonoBehaviour
    //         m_listMonster.Remove(monster);
    //     }
     }
+
+    private void InitSpawner()
+    {
+        int l_size = m_parentSpawner.childCount;
+        for (int i = 0; i < l_size; ++i) {
+            Spawner l_spawner = null;
+            if (m_parentSpawner.GetChild(i).TryGetComponent(out l_spawner) == true) {
+                m_listSpawner.Add(l_spawner);
+            }
+        }
+
+        // Spanwer Info -> Transform To Position
+        foreach (Spawner spawner in m_listSpawner)
+        {
+            spawner.TransformToPosition();
+        }
+    }
+
 }

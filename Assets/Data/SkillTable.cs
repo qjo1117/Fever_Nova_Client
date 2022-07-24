@@ -4,33 +4,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum range { 
+ 	circle,
+	box,
+ };
+
 [System.Serializable]
 public class SkillTable
 {
-		public System.Int32 Index;
-		public System.String Name;
-		public System.Int32 ID;
-		public System.String skill_Ob_Name;
-		public System.Int32 skill_Ob_Delay;
-		public System.String skill_Ob_castingPos;
-		public System.Int32 skill_Ob_Quantity;
-		public System.Int32 skill_Cast_Number;
-		public System.Int32 skill_CastInterval;
-		public System.Int32 skill_CoolTime;
-		public System.String range_Type;
-		public System.Int32 range_Length;
-		public System.Int32 range_Width;
-		public System.Int32 range_Height;
-		public System.Int32 range_Radius;
-		public System.Int32 range_Angle;
+		public System.Int32 index;
+		public System.String name;
+		public System.Int32 id;
+		public System.String skillRangeRadius;
+		public System.String skillObName;
+		public System.Int32 skillObDelay;
+		public System.String skillObcastingPos;
+		public System.Int16 skillObQuantity;
+		public System.Int16 skillCastNumber;
+		public System.Int32 skillCastInterval;
+		public System.Int32 skillCoolTime;
+		public range rangeType;
+		public System.String rangeLength;
+		public System.String rangeWidth;
+		public System.Int32 rangeHeight;
+		public System.Int32 rangeRadius;
+		public System.Int32 rangeAngle;
 		public System.Int32 hitPossible;
-		public System.Int32 skill_Damage;
-		public System.Boolean kbOnOff;
+		public System.Int32 skillDamage;
+		public System.String kbOnOff;
 		public System.Int32 kbDistance;
-		public System.Int16 skill_Animation1;
-		public System.Int16 skill_Animation2;
-		public System.Int32 eventName;
-		public System.Int16 FX_skillCasting;
-		public System.Int16 FX_skillCollsion;
+		public System.String skillAnimation1;
+		public System.String skillAnimation2;
+		public System.String eventName;
+		public System.String  fxSkillCasting;
+		public System.String fxSkillCollsion;
 
 }

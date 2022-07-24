@@ -9,15 +9,16 @@ public class PoolManager
 	{
 		public GameObject original { get; private set; }
 
-		public Transform root { get; set; }
+		private Transform m_root = null;
+		public Transform Root { get => m_root; set => m_root = value; }
 
 		Stack<Poolable> _poolStack = new Stack<Poolable>();
 
 		public void Init(GameObject origin,int count = 5)
 		{
 			original = origin;
-			root = new GameObject().transform;
-			root.name = $"{origin.name}_Root";
+			Root = new GameObject().transform;
+			Root.name = $"{origin.name}_Root";
 
 			for (int i = 0; i < count; ++i)
 			{
@@ -40,12 +41,16 @@ public class PoolManager
 
 		public void Push(Poolable poolable)
 		{
-			if(poolable == null)
-			{
+			if(poolable == null) {
 				return;
 			}
-
-			poolable.transform.parent = root;
+			RectTransform rectTransform = null;
+			if (poolable.TryGetComponent(out rectTransform) == true) {
+				rectTransform.parent = Root;
+			}
+			else {
+				poolable.transform.parent = Root;
+			}
 			poolable.gameObject.SetActive(false);
 			poolable.isUsing = false;
 
@@ -55,18 +60,15 @@ public class PoolManager
 		public Poolable Pop(Transform parent)
 		{
 			Poolable poolable;
-			if(_poolStack.Count > 0)
-			{
+			if(_poolStack.Count > 0) {
 				poolable = _poolStack.Pop();
 			}
-			else
-			{
+			else {
 				poolable = Create();
 			}
 
-			if(parent == null)
-			{
-				parent = root;
+			if(parent == null) {
+				parent = Root;
 			}
 
 			poolable.gameObject.SetActive(true);
@@ -116,7 +118,7 @@ public class PoolManager
 
 		Pool pool = new Pool();
 		pool.Init(origin, count);
-		pool.root.parent = _root;
+		pool.Root.parent = _root;
 
 		_pool.Add(origin.name, pool);
 	}
@@ -127,7 +129,7 @@ public class PoolManager
 		{
 			CreatePool(origin);
 		}
-		return _pool[origin.name].Pop(parent);
+		return _pool[origin.name].Pop((Transform)parent);
 	}
 
 	public GameObject GetOriginal(string name)

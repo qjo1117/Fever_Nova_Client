@@ -27,8 +27,6 @@ static class Path {
 
 namespace Define 
 {
-
-
 	public enum Layer {
 		Ground = 6,
 		Monster = 7,

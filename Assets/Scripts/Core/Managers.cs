@@ -48,13 +48,12 @@ public class Managers : MonoBehaviour
 			GameObject go = GameObject.Find("@Managers");
 			if(go == null) {
 				go = new GameObject { name = "@Managers" };
-				go.AddComponent<Managers>();
+				go.GetOrAddComponent<Managers>();
 			}
 
 			// 삭제 방지
 			DontDestroyOnLoad(go);
 			m_instance = go.GetComponent<Managers>();
-
 
 			m_instance.m_resource.Init();
 			m_instance.m_pool.Init();

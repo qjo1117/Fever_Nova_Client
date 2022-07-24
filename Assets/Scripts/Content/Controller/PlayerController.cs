@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     private PlayerState     m_state = PlayerState.Idle;
 
     private Vector3         m_move = Vector3.zero;
+    private float           m_inputPress = 0.0f;
     private Vector3         m_mousePos = Vector3.zero;
 
     private float           m_lookRotation = 0.0f;
@@ -134,19 +135,27 @@ public class PlayerController : MonoBehaviour
 
     public void IdleUpdate()
 	{
-        m_anim.SetInteger("Vertical", 0);
-        m_anim.SetInteger("Horizontal", 0);
+        m_anim.SetFloat("MoveX", 0);
+        m_anim.SetFloat("MoveZ", 0);
 
     }
 
     public void RunState()
 	{
-        m_anim.SetInteger("Vertical",   (int)(transform.position.z - m_mousePos.z));
-        m_anim.SetInteger("Horizontal", (int)(transform.position.x - m_mousePos.x));
-        
+        m_anim.SetFloat("MoveX", m_move.x * m_inputPress);
+        m_anim.SetFloat("MoveZ", m_move.z * m_inputPress);
+
+
     }
 
+    public void FootR()
+	{
 
+	}
+    public void FootL()
+    {
+
+    }
 
     public void EvasionState()
 	{
@@ -291,6 +300,10 @@ public class PlayerController : MonoBehaviour
 
         InputMouse();
 
+        if(Managers.Input.GetKeyUpOrAll(UserKey.Forward, UserKey.Backward, UserKey.Left, UserKey.Right) == true) {
+            m_inputPress = 0.2f;
+        } 
+
         if (Input.anyKey == false) {
             return;
 		}
@@ -334,6 +347,12 @@ public class PlayerController : MonoBehaviour
         if(m_move != Vector3.zero) {
             m_state = PlayerState.Run;
             m_rigid.AddForce(m_stat.moveSpeed * m_move.normalized);
+            if (m_inputPress >= 0.5f) {
+                m_inputPress = 0.5f;
+            }
+            else {
+                m_inputPress += 0.5f * Time.deltaTime;
+            }
         }
 	}
 
