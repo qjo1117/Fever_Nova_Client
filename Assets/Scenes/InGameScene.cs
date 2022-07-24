@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InGameScene : BaseScene
 {
-
     protected override void LoadGameObject()
 	{
         Managers.Resource.RegisterPoolGameObject("Boom");

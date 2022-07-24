@@ -154,8 +154,12 @@ public class ResourceManager
 		Addressables.LoadAssetAsync<GameObject>(p_key).Completed +=
 			(AsyncOperationHandle<GameObject> p_obj) => {
 				GameObject result = p_obj.Result;
-				Managers.Pool.CreatePool(result);
-				m_listAddressable.Add(p_obj);               // Ref카운딩
+				if(result!=null)
+                {
+					Managers.Pool.CreatePool(result);// Ref카운딩
+					m_listAddressable.Add(p_obj);
+				}
+				         
 
 				DataAsyncCount += 1;
 			};
