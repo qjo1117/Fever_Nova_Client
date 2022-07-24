@@ -93,6 +93,14 @@ MonoBehaviour:
     m_Address: Assets/05Prefabs/Boom_Particle
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: bdc3298330f10284ea5bbbf4b883c45d
+    m_Address: UI/Popup/UI_PauseScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ab74b55775f9d5f45bbd529a1d7ea8e4
+    m_Address: UI/Popup/UI_ResultScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aa1c45dd9f67c694eb5b8e4a529c5a60, type: 2}
   m_SchemaSet:

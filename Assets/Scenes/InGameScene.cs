@@ -25,6 +25,7 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.UI_Goal);
         Managers.Resource.RegisterPoolGameObject(Path.UI_Score);
         Managers.Resource.RegisterPoolGameObject(Path.UI_Pause);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_PauseScreen);
     }
 
 	protected override void Init()

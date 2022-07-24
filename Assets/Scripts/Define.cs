@@ -22,6 +22,7 @@ static class Path {
 	public const string UI_Goal = "UI/Scene/UI_Goal";
 	public const string UI_Score = "UI/Scene/UI_Score";
 	public const string UI_Pause = "UI/Scene/UI_Pause";
+	public const string UI_PauseScreen = "UI/Popup/UI_PauseScreen";
 }
 
 

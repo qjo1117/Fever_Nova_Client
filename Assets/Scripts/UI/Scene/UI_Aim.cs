@@ -16,7 +16,7 @@ public class UI_Aim : UI_Scene
         Material l_material = GetComponent<MeshRenderer>().material;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         PositionUpdate();
     }
