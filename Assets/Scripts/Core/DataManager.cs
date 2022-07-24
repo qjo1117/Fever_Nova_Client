@@ -9,13 +9,22 @@ public class DataManager : MonoBehaviour
 {
 	public string[] m_filePath;
 
-	public DataSkillTable m_skillTable = new DataSkillTable();
+	#region Variable
+	[SerializeField]
+	private DataSkillTable m_skillTable = new DataSkillTable();
+	[SerializeField]
+	private List<MonsterStat> m_monsterStat = new List<MonsterStat>();
+	#endregion
+
+	#region Property
 	public DataSkillTable SkillTable { get => m_skillTable; }
+	public List<MonsterStat> MonsterStat { get => m_monsterStat; }
+	#endregion
 
 	[ContextMenu("CreateScript")]
 	public void CreateScript()
 	{
-		DataSystem.CreateGenerateScript("Stage_01_SkillTable.ver.0.1", "SkillTable");
+		DataSystem.CreateGenerateScript("SkillTable.ver.0.3", "SkillTable");
 	}
 
 	[ContextMenu("LoadData")]

@@ -9,11 +9,10 @@ public class PlayerManager : MonoBehaviour
     private List<PlayerController>  m_listPlayers = new List<PlayerController>();
     private PlayerController        m_mainPlayer = null;
 
-
     private UI_PlayerHPBar          m_playerHPBar = null;
 
     // 이름 추천 받음
-    public List<PlayerController>   List { get => m_listPlayers; }
+    public List<PlayerController> List { get => m_listPlayers; }
 
     public PlayerController MainPlayer { get => m_mainPlayer; }
 
@@ -21,14 +20,12 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
+        if (Input.GetKeyDown(KeyCode.Keypad1)) {
             m_mainPlayer.Demege(10);
             m_playerHPBar.HP = m_mainPlayer.Stat.hp;
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
+        if (Input.GetKeyDown(KeyCode.Keypad2)) {
             m_mainPlayer.Recover(10);
             m_playerHPBar.HP = m_mainPlayer.Stat.hp;
         }
@@ -56,7 +53,9 @@ public class PlayerManager : MonoBehaviour
         m_listPlayers.Add(l_player);                    // 매니저 추가
 
         // 메인 플레이어 설정
-        m_mainPlayer = l_player;
+        if (m_mainPlayer == null) {
+            m_mainPlayer = l_player;
+        }
 
         // 플레이어 HP바 생성
         m_playerHPBar = Managers.UI.ShowSceneUI<UI_PlayerHPBar>("UI_PlayerHPBar");
@@ -69,8 +68,7 @@ public class PlayerManager : MonoBehaviour
 
     // 초기화 작업을 한다.
     public void Init()
-    {    
-        // 데이터 셋팅을 진행한다.
+    {
 
     }
 

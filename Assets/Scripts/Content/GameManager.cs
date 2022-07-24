@@ -6,32 +6,29 @@ using UnityEngine;
 public class GameManager
 {
     private PlayerManager m_player = null;
-
-    public PlayerManager Player { get => m_player; }
-
     private MonsterManager m_monster = null;
-
-    public MonsterManager Monster { get => m_monster; }
-
     private BoomManager m_boom = null;
+    private int m_score = 0;
 
-    public BoomManager Boom { get => m_boom; }
-
+    private int m_beginPlayTime = 0;
+    private int m_endPlayTime = 0;
 
     // 몬스터들에 대한 프리팹을 들고 있는다.
     private List<GameObject> m_listPrefab = new List<GameObject>();
-    public List<GameObject> Prefab { get => m_listPrefab; }
 
-    
-    private int m_score = 0;
+    #region Property
+    public PlayerManager Player { get => m_player; }
+    public MonsterManager Monster { get => m_monster; }
+    public BoomManager Boom { get => m_boom; }
+    public List<GameObject> Prefab { get => m_listPrefab; }
     public int Score { get => m_score; set => m_score = value; }
+    #endregion
+
+
 
     public void Init()
     {
-        //DataSystem.Load("MonsterData");
-        // Prefab에 등록 및 풀링 신청(비동기이기 때문)
-
-        // 몬스터의 데이터를 셋팅합니다.
+         // 오브젝트가 처음 생성되엇을때 필요한 정보를 가지고 있는다.
 
     }
 
@@ -42,11 +39,9 @@ public class GameManager
 
     }
 
-
-    public void InGameInit()
+    // 게임이 시작할때 가장 필요한 요소들을 셋팅한다.
+    public void StartGame()
 	{
-        // 이건 조금 생각해야할게 객체로 들고 있을 필요가 있을지가 의문
-        // 구조적으로 이건 조금 생각해보자
         {
             GameObject obj = GameObject.Find("@PlayerManager");
             if (obj == null) {
@@ -74,7 +69,16 @@ public class GameManager
 
         Managers.Game.Player.Init();
         Managers.Game.Monster.Init();
+
+        // 시작 시간을 가져온다.
+        m_beginPlayTime = DateTime.Now.Second + DateTime.Now.Month * 60;
     }
+
+    public void Clear()
+	{
+
+	}
+
 
 	public void Update()
     {

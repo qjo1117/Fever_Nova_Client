@@ -42,11 +42,11 @@ public class ResourceManager
 
 	#region Resource Folder
 
-	public T Load<T>(string path) where T : Object
+	public T Load<T>(string _path) where T : Object
     {
         if (typeof(T) == typeof(GameObject)) {
             // ObjectPoolManager에 있는 녀석인지 확인한다.
-            string name = path;
+            string name = _path;
             int index = name.LastIndexOf('/');
             if (index >= 0) {
                 name = name.Substring(index + 1);
@@ -56,25 +56,25 @@ public class ResourceManager
                 return go as T;
             }
         }
-        return Resources.Load<T>(path);
+        return Resources.Load<T>(_path);
     }
 
     // Resource에서 저장하는 것이 아니라 불러오는 것이다.
     // 거의 Resource폴더를 접근해서 Prefab,Sound,Particle등을 참조하기 쉽게 만들어둔 PathManager느낌
-    public GameObject NewPrefab(string path, Transform parent = null)
+    public GameObject NewPrefab(string _path, Transform _parent = null)
     {
-        GameObject original = Load<GameObject>($"Prefabs/{path}");
+        GameObject original = Load<GameObject>($"Prefabs/{_path}");
         if (original == null) {
-            Debug.Log($"Failed to Load prefab : {path}");
+            Debug.Log($"Failed to Load prefab : {_path}");
             return null;
         }
 
         // Poolable을 가지고 있으면 PoolManager에 있는 녀석이다.
         if (original.GetComponent<Poolable>() != null) {
-            return Managers.Pool.Pop(original, parent).gameObject;
+            return Managers.Pool.Pop(original, _parent).gameObject;
         }
 
-        GameObject go = Object.Instantiate(original, parent);
+        GameObject go = Object.Instantiate(original, _parent);
         go.name = original.name;
         return go;
     }
@@ -83,20 +83,20 @@ public class ResourceManager
     // 풀링 등록               [Destroy]
     // 생성 지운다.
 
-    public void DelPrefab(GameObject go)
+    public void DelPrefab(GameObject _go)
     {
-        if (go == null) {
+        if (_go == null) {
             return;
         }
 
         // 만약에 풀링이 필요한 아이라면 -> 풀링 매니저한테 맡겨진다.
-        Poolable poolable = go.GetComponent<Poolable>();
+        Poolable poolable = _go.GetComponent<Poolable>();
         if (poolable != null){
             Managers.Pool.Push(poolable);
             return;
         }
 
-        Object.Destroy(go);
+        Object.Destroy(_go);
     }
 
 	#endregion
@@ -119,10 +119,10 @@ public class ResourceManager
 		}
 	}
 
-	public GameObject Instantiate(string p_key, Transform p_parent = null)
+	public GameObject Instantiate(string _key, Transform _parent = null)
 	{
 		// ObjectPoolManager에 있는 녀석인지 확인한다.
-		string name = p_key;
+		string name = _key;
 		int index = name.LastIndexOf('/');
 		if (index >= 0) {
 			name = name.Substring(index + 1);
@@ -135,7 +135,7 @@ public class ResourceManager
 
 		// 풀에 등록이 안되어있다면 호출을 한다.
 		if (obj == null) {
-			Addressables.InstantiateAsync(p_key, p_parent).Completed +=
+			Addressables.InstantiateAsync(_key, _parent).Completed +=
 				(AsyncOperationHandle<GameObject> p_obj) => {
 					obj = p_obj.Result;
 					DataAsyncCount += 1;
@@ -143,51 +143,51 @@ public class ResourceManager
 		}
 
 		// 등록된녀석이면 그냥 실행해준다.
-		return Managers.Pool.Pop(obj, p_parent).gameObject;
+		return Managers.Pool.Pop(obj, _parent).gameObject;
 	}
 
-	public void Destroy(GameObject p_obj)
+	public void Destroy(GameObject _obj)
 	{
-		if (p_obj == null) {
+		if (_obj == null) {
 			return;
 		}
 
 		// 만약에 풀링이 필요한 아이라면 -> 풀링 매니저한테 맡겨진다.
-		Poolable poolable = p_obj.GetComponent<Poolable>();
+		Poolable poolable = _obj.GetComponent<Poolable>();
 		if (poolable != null) {
 			Managers.Pool.Push(poolable);
 			return;
 		}
 
-		Addressables.ReleaseInstance(p_obj);
+		Addressables.ReleaseInstance(_obj);
 	}
 
-	public void Destroy(GameObject p_obj, float _delayTime)
+	public void Destroy(GameObject _obj, float _delayTime)
 	{
 		if(m_destroyPool.Count == 0) {
 			m_destroyPool.Push(new DestroyObject());
 		}
 		DestroyObject l_destroy = m_destroyPool.Pop();
-		l_destroy.obj = p_obj;
+		l_destroy.obj = _obj;
 		l_destroy.delayTime = _delayTime;
 		l_destroy.currentDelayTime = 0.0f;
 		m_destroys.Add(l_destroy);
 	}
 
 	// 등록만 하기 때문에 생성은 되지않는다.
-	public void RegisterPoolGameObject(string p_key)
+	public void RegisterPoolGameObject(string _key, int _count = 10)
 	{
 		DataMaxAsyncCount += 1;
-		Addressables.LoadAssetAsync<GameObject>(p_key).Completed +=
+		Addressables.LoadAssetAsync<GameObject>(_key).Completed +=
 			(AsyncOperationHandle<GameObject> p_obj) => {
-				string name = p_key;
+				string name = _key;
 				int index = name.LastIndexOf('/');
 				if (index >= 0) {
 					name = name.Substring(index + 1);
 				}
 				GameObject result = p_obj.Result;
 				result.name = name;
-				Managers.Pool.CreatePool(result);
+				Managers.Pool.CreatePool(result, _count);
 				m_listAddressable.Add(p_obj);               // Ref카운딩
 
 				DataAsyncCount += 1;

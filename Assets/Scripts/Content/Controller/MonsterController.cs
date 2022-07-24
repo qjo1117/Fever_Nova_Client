@@ -85,22 +85,18 @@ public class MonsterController : BaseController
     void Update()
     {
         // 몬스터 체력바 테스트 대미지 주기
-        if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
+        if (Input.GetKeyDown(KeyCode.Keypad4)) {
             Damege(10);
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad5))
-        {
-            if (m_stat.Hp >= m_stat.MaxHp)
-            {
+        if (Input.GetKeyDown(KeyCode.Keypad5)) {
+            if (m_stat.Hp >= m_stat.MaxHp) {
                 return;
             }
 
             m_stat.Hp += 10;
 
-            if (m_isBoss)
-            {
+            if (m_isBoss) {
                 m_bossMonsterHPBar.HP = m_stat.Hp;
             }
             m_monsterHPBar.HP = m_stat.Hp;

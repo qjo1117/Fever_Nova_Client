@@ -153,16 +153,16 @@ public class InputManager
 		m_dicKeys.Clear();
 	}
 
-	public void RegisterKeyEvent(Action p_keyEvent)
+	public void RegisterKeyEvent(Action _keyEvent)
 	{
-		KeyEvent -= p_keyEvent;
-		KeyEvent += p_keyEvent;
+		KeyEvent -= _keyEvent;
+		KeyEvent += _keyEvent;
 	}
 
-	public void RegisterMouseEvent(Action<Define.Mouse> p_mouseEvent)
+	public void RegisterMouseEvent(Action<Define.Mouse> _mouseEvent)
 	{
-		MouseEvent -= p_mouseEvent;
-		MouseEvent += p_mouseEvent;
+		MouseEvent -= _mouseEvent;
+		MouseEvent += _mouseEvent;
 	}
 
 	#endregion
@@ -184,15 +184,15 @@ public class InputManager
 		return false;
 	}
 
-	public bool GetKeyDown(UserKey p_key)
+	public bool GetKeyDown(UserKey _key)
 	{
 		// 등록된 키가 없을 경우
-		if (m_dicKeys.ContainsKey(p_key) == false) {
+		if (m_dicKeys.ContainsKey(_key) == false) {
 			return false;
 		}
 
 		// 클릭햇을때
-		if (m_dicKeys[p_key].down == true) {
+		if (m_dicKeys[_key].down == true) {
 			return true;
 		}
 
@@ -200,15 +200,15 @@ public class InputManager
 		return false;
 	}
 
-	public bool GetKeyUp(UserKey p_key)
+	public bool GetKeyUp(UserKey _key)
 	{
 		// 등록된 키가 없을 경우
-		if (m_dicKeys.ContainsKey(p_key) == false) {
+		if (m_dicKeys.ContainsKey(_key) == false) {
 			return false;
 		}
 
 		// 클릭햇을때
-		if (m_dicKeys[p_key].up == true) {
+		if (m_dicKeys[_key].up == true) {
 			return true;
 		}
 
@@ -216,14 +216,14 @@ public class InputManager
 		return false;
 	}
 
-	public bool GetKeyUpOrAll(UserKey p_key1, UserKey p_key2, UserKey p_key3, UserKey p_key4)
+	public bool GetKeyUpOrAll(UserKey _key1, UserKey _key2, UserKey _key3, UserKey _key4)
 	{
-		return GetKeyUp(p_key1) || GetKeyUp(p_key2) || GetKeyUp(p_key3) || GetKeyUp(p_key4);
+		return GetKeyUp(_key1) || GetKeyUp(_key2) || GetKeyUp(_key3) || GetKeyUp(_key4);
 	}
 
-	private bool GetKeyCode(List<KeyCode> p_keycode)
+	private bool GetKeyCode(List<KeyCode> _keyCode)
 	{
-		foreach (KeyCode code in p_keycode) {
+		foreach (KeyCode code in _keyCode) {
 			if (Input.GetKey(code) == true) {
 				return true;
 			}
@@ -232,49 +232,54 @@ public class InputManager
 		return false;
 	}
 
-	public void AddKey(UserKey p_key, KeyCode p_keycode)
+	public void AddKey(UserKey _key, KeyCode _keycode)
 	{
 		// 해당하는 키의 객체가 없을 경우 생성
-		if(m_dicKeys.ContainsKey(p_key) == false)  {
-			m_dicKeys[p_key] = new KeyInfo();
-			m_dicKeys[p_key].key = p_key;
+		if(m_dicKeys.ContainsKey(_key) == false)  {
+			m_dicKeys[_key] = new KeyInfo();
+			m_dicKeys[_key].key = _key;
 		}
 
 		// 배열 접근 쓰기 귀찮
-		KeyInfo info = m_dicKeys[p_key];
+		KeyInfo l_info = m_dicKeys[_key];
 
 		// 만약 리스트안에 코드가 존재할 경우
-		if(IsListKeyCode(info.listKey, p_keycode) == true) {
+		if(IsListKeyCode(l_info.listKey, _keycode) == true) {
 			return;
 		}
 
 		// 없을 경우
-		info.listKey.Add(p_keycode);
+		l_info.listKey.Add(_keycode);
 	}
-	public void DelKey(UserKey p_key, KeyCode p_keycode = KeyCode.None)
+	public void DelKey(UserKey _key, KeyCode _keycode = KeyCode.None)
 	{
 		// 맵핑
-		if (m_dicKeys.ContainsKey(p_key) == false) {
+		if (m_dicKeys.ContainsKey(_key) == false) {
 			return;
 		}
 
 		// 배열 접근 쓰기 귀찮
-		KeyInfo info = m_dicKeys[p_key];
+		KeyInfo l_info = m_dicKeys[_key];
 
 		// 싹다 삭제
-		if (p_keycode == KeyCode.None) {
-			info.listKey.RemoveRange(0, info.listKey.Count);
+		if (_keycode == KeyCode.None) {
+			l_info.listKey.RemoveRange(0, l_info.listKey.Count);
 		}
 		// 지정한게 있으면 삭제
 		else {
-			info.listKey.Remove(p_keycode);
+			l_info.listKey.Remove(_keycode);
 		}
 	}
 
-	private bool IsListKeyCode(List<KeyCode> p_listKey, KeyCode p_keycode)
+	public void ChangeKey(UserKey _userKey, KeyCode _keyCode)
 	{
-		foreach (KeyCode key in p_listKey) {
-			if (key == p_keycode) {
+
+	}
+
+	private bool IsListKeyCode(List<KeyCode> _listKey, KeyCode _keyCode)
+	{
+		foreach (KeyCode key in _listKey) {
+			if (key == _keyCode) {
 				return true;
 			}
 		}

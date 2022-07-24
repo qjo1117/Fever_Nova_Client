@@ -18,6 +18,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+$DEFINE_ENUM
+
 [System.Serializable]
 public class $CLASS
 {
@@ -61,7 +63,7 @@ $ROW_MEMBER_CODE
 
         int index = 0;
         for (; index < lines.Length; ++index) {
-            if(Regex.Split(lines[index], SPLIT_RE)[0].Contains("Index")) {
+            if(Regex.Split(lines[index], SPLIT_RE)[1].Contains("index")) {
                 break;
 			}
         }
@@ -73,17 +75,20 @@ $ROW_MEMBER_CODE
         string[] header = Regex.Split(lines[index], SPLIT_RE);          // 두번째 줄 부터 순회를 시작  사유 : 구조
         string[] type = Regex.Split(lines[index + 1], SPLIT_RE);
 
+        int l_rowSize = header.Length;
 
         int lenLine = lines.Length;
         for (int i = index + 2; i < lenLine; ++i) {
             string[] values = Regex.Split(lines[i], SPLIT_RE);
-            if (values.Length == 0 || values[0] == "" || values[0] == "\0") {
+            if (values.Length < l_rowSize || values[1] == "" || values[1] == "\0") {
                 continue;
             }
 
             Dictionary<string, object> dict = new Dictionary<string, object>();
             int length = type.Length;
             for (int j = 0; j < length; ++j) {
+                string key = header[j];
+
                 string value = values[j];
                 value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
                 object finalValue = value;
@@ -112,8 +117,11 @@ $ROW_MEMBER_CODE
                         finalValue = sTemp;
                     }
                 }
+                else if (type[j].Contains("enum") == true) {
+                    key = type[j] + '|' + header[j];
+                }
 
-                dict[header[j]] = finalValue;
+                dict[key] = finalValue;
             }
 
             listData.Add(dict);
@@ -124,24 +132,80 @@ $ROW_MEMBER_CODE
     }
 
     // 파일 제작 기능
-    static public string GenerateDataToString(string csvText, string className, out List<Dictionary<string, object>> listData)
+    static public string GenerateDataToString(string _csvText, string _className, out List<Dictionary<string, object>> _listData)
     {
 
-        listData = Load(csvText);
+        _listData = Load(_csvText);
 
         string rowMemberCode = "";
+        // Enum에 대한 데이터를 맵핑해둔다.
+        Dictionary<string, List<string>> l_dicEnumData = new Dictionary<string, List<string>>();
 
-        foreach(var item in listData[0]) {
+        foreach(var item in _listData[0]) {
+            // Enum일 경우 두번째 있는 타입이 Enum의 명칭이 된다.
+            if(item.Key.Contains("enum") == true) {
+				l_dicEnumData.Add(item.Key, new List<string>());
+            }
+
             string key = item.Key;
-            if(key == "" || key[0] == '\0') {
+            if (key == "" || key[0] == '\0') {
                 continue;
-			}
-            rowMemberCode += string.Format("\t\tpublic {1} {0};\n", key, item.Value.GetType().ToString());
+            }
+            if (key.Contains("enum") == true) {
+                string[] splitEnum = key.Split('|');
+                rowMemberCode += string.Format("\t\tpublic {1} {0};\n", splitEnum[2], splitEnum[1]);
+            }
+            else {
+                rowMemberCode += string.Format("\t\tpublic {1} {0};\n", key, item.Value.GetType().ToString());
+            }
+        }
+
+        int l_size = _listData.Count;
+        for (int i = 0; i < l_size; ++i) {
+            // 해당하는 키의 데이터를 가져온다.
+            foreach(var item in l_dicEnumData) {
+				if(_listData[i].ContainsKey(item.Key) == true) {
+                    // 겹치는 키가 있는지 확인한다.
+                    bool l_check = false;
+
+                    int l_keyCount = l_dicEnumData[item.Key].Count;
+                    for (int j = 0; j < l_keyCount; ++j) {
+						if (l_dicEnumData[item.Key][j].Contains(_listData[i][item.Key].ToString()) == true) {
+                            l_check = true;
+                        }
+                    }
+
+                    // 겹치는 값이 없으면 추가한다.
+                    if(l_check == false) {
+                        l_dicEnumData[item.Key].Add(_listData[i][item.Key].ToString());
+                    }
+				}
+            }
         }
 
         string code = codeTemplate;
-        code = code.Replace("$CLASS", className);
+        code = code.Replace("$CLASS", _className);
         code = code.Replace("$ROW_MEMBER_CODE", rowMemberCode);
+
+        string resultDefineEnum = "";
+
+        // 만약 Enum이 있을 경우
+        if (l_dicEnumData.Count > 0) {
+            string enumCode = "";
+            foreach (var item in l_dicEnumData) {
+                string defineEnum = "public enum $ENUM { \n $DATA };";
+                defineEnum = defineEnum.Replace("$ENUM", item.Key.Split('|')[1]);
+                int size = item.Value.Count;
+                for (int i = 0; i < size; ++i) {
+                    enumCode += string.Format("\t{0},\n", item.Value[i]);
+                }
+                defineEnum = defineEnum.Replace("$DATA", enumCode);
+
+                resultDefineEnum += defineEnum;
+            }
+        }
+
+        code = code.Replace("$DEFINE_ENUM", resultDefineEnum);
 
         return code;
     }
@@ -159,7 +223,14 @@ $ROW_MEMBER_CODE
             if (key == "" || key[0] == '\0') {
                 continue;
             }
-            rowMemberCode += string.Format("\t\t\tinfo.{0} = ({1})item[\"{0}\"];\n", key, data.Value.GetType().ToString());
+            if (key.Contains("enum") == true) {
+                string[] splitKey = key.Split('|');
+                //info.rangeType = (range)Enum.Parse(typeof(range), (string)item["enum|range|rangeType"]);
+                rowMemberCode += string.Format("\t\t\tinfo.{0} = ({1})Enum.Parse(typeof({1}), (string)item[\"{2}\"]);\n", splitKey[2], splitKey[1], key);
+            }
+            else {
+                rowMemberCode += string.Format("\t\t\tinfo.{0} = ({1})item[\"{0}\"];\n", key, data.Value.GetType().ToString());
+            }
         }
         
 

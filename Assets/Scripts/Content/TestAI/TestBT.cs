@@ -82,6 +82,7 @@ public class TestBT : BehaviorTree
             Gizmos.DrawLine(m_wayPoints[i], m_wayPoints[i + 1]);
             Gizmos.DrawSphere(m_wayPoints[i], 0.5f);
         }
+        Gizmos.DrawLine(m_wayPoints[size - 1], m_wayPoints[0]);
         Gizmos.DrawSphere(m_wayPoints[size - 1], 0.5f);
     }
 

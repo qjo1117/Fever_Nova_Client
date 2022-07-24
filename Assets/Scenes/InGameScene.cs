@@ -5,6 +5,9 @@ using UnityEngine;
 public class InGameScene : BaseScene
 {
 
+
+    private CameraController m_camera = null;
+
     protected override void LoadGameObject()
     {
         Managers.Resource.RegisterPoolGameObject(Path.Boom);
@@ -12,39 +15,37 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.Monster);
         Managers.Resource.RegisterPoolGameObject(Path.Player);
 
-        Managers.Resource.RegisterPoolGameObject(Path.UI_PopupMsg);
+        int l_count = 2;
+        Managers.Resource.RegisterPoolGameObject(Path.UI_PopupMsg, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_Aim, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_BombRange, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_BombJumpRange, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_BombJumpArrow, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_BombDropPoint, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_BossMonsterHPBar, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_PlayerHPBar, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_Goal, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_Score, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_Pause, l_count);
 
-        Managers.Resource.RegisterPoolGameObject(Path.UI_Aim);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_BombRange);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_BombJumpRange);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_BombJumpArrow);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_BombDropPoint);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_MonsterHPBar);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_BossMonsterHPBar);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_PlayerHPBar);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_Goal);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_Score);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_Pause);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_MonsterHPBar, 100);
         Managers.Resource.RegisterPoolGameObject(Path.UI_PauseScreen);
     }
 
 	protected override void Init()
 	{
+
         UIInit();
+        Managers.Game.StartGame();
 
-        Managers.Game.InGameInit();
-
-        Managers.Game.Player.Spawn(Vector3.zero, new PlayerStat { id = 0, name = "Sample_Player" });
-        Managers.Resource.Instantiate(Path.Monster, Managers.Game.Monster.transform);
-        Managers.Resource.Instantiate(Path.Monster, Managers.Game.Monster.transform);
-        Managers.Resource.Instantiate(Path.Monster, Managers.Game.Monster.transform);
-
+        m_camera = GameObject.FindObjectOfType<CameraController>();
+        m_camera.SetPlayer(Managers.Game.Player.Spawn(Vector3.zero, new PlayerStat { id = 0, name = "Sample_Player" }).gameObject);
     }
 
     private void UIInit()
     {
         UI_PopupMsg l_popupMsg = Managers.UI.ShowPopupUI<UI_PopupMsg>("UI_PopupMsg");
-        l_popupMsg.Message = "¿˚ √‚«ˆ";
+        l_popupMsg.Message = "Ï†Å Ï∂úÌòÑ!!";
         l_popupMsg.DelayDeleteTime = 3.0f;
 
         Managers.UI.ShowSceneUI<UI_Aim>("UI_Aim");

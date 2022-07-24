@@ -67,6 +67,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.195
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.081
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.17980886
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.503207
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6330482
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5600907
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -211.882
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -68.737
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424436052274848, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 80.931
+      objectReference: {fileID: 0}
     - target: {fileID: 95786743544921876, guid: 788b00144675db14ab99aaf2c6e9b1d8, type: 3}
       propertyPath: m_Enabled
       value: 1
