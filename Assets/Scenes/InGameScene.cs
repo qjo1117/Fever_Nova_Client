@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class InGameScene : BaseScene
 {
-
-
     private CameraController m_camera = null;
 
     protected override void LoadGameObject()
@@ -43,7 +41,7 @@ public class InGameScene : BaseScene
 
         UIInit();
         Managers.Game.StartGame();
-
+        
         m_camera = GameObject.FindObjectOfType<CameraController>();
         m_camera.SetPlayer(Managers.Game.Player.Spawn(Vector3.zero, new PlayerStat { id = 0, name = "Sample_Player" }).gameObject);
     }
@@ -75,7 +73,14 @@ public class InGameScene : BaseScene
     }
 
 
-    public override void Clear()
+    protected override void OnUpdate()
+	{
+		if(Input.GetKeyDown(KeyCode.V) == true) {
+            Managers.Input.ChangeKey(Define.UserKey.Forward, KeyCode.UpArrow);
+        }
+	}
+
+	public override void Clear()
     {
 
         Managers.Log("InGame Clear");

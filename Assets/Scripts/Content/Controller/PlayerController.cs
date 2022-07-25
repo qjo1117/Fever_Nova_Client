@@ -11,8 +11,8 @@ public class PlayerStat
     public int      hp = 100;
     public int      maxHp = 100;
     public int      attack = 70;
-    public float    moveSpeed = 100.0f;
-    public float    evasionSpeed = 10.0f;
+    public float    moveSpeed = 50.0f;
+    public float    evasionSpeed = 5000.0f;
     public int      score = 0;
     public int      totalScore = 0;
 }
@@ -47,8 +47,12 @@ public class PlayerController : MonoBehaviour
     private bool            m_isExplosion = false;
 
     // 폭탄 쿨타임 테스트용
-    public float m_coolTime = 2.0f;
-    private bool m_isCoolTime = false;
+    public float            m_coolTime = 2.0f;
+    private bool            m_isCoolTime = false;
+
+    // 총 애니메이션 딜레이
+    private float           m_shotMaxDelay = 3.0f;
+    private float           m_shotDelay = 0.0f;
 
     private float           m_explosionJumpRadius = 4.0f;
 
@@ -118,15 +122,10 @@ public class PlayerController : MonoBehaviour
         m_handler = Util.FindChild(gameObject, "@Handler", true).transform;
     }
 
-    private void Update()
+    public void OnUpdate()
     {
         UpdateState();
         UpdateInput();
-    }
-
-	private void FixedUpdate()
-	{
-
     }
 
 
@@ -193,26 +192,18 @@ public class PlayerController : MonoBehaviour
 
     public void IdleUpdate()
 	{
-        m_anim.SetFloat("MoveX", 0);
-        m_anim.SetFloat("MoveZ", 0);
+        m_anim.SetFloat("MoveX", 0.0f);
+        m_anim.SetFloat("MoveZ", 0.0f);
 
     }
 
     public void RunState()
 	{
-        m_anim.SetFloat("MoveX", m_move.x * m_inputPress);
-        m_anim.SetFloat("MoveZ", m_move.z * m_inputPress);
+        float l_moveX = Mathf.Clamp(m_mousePos.x - transform.position.x, -1.0f, 1.0f) * m_move.x;
+        float l_moveZ = Mathf.Clamp(m_mousePos.z - transform.position.z, -1.0f, 1.0f) * m_move.z;
 
-
-    }
-
-    public void FootR()
-	{
-
-	}
-    public void FootL()
-    {
-
+        m_anim.SetFloat("MoveX", -l_moveX * m_inputPress);
+        m_anim.SetFloat("MoveZ", l_moveZ * m_inputPress);
     }
 
     public void EvasionState()
@@ -226,6 +217,22 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
+
+    #region Move Animation Event
+    
+    public void FootR()
+	{
+
+	}
+    public void FootL()
+    {
+
+    }
+
+	#endregion
+
+
 
 
     #region 입력 업데이트
@@ -271,19 +278,23 @@ public class PlayerController : MonoBehaviour
 
     public void InputShoot()
 	{
-        // 쿨타임 테스트용
-        if (m_isCoolTime)
-            return;
-
-
         if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
+            m_shotDelay = 0.0f;
             if (m_state == PlayerState.Jump) {
-                ShotEnd();
+                m_anim.CrossFade("GunJump", 0.3f);
             }
             else {
-                m_anim.CrossFade("Player-Aiming-CM", 0.1f);
+                m_anim.SetBool("Shot", true);
             }
         }
+
+        m_shotDelay += Time.deltaTime;
+        if (m_shotDelay > m_shotMaxDelay) {
+            m_anim.SetBool("Shot", false);
+            return;
+        }
+
+        m_anim.SetFloat("Fire", m_shotDelay);
 
         // 현재 폭탄을 가지고 있지 않는다면 넘어가자.
         if (m_boom?.gameObject.IsValid() == false) {
@@ -306,8 +317,6 @@ public class PlayerController : MonoBehaviour
             m_explosionTime = 0.0f;
             m_isExplosion = false;
 
-
- 
             // 쿨타임 테스트용
             m_isCoolTime = true;
             Managers.UI.Root.GetComponentInChildren<UI_Aim>().ColorChange(Color.red);
@@ -344,13 +353,17 @@ public class PlayerController : MonoBehaviour
         }
         else {
             // 가장 최신의 폭탄을 가지고 있는다.      TODO : 지금 벡터로 처리해서 범위 체크를 어떻게 해야할지 모르겠다.
-            m_boom.Shoot(m_handler.position, transform.forward, 100000.0f);
+            m_boom.Shoot(m_handler.position, transform.forward, 50000.0f, m_move * m_stat.moveSpeed * 3.0f);
         }
     }
 
+    public void EvasionEnd()
+	{
+        m_state = PlayerState.Idle;
+	}
+
     public void UpdateInput()
 	{
-
         // 회피중일때는 다른 상태는 불가능
         if (m_state == PlayerState.Evasion) {
             return;
@@ -380,6 +393,8 @@ public class PlayerController : MonoBehaviour
 		}
 
 		if (Managers.Input.GetKeyDown(UserKey.Evasion) == true && m_state == PlayerState.Run) {
+            m_anim.Play("Player-Evasion");
+            m_move *= 2.0f;
             m_rigid.AddForce(m_move * m_stat.evasionSpeed);
 			m_evasionTime = 0.0f;
 			m_state = PlayerState.Evasion;

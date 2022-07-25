@@ -27,6 +27,9 @@ public class PlayerManager : MonoBehaviour
             m_mainPlayer.Recover(10);
             m_mainPlayer.PlayerHPBar.HP = m_mainPlayer.Stat.hp;
         }
+
+        // 업데이트
+        m_mainPlayer?.OnUpdate();
     }
 
     public PlayerController FindPlayer(int _id)
@@ -53,7 +56,6 @@ public class PlayerManager : MonoBehaviour
         // 메인 플레이어 설정
         if (m_mainPlayer == null) {
             m_mainPlayer = l_player;
-        }
 
         // 플레이어 HP바 생성
         UI_PlayerHPBar l_playerHPBar = Managers.UI.ShowSceneUI<UI_PlayerHPBar>("UI_PlayerHPBar");

@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /* ------------------------------------------ 
- *          ½ºÆ÷³Ê¿¡°Ô ÇÊ¿äÇÑ °Í
+ *          ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½
  * 
  * 
 ------------------------------------------ */
 
-// ½ºÆùµÉ ³à¼®µéÀÇ Á¤º¸¸¦ µé°í ÀÖ´Â´Ù.
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½à¼®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½.
+[System.Serializable]
+public struct SpawnerInfo 
 public struct SpawnerInfo
 {
-    public int Index;            // ¸ó½ºÅÍ ½ºÅÝ ÀÎµ¦½º
-    public Vector3 Position;         // ½ºÆùµÉ À§Ä¡ (±âÈ¹ÀÚÂÊ¿¡¼­ Á÷Á¢ÇÏ±â·Î ÇØ¼­)
+    public int Index;            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
+    public Vector3 Position;         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ (ï¿½ï¿½È¹ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ ï¿½Ø¼ï¿½)
 }
 
 public class Spawner : MonoBehaviour
 {
-    // --------- ±âÈ¹ÀÚ Àü¿ë UI ---------
+
+    #region Variable (ï¿½ï¿½ï¿½ï¿½)
+    // --------- ï¿½ï¿½È¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ---------
     public Transform m_parentMonsterPoint = null;
 
-    // --------- Spawn¿¡ °ü·ÃµÈ º¯¼ö ---------
+    // --------- Spawnï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ ---------
     [SerializeField]
     private List<SpawnerInfo> m_listSpawnerInfo = new List<SpawnerInfo>();
     [SerializeField]
@@ -30,16 +34,24 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private Transform m_monsters = null;
 
-    public void Start()
+	#endregion
+
+	#region Property
+	public SpawnerTrigger Trigger { get => m_trigger; }
+	public List<SpawnerInfo> ListSpawnerInfo { get => m_listSpawnerInfo; }
+
+	#endregion
+
+	public void Start()
     {
-        // Æ®¸®°Å°¡ ¾øÀ» °æ¿ì ¸ÊÇÎÇØº»´Ù.
+        // Æ®ï¿½ï¿½ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øºï¿½ï¿½ï¿½.
         if (m_trigger.gameObject.IsValid() == false)
         {
             m_trigger = Util.FindChild<SpawnerTrigger>(gameObject);
         }
         m_trigger?.SetSpawner(this);
 
-        // ¾øÀ» °æ¿ì ¸ÊÇÎ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (m_monsters == null)
         {
             m_monsters = Util.FindChild<Transform>(gameObject, "Monsters");
@@ -54,15 +66,15 @@ public class Spawner : MonoBehaviour
 
     }
 
-    // ÃÑ 3¹øÀ» °ÉÃÄ¼­ ÁøÇàµÈ´Ù.
-    // 1. Parent¿¡ Á¢±ÙÇØ¼­ Spawner ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿Â ÈÄ
-    // 2. SpawnerPoint¿¡¼­ ½ÇÁ¦·Î ÇÊ¿äÇÑ Á¤º¸¸¸ ÃßÃâÇÑ´Ù. => SpawnInfo
-    // 3. UIÀûÀ¸·Î º¸¿©ÁÖ´ø TransformÀ» ¸ðµÎ »èÁ¦ÇÑ´Ù.
-    // ¼³¸í : °ÔÀÓ ½ÃÀÛÀ» ÇßÀ»¶§ Trasnform => VecÀ¸·Î ¹Ù²ã¾ßÇÑ´Ù.
+    // ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½ï¿½È´ï¿½.
+    // 1. Parentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ Spawner ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    // 2. SpawnerPointï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. => SpawnInfo
+    // 3. UIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ Transformï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+    // ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Trasnform => Vecï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½Ñ´ï¿½.
     public void TransformToPosition()
     {
         List<MonsterSpawnPoint> l_listMonsterPoint = new List<MonsterSpawnPoint>();
-        // ÇöÀç Transform¿¡ ÀÖ´Â SpawnerPoint¸¦ °¡Á®¿Â´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ Transformï¿½ï¿½ ï¿½Ö´ï¿½ SpawnerPointï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
         int l_spawnSize = m_parentMonsterPoint.childCount;
         for (int i = 0; i < l_spawnSize; ++i)
         {
@@ -85,14 +97,14 @@ public class Spawner : MonoBehaviour
             }
         }
 
-        // µ¥ÀÌÅÍ ÀÌÀü ÀÌÈÄ »èÁ¦
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         l_spawnSize = l_listMonsterPoint.Count;
         for (int i = 0; i < l_spawnSize; ++i)
         {
             m_listSpawnerInfo.Add(new SpawnerInfo { Index = l_listMonsterPoint[i].m_index, Position = l_listMonsterPoint[i].transform.position });
         }
 
-        // TransformÀ» Ç¥½ÃÇÏ´ø ¿ÀºêÁ§Æ®¸¦ ÀüºÎ »èÁ¦½ÃÅ²´Ù.
+        // Transformï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
         l_spawnSize = m_parentMonsterPoint.childCount;
         for (int i = 0; i < l_spawnSize; ++i)
         {
@@ -105,21 +117,21 @@ public class Spawner : MonoBehaviour
         }
         Managers.Resource.DelPrefab(m_parentMonsterPoint.gameObject);
 
-        // ÇÊ¿ä°¡ ¾øÀ¸¹Ç·Î »èÁ¦ÇÑ´Ù.
+        // ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         l_listMonsterPoint.Clear();
     }
 
 
-    // ÇÃ·¹ÀÌ¾î°¡ Æ®¸®°Å¿¡ Á¢ÃËÇßÀ»¶§ Á¤º¸¸¦ °»½ÅÇÏ¸ç ¸ó½ºÅÍ¸¦ »ý¼ºÇÑ´Ù.
+    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ Æ®ï¿½ï¿½ï¿½Å¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
     public void StartSpawn()
     {
-        // Á¤º¸°¡ ¾Æ¿¹ ¾øÀ¸¸é Ãë¼Ò
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         if (m_listSpawnerInfo.Count < 0)
         {
             return;
         }
 
-        // ÇØ´ç ÀÎµ¦½º¿¡ ¸Â°Ô ½ºÆùÀ» ½ÃÀÛÇÑ´Ù.
+        // ï¿½Ø´ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         int l_spawnSize = m_listSpawnerInfo.Count;
         for (int i = 0; i < l_spawnSize; ++i)
         {
@@ -149,11 +161,11 @@ public class Spawner : MonoBehaviour
         }
 
 
-        // TODO : ÇØ´ç UI¿¡ Àü´ÞÇØ¾ßÇÏ´Â °Í
-        // ¸ñÇ¥ ¼ýÀÚ
+        // TODO : ï¿½Ø´ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½
+        // ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
     }
 
-
+    
     private void RegisterMonster()
     {
         int l_size = m_monsters.childCount;
@@ -162,4 +174,7 @@ public class Spawner : MonoBehaviour
             m_monsters.GetChild(i).gameObject.SetActive(false);
         }
     }
+
+
+
 }

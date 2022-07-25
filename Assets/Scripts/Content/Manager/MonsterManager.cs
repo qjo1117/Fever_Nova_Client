@@ -16,8 +16,33 @@ public class TargetData
     public Vector3 force = Vector3.zero;
 }
 
+// Spawner Data
+[System.Serializable]
+public class SpawnerJsonInfo
+{
+    // 스포너의 위치
+    public Vector3 Position = Vector3.zero;
+    // 트리거 위치, 크기
+    public Vector3 TriggerPosition = Vector3.zero;
+    public Vector3 TriggerSize = Vector3.zero;
+    // 스포너가 가지고 있는 몬스터 리스트
+    public List<SpawnerInfo> ListSpawnerInfo = new List<SpawnerInfo>();
+}
+
+[System.Serializable]
+public class SpawnerJson
+{
+    public List<SpawnerJsonInfo> ListJson = new List<SpawnerJsonInfo>();
+}
+
 public class MonsterManager : MonoBehaviour
 {
+	#region 변수
+
+	// --------- Monster Data ---------
+	[SerializeField]
+    private List<BehaviorTree>  m_listMonster = new List<BehaviorTree>();
+    private List<TargetData>    m_listTargetData = new List<TargetData>();                 // 
     #region ����
 
     // --------- ���� ���� ���� ---------
@@ -28,6 +53,8 @@ public class MonsterManager : MonoBehaviour
     // --------- UI Test ---------
     private UI_Goal m_goal;
 
+    private int m_allMonsterCount;     // 
+    private int m_killCount;           // 
     private int m_allMonsterCount;     // ������ ������ �� ��
     private int m_killCount;           // ���� ������ �� ��
 
@@ -59,6 +86,9 @@ public class MonsterManager : MonoBehaviour
     }
 
     // --------- Spawner ���� ���� ---------
+    public Transform            m_parentSpawner = null;
+	[SerializeField]
+    private List<Spawner>       m_listSpawner = new List<Spawner>();
     public Transform m_parentSpawner = null;
     [SerializeField]
     private List<Spawner> m_listSpawner = new List<Spawner>();
@@ -168,9 +198,41 @@ public class MonsterManager : MonoBehaviour
         }
 
         // Spanwer Info -> Transform To Position
-        foreach (Spawner spawner in m_listSpawner)
-        {
+        foreach (Spawner spawner in m_listSpawner) {
             spawner.TransformToPosition();
         }
     }
+
+    #region SpanwerData / Save Load
+
+    public void SpanwerSave()
+	{
+        SpawnerJson l_spawnerJson = new SpawnerJson();    
+
+        // 현재 들고 있는 스포너의 데이터를 저장한다.
+        foreach (Spawner spawner in m_listSpawner) {
+            SpawnerJsonInfo info = new SpawnerJsonInfo();
+            // 스포너의 위치
+            info.Position = spawner.transform.position;
+
+            // 트리거의 정보
+            info.TriggerPosition = spawner.Trigger.transform.position;
+            info.TriggerSize = spawner.Trigger.GetComponent<BoxCollider>().size;
+
+            // 위치랑 인덱스만 있는 몬스터의 정보
+            int l_size = spawner.ListSpawnerInfo.Count;
+            List<SpawnerInfo> l_listSpawner = spawner.ListSpawnerInfo;
+            for (int i = 0; i < l_size; ++i) {
+                info.ListSpawnerInfo.Add(l_listSpawner[i]);
+            }
+            l_spawnerJson.ListJson.Add(info);
+        }
+
+        string l_json = JsonUtility.ToJson(l_spawnerJson);
+        Debug.Log(l_json);
+	}
+
+	#endregion
+
+}
 }

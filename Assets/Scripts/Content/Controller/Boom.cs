@@ -20,7 +20,7 @@ public class Boom : MonoBehaviour
     private float               m_explosionForce = 1000.0f;
 
     [SerializeField]
-    private float               m_moveSpeed = 10000.0f;               // ÆøÅºÀÇ °¡ÇØÁö´Â Èû
+    private float               m_moveSpeed = 50000.0f;               // ÆøÅºÀÇ °¡ÇØÁö´Â Èû
     [SerializeField]
     private float               m_explosionRange = 5.0f;            // Æø¹ß ¹Ý°æ
     [SerializeField]
@@ -60,14 +60,14 @@ public class Boom : MonoBehaviour
     }
 
     // ¹ß»ç¸¦ ÇßÀ»¶§ ÇÊ¿äÇÑ Á¤º¸¸¦ ¼öÁýÁß
-    public void Shoot(Vector3 _position, Vector3 _direction, float _dist)
+    public void Shoot(Vector3 _position, Vector3 _direction, float _dist, Vector3 _move)
 	{
         if(_dist >= m_moveSpeed) {
             _dist = m_moveSpeed;
         }
-
+        _move += _direction * _dist;
         transform.position = _position;
-        m_rigid.AddForce(_direction * _dist);
+        m_rigid.AddForce(_move);
 	}
 
     public void JumpShoot(Vector3 _position, Vector3 _direction)

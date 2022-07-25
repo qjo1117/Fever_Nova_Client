@@ -7,9 +7,9 @@ using System;
 using UnityEngine.EventSystems;
 
 /*
- * InputManager´Â ÀÔ·ÂÀ» Á¦¾î ¹Þ´Â °Íµµ ÀÖÁö¸¸ ÇØ´çÇÏ´Â 
- * À¯Àú¿¡¼­ Å°¸¦ ¼³Á¤ÇÑ °ªÀÌ Ã¼Å©°¡ µÇ¾úÀ» °æ¿ì ÇÔ¼ö¸¦ È£Ãâ ÇÒ ¼ö ÀÖµµ·Ï ¸¸µç °ÍÀÔ´Ï´Ù.
- * ±»ÀÌ ¾È¸¸µé¾îµµ µÉ²¨°°Àºµ¥ ±×³É GetKey ´­·ÈÀ»Áö È®ÀÎÇÏ´Â °Í ±îÁö ´Ù½Ã Á¦ÀÛÇß½À´Ï´Ù.
+ * InputManagerï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ 
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
+ * ï¿½ï¿½ï¿½ï¿½ ï¿½È¸ï¿½ï¿½ï¿½îµµ ï¿½É²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×³ï¿½ GetKey ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.
 */
 
 [System.Serializable]
@@ -22,7 +22,7 @@ class KeyInfo
 	public bool up = false;
 }
 
-// ³ªÁß¿¡ JsonÀ¸·Î ÀúÀåÇÒ ¿ëµµ
+// ï¿½ï¿½ï¿½ß¿ï¿½ Jsonï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ëµµ
 class KeyInfoJson 
 {
 	[System.Serializable]
@@ -45,12 +45,12 @@ public class InputManager
 	private bool m_isPressed = false;
 	private float m_pressTime = 0.5f;
 
-	#region ÇÁ·¹ÀÓ ¿öÅ©
+	#region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©
 	public void Init()
 	{
 		m_dicKeys.Clear();
 
-		// ±âº»ÀûÀÎ °ªÀ» µî·Ï
+		// ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		AddKey(UserKey.Forward, KeyCode.W);
 		AddKey(UserKey.Forward, KeyCode.UpArrow);
 		AddKey(UserKey.Backward, KeyCode.S);
@@ -65,34 +65,34 @@ public class InputManager
 
 	public void Update()
 	{
-		// ¼øÈ¸
+		// ï¿½ï¿½È¸
 		foreach (var pair in m_dicKeys) {
 			KeyInfo info = pair.Value;
 
-			// ÄÚµå°¡ ´­·È´ÂÁö Ã¼Å©ÇÑ´Ù.
+			// ï¿½Úµå°¡ ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ñ´ï¿½.
 			bool check = GetKeyCode(info.listKey);
 
-			// ´­·ÈÀ»¶§
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			if(check == true) {
-				// ´©¸¥°Ô È®ÀÎ ¾È‰çÀ»¶§
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½È‰ï¿½ï¿½ï¿½ï¿½ï¿½
 				if(info.down == false && info.press == false) {
 					info.down = true;
 					info.press = true;
 				}
-				// °è¼Ó ´©¸£°í ÀÖ¾úÀ»¶§
+				// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½
 				else {
 					info.down = false;
 				}
 			}
-			// ¾È´­·ÈÀ»¶§
+			// ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			else {
-				// Àü¿¡ Å°¸¦ ´­·¶À»¶§
+				// ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				if(info.down == true || info.press == true) {
 					info.up = true;
 					info.down = false;
 					info.press = false;
 				}
-				// Àü¿¡ Å°¸¦ ¶®À»¶§
+				// ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				else if(info.up == true) {
 					info.up = false;
 				}
@@ -136,8 +136,8 @@ public class InputManager
 
 	public void Load()
 	{
-		// TODO : ÀúÀå ¸¸µé±â
-		// ¾ÆÁ÷Àº ±ÍÂú
+		// TODO : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 		KeyInfoJson json = new KeyInfoJson();
 		foreach (var item in m_dicKeys)
@@ -166,8 +166,8 @@ public class InputManager
 
 	#endregion
 
-	#region ±â´É ÇÔ¼ö
-	//Ãß°¡
+	#region ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+	//ï¿½ß°ï¿½
 	public KeyCode GetKeyData(UserKey p_key)
     {
 		return m_dicKeys[p_key].listKey[0];
@@ -185,49 +185,49 @@ public class InputManager
 
 	public bool GetKey(UserKey p_key)
 	{
-		// µî·ÏµÈ Å°°¡ ¾øÀ» °æ¿ì
+		// ï¿½ï¿½Ïµï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if(m_dicKeys.ContainsKey(p_key) == false) {
 			return false;
 		}
 
-		// Å¬¸¯ÇÞÀ»¶§
+		// Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(m_dicKeys[p_key].down == true || m_dicKeys[p_key].press == true) {
 			return true;
 		}
 
-		// ¾Æ¹«°Íµµ ¾Æ´Ï¿´À»¶§
+		// ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½Æ´Ï¿ï¿½ï¿½ï¿½ï¿½ï¿½
 		return false;
 	}
 
 	public bool GetKeyDown(UserKey _key)
 	{
-		// µî·ÏµÈ Å°°¡ ¾øÀ» °æ¿ì
+		// ï¿½ï¿½Ïµï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if (m_dicKeys.ContainsKey(_key) == false) {
 			return false;
 		}
 
-		// Å¬¸¯ÇÞÀ»¶§
+		// Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (m_dicKeys[_key].down == true) {
 			return true;
 		}
 
-		// ¾Æ¹«°Íµµ ¾Æ´Ï¿´À»¶§
+		// ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½Æ´Ï¿ï¿½ï¿½ï¿½ï¿½ï¿½
 		return false;
 	}
 
 	public bool GetKeyUp(UserKey _key)
 	{
-		// µî·ÏµÈ Å°°¡ ¾øÀ» °æ¿ì
+		// ï¿½ï¿½Ïµï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if (m_dicKeys.ContainsKey(_key) == false) {
 			return false;
 		}
 
-		// Å¬¸¯ÇÞÀ»¶§
+		// Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (m_dicKeys[_key].up == true) {
 			return true;
 		}
 
-		// ¾Æ¹«°Íµµ ¾Æ´Ï¿´À»¶§
+		// ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½Æ´Ï¿ï¿½ï¿½ï¿½ï¿½ï¿½
 		return false;
 	}
 
@@ -249,40 +249,49 @@ public class InputManager
 
 	public void AddKey(UserKey _key, KeyCode _keycode)
 	{
-		// ÇØ´çÇÏ´Â Å°ÀÇ °´Ã¼°¡ ¾øÀ» °æ¿ì »ý¼º
+		// ï¿½Ø´ï¿½ï¿½Ï´ï¿½ Å°ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if(m_dicKeys.ContainsKey(_key) == false)  {
 			m_dicKeys[_key] = new KeyInfo();
 			m_dicKeys[_key].key = _key;
 		}
 
-		// ¹è¿­ Á¢±Ù ¾²±â ±ÍÂú
+		// ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		KeyInfo l_info = m_dicKeys[_key];
 
-		// ¸¸¾à ¸®½ºÆ®¾È¿¡ ÄÚµå°¡ Á¸ÀçÇÒ °æ¿ì
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½È¿ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if(IsListKeyCode(l_info.listKey, _keycode) == true) {
 			return;
 		}
 
-		// ¾øÀ» °æ¿ì
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		l_info.listKey.Add(_keycode);
 	}
 	public void DelKey(UserKey _key, KeyCode _keycode = KeyCode.None)
 	{
-		// ¸ÊÇÎ
+		// ï¿½ï¿½ï¿½ï¿½
 		if (m_dicKeys.ContainsKey(_key) == false) {
 			return;
 		}
 
-		// ¹è¿­ Á¢±Ù ¾²±â ±ÍÂú
+		// ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		KeyInfo l_info = m_dicKeys[_key];
 
-		// ½Ï´Ù »èÁ¦
+		// ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if (_keycode == KeyCode.None) {
 			l_info.listKey.RemoveRange(0, l_info.listKey.Count);
 		}
-		// ÁöÁ¤ÇÑ°Ô ÀÖÀ¸¸é »èÁ¦
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		else {
 			l_info.listKey.Remove(_keycode);
+		}
+	}
+
+	public void ChangeKey(UserKey _userKey, KeyCode _keyCode)
+	{
+		if(m_dicKeys.ContainsKey(_userKey) == true) {
+			int l_size = m_dicKeys[_userKey].listKey.Count;
+			List<KeyCode> l_keys = m_dicKeys[_userKey].listKey;
+			l_keys[0] = _keyCode;
 		}
 	}
 
