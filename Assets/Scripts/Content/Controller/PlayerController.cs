@@ -14,6 +14,8 @@ public class PlayerStat
     public float    moveSpeed = 100.0f;
     public float    evasionSpeed = 10.0f;
     public int      score = 0;
+    // 결과창 UI에 totalScore 출력해야 해서 추가함
+    public int      totalScore = 0;
 }
 
 // 기획자쪽에서 스탯 조절할 목록을 받으면 Class로 따로 스피드 체력 등등을 나눈다.
@@ -62,12 +64,40 @@ public class PlayerController : MonoBehaviour
 
     private Transform       m_handler = null;
 
+
+    // 죽인 몬스터의수, 멀티킬의 횟수는 플레이어 마다 다르기떄문에
+    // MonsterManager에서 PlayerController로 이동시켰다.
+    // --------- Goal UI Test ---------
+    private UI_Goal m_goal;
+
+    private int m_hitCount;
+    private int m_killCount;           // 죽인 몬스터 수
+    private int m_multiKillCount;      // 멀티킬한 횟수
+
+
     #endregion
 
     #region 프로퍼티
 
     public PlayerStat Stat { get => m_stat; set => m_stat = value; }
     public PlayerState State { get => m_state; set => m_state = value; }
+
+
+    // --------- Goal UI Test ---------
+    public int MonsterKillCount
+    {
+        get
+        {
+            return m_killCount;
+        }
+        set
+        {
+            m_killCount = value;
+            m_goal.MonsterKillCount = m_killCount;
+        }
+    }
+
+    public int MonsterMultiKillCount { get => m_multiKillCount; set => m_multiKillCount = value; }
 
     #endregion
 
@@ -77,6 +107,8 @@ public class PlayerController : MonoBehaviour
         m_rigid  = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
         m_handler = Util.FindChild(gameObject, "@Handler", true).transform;
+
+        m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
     }
 
     private void Update()
@@ -93,13 +125,25 @@ public class PlayerController : MonoBehaviour
 
     public void Demege(int p_attack)
     {
+        m_hitCount++;
+        m_stat.hp -= p_attack;
+
         if (m_stat.hp <= 0)
         {
-            // 사망처리
+            // 게임 결과창 출력
+            Managers.UI.ShowPopupUI<UI_ResultScreen>("UI_ResultScreen");
+            UI_Result l_result = Managers.UI.ShowPopupUI<UI_Result>("UI_Result");
+
+            l_result.PlayerId = 1;
+            l_result.Result = "Defeat...";
+            l_result.Score = m_stat.score;
+            l_result.GameStartTime = Managers.Game.BeginPlayTime;
+            l_result.KillCount = m_killCount;
+            l_result.MultiKillCount = m_multiKillCount;
+            l_result.HitCount = m_hitCount;
+            l_result.TotalScore = m_stat.totalScore;
             return;
         }
-
-        m_stat.hp -= p_attack;
     }
 
     // 플레이어 hp 체력바 회복 테스트용
@@ -260,7 +304,7 @@ public class PlayerController : MonoBehaviour
             Managers.UI.Root.GetComponentInChildren<UI_Score>().ScoreLogCreate(10);
 
             // 목표 UI 테스트용
-            Managers.UI.Root.GetComponentInChildren<UI_Goal>().MonsterKillCount++;
+            MonsterKillCount++;
         }
 
 

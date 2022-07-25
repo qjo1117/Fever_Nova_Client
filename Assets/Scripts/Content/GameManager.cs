@@ -10,8 +10,13 @@ public class GameManager
     private BoomManager m_boom = null;
     private int m_score = 0;
 
-    private int m_beginPlayTime = 0;
-    private int m_endPlayTime = 0;
+    //private int m_beginPlayTime = 0;
+    //private int m_endPlayTime = 0;
+
+
+    // Unity의 Time을 이용하여 플레이타임 구현
+    private float m_beginPlayTime = 0;
+    private float m_endPlayTime = 0;
 
     // 몬스터들에 대한 프리팹을 들고 있는다.
     private List<GameObject> m_listPrefab = new List<GameObject>();
@@ -22,6 +27,10 @@ public class GameManager
     public BoomManager Boom { get => m_boom; }
     public List<GameObject> Prefab { get => m_listPrefab; }
     public int Score { get => m_score; set => m_score = value; }
+
+    // 플레이 타임 UI에 출력시키기 위해
+    public float BeginPlayTime { get => m_beginPlayTime; set => m_beginPlayTime = value; }
+    public float EndPlayTime { get => m_endPlayTime; set => m_endPlayTime = value; }
     #endregion
 
 
@@ -71,7 +80,8 @@ public class GameManager
         Managers.Game.Monster.Init();
 
         // 시작 시간을 가져온다.
-        m_beginPlayTime = DateTime.Now.Second + DateTime.Now.Month * 60;
+        // m_beginPlayTime = DateTime.Now.Second + DateTime.Now.Month * 60;
+        m_beginPlayTime = Time.time;
     }
 
     public void Clear()

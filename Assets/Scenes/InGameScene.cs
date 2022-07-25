@@ -29,7 +29,9 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.UI_Pause, l_count);
 
         Managers.Resource.RegisterPoolGameObject(Path.UI_MonsterHPBar, 100);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_PauseScreen);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_PauseScreen,l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_ResultScreen, l_count);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_Result, l_count);
     }
 
 	protected override void Init()

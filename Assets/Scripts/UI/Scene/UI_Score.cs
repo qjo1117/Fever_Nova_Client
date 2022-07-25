@@ -80,6 +80,9 @@ public class UI_Score : UI_Scene
 
             // 플레이어 Score Stat 업데이트
             l_player.Stat.score += m_killScoreList[0];
+
+            // 몬스터를 죽일떄마다 TotalScore를 올릴것인지, 라운드가 끝났을떄 TotalScore를 올릴것인지 애매하다 (물어보자)
+            l_player.Stat.totalScore += m_killScoreList[0];
         }
         // 획득한 점수가 1개 이상일떄 (멀티 킬일때)
         else

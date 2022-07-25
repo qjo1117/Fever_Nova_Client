@@ -25,12 +25,9 @@ public class MonsterManager : MonoBehaviour
     private List<BehaviorTree>  m_listMonster = new List<BehaviorTree>();
     private List<TargetData>    m_listTargetData = new List<TargetData>();                 // ���� ���޿�
 
-    // --------- UI Test ---------
-    private UI_Goal m_goal;
-
-    private int m_allMonsterCount;     // ������ ������ �� ��
-    private int m_killCount;           // ���� ������ �� ��
-
+    // --------- Goal UI Test ---------
+    private UI_Goal m_goal;            
+    private int m_allMonsterCount;     // 스테이지에서 스폰될 몬스터의 수
 
     public int AllMonsterCount
     {
@@ -42,19 +39,6 @@ public class MonsterManager : MonoBehaviour
         {
             m_allMonsterCount = value;
             m_goal.AllMonsterCount = m_allMonsterCount;
-        }
-    }
-
-    public int MonsterKillCount
-    {
-        get
-        {
-            return m_killCount;
-        }
-        set
-        {
-            m_killCount = value;
-            m_goal.MonsterKillCount = m_killCount;
         }
     }
 
@@ -75,8 +59,8 @@ public class MonsterManager : MonoBehaviour
 	public void Init()
 	{
         m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
-        // BehaviorTree 구성
 
+        // BehaviorTree 구성
 
         // 시작할때 스포너에 있는 데이터를 가져온다.
         InitSpawner();

@@ -101,6 +101,10 @@ MonoBehaviour:
     m_Address: UI/Popup/UI_ResultScreen
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: f35b7603510fcc6478facad6c40c9d5b
+    m_Address: UI/Popup/UI_Result
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aa1c45dd9f67c694eb5b8e4a529c5a60, type: 2}
   m_SchemaSet:
