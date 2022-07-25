@@ -65,6 +65,7 @@ public class UI_MainMenu : UI_Scene
     {
         Debug.Log("환경설정");
         Managers.UI.ShowPopupUI<UI_Option>("UI_Option");
+        //GameObject.Find("UI_Option").GetComponent<UI_Option>().SetOption();
     }
 
     public void ExitButtonClicked(PointerEventData data)

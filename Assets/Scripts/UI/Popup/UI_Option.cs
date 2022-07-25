@@ -58,7 +58,9 @@ public class UI_Option : UI_Popup
     {
         Init();
 
-        SetOption();
+        m_isInitialize = false;
+        m_soundVolume = m_defaultSound;
+        m_curSoundVolume = m_defaultSound;
     }
 
     public override void Init()
@@ -89,11 +91,12 @@ public class UI_Option : UI_Popup
     {
         Debug.Log("확인");
         KeyApply();
-        gameObject.SetActive(false);
+        m_isInitialize = false;
+        Managers.UI.ClosePopupUI();
     }
     public void ClickApplyButton(PointerEventData data)
     {
-        if(m_isChange)
+        if (m_isChange)
         {
             Debug.Log("적용");
             KeyApply();
@@ -105,37 +108,48 @@ public class UI_Option : UI_Popup
     public void ClickCancelButton(PointerEventData data)
     {
         Debug.Log("취소");
-        gameObject.SetActive(false);
+        m_isInitialize = false;
+        ClosePopupUI();
     }
 
     GameObject m_selectObject;
 
     public void ClickInputKeyButton(PointerEventData data)
     {
-        Debug.Log("click");
-        Managers.UI.ShowPopupUI<UI_KeyInput>("UI_KeyInput");
+        if (data.button == PointerEventData.InputButton.Left)//좌클릭 일때만 실행
+        {
+            Debug.Log("click");
+            Managers.UI.ShowPopupUI<UI_KeyInput>("UI_KeyInput");
 
-        m_selectObject = EventSystem.current.currentSelectedGameObject;
+            m_selectObject = EventSystem.current.currentSelectedGameObject;
 
-        string l_keyCodeText = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponent<Text>().text;
+            string l_keyCodeText = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponent<Text>().text;
 
-        GameObject.Find("UI_KeyInput").GetComponent<UI_KeyInput>().LoadCUrrentData(
-            GetText((int)(Texts)Enum.Parse(typeof(Texts), $"{m_selectObject.name}Text")),
-            (KeyCode)Enum.Parse(typeof(KeyCode), l_keyCodeText));
-    } 
+            GameObject.Find("UI_KeyInput").GetComponent<UI_KeyInput>().LoadCUrrentData(
+                GetText((int)(Texts)Enum.Parse(typeof(Texts), $"{m_selectObject.name}Text")),
+                (KeyCode)Enum.Parse(typeof(KeyCode), l_keyCodeText));
+        }
+    }
 
-
+    bool m_isInitialize;
     bool m_isChange;
 
-  
-    float m_soundVolume = 1f;
+    float m_defaultSound = 1f;
+    float m_curSoundVolume;
+    float m_soundVolume;
     private void Update()
     {
-        if(m_soundVolume != GetSlider((int)Sliders.SoundBar).value)
+        if (m_isInitialize == false)
         {
-            m_soundVolume = GetSlider((int)Sliders.SoundBar).value;
+            SetOption();
+            m_isInitialize = true;
+        }
 
-            GetText((int)Texts.SoundValue).text = $"{((int)(m_soundVolume * 100)).ToString()}%";
+        if (m_curSoundVolume != GetSlider((int)Sliders.SoundBar).value)
+        {
+            m_curSoundVolume = GetSlider((int)Sliders.SoundBar).value;
+
+            GetText((int)Texts.SoundValue).text = $"{((int)(m_curSoundVolume * 100)).ToString()}%";
 
             GetButton((int)Buttons.ApplyButton).interactable = true;
             m_isChange = true;
@@ -143,31 +157,32 @@ public class UI_Option : UI_Popup
     }
 
 
-    KeyCode m_forwardKey = KeyCode.W;
-    KeyCode m_backwardKey = KeyCode.S;
-    KeyCode m_leftKey = KeyCode.A;
-    KeyCode m_rightKey = KeyCode.D;
-    KeyCode m_evasionKeyKey = KeyCode.Space;
-    KeyCode m_shootKey = KeyCode.Mouse0;
-    void KeyLoad()
+    List<KeyCode> m_usingKey;
+
+    void LoadUsingKey()
     {
-        //현재 KeyCode 얻어올함수가 없네
+        foreach (var item in (UserKey[])Enum.GetValues(typeof(UserKey)))
+        {
+            m_usingKey.Add(Managers.Input.GetKeyData(item));
+        }
     }
 
     void KeyApply()
     {
         //변경된 옵션 적용(팝업으로 바꿔서 다시 열면 저장 안됨)
-        m_forwardKey = (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Forward).transform.GetChild(0).GetComponent<Text>().text);
-        m_backwardKey = (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Backward).transform.GetChild(0).GetComponent<Text>().text);
-        m_leftKey = (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Left).transform.GetChild(0).GetComponent<Text>().text);
-        m_rightKey = (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Right).transform.GetChild(0).GetComponent<Text>().text);
-        m_evasionKeyKey = (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Evasion).transform.GetChild(0).GetComponent<Text>().text);
-        m_shootKey = (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Shoot).transform.GetChild(0).GetComponent<Text>().text);
+        m_soundVolume = m_curSoundVolume;
+
+        Managers.Input.ChangeKey(UserKey.Forward, (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Forward).transform.GetChild(0).GetComponent<Text>().text));
+        Managers.Input.ChangeKey(UserKey.Backward, (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Backward).transform.GetChild(0).GetComponent<Text>().text));
+        Managers.Input.ChangeKey(UserKey.Left, (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Left).transform.GetChild(0).GetComponent<Text>().text));
+        Managers.Input.ChangeKey(UserKey.Right, (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Right).transform.GetChild(0).GetComponent<Text>().text));
+        Managers.Input.ChangeKey(UserKey.Evasion, (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Evasion).transform.GetChild(0).GetComponent<Text>().text));
+        Managers.Input.ChangeKey(UserKey.Shoot, (KeyCode)Enum.Parse(typeof(KeyCode), GetButton((int)Buttons.Shoot).transform.GetChild(0).GetComponent<Text>().text));
     }
 
     public void InputDataAppry(string _string)
     {
-        for (int i=0;i< Enum.GetValues(typeof(Buttons)).Length;i++)
+        for (int i = 0; i < Enum.GetValues(typeof(Buttons)).Length; i++)
         {
             if (GetButton(i).transform.GetChild(0).GetComponent<Text>().text == _string)
             {
@@ -179,13 +194,15 @@ public class UI_Option : UI_Popup
         m_isChange = true;
     }
 
-    void SetOption()
+    public void SetOption()
     {
-        GetButton((int)Buttons.Forward).transform.GetChild(0).GetComponent<Text>().text = m_forwardKey.ToString();
-        GetButton((int)Buttons.Backward).transform.GetChild(0).GetComponent<Text>().text = m_backwardKey.ToString();
-        GetButton((int)Buttons.Left).transform.GetChild(0).GetComponent<Text>().text = m_leftKey.ToString();
-        GetButton((int)Buttons.Right).transform.GetChild(0).GetComponent<Text>().text = m_rightKey.ToString();
-        GetButton((int)Buttons.Evasion).transform.GetChild(0).GetComponent<Text>().text = m_evasionKeyKey.ToString();
-        GetButton((int)Buttons.Shoot).transform.GetChild(0).GetComponent<Text>().text = m_shootKey.ToString();
+        GetSlider((int)Sliders.SoundBar).value = m_soundVolume;
+
+        GetButton((int)Buttons.Forward).transform.GetChild(0).GetComponent<Text>().text = Managers.Input.GetKeyData(UserKey.Forward).ToString();
+        GetButton((int)Buttons.Backward).transform.GetChild(0).GetComponent<Text>().text = Managers.Input.GetKeyData(UserKey.Backward).ToString();
+        GetButton((int)Buttons.Left).transform.GetChild(0).GetComponent<Text>().text = Managers.Input.GetKeyData(UserKey.Left).ToString();
+        GetButton((int)Buttons.Right).transform.GetChild(0).GetComponent<Text>().text = Managers.Input.GetKeyData(UserKey.Right).ToString();
+        GetButton((int)Buttons.Evasion).transform.GetChild(0).GetComponent<Text>().text = Managers.Input.GetKeyData(UserKey.Evasion).ToString();
+        GetButton((int)Buttons.Shoot).transform.GetChild(0).GetComponent<Text>().text = Managers.Input.GetKeyData(UserKey.Shoot).ToString();
     }
 }

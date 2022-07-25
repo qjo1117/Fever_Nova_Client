@@ -24,6 +24,9 @@ public class UI_KeyInput : UI_Popup
     private void Start()
     {
         Init();
+
+        m_isInitialize = false;
+        m_isOnButton = false;
     }
 
     public override void Init()
@@ -36,57 +39,65 @@ public class UI_KeyInput : UI_Popup
         GetButton((int)Buttons.OkButton).gameObject.BindEvent(OnOkButtonClicked);
         GetButton((int)Buttons.CanselButton).gameObject.BindEvent(OnCanselButtonClicked);
 
-        GetText((int)Texts.KeyNameText).text = m_KeyNameText;
-        GetText((int)Texts.KeyValueText).text = m_KeyValueText;
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerEnter;
+        entry.callback.AddListener((eventdata) => { m_isOnButton = true; });
 
+        GetButton((int)Buttons.OkButton).gameObject.AddComponent<EventTrigger>();
+        GetButton((int)Buttons.CanselButton).gameObject.AddComponent<EventTrigger>();
+
+        GetButton((int)Buttons.OkButton).GetComponent<EventTrigger>().triggers.Add(entry);
+        GetButton((int)Buttons.CanselButton).GetComponent<EventTrigger>().triggers.Add(entry);
+
+        //버그 방지(가끔 옵션창 뒤로 감)
+        gameObject.GetComponent<Canvas>().sortingOrder = 15;
     }
 
     public void OnOkButtonClicked(PointerEventData data)
     {
         GameObject.Find("UI_Option").GetComponent<UI_Option>().InputDataAppry(GetText((int)Texts.KeyValueText).text);
+        m_isInitialize = false;
+        m_isOnButton = false;
         ClosePopupUI();
     }
 
     public void OnCanselButtonClicked(PointerEventData data)
     {
+        m_isInitialize = false;
+        m_isOnButton = false;
         ClosePopupUI();
     }
+
+    bool m_isInitialize;
+    bool m_isOnButton;
 
     private KeyCode m_curInputKey;
     private string m_KeyNameText;
     private string m_KeyValueText;
+
     private void OnGUI()
     {
-        if (Input.anyKeyDown)
+        if (m_isInitialize == false)
         {
-            if(m_curInputKey != Event.current.keyCode &&
-                Event.current.keyCode != KeyCode.None)
-            {
-                m_curInputKey = Event.current.keyCode;
+            GetText((int)Texts.KeyNameText).text = m_KeyNameText;
+            GetText((int)Texts.KeyValueText).text = m_KeyValueText;
 
-                if (m_curInputKey == KeyCode.None||
-                    m_curInputKey == KeyCode.LeftAlt ||
-                    m_curInputKey == KeyCode.RightAlt ||
-                    m_curInputKey == KeyCode.LeftControl ||
-                    m_curInputKey == KeyCode.RightControl ||
-                    m_curInputKey == KeyCode.LeftShift ||
-                    m_curInputKey == KeyCode.RightShift)
-                {
-                }
-                else
-                {
-                    if(Input.GetKey(KeyCode.LeftShift))
-                    {
-                        //Debug.Log($"{KeyCode.LeftShift} + {m_curInputKey}");
-                        //GetText((int)Texts.KeyValueText).text=$"{KeyCode.LeftShift} + {m_curInputKey}";
-                    }
-                    else
-                    {
-                        Debug.Log(m_curInputKey);
-                        GetText((int)Texts.KeyValueText).text = m_curInputKey.ToString();
-                    }
-                }
-            }
+
+            m_isInitialize = true;
+        }
+
+        if (Event.current.isMouse && m_isOnButton == false)
+        {
+            GetText((int)Texts.KeyValueText).text = (KeyCode.Mouse0 + Event.current.button).ToString();
+        }
+
+        if (Input.anyKeyDown &&
+            Input.GetKey(KeyCode.None) == false &&
+            Event.current.keyCode != KeyCode.None)
+        {
+            m_curInputKey = Event.current.keyCode;
+            GetText((int)Texts.KeyValueText).text = m_curInputKey.ToString();
+            return;
         }
     }
 

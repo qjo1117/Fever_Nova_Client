@@ -14,8 +14,6 @@ public class MainScene : BaseScene
     protected override void Init()
     {
         Managers.UI.ShowSceneUI<UI_MainMenu>("UI_MainMenu");
-        //Managers.UI.ShowPopupUI<UI_Option>("UI_Option");
-        //Managers.UI.ShowPopupUI<UI_KeyInput>("UI_KeyInput");
     }
 
     public override void Clear()
