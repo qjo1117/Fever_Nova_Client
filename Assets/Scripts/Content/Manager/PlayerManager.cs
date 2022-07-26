@@ -6,6 +6,8 @@ using Define;
 
 public class PlayerManager : MonoBehaviour
 {
+    public Transform                m_spawnPoint = null;
+
     private List<PlayerController>  m_listPlayers = new List<PlayerController>();
     private PlayerController        m_mainPlayer = null;
 
@@ -13,6 +15,8 @@ public class PlayerManager : MonoBehaviour
     public List<PlayerController> List { get => m_listPlayers; }
 
     public PlayerController MainPlayer { get => m_mainPlayer; }
+
+    public Vector3 SpanwPoint { get => m_spawnPoint.position; }
 
 
     void Update()
@@ -97,6 +101,10 @@ public class PlayerManager : MonoBehaviour
         //Demege(p_player.ID, p_attack, p_force);
     }
 
-
+	private void OnDrawGizmos()
+	{
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(m_spawnPoint.position, Vector3.one * 3.0f);
+	}
 
 }

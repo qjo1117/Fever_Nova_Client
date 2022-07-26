@@ -8,10 +8,10 @@ public class InGameScene : BaseScene
 
     protected override void LoadGameObject()
     {
-        Managers.Resource.RegisterPoolGameObject(Path.Boom);
-        Managers.Resource.RegisterPoolGameObject(Path.Boom_Particle);
-        Managers.Resource.RegisterPoolGameObject(Path.Monster);
-        Managers.Resource.RegisterPoolGameObject(Path.Player);
+        Managers.Resource.RegisterPoolGameObject(Path.Boom, 20);
+        Managers.Resource.RegisterPoolGameObject(Path.Boom_Particle, 20);
+        Managers.Resource.RegisterPoolGameObject(Path.Monster, 30);
+        Managers.Resource.RegisterPoolGameObject(Path.Player, 5);
 
         int l_count = 2;
         Managers.Resource.RegisterPoolGameObject(Path.UI_PopupMsg, l_count);
@@ -40,16 +40,18 @@ public class InGameScene : BaseScene
 	{
 
         UIInit();
+        InitUI();
         Managers.Game.StartGame();
-        
+
+        // Init Camera
         m_camera = GameObject.FindObjectOfType<CameraController>();
-        m_camera.SetPlayer(Managers.Game.Player.Spawn(Vector3.zero, new PlayerStat { id = 0, name = "Sample_Player" }).gameObject);
+        m_camera.SetPlayer(Managers.Game.Player.Spawn(Managers.Game.Player.SpanwPoint, new PlayerStat { id = 0, name = "Sample_Player" }).gameObject);
     }
 
-    private void UIInit()
+    private void InitUI()
     {
         UI_PopupMsg l_popupMsg = Managers.UI.ShowPopupUI<UI_PopupMsg>("UI_PopupMsg");
-        l_popupMsg.Message = "Àû ÃâÇö";
+        l_popupMsg.Message = "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
         l_popupMsg.DelayDeleteTime = 3.0f;
 
         Managers.UI.ShowSceneUI<UI_Aim>("UI_Aim");
@@ -73,6 +75,7 @@ public class InGameScene : BaseScene
     }
 
 
+
     protected override void OnUpdate()
 	{
 		if(Input.GetKeyDown(KeyCode.V) == true) {
@@ -85,4 +88,5 @@ public class InGameScene : BaseScene
 
         Managers.Log("InGame Clear");
     }
+
 }

@@ -15,8 +15,8 @@ public class SkillTable
 		public System.Int32 index;
 		public System.String name;
 		public System.Int32 id;
-		public System.String skillRangeRadius;
-		public System.String skillObName;
+		public System.Int32 skillRangeRadius;
+		public System.Int32 skillObName;
 		public System.Int32 skillObDelay;
 		public System.String skillObcastingPos;
 		public System.Int16 skillObQuantity;
@@ -24,8 +24,8 @@ public class SkillTable
 		public System.Int32 skillCastInterval;
 		public System.Int32 skillCoolTime;
 		public range rangeType;
-		public System.String rangeLength;
-		public System.String rangeWidth;
+		public System.Int32 rangeLength;
+		public System.Int32 rangeWidth;
 		public System.Int32 rangeHeight;
 		public System.Int32 rangeRadius;
 		public System.Int32 rangeAngle;
@@ -33,10 +33,10 @@ public class SkillTable
 		public System.Int32 skillDamage;
 		public System.String kbOnOff;
 		public System.Int32 kbDistance;
-		public System.String skillAnimation1;
-		public System.String skillAnimation2;
-		public System.String eventName;
-		public System.String  fxSkillCasting;
-		public System.String fxSkillCollsion;
+		public System.Int32 skillAnimation1;
+		public System.Int32 skillAnimation2;
+		public System.Int32 eventName;
+		public System.Int32  fxSkillCasting;
+		public System.Int32 fxSkillCollsion;
 
 }

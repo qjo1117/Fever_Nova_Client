@@ -5,9 +5,19 @@ using UnityEngine;
 
 public class GameManager
 {
-    private PlayerManager m_player = null;
+	#region Variable
+
+	private PlayerManager m_player = null;
     private MonsterManager m_monster = null;
     private BoomManager m_boom = null;
+    private RespawnManager m_respawn = null;
+    private int m_score = 0;
+
+    private int m_respawnIndex = 0;
+
+    private int m_beginPlayTime = 0;
+    private int m_endPlayTime = 0;
+
     private ItemManager m_item = null;
 
     private int m_score = 0;
@@ -24,6 +34,19 @@ public class GameManager
     public PlayerManager Player { get => m_player; }
     public MonsterManager Monster { get => m_monster; }
     public BoomManager Boom { get => m_boom; }
+	#endregion
+
+	#region Property
+	public PlayerManager Player { get => m_player; }
+    public MonsterManager Monster { get => m_monster; }
+    public BoomManager Boom { get => m_boom; }
+    public RespawnManager Respawn { get => m_respawn; }
+
+    public List<GameObject> Prefab { get => m_listPrefab; }
+    public int Score { get => m_score; set => m_score = value; }
+    public int RespawnIndex { get => m_respawnIndex; set => m_respawnIndex = value; }
+
+    // Item Manager 추가 (문제 될시 삭제 바람)
     public ItemManager Item { get => m_item; }
     public List<GameObject> Prefab { get => m_listPrefab; }
     public int Score { get => m_score; set => m_score = value; }
@@ -49,24 +72,20 @@ public class GameManager
 
     }
 
+
     // 게임이 시작할때 가장 필요한 요소들을 셋팅한다.
     public void StartGame()
 	{
         {
-            GameObject obj = GameObject.Find("@PlayerManager");
-            if (obj == null) {
-                obj = new GameObject { name = "@PlayerManager" };
-            }
-            m_player = obj.GetOrAddComponent<PlayerManager>();
+            m_player = GameObject.FindObjectOfType<PlayerManager>();
+            m_monster = GameObject.FindObjectOfType<MonsterManager>();
+            m_boom = GameObject.FindObjectOfType<BoomManager>();
+            m_respawn = GameObject.FindObjectOfType<RespawnManager>();
         }
 
-        {
-            GameObject obj = GameObject.Find("@MonsterManager");
-            if (obj == null) {
-                obj = new GameObject { name = "@MonsterManager" };
-            }
-            m_monster = obj.GetOrAddComponent<MonsterManager>();
-        }
+        m_player.Init();
+        m_monster.Init();
+        m_respawn.Init();
 
         {
             GameObject obj = GameObject.Find("@BoomManager");

@@ -18,8 +18,8 @@ public class DataSkillTable
 			info.index = (System.Int32)item["index"];
 			info.name = (System.String)item["name"];
 			info.id = (System.Int32)item["id"];
-			info.skillRangeRadius = (System.String)item["skillRangeRadius"];
-			info.skillObName = (System.String)item["skillObName"];
+			info.skillRangeRadius = (System.Int32)item["skillRangeRadius"];
+			info.skillObName = (System.Int32)item["skillObName"];
 			info.skillObDelay = (System.Int32)item["skillObDelay"];
 			info.skillObcastingPos = (System.String)item["skillObcastingPos"];
 			info.skillObQuantity = (System.Int16)item["skillObQuantity"];
@@ -27,8 +27,8 @@ public class DataSkillTable
 			info.skillCastInterval = (System.Int32)item["skillCastInterval"];
 			info.skillCoolTime = (System.Int32)item["skillCoolTime"];
 			info.rangeType = (range)Enum.Parse(typeof(range), (string)item["enum|range|rangeType"]);
-			info.rangeLength = (System.String)item["rangeLength"];
-			info.rangeWidth = (System.String)item["rangeWidth"];
+			info.rangeLength = (System.Int32)item["rangeLength"];
+			info.rangeWidth = (System.Int32)item["rangeWidth"];
 			info.rangeHeight = (System.Int32)item["rangeHeight"];
 			info.rangeRadius = (System.Int32)item["rangeRadius"];
 			info.rangeAngle = (System.Int32)item["rangeAngle"];
@@ -36,11 +36,11 @@ public class DataSkillTable
 			info.skillDamage = (System.Int32)item["skillDamage"];
 			info.kbOnOff = (System.String)item["kbOnOff"];
 			info.kbDistance = (System.Int32)item["kbDistance"];
-			info.skillAnimation1 = (System.String)item["skillAnimation1"];
-			info.skillAnimation2 = (System.String)item["skillAnimation2"];
-			info.eventName = (System.String)item["eventName"];
-			info. fxSkillCasting = (System.String)item[" fxSkillCasting"];
-			info.fxSkillCollsion = (System.String)item["fxSkillCollsion"];
+			info.skillAnimation1 = (System.Int32)item["skillAnimation1"];
+			info.skillAnimation2 = (System.Int32)item["skillAnimation2"];
+			info.eventName = (System.Int32)item["eventName"];
+			info. fxSkillCasting = (System.Int32)item[" fxSkillCasting"];
+			info.fxSkillCollsion = (System.Int32)item["fxSkillCollsion"];
 
         
             listSkillTable.Add(info);
