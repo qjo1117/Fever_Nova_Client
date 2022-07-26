@@ -8,6 +8,9 @@ public class GameManager
     private PlayerManager m_player = null;
     private MonsterManager m_monster = null;
     private BoomManager m_boom = null;
+
+    private ItemManager m_item = null;
+
     private int m_score = 0;
 
     //private int m_beginPlayTime = 0;
@@ -25,6 +28,11 @@ public class GameManager
     public PlayerManager Player { get => m_player; }
     public MonsterManager Monster { get => m_monster; }
     public BoomManager Boom { get => m_boom; }
+
+    // Item Manager 추가 (문제 될시 삭제 바람)
+    public ItemManager Item { get => m_item; }
+
+
     public List<GameObject> Prefab { get => m_listPrefab; }
     public int Score { get => m_score; set => m_score = value; }
 
@@ -37,6 +45,7 @@ public class GameManager
 
     public void Init()
     {
+        
          // 오브젝트가 처음 생성되엇을때 필요한 정보를 가지고 있는다.
 
     }
@@ -76,8 +85,21 @@ public class GameManager
             m_boom = obj.GetOrAddComponent<BoomManager>();
         }
 
+        // Item Manager 추가 
+        {
+            GameObject obj = GameObject.Find("@ItemManager");
+            if (obj == null)
+            {
+                obj = new GameObject { name = "@ItemManager" };
+            }
+            m_item = obj.GetOrAddComponent<ItemManager>();
+        }
+
         Managers.Game.Player.Init();
         Managers.Game.Monster.Init();
+
+        // Item Manager Init 추가
+        Managers.Game.Item.Init();
 
         // 시작 시간을 가져온다.
         // m_beginPlayTime = DateTime.Now.Second + DateTime.Now.Month * 60;

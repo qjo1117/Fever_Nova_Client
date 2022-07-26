@@ -74,6 +74,8 @@ public class PlayerController : MonoBehaviour
     private int m_killCount;           // 죽인 몬스터 수
     private int m_multiKillCount;      // 멀티킬한 횟수
 
+    // --------- player hp bar ---------
+    private UI_PlayerHPBar m_playerHPBar = null;
 
     #endregion
 
@@ -98,6 +100,13 @@ public class PlayerController : MonoBehaviour
     }
 
     public int MonsterMultiKillCount { get => m_multiKillCount; set => m_multiKillCount = value; }
+
+    // 플레이어 hp바 PlayerManager에서 PlayerController로 이동
+
+    // => Health 아이템 충돌시 PlayerController와 충돌하게 되므로 hp 바 갱신을 위해서
+    // PlayerController로 플레이어 hp바를 이동하였다.
+    // --------- player hp bar ---------
+    public UI_PlayerHPBar PlayerHPBar { get => m_playerHPBar; set => m_playerHPBar = value; }
 
     #endregion
 
@@ -130,6 +139,12 @@ public class PlayerController : MonoBehaviour
 
         if (m_stat.hp <= 0)
         {
+            if (Util.FindChild<UI_ResultScreen>(Managers.UI.Root, "UI_ResultScreen") != null)
+            {
+                return;
+            }
+
+
             // 게임 결과창 출력
             Managers.UI.ShowPopupUI<UI_ResultScreen>("UI_ResultScreen");
             UI_Result l_result = Managers.UI.ShowPopupUI<UI_Result>("UI_Result");
@@ -155,6 +170,7 @@ public class PlayerController : MonoBehaviour
         }
 
         m_stat.hp += p_recoverHp;
+        m_playerHPBar.HP = m_stat.hp;
     }
 
     #region 상태 업데이트

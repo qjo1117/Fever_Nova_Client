@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     private List<PlayerController>  m_listPlayers = new List<PlayerController>();
     private PlayerController        m_mainPlayer = null;
 
-    private UI_PlayerHPBar          m_playerHPBar = null;
+
 
     // 이름 추천 받음
     public List<PlayerController> List { get => m_listPlayers; }
@@ -22,12 +22,12 @@ public class PlayerManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Keypad1)) {
             m_mainPlayer.Demege(10);
-            m_playerHPBar.HP = m_mainPlayer.Stat.hp;
+            m_mainPlayer.PlayerHPBar.HP = m_mainPlayer.Stat.hp;
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad2)) {
             m_mainPlayer.Recover(10);
-            m_playerHPBar.HP = m_mainPlayer.Stat.hp;
+            m_mainPlayer.PlayerHPBar.HP = m_mainPlayer.Stat.hp;
         }
     }
 
@@ -58,11 +58,12 @@ public class PlayerManager : MonoBehaviour
         }
 
         // 플레이어 HP바 생성
-        m_playerHPBar = Managers.UI.ShowSceneUI<UI_PlayerHPBar>("UI_PlayerHPBar");
-        m_playerHPBar.HP = l_player.Stat.hp;
-        m_playerHPBar.MaxHP = l_player.Stat.maxHp;
-        Managers.UI.SetCanvas(m_playerHPBar.gameObject, false);
+        UI_PlayerHPBar l_playerHPBar = Managers.UI.ShowSceneUI<UI_PlayerHPBar>("UI_PlayerHPBar");
+        l_playerHPBar.HP = l_player.Stat.hp;
+        l_playerHPBar.MaxHP = l_player.Stat.maxHp;
+        Managers.UI.SetCanvas(l_playerHPBar.gameObject, false);
 
+        l_player.PlayerHPBar = l_playerHPBar;
         return l_player;
     }
 
