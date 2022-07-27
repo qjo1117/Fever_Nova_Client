@@ -42,6 +42,9 @@ public class UI_ResultScreen : UI_Popup
             item.ClosePopupUI();
         }
 
+        // 임시로 신을 다시로드하여 재시작
+        Managers.Scene.LoadScene(Define.Scene.InGame);
+
         ClosePopupUI();
     }
 

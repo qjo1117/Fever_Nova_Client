@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class UI_MainMenu : UI_Scene
 {
     #region ENUM
@@ -27,10 +26,6 @@ public class UI_MainMenu : UI_Scene
         ExitButton,
     }
 
-    enum GameObjects
-    {
-        UI_Option,  //??
-    }
     #endregion
 
     private void Start()
@@ -45,7 +40,6 @@ public class UI_MainMenu : UI_Scene
         Bind<Image>(typeof(Images));
         Bind<TextMeshProUGUI>(typeof(TextMeshPros));
         Bind<Button>(typeof(Buttons));
-        Bind<GameObject>(typeof(GameObjects));
 
         GetButton((int)Buttons.PlayButton).gameObject.BindEvent(PlayButtonClicked);
         GetButton((int)Buttons.OptionButton).gameObject.BindEvent(OptionButtonClicked);
