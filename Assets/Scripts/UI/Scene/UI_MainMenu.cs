@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+using Define;
 
 public class UI_MainMenu : UI_Scene
 {
@@ -25,13 +26,6 @@ public class UI_MainMenu : UI_Scene
         OptionButton,
         ExitButton,
     }
-
-
-
-    enum GameObjects
-    {
-        UI_Option,
-    }
     #endregion
 
     private void Start()
@@ -46,36 +40,40 @@ public class UI_MainMenu : UI_Scene
         Bind<Image>(typeof(Images));
         Bind<Text>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
-        Bind<GameObject>(typeof(GameObjects));
 
         GetButton((int)Buttons.PlayButton).gameObject.BindEvent(PlayButtonClicked);
         GetButton((int)Buttons.OptionButton).gameObject.BindEvent(OptionButtonClicked);
         GetButton((int)Buttons.ExitButton).gameObject.BindEvent(ExitButtonClicked);
-
-        //GetObject((int)GameObjects.UI_Option).SetActive(false);
     }
 
+    #region ButtonClicked
     public void PlayButtonClicked(PointerEventData data)
     {
-        Debug.Log("게임시작");
-        SceneManager.LoadScene("InGame");
+        if (data.button == PointerEventData.InputButton.Left)
+        {
+            Managers.Scene.LoadScene(Define.Scene.InGame);
+        }
     }
 
     public void OptionButtonClicked(PointerEventData data)
     {
-        Debug.Log("환경설정");
-        Managers.UI.ShowPopupUI<UI_Option>("UI_Option");
-        //GameObject.Find("UI_Option").GetComponent<UI_Option>().SetOption();
+        if (data.button == PointerEventData.InputButton.Left)
+        {
+            Managers.UI.ShowPopupUI<UI_Option>("UI_Option");
+        }
     }
 
     public void ExitButtonClicked(PointerEventData data)
     {
-        //종료버튼 누르면 바로 종료
+        if (data.button == PointerEventData.InputButton.Left)
+        {
 #if UNITY_EDITOR
-        Debug.Log("게임 종료");
-        UnityEditor.EditorApplication.isPlaying = false;
+            Debug.Log("게임 종료");
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+        }
     }
+    #endregion
 }
