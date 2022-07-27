@@ -117,6 +117,9 @@ public class ResourceManager
 		foreach (AsyncOperationHandle handle in m_listAddressable) {
 			Addressables.Release(handle);
 		}
+
+		// Release했을시 InvalidOperation 남아있으므로 m_listAddressable Clear - 찬혁 -
+		m_listAddressable.Clear();
 	}
 
 	public GameObject Instantiate(string _key, Transform _parent = null)

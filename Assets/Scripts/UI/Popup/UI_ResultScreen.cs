@@ -54,6 +54,7 @@ public class UI_ResultScreen : UI_Popup
             item.ClosePopupUI();
         }
 
+        Managers.Scene.LoadScene(Define.Scene.Main);
         ClosePopupUI();
     }
 

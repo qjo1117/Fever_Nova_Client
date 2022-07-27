@@ -40,7 +40,8 @@ namespace Define
 
 	public enum Scene {
 		Unknown,
-		Game,
+		Main,
+		InGame,
 	}
 
 

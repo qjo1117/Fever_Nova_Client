@@ -73,6 +73,8 @@ public class InGameScene : BaseScene
 
     public override void Clear()
     {
+        Managers.UI.Clear();
+        Managers.Game.Clear();
 
         Managers.Log("InGame Clear");
     }

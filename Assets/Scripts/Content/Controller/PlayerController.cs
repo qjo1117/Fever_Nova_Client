@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
 
     // => Health 아이템 충돌시 PlayerController와 충돌하게 되므로 hp 바 갱신을 위해서
     // PlayerController로 플레이어 hp바를 이동하였다.
+    // (Player hp Bar 생성하는 코드 자체는 PlayerManager에 존재한다. PlayerSpawn함수에서 생성하기떄문)
     // --------- player hp bar ---------
     public UI_PlayerHPBar PlayerHPBar { get => m_playerHPBar; set => m_playerHPBar = value; }
 

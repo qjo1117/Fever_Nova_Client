@@ -61,7 +61,6 @@ public class InputManager
 		AddKey(UserKey.Left, KeyCode.LeftArrow);
 		AddKey(UserKey.Evasion, KeyCode.Space);
 		AddKey(UserKey.Shoot, KeyCode.Mouse0);
-
 	}
 
 	public void Update()
@@ -168,6 +167,22 @@ public class InputManager
 	#endregion
 
 	#region 기능 함수
+	//추가
+	public KeyCode GetKeyData(UserKey p_key)
+    {
+		return m_dicKeys[p_key].listKey[0];
+	}
+
+	public void ChangeKey(UserKey _userKey, KeyCode _keyCode)
+	{
+		if (m_dicKeys.ContainsKey(_userKey) == true)
+		{
+			int l_size = m_dicKeys[_userKey].listKey.Count;
+			List<KeyCode> l_keys = m_dicKeys[_userKey].listKey;
+			l_keys[0] = _keyCode;
+		}
+	}
+
 	public bool GetKey(UserKey p_key)
 	{
 		// 등록된 키가 없을 경우
@@ -271,11 +286,6 @@ public class InputManager
 		}
 	}
 
-	public void ChangeKey(UserKey _userKey, KeyCode _keyCode)
-	{
-
-	}
-
 	private bool IsListKeyCode(List<KeyCode> _listKey, KeyCode _keyCode)
 	{
 		foreach (KeyCode key in _listKey) {
@@ -286,5 +296,6 @@ public class InputManager
 
 		return false;
 	}
+
 	#endregion
 }
