@@ -8,6 +8,7 @@ using Define;
 
 public class UI_KeyInput : UI_Popup
 {
+    #region Enum
     enum Texts
     {
         MessageText,
@@ -20,10 +21,15 @@ public class UI_KeyInput : UI_Popup
         OkButton,
         CanselButton
     }
+    #endregion
+
+    private UI_Option m_uiOption;
 
     private void Start()
     {
         Init();
+
+        m_uiOption = GameObject.Find("UI_Option").GetComponent<UI_Option>();
 
         m_isInitialize = false;
         m_isOnButton = false;
@@ -55,17 +61,24 @@ public class UI_KeyInput : UI_Popup
 
     public void OnOkButtonClicked(PointerEventData data)
     {
-        GameObject.Find("UI_Option").GetComponent<UI_Option>().InputDataAppry(GetText((int)Texts.KeyValueText).text);
-        m_isInitialize = false;
-        m_isOnButton = false;
-        ClosePopupUI();
+        if (data.button == PointerEventData.InputButton.Left)
+        {
+            
+            m_uiOption.InputDataAppry(GetText((int)Texts.KeyValueText).text);
+            m_isInitialize = false;
+            m_isOnButton = false;
+            ClosePopupUI();
+        }
     }
 
     public void OnCanselButtonClicked(PointerEventData data)
     {
-        m_isInitialize = false;
-        m_isOnButton = false;
-        ClosePopupUI();
+        if (data.button == PointerEventData.InputButton.Left)
+        {
+            m_isInitialize = false;
+            m_isOnButton = false;
+            ClosePopupUI();
+        }
     }
 
     bool m_isInitialize;

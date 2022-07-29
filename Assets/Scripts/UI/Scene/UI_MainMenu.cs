@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
+
+using Define;
 
 public class UI_MainMenu : UI_Scene
 {
@@ -14,7 +15,7 @@ public class UI_MainMenu : UI_Scene
         MainImage,
     }
 
-    enum TextMeshPros
+    enum Texts
     {
         GameTitle,
     }
@@ -25,7 +26,6 @@ public class UI_MainMenu : UI_Scene
         OptionButton,
         ExitButton,
     }
-
     #endregion
 
     private void Start()
@@ -38,37 +38,40 @@ public class UI_MainMenu : UI_Scene
         base.Init();
 
         Bind<Image>(typeof(Images));
-        Bind<TextMeshProUGUI>(typeof(TextMeshPros));
+        Bind<Text>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
 
         GetButton((int)Buttons.PlayButton).gameObject.BindEvent(PlayButtonClicked);
         GetButton((int)Buttons.OptionButton).gameObject.BindEvent(OptionButtonClicked);
         GetButton((int)Buttons.ExitButton).gameObject.BindEvent(ExitButtonClicked);
-
-        //GetObject((int)GameObjects.UI_Option).SetActive(false);
     }
 
+    #region ButtonClicked
     public void PlayButtonClicked(PointerEventData data)
     {
-        Debug.Log("°ÔÀÓ½ÃÀÛ");
+        Debug.Log("ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½");
         Managers.UI.ShowPopupUI<UI_GamePlaySelect>("UI_GamePlaySelect");
     }
 
     public void OptionButtonClicked(PointerEventData data)
     {
-        Debug.Log("È¯°æ¼³Á¤");
-        Managers.UI.ShowPopupUI<UI_Option>("UI_Option");
-        //GameObject.Find("UI_Option").GetComponent<UI_Option>().SetOption();
+        if (data.button == PointerEventData.InputButton.Left)
+        {
+            Managers.UI.ShowPopupUI<UI_Option>("UI_Option");
+        }
     }
 
     public void ExitButtonClicked(PointerEventData data)
     {
-        //Á¾·á¹öÆ° ´©¸£¸é ¹Ù·Î Á¾·á
+        if (data.button == PointerEventData.InputButton.Left)
+        {
 #if UNITY_EDITOR
-        Debug.Log("°ÔÀÓ Á¾·á");
-        UnityEditor.EditorApplication.isPlaying = false;
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+        }
     }
+    #endregion
 }

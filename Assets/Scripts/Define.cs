@@ -48,7 +48,7 @@ namespace Define
 	public enum Scene {
 		Unknown,
 		Main,
-		InGame,
+		InGame,//씬 이름이랑 일치해야해서 변경
 	}
 
 

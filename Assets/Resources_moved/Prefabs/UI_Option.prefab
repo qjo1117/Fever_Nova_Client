@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 3244937939771335663}
   - component: {fileID: 1381149244011846791}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: LeftText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1026,7 +1026,7 @@ GameObject:
   - component: {fileID: 8694170838095755649}
   - component: {fileID: 9015862790163369602}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: EvasionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1388,7 +1388,7 @@ GameObject:
   - component: {fileID: 8705601481725309643}
   - component: {fileID: 4748822079985322116}
   m_Layer: 5
-  m_Name: LeftText
+  m_Name: LeftTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1468,7 +1468,7 @@ GameObject:
   - component: {fileID: 6113258287860998774}
   - component: {fileID: 1110559672533915479}
   m_Layer: 5
-  m_Name: ForwardText
+  m_Name: ForwardTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1548,7 +1548,7 @@ GameObject:
   - component: {fileID: 6527219961540261390}
   - component: {fileID: 2213329909390457379}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: ShootText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1956,7 +1956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.227451, g: 0.121568635, b: 0.10980393, a: 0.7529412}
+  m_Color: {r: 0.5943396, g: 0.41101366, b: 0.39529192, a: 0.98039216}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3179,7 +3179,7 @@ GameObject:
   - component: {fileID: 6103193358184828392}
   - component: {fileID: 6103193358184828393}
   m_Layer: 5
-  m_Name: SoundText
+  m_Name: SoundTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3339,7 +3339,7 @@ GameObject:
   - component: {fileID: 569421621990883819}
   - component: {fileID: 4675254824594444930}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: BackwardText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3419,7 +3419,7 @@ GameObject:
   - component: {fileID: 5514437009362243224}
   - component: {fileID: 8381050302611529250}
   m_Layer: 5
-  m_Name: ShootText
+  m_Name: ShootTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3499,7 +3499,7 @@ GameObject:
   - component: {fileID: 1686330402720497291}
   - component: {fileID: 1373268311686489615}
   m_Layer: 5
-  m_Name: EvasionText
+  m_Name: EvasionTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3579,7 +3579,7 @@ GameObject:
   - component: {fileID: 5112001622141123936}
   - component: {fileID: 8272288058977128147}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: ForwardText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3697,7 +3697,7 @@ GameObject:
   - component: {fileID: 1045221731039338728}
   - component: {fileID: 7617256413197297133}
   m_Layer: 5
-  m_Name: RightText
+  m_Name: RightTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3853,7 +3853,7 @@ GameObject:
   - component: {fileID: 5620942040519545447}
   - component: {fileID: 1159504201010540455}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: RightText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4013,7 +4013,7 @@ GameObject:
   - component: {fileID: 6957396017962210808}
   - component: {fileID: 2756986513719967522}
   m_Layer: 5
-  m_Name: BackwardText
+  m_Name: BackwardTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
