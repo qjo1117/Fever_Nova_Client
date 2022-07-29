@@ -12,7 +12,7 @@ public class Health : BaseItem
         if(_player.Stat.hp < _player.Stat.maxHp)
         {
             _player.Recover(m_hpPlus);
-            Destroy(gameObject);
+            Managers.Resource.Destroy(gameObject);
         }
     }
 }

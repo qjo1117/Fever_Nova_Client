@@ -12,14 +12,20 @@ public struct ItemInfo
 
 public class ItemManager : MonoBehaviour
 {
-    public Transform            m_parentItemPoint;      // 아이템이 생성될 오브젝트들의 부모 Transfrom
+    // 데이터시트와 함께 사용하기 위해서는 데이터 시트 변경 될떄 마다 m_ItemPath 같이 변경 해주어야함.
+    // ex)  
+
+    public string[]                    m_ItemPath =             
+    {
+        Path.Health
+    };
+
+    public Transform                m_parentItemPoint;      // 아이템이 생성될 오브젝트들의 부모 Transfrom
 
     [SerializeField]
-    private List<ItemInfo>      m_listItemInfo;         // Json에서 가져온 ItemInfo리스트
-    [SerializeField]
-    private List<BaseItem>      m_listItems;            // 원본 아이템 리스트
+    private List<ItemInfo>       m_listItemInfo;         // Json에서 가져온 ItemInfo리스트
 
-    private Save                m_saveLoadBuf;          // Json 세이브, 로드한 데이터 임시저장하는 버퍼
+    private Save                      m_saveLoadBuf;          // Json 세이브, 로드한 데이터 임시저장하는 버퍼
 
 
     public void Init()
@@ -46,18 +52,24 @@ public class ItemManager : MonoBehaviour
         JsonFileSave();
     }
 
+    public void Spawn(int _id, Vector3 _spawnPosition)
+    {
+        BaseItem l_newItem;
+        l_newItem = Managers.Resource.Instantiate(m_ItemPath[_id]).GetComponent<BaseItem>();
+
+        l_newItem.transform.parent = m_parentItemPoint;
+        l_newItem.transform.position = _spawnPosition;
+    }
+
+
     // Json파일에서 Load한 아이템 정보를 통해 실제 아이템오브젝트를 생성하는 함수
     public void ItemLoad()
     {
-        BaseItem l_newItem;
         int l_count = m_listItemInfo.Count;
 
         for (int i = 0; i < l_count; i++)
         {
-            l_newItem = Instantiate(m_listItems[m_listItemInfo[i].id]);
-
-            l_newItem.transform.parent = m_parentItemPoint;
-            l_newItem.transform.position = m_listItemInfo[i].position;
+            Spawn(m_listItemInfo[i].id, m_listItemInfo[i].position);
         }
     }
 
@@ -93,22 +105,6 @@ public class ItemManager : MonoBehaviour
             m_listItemInfo.Add(l_iteminfo);
         }
     }
-
-    //private void VectorToTransform()
-    //{
-    //    Transform l_newTransform;
-    //    ItemSpawnPoint l_itemSpawnPoint;
-
-    //    foreach(ItemInfo info in m_listItemInfo)
-    //    {
-    //        l_newTransform = new GameObject("Point").transform;
-    //        l_newTransform.parent = m_parentItemPoint;
-    //        l_itemSpawnPoint = Util.GetOrAddComponent<ItemSpawnPoint>(l_newTransform.gameObject);
-
-    //        l_itemSpawnPoint.m_index = info.id;
-    //        l_itemSpawnPoint.transform.position = info.position;
-    //    }
-    //}
 
     // 버퍼에 Json파일로 출력할 Data 복사하는 함수
     private void InitializeSaveData()
@@ -161,4 +157,13 @@ public class ItemManager : MonoBehaviour
         Debug.Log("Loaded!!");
     }
 
+    public void Clear()
+    {
+        foreach (Transform trasnform in m_parentItemPoint)
+        {
+            Destroy(trasnform.gameObject);
+        }
+
+        m_listItemInfo.Clear();
+    }
 }

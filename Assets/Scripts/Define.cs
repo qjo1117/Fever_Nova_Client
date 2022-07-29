@@ -8,8 +8,6 @@ static class Path {
 	public const string Boom = "Boom";
 	public const string Boom_Particle = "Assets/05Prefabs/Boom_Particle";
 
-	public const string UI_PopupMsg = "UI/Popup/UI_PopupMsg";
-
 	public const string UI_MonsterHPBar = "UI/WorldSpace/UI_MonsterHPBar";
 
 	public const string UI_Aim = "UI/Scene/UI_Aim";
@@ -22,9 +20,18 @@ static class Path {
 	public const string UI_Goal = "UI/Scene/UI_Goal";
 	public const string UI_Score = "UI/Scene/UI_Score";
 	public const string UI_Pause = "UI/Scene/UI_Pause";
+	public const string UI_MainMenu = "UI/Scene/UI_MainMenu";
+
+	public const string UI_PopupMsg = "UI/Popup/UI_PopupMsg";
 	public const string UI_PauseScreen = "UI/Popup/UI_PauseScreen";
 	public const string UI_ResultScreen = "UI/Popup/UI_ResultScreen";
 	public const string UI_Result = "UI/Popup/UI_Result";
+	public const string UI_StageSelect = "UI/Popup/UI_StageSelect";
+	public const string UI_GamePlaySelect = "UI/Popup/UI_GamePlaySelect";
+	public const string UI_Option = "UI/Popup/UI_Option";
+	public const string UI_KeyInput = "UI/Popup/UI_KeyInput";
+
+	public const string Health = "Health";
 }
 
 

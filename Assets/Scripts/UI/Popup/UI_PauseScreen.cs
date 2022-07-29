@@ -45,7 +45,7 @@ public class UI_PauseScreen : UI_Popup
     // 메인화면 버튼 눌렀을떄 실행
     private void MainScrrenButtonClicked()
     {
-
+        Managers.Scene.LoadScene(Define.Scene.Main);
     }
 
 }

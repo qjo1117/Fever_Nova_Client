@@ -51,7 +51,7 @@ public class UI_MainMenu : UI_Scene
     public void PlayButtonClicked(PointerEventData data)
     {
         Debug.Log("게임시작");
-        Managers.Scene.LoadScene(Define.Scene.InGame);
+        Managers.UI.ShowPopupUI<UI_GamePlaySelect>("UI_GamePlaySelect");
     }
 
     public void OptionButtonClicked(PointerEventData data)

@@ -32,11 +32,12 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.UI_PauseScreen,l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_ResultScreen, l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_Result, l_count);
+
+        Managers.Resource.RegisterPoolGameObject(Path.Health, 20);
     }
 
 	protected override void Init()
 	{
-
         UIInit();
         Managers.Game.StartGame();
 
@@ -73,9 +74,6 @@ public class InGameScene : BaseScene
 
     public override void Clear()
     {
-        Managers.UI.Clear();
-        Managers.Game.Clear();
-
         Managers.Log("InGame Clear");
     }
 }
