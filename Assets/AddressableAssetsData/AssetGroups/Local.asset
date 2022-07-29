@@ -103,6 +103,8 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: f35b7603510fcc6478facad6c40c9d5b
     m_Address: UI/Popup/UI_Result
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   - m_GUID: 86079d5ce6a938a4b84fa58f55604273
     m_Address: UI/Popup/UI_Option
     m_ReadOnly: 0
@@ -113,6 +115,18 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 3dcfcbe07c9539c47a97cda20c0dc34b
     m_Address: UI/Scene/UI_MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f5e34e048fe2b174b9842bee119c680d
+    m_Address: Health
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7ec17de4828f5de4e9ddb3f82ff06628
+    m_Address: UI/Popup/UI_GamePlaySelect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f6cacec20cd8aa7409d148db1f1cf676
+    m_Address: UI/Popup/UI_StageSelect
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

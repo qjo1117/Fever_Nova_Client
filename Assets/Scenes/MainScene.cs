@@ -6,9 +6,11 @@ public class MainScene : BaseScene
 {
     protected override void LoadGameObject()
     {
-        Managers.Resource.RegisterPoolGameObject("UI/Scene/UI_MainMenu");
-        Managers.Resource.RegisterPoolGameObject("UI/Popup/UI_Option");
-        Managers.Resource.RegisterPoolGameObject("UI/Popup/UI_KeyInput");
+        Managers.Resource.RegisterPoolGameObject(Path.UI_MainMenu);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_Option);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_KeyInput);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_GamePlaySelect);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_StageSelect);
     }
 
     protected override void Init()

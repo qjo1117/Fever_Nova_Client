@@ -75,13 +75,13 @@ public class PlayerManager : MonoBehaviour
 
     public void Clear()
 	{
-        //      // 만약 하이라키에 플레이어가 생존해 있으면 삭제 시켜버린다.
-        //      foreach(PlayerController player in m_listPlayers) {
-        //          Managers.Resource.DelPrefab(player.gameObject);
-        //}
-        //      // 초기화
-        //      m_listPlayers.Clear();
-
+        // 만약 하이라키에 플레이어가 생존해 있으면 삭제 시켜버린다.
+        foreach (PlayerController player in m_listPlayers)
+        {
+            Managers.Resource.DelPrefab(player.gameObject);
+        }
+        // 초기화
+        m_listPlayers.Clear();
     }
 
     // 대미지를 입힐때 쓰인다.

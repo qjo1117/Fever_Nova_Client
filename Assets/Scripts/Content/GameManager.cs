@@ -13,9 +13,6 @@ public class GameManager
 
     private int m_score = 0;
 
-    //private int m_beginPlayTime = 0;
-    //private int m_endPlayTime = 0;
-
 
     // Unity의 Time을 이용하여 플레이타임 구현
     private float m_beginPlayTime = 0;
@@ -104,6 +101,14 @@ public class GameManager
         // 시작 시간을 가져온다.
         // m_beginPlayTime = DateTime.Now.Second + DateTime.Now.Month * 60;
         m_beginPlayTime = Time.time;
+    }
+
+    public void Restart()
+    {
+        // Managers.Game.Monster
+        Managers.Game.Player.Clear();
+        Managers.Game.Item.Clear();
+        Managers.UI.Clear();
     }
 
     public void Clear()
