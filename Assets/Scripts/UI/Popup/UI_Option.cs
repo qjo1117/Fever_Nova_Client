@@ -31,7 +31,7 @@ public class UI_Option : UI_Popup
         EvasionTag,
         ShootTag,
 
-        SoundText,
+        SoundTag,
         SoundValue,
     }
 

@@ -105,15 +105,15 @@ MonoBehaviour:
     m_Address: UI/Popup/UI_Result
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 86079d5ce6a938a4b84fa58f55604273
+  - m_GUID: 45434779224129840a2a907fd18c9030
     m_Address: UI/Popup/UI_Option
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 2604056213e4b344ab0747d451e2ed9d
+  - m_GUID: b5e1b4e2d1b0dde448f8d9bc87251221
     m_Address: UI/Popup/UI_KeyInput
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 3dcfcbe07c9539c47a97cda20c0dc34b
+  - m_GUID: 1be27df8c4d466646a48f52b467bd1ea
     m_Address: UI/Scene/UI_MainMenu
     m_ReadOnly: 0
     m_SerializedLabels: []
