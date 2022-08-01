@@ -36,5 +36,5 @@ public class UI_Pause : UI_Scene
         UI_PauseScreen l_popup = Managers.UI.ShowPopupUI<UI_PauseScreen>("UI_PauseScreen");
     }
 
-   
+
 }

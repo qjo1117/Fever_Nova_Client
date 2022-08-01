@@ -1,56 +1,62 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public abstract class BehaviorTree : MonoBehaviour
+public class BehaviorTree
 {
-    // 이러는 이유는 통합적으로 변수를 가져오는 방식이 귀찮기 때문
-    private Dictionary<string, object>  m_dicData = new Dictionary<string, object>();
-    private BehaviorNode                m_root = null;
+    private AI.State m_state;
+    private AI.NodeType m_nodeType;
+    private int m_index;
+    private BehaviorTree m_parent;
 
-    public void Init()
+    public BehaviorTree() => m_state = AI.State.INVALID;
+
+    public BehaviorTree Parent
     {
-        m_root = SetupTree();
-        gameObject.SetActive(true);
+        get => m_parent;
+        set => m_parent = value;
     }
 
-    protected void Update()
+    public AI.State State
     {
-        if (m_root != null) {
-            m_root.Update();
-        }
+        get => m_state;
+        set => m_state = value;
     }
 
-    // 추상 클래스
-    protected abstract BehaviorNode SetupTree();
-
-    public void SetData(string p_key, object p_data)
-	{
-        // 만약 사전에 등록되어있으면 그 값을 설정한다.
-        if (m_dicData.ContainsKey(p_key) == true){
-            m_dicData[p_key] = p_data;
-        }
-        // 등록 안되었다면 추가
-        else {
-            m_dicData.Add(p_key, p_data);
-        }
-    }
-
-    public object GetData(string p_key)
-	{
-        // 사전에 등록되어 있으면 반환
-        object data = null;
-        if(m_dicData.TryGetValue(p_key, out data) == true) {
-            return data;
-        }
-
-        // 아니면 Null반환
-        return null;
-	}
-
-    public T GetData<T>(string p_key)
+    public AI.NodeType NodeType
     {
-        return (T)GetData(p_key);
+        get => m_nodeType;
+        set => m_nodeType = value;
     }
 
+    public int Index
+    {
+        get => m_index;
+        set => m_index = value;
+    }
+
+    public virtual void Reset() => m_state = AI.State.INVALID;
+
+    public bool IsTerminated() => m_state == AI.State.SUCCESS || m_state == AI.State.FAILURE;
+
+    public bool IsRunning() => m_state == AI.State.RUNNING;
+
+    public virtual AI.State Update() => AI.State.SUCCESS;
+
+    public virtual AI.State Tick()
+    {
+        if (m_state == AI.State.INVALID)
+        {
+            Initialize();
+            m_state = AI.State.RUNNING;
+        }
+
+        m_state = Update();
+
+        if (m_state != AI.State.RUNNING)
+        {
+            Terminate();
+        }
+        return m_state;
+    }
+
+    public virtual void Initialize() { }
+
+    public virtual void Terminate() { }
 }

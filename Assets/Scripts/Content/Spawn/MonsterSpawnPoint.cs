@@ -7,7 +7,6 @@ public class MonsterSpawnPoint : MonoBehaviour
     // 현재 소환할 인덱스
     public int m_index = -1;
 
-
 	public Color GetColor()
 	{
 		// -1 일 경우, 더 경우가 없는 경우 magenta / 설정해야한다고 알리는 용도

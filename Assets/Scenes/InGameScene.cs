@@ -29,7 +29,9 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.UI_Pause, l_count);
 
         Managers.Resource.RegisterPoolGameObject(Path.UI_MonsterHPBar, 100);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_PauseScreen,l_count);
+
+        Managers.Resource.RegisterPoolGameObject(Path.UI_MonsterHPBar, 100);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_PauseScreen, l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_ResultScreen, l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_Result, l_count);
 
@@ -38,6 +40,7 @@ public class InGameScene : BaseScene
 
 	protected override void Init()
 	{
+
         UIInit();
         Managers.Game.StartGame();
 
@@ -48,7 +51,7 @@ public class InGameScene : BaseScene
     private void UIInit()
     {
         UI_PopupMsg l_popupMsg = Managers.UI.ShowPopupUI<UI_PopupMsg>("UI_PopupMsg");
-        l_popupMsg.Message = "Ï†Å Ï∂úÌòÑ!!";
+        l_popupMsg.Message = "¿˚ √‚«ˆ";
         l_popupMsg.DelayDeleteTime = 3.0f;
 
         Managers.UI.ShowSceneUI<UI_Aim>("UI_Aim");
@@ -74,6 +77,7 @@ public class InGameScene : BaseScene
 
     public override void Clear()
     {
+
         Managers.Log("InGame Clear");
     }
 }

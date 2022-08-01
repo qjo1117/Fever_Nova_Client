@@ -76,7 +76,7 @@ CapsuleCollider:
   m_Height: 1.9
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &1336292429
+--- !u!114 &3059735493817408689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,16 +85,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 3472199594695416382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16d54885a9d6a034f99d289df9fae5e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 7dba4d584d1f0984db6264a5fea3c48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_wayPoints:
-  - {x: 5.04, y: 0, z: -4.65}
-  - {x: 10.58, y: 0, z: 0.92}
-  m_moveSpeed: 5
-  m_checkRange: 5
-  m_hp: 100
-  m_maxHp: 100
+  m_stat:
+    Id: -1
+    Name: Unkown
+    Hp: 100
+    MaxHp: 100
+    MoveSpeed: 10
+    Mass: 1
+    Score: 1
+    TreeId: 0
+    Path: 
+  m_hpBar: {fileID: 0}
+  Detect_Range: 30
+  Alarm_Range: 15
+  Chase_MoveSpeed: 10
+  Patrol_MoveSpeed: 5
+  LineRenderMat: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  WayPointMat: {fileID: 2100000, guid: faaba991bbc47b54f84d50d44dcdba4c, type: 2}
 --- !u!114 &4487138549576368772
 MonoBehaviour:
   m_ObjectHideFlags: 0

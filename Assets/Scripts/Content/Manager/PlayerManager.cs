@@ -9,8 +9,6 @@ public class PlayerManager : MonoBehaviour
     private List<PlayerController>  m_listPlayers = new List<PlayerController>();
     private PlayerController        m_mainPlayer = null;
 
-
-
     // 이름 추천 받음
     public List<PlayerController> List { get => m_listPlayers; }
 
@@ -22,7 +20,7 @@ public class PlayerManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Keypad1)) {
             m_mainPlayer.Demege(10);
-            m_mainPlayer.PlayerHPBar.HP = m_mainPlayer.Stat.hp;
+            m_mainPlayer.PlayerHPBar.HP= m_mainPlayer.Stat.hp;
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad2)) {
@@ -62,8 +60,8 @@ public class PlayerManager : MonoBehaviour
         l_playerHPBar.HP = l_player.Stat.hp;
         l_playerHPBar.MaxHP = l_player.Stat.maxHp;
         Managers.UI.SetCanvas(l_playerHPBar.gameObject, false);
-
         l_player.PlayerHPBar = l_playerHPBar;
+
         return l_player;
     }
 
@@ -75,13 +73,13 @@ public class PlayerManager : MonoBehaviour
 
     public void Clear()
 	{
-        // 만약 하이라키에 플레이어가 생존해 있으면 삭제 시켜버린다.
-        foreach (PlayerController player in m_listPlayers)
-        {
-            Managers.Resource.DelPrefab(player.gameObject);
-        }
-        // 초기화
-        m_listPlayers.Clear();
+        //      // 만약 하이라키에 플레이어가 생존해 있으면 삭제 시켜버린다.
+        //      foreach(PlayerController player in m_listPlayers) {
+        //          Managers.Resource.DelPrefab(player.gameObject);
+        //}
+        //      // 초기화
+        //      m_listPlayers.Clear();
+
     }
 
     // 대미지를 입힐때 쓰인다.

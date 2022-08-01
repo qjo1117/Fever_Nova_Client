@@ -93,8 +93,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 299671925223577781}
+  - component: {fileID: 8913548318413685756}
   - component: {fileID: 8908412868380567192}
-  - component: {fileID: 6965915314933614782}
   m_Layer: 0
   m_Name: UI_BombJumpRange
   m_TagString: Untagged
@@ -118,6 +118,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8913548318413685756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8506837262157062595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 774589a92d3775744b4ea3da1579c08d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rangeRadius: 0.5
 --- !u!114 &8908412868380567192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,16 +144,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
---- !u!114 &6965915314933614782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8506837262157062595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 372b485906073b04a91c45439f586a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_rangeRadius: 0.5

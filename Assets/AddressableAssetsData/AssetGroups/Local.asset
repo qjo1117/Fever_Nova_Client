@@ -93,20 +93,8 @@ MonoBehaviour:
     m_Address: Assets/05Prefabs/Boom_Particle
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: bdc3298330f10284ea5bbbf4b883c45d
-    m_Address: UI/Popup/UI_PauseScreen
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: ab74b55775f9d5f45bbd529a1d7ea8e4
-    m_Address: UI/Popup/UI_ResultScreen
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: f35b7603510fcc6478facad6c40c9d5b
-    m_Address: UI/Popup/UI_Result
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 45434779224129840a2a907fd18c9030
-    m_Address: UI/Popup/UI_Option
+  - m_GUID: 7ec17de4828f5de4e9ddb3f82ff06628
+    m_Address: UI/Popup/UI_GamePlaySelect
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: b5e1b4e2d1b0dde448f8d9bc87251221
@@ -117,16 +105,28 @@ MonoBehaviour:
     m_Address: UI/Scene/UI_MainMenu
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: f5e34e048fe2b174b9842bee119c680d
-    m_Address: Health
+  - m_GUID: 45434779224129840a2a907fd18c9030
+    m_Address: UI/Popup/UI_Option
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 7ec17de4828f5de4e9ddb3f82ff06628
-    m_Address: UI/Popup/UI_GamePlaySelect
+  - m_GUID: bdc3298330f10284ea5bbbf4b883c45d
+    m_Address: UI/Popup/UI_PauseScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f35b7603510fcc6478facad6c40c9d5b
+    m_Address: UI/Popup/UI_Result
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ab74b55775f9d5f45bbd529a1d7ea8e4
+    m_Address: UI/Popup/UI_ResultScreen
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: f6cacec20cd8aa7409d148db1f1cf676
     m_Address: UI/Popup/UI_StageSelect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f5e34e048fe2b174b9842bee119c680d
+    m_Address: Health
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

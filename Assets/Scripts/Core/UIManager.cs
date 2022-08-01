@@ -146,24 +146,8 @@ public class UIManager {
         }
     }
 
-    public void CloseAllSceneUI()
-    {
-        UI_Scene l_uiScene;
-        int l_rootChildCount = Root.transform.childCount;
-
-        for (int i = l_rootChildCount - 1; i >= 0; i--) 
-        {
-            Root.transform.GetChild(i).TryGetComponent<UI_Scene>(out l_uiScene);
-            if (l_uiScene != null)
-            {
-                Managers.Resource.Destroy(l_uiScene.gameObject);
-            }
-        }
-    }
-
     public void Clear()
     {
-        CloseAllSceneUI();
         CloseAllPopupUI();
         m_sceneUI = null;
     }

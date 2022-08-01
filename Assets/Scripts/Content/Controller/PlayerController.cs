@@ -14,7 +14,6 @@ public class PlayerStat
     public float    moveSpeed = 100.0f;
     public float    evasionSpeed = 10.0f;
     public int      score = 0;
-    // 결과창 UI에 totalScore 출력해야 해서 추가함
     public int      totalScore = 0;
 }
 
@@ -117,8 +116,6 @@ public class PlayerController : MonoBehaviour
         m_rigid  = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
         m_handler = Util.FindChild(gameObject, "@Handler", true).transform;
-
-        m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
     }
 
     private void Update()
@@ -321,7 +318,8 @@ public class PlayerController : MonoBehaviour
             Managers.UI.Root.GetComponentInChildren<UI_Score>().ScoreLogCreate(10);
 
             // 목표 UI 테스트용
-            MonsterKillCount++;
+            m_killCount++;
+            Managers.UI.Root.GetComponentInChildren<UI_Goal>().MonsterKillCount = m_killCount;
         }
 
 
