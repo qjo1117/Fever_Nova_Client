@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollisionRespawn : MonoBehaviour
 {
-	private void OnTriggerEnter(Collider other)
+	public void OnTriggerEnter(Collider other)
 	{
 		int l_layer = other.gameObject.layer;
 
