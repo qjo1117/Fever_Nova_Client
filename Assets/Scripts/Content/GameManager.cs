@@ -11,12 +11,8 @@ public class GameManager
     private MonsterManager m_monster = null;
     private BoomManager m_boom = null;
     private RespawnManager m_respawn = null;
-    private int m_score = 0;
 
     private int m_respawnIndex = 0;
-
-    private int m_beginPlayTime = 0;
-    private int m_endPlayTime = 0;
 
     private ItemManager m_item = null;
 
@@ -110,6 +106,8 @@ public class GameManager
         Managers.Game.Monster.Init();
         // Item Manager Init 추가
         Managers.Game.Item.Init();
+
+        Physics.gravity = -9.8f * Vector3.up * 5.0f;
 
         // 시작 시간을 가져온다.
         //m_beginPlayTime = DateTime.Now.Second + DateTime.Now.Month * 60;

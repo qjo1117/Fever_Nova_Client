@@ -286,15 +286,6 @@ public class InputManager
 		}
 	}
 
-	public void ChangeKey(UserKey _userKey, KeyCode _keyCode)
-	{
-		if(m_dicKeys.ContainsKey(_userKey) == true) {
-			int l_size = m_dicKeys[_userKey].listKey.Count;
-			List<KeyCode> l_keys = m_dicKeys[_userKey].listKey;
-			l_keys[0] = _keyCode;
-		}
-	}
-
 	private bool IsListKeyCode(List<KeyCode> _listKey, KeyCode _keyCode)
 	{
 		foreach (KeyCode key in _listKey) {

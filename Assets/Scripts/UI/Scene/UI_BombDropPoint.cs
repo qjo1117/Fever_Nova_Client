@@ -34,7 +34,7 @@ public class UI_BombDropPoint : UI_Scene
         Ray l_ray = m_mainCam.ScreenPointToRay(Input.mousePosition);
 
         // ray를 쏴봐서 마우스 위치의 월드 위치값을 구함
-        if (Physics.Raycast(l_ray, out l_hit, 100f))
+        if (Physics.Raycast(l_ray, out l_hit, 100f, 1 << (int)Define.Layer.Ground))
         {
             // 현재 마우스 위치 폭탄 사거리 범위안인지 체크
             if(BombRangeInnerCheck(l_hit.point))

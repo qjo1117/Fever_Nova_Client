@@ -29,12 +29,9 @@ public class UI_Aim : UI_Scene
         // 마우스 위치에 ray를 쏴서 월드 위치값 도출
         Ray l_Ray = m_mainCam.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(l_Ray, out hit, 100f))
+        if (Physics.Raycast(l_Ray, out hit, 100.0f, 1 << (int)Define.Layer.Ground))
         {
-            if(transform.position!= hit.point)
-            {
-                transform.position = hit.point;
-            }
+            transform.position = hit.point;
         }
     }
 
