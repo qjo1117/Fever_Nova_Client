@@ -1,0 +1,6 @@
+준영이 AI코드와, 종배형과 내가 만든 UI코드를 합친 파일임.
+AI와 합치기전의 UI 원본코드가 필요 할 수도있을것 같아서, 이렇게 따로 올림.
+
+용량이 (매우)크므로 드라이브 링크 주소로 올림.
+
+link : https://drive.google.com/file/d/1D1q8nutBQLycsqM7MWj3wXFmZrGna12g/view?usp=sharing
