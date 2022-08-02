@@ -5,9 +5,9 @@ using UnityEngine;
 // 매니저로 굳이 뺀 이유 : 서버
 // 패킷 묶어서 보낼려고
 
-public class BoomManager : MonoBehaviour
+public class BombManager : MonoBehaviour
 {
-    private List<Boom> m_listBoom = new List<Boom>();
+    private List<Bomb> m_listBoom = new List<Bomb>();
 
 	[SerializeField]
     private float m_speed = 600;                         // 
@@ -18,11 +18,11 @@ public class BoomManager : MonoBehaviour
 	[SerializeField]
 	private float m_jumpForce = 3000.0f;
 	[SerializeField]
-	private float m_ratio = 10.0f;
+	private float m_ratio = 9.0f;
 
-    public Boom ShootSpawn(Vector3 _position, Vector3 _direction, float _dist)
+    public Bomb ShootSpawn(Vector3 _position, Vector3 _direction, float _dist)
 	{
-		Boom l_boom = Managers.Resource.Instantiate("Boom", transform).GetComponent<Boom>();
+		Bomb l_boom = Managers.Resource.Instantiate("Bomb", transform).GetComponent<Bomb>();
 		
 		// 기본적인 스탯 셋팅
 		l_boom.Speed = m_speed;
@@ -33,15 +33,12 @@ public class BoomManager : MonoBehaviour
 		l_boom.Shoot(_position, _direction, _dist / m_ratio);
 		m_listBoom.Add(l_boom);
 
-		// TODO : 테스트
-		Managers.UI.Root.GetComponentInChildren<UI_BombRange>().RangeRadius = _dist;
-
 		return l_boom;
 	}
 
-	public Boom JumpSpawn(Vector3 _position)
+	public Bomb JumpSpawn(Vector3 _position)
 	{
-		Boom l_boom = Managers.Resource.Instantiate("Boom", transform).GetComponent<Boom>();
+		Bomb l_boom = Managers.Resource.Instantiate("Bomb", transform).GetComponent<Bomb>();
 
 		// 기본적인 스탯 셋팅
 		l_boom.Speed = m_speed;
@@ -54,12 +51,12 @@ public class BoomManager : MonoBehaviour
 		return l_boom;
 	}
 
-	public void DeSpawn(Boom _boom)
+	public void DeSpawn(Bomb _boom)
 	{
 		m_listBoom.Remove(_boom);
 
 		// 파티클
-		GameObject particle = Managers.Resource.Instantiate(Path.Boom_Particle, transform);
+		GameObject particle = Managers.Resource.Instantiate(Path.Bomb_Particle, transform);
 		particle.transform.position = _boom.transform.position;
 		Managers.Resource.Destroy(particle, 7.0f);
 

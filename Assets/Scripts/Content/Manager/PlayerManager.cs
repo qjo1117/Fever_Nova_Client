@@ -11,18 +11,21 @@ public class PlayerManager : MonoBehaviour
     private List<PlayerController>  m_listPlayers = new List<PlayerController>();
     private PlayerController        m_mainPlayer = null;
 
-    #endregion
+	#endregion
 
-    #region Property
-    // 이름 추천 받음
-    public List<PlayerController> List { get => m_listPlayers; }
+	#region Property
+	// 이름 추천 받음
+	public List<PlayerController> List { get => m_listPlayers; }
     public PlayerController MainPlayer { get => m_mainPlayer; }
     public Vector3 SpanwPoint { get => m_spawnPoint.position; }
 
-    #endregion
+	#endregion
 
-    #region Player Variable
-    private float           m_jumpRange = 4.0f;
+	#region Player Variable
+	[SerializeField]
+    private float           m_jumpRange = 5.0f;
+	[SerializeField]
+    private float           m_explosionRange = 12.0f;
     #endregion
 
     #region Player Property
@@ -78,7 +81,9 @@ public class PlayerManager : MonoBehaviour
         // 메인 플레이어 설정
         if (m_mainPlayer == null) {
             m_mainPlayer = l_player;
-            m_mainPlayer.BombRange = Managers.UI.Root.GetComponentInChildren<UI_BombRange>();
+
+            m_mainPlayer.ExplosionRadius = m_explosionRange;
+            m_mainPlayer.ExplosionJumpRadius = m_jumpRange;
         }
 
         // 플레이어 HP바 생성

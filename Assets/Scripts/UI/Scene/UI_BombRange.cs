@@ -39,13 +39,13 @@ public class UI_BombRange : UI_Scene
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         PositionUpdate();
     }
 
     // 반지름에 따라 UI의 크기 조정하는 함수
-    private void SetUIScale()
+    public void SetUIScale()
     {
         // 현재 이미지의 Pixel per unit 조정해서 scale 1,1,1 기준 반지름 0.5f
         transform.localScale = Vector3.one * (m_rangeRadius / 0.5f);

@@ -9,7 +9,7 @@ public class GameManager
 
 	private PlayerManager m_player = null;
     private MonsterManager m_monster = null;
-    private BoomManager m_boom = null;
+    private BombManager m_boom = null;
     private RespawnManager m_respawn = null;
 
     private int m_respawnIndex = 0;
@@ -31,7 +31,7 @@ public class GameManager
     #region Property
     public PlayerManager Player { get => m_player; }
     public MonsterManager Monster { get => m_monster; }
-    public BoomManager Boom { get => m_boom; }
+    public BombManager Boom { get => m_boom; }
     public RespawnManager Respawn { get => m_respawn; }
     // Item Manager 추가 (문제 될시 삭제 바람)
     public ItemManager Item { get => m_item; }
@@ -68,7 +68,7 @@ public class GameManager
         {
             m_player = Util.FindGetOrAddGameObject<PlayerManager>("PlayerManager");
             m_monster = Util.FindGetOrAddGameObject<MonsterManager>("MonsterManager");
-            m_boom = Util.FindGetOrAddGameObject<BoomManager>("BoomManager");
+            m_boom = Util.FindGetOrAddGameObject<BombManager>("BombManager");
             m_respawn = Util.FindGetOrAddGameObject<RespawnManager>("RespawnManager");
             m_item = Util.FindGetOrAddGameObject<ItemManager>("ItemManager");
         }

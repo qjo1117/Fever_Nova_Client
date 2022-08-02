@@ -112,9 +112,6 @@ MonoBehaviour:
     score: 0
     totalScore: 0
   m_state: 0
-  m_coolTime: 2
-  m_explosionJumpRadius: 4
-  m_explosionRadius: 15
   m_evasionDelayTime: 1
 --- !u!114 &8590821211538129971
 MonoBehaviour:
@@ -1899,19 +1896,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4888476691437928, guid: 49ede2abd454d6541969f5ed82f28081, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.06751
       objectReference: {fileID: 0}
     - target: {fileID: 4888476691437928, guid: 49ede2abd454d6541969f5ed82f28081, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.014636802
+      value: 0.0078
       objectReference: {fileID: 0}
     - target: {fileID: 4888476691437928, guid: 49ede2abd454d6541969f5ed82f28081, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.003693995
+      value: 0.0037
       objectReference: {fileID: 0}
     - target: {fileID: 4888476691437928, guid: 49ede2abd454d6541969f5ed82f28081, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0033173813
+      value: -0.0033
       objectReference: {fileID: 0}
     - target: {fileID: 4888476691437928, guid: 49ede2abd454d6541969f5ed82f28081, type: 3}
       propertyPath: m_LocalRotation.w

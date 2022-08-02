@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Define;
 
-public class Boom : MonoBehaviour
+public class Bomb : MonoBehaviour
 {
     public enum BoomState
 	{

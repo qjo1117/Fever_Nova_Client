@@ -5,8 +5,8 @@ using UnityEngine;
 static class Path {
 	public const string Player = "Assets/05Prefabs/Player";
 	public const string Monster = "Monster";
-	public const string Boom = "Boom";
-	public const string Boom_Particle = "Assets/05Prefabs/Boom_Particle";
+	public const string Bomb = "Bomb";
+	public const string Bomb_Particle = "Assets/05Prefabs/Boom_Particle";
 
 	public const string UI_MonsterHPBar = "UI/WorldSpace/UI_MonsterHPBar";
 

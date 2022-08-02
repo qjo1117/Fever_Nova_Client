@@ -8,8 +8,8 @@ public class InGameScene : BaseScene
 
     protected override void LoadGameObject()
     {
-        Managers.Resource.RegisterPoolGameObject(Path.Boom, 20);
-        Managers.Resource.RegisterPoolGameObject(Path.Boom_Particle, 20);
+        Managers.Resource.RegisterPoolGameObject(Path.Bomb, 20);
+        Managers.Resource.RegisterPoolGameObject(Path.Bomb_Particle, 20);
         Managers.Resource.RegisterPoolGameObject(Path.Monster, 30);
         Managers.Resource.RegisterPoolGameObject(Path.Player, 5);
 
