@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Save
+public class ItemSave
 {
     public List<ItemInfo> itemInfoList;
 
-    public Save()
+    public ItemSave()
     {
         itemInfoList = new List<ItemInfo>();
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Define;
+using UnityEngine.EventSystems;
 
 [System.Serializable]
 public class PlayerStat 
@@ -31,7 +32,6 @@ public class PlayerController : MonoBehaviour
     }
 
     #region 변수
-
     [SerializeField]
     private PlayerStat          m_stat = new PlayerStat();
 
@@ -55,17 +55,19 @@ public class PlayerController : MonoBehaviour
     private float               m_shotMaxDelay = 3.0f;
     private float               m_shotDelay = 0.0f;
 
+	[Header("Explosion")]
+	[SerializeField]
     private float               m_explosionJumpRadius = 4.0f;
+	[SerializeField]
+    private float               m_explosionRadius = 12.0f;
 
     [SerializeField]
     private float               m_evasionDelayTime = 1.0f;      // 대기 시간
     private float               m_evasionTime = 0.0f;           // 현재 시간
 
     private Boom                m_boom = null;
-
     private Rigidbody           m_rigid = null;
     private Animator            m_anim = null;
-
     private Transform           m_handler = null;
 
 
@@ -128,7 +130,7 @@ public class PlayerController : MonoBehaviour
         // 폭탄의 범위를 전달해준다.
         if (m_bombRange != null) {
             //m_bombRange.RangeRadius = (m_mousePos - transform.position).magnitude;
-            m_bombRange.RangeRadius = 4.0f;
+            m_bombRange.RangeRadius = m_explosionRadius;
         }
     }
 
@@ -141,7 +143,6 @@ public class PlayerController : MonoBehaviour
     {
         UpdateState();
         UpdateInput();
-
     }
 
 
@@ -151,7 +152,6 @@ public class PlayerController : MonoBehaviour
         m_stat.hp -= _attack;
 
         // Player Dead ---> Result
-        // 이거 그렇게 바로 보여주는거 아님
         if (m_stat.hp <= 0)
         {
             if (Util.FindChild<UI_ResultScreen>(Managers.UI.Root, "UI_ResultScreen") != null)
@@ -284,14 +284,18 @@ public class PlayerController : MonoBehaviour
             l_position.y = 0.0f;
             m_mousePos = l_hit.point;
 
-
+           
 
             Color l_color = Color.red;
+            float l_magnitude = l_position.sqrMagnitude;
             // 폭탄 반경보다 좁으면
-            if (l_position.sqrMagnitude <= m_explosionJumpRadius * m_explosionJumpRadius) {
+            if (l_magnitude <= m_explosionJumpRadius * m_explosionJumpRadius) {
                 m_state = PlayerState.Jump;
                 m_anim.SetBool("Jump", false);
-                m_bombRange.RangeRadius = 4.0f;
+
+                if(l_magnitude >= m_explosionRadius) {
+                    m_bombRange.RangeRadius = m_explosionRadius;
+                }
                 l_color = Color.blue;
             }
 
@@ -392,6 +396,10 @@ public class PlayerController : MonoBehaviour
         if (m_state == PlayerState.Evasion) {
             return;
         }
+        if(EventSystem.current.IsPointerOverGameObject() == true) {
+            return;
+		}
+
         m_state = PlayerState.Idle;
 
         InputMouse();

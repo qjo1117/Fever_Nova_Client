@@ -57,15 +57,16 @@ public class AI_Patrol_Waypoint : BT_Action
         }
         // 바라보는 방향을 설정해준다.
         Vector3 Dir = WayPoint - m_object.transform.position;
+        Dir.y = 0.0f;
         m_object.transform.rotation = Quaternion.Slerp
             (m_object.transform.rotation,
             Quaternion.LookRotation(Dir),
             Time.deltaTime * 8);
 
         // 이거 그냥 Transform에 달려잇는 걸로 움직이면 제대로 안움직임
-        //m_object.transform.Translate(Vector3.forward * m_moveSpeed * Time.deltaTime);
+        m_object.transform.Translate(Vector3.forward * m_moveSpeed * Time.deltaTime);
 
         // 현재 위에 코드로 인해 바라보는 방향이 WayPoint일 테니 앞으로 힘을 주면 Waypoint로 가는 것 처럼 보인다.
-        m_rigid.AddForce(Vector3.forward * m_moveSpeed);
+        //m_rigid.AddForce(Vector3.forward * m_moveSpeed);
     }
 }

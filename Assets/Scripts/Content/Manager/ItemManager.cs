@@ -25,7 +25,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField]
     private List<ItemInfo>       m_listItemInfo;         // Json에서 가져온 ItemInfo리스트
 
-    private Save                      m_saveLoadBuf;          // Json 세이브, 로드한 데이터 임시저장하는 버퍼
+    private ItemSave                      m_saveLoadBuf;          // Json 세이브, 로드한 데이터 임시저장하는 버퍼
 
 
     public void Init()
@@ -39,7 +39,7 @@ public class ItemManager : MonoBehaviour
     [ContextMenu("ItemInfoSave")]
     public void ItemInfoSave()
     {
-        m_saveLoadBuf = new Save();
+        m_saveLoadBuf = new ItemSave();
         if(m_parentItemPoint == null)
         {
             m_parentItemPoint = Util.FindChild<Transform>(gameObject, "ItemPoints");
@@ -76,7 +76,7 @@ public class ItemManager : MonoBehaviour
     // Json파일에서 아이템 정보를 Load하는 함수
     public void ItemInfoLoad()
     {
-        m_saveLoadBuf = new Save();
+        m_saveLoadBuf = new ItemSave();
         if (m_parentItemPoint == null)
         {
             m_parentItemPoint = Util.FindChild<Transform>(gameObject, "ItemPoints");
@@ -152,7 +152,7 @@ public class ItemManager : MonoBehaviour
     private void JsonFileLoad()
     {
         string jsonString = File.ReadAllText(Application.dataPath + "/Data/ItemInfos.json");
-        m_saveLoadBuf = JsonUtility.FromJson<Save>(jsonString);
+        m_saveLoadBuf = JsonUtility.FromJson<ItemSave>(jsonString);
 
         Debug.Log("Loaded!!");
     }

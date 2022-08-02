@@ -115,12 +115,35 @@ public class MonsterManager : MonoBehaviour
     }
 
 
+    // 지금 파라미터는 테이블에서 참조할 인덱스임
+    // ID를 Parameter로 받을 것인가에 대해 생각해야함
     public AI_Enemy Spawn(int _index)
     {
-        // -------------------
-        m_listMonster.Add(Managers.Resource.Instantiate("Monster", transform).GetOrAddComponent<AI_Enemy_01>());
-        return m_listMonster[m_listMonster.Count - 1];
+        // 굳이 HpBar랑 나눠서 해야함?
+        AI_Enemy l_monster = Managers.Resource.Instantiate("Monster", transform).GetOrAddComponent<AI_Enemy_01>();
+        m_listMonster.Add(l_monster);
+
+        // TODO : 테이블에 접근해서 객체를 생성및 스탯 반영하는 코드를 추가하면 될 것 같음
+
+        l_monster.m_hpBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(l_monster.transform, "UI_MonsterHPBar");
+        l_monster.m_hpBar.MaxHP = l_monster.m_stat.MaxHp;
+        l_monster.m_hpBar.HP = l_monster.m_stat.Hp;
+
+        return l_monster;
     }
+
+    // 일단 구현체만 만듬
+    public AI_Enemy_Boss BossSpawn(int _index)
+	{
+        AI_Enemy_Boss l_boss = null;
+        return l_boss;
+	}
+
+    public void DeSpawn(AI_Enemy _monster)
+	{
+        m_listMonster.Remove(_monster);
+        Managers.Resource.Destroy(_monster.gameObject, 1.0f);
+	}
 
     public void Register(AI_Enemy _monster)
     {

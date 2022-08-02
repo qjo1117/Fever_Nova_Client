@@ -113,6 +113,8 @@ MonoBehaviour:
     totalScore: 0
   m_state: 0
   m_coolTime: 2
+  m_explosionJumpRadius: 4
+  m_explosionRadius: 15
   m_evasionDelayTime: 1
 --- !u!114 &8590821211538129971
 MonoBehaviour:

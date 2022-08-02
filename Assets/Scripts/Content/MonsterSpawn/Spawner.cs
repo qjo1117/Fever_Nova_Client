@@ -124,52 +124,43 @@ public class Spawner : MonoBehaviour
     // �÷��̾ Ʈ���ſ� ���������� ������ �����ϸ� ���͸� �����Ѵ�.
     public void StartSpawn()
     {
-        // ������ �ƿ� ������ ���
-        if (m_listSpawnerInfo.Count < 0)
-        {
+        if (m_listSpawnerInfo.Count < 0) {
             return;
         }
 
-        // �ش� �ε����� �°� ������ �����Ѵ�.
+        // 해당 스폰에 대한 정보를 기반으로 스포너 구성
         int l_spawnSize = m_listSpawnerInfo.Count;
-        for (int i = 0; i < l_spawnSize; ++i)
-        {
-            var l_monster = Managers.Game.Monster.Spawn(m_listSpawnerInfo[i].Index);
+        for (int i = 0; i < l_spawnSize; ++i) {
+            // Spawner에서 지정한 몬스터를 소환하기 위해 인덱스로 구별
+            AI_Enemy l_monster = Managers.Game.Monster.Spawn(m_listSpawnerInfo[i].Index);
             l_monster.transform.position = m_listSpawnerInfo[i].Position;
-            l_monster.m_hpBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(l_monster.transform, "UI_MonsterHPBar");
-            l_monster.m_hpBar.MaxHP = l_monster.m_stat.MaxHp;
-            l_monster.m_hpBar.HP = l_monster.m_stat.Hp;
-
+            
+            // Patrol에 관련되어 맵핑
             l_monster.AddPatrolPoint(m_listSpawnerInfo[i].Position);
             int l_partolSize = m_listPatrolInfo[i].Count;
-            for (int j = 0; j < l_partolSize; j++)
-            {
+            for (int j = 0; j < l_partolSize; j++) {
                 l_monster.AddPatrolPoint(m_listPatrolInfo[i][j]);
             }
             l_monster.Init();
         }
 
+        // 만약 몬스터가 이미 등록되어 있다면 MonsterManager에게 등록하는 것만 해준다.
         l_spawnSize = m_monsters.transform.childCount;
-        for (int i = 0; i < l_spawnSize; ++i)
-        {
+        for (int i = 0; i < l_spawnSize; ++i) {
             AI_Enemy l_monster = null;
-            if (m_monsters.GetChild(i).TryGetComponent(out l_monster) == true)
-            {
+            if (m_monsters.GetChild(i).TryGetComponent(out l_monster) == true) {
                 Managers.Game.Monster.Register(l_monster);
             }
         }
 
 
-        // TODO : �ش� UI�� �����ؾ��ϴ� ��
-        // ��ǥ ����
     }
 
     
     private void RegisterMonster()
     {
         int l_size = m_monsters.childCount;
-        for (int i = 0; i < l_size; ++i)
-        {
+        for (int i = 0; i < l_size; ++i) {
             m_monsters.GetChild(i).gameObject.SetActive(false);
         }
     }

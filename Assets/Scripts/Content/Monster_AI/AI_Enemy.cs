@@ -47,7 +47,7 @@ public class AI_Enemy : MonoBehaviour
         m_hpBar.HP = m_stat.Hp;
         // Die
         if (m_stat.Hp <= 0) {
-
+            Managers.Game.Monster.DeSpawn(this);
 		}
     }
 

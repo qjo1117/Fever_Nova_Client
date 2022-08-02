@@ -42,8 +42,8 @@ public class AI_Combat_Chase : BT_Action
                 Quaternion.LookRotation(Dir),
                 Time.deltaTime * 4);
 
-            //m_object.transform.Translate(Vector3.forward * m_moveSpeed * Time.deltaTime);
-            m_rigid.AddForce(Vector3.forward * m_moveSpeed);
+            m_object.transform.Translate(Vector3.forward * m_moveSpeed * Time.deltaTime);
+            //m_rigid.AddForce(Vector3.forward * m_moveSpeed);
         }
     }
 }
