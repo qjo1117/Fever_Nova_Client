@@ -132,6 +132,11 @@ public class AI_Enemy_01 : AI_Enemy
 
     protected override void CreateBehaviorTreeAIState()
     {
+        // 현재 구조는 대략적으로 이렇다고 한다.
+        //                                    Main (Selecter)
+        //                Combat (Sequence)                    Patrol (Sequence)                
+        //      Detect (Action)      Chase (Action)             Patrol (Action)      
+
         m_enemyType = AI.EnemyType.Melee;
         m_brain = new BT_Root();
 
@@ -161,7 +166,8 @@ public class AI_Enemy_01 : AI_Enemy
 
         m_brain.Child = l_mainSelector;
 
-        Debug();
+        // TODO : 너무 난잡함 -박-
+        //Debug();
     }
 
     public override void AddPatrolPoint(Vector3 _position)

@@ -6,17 +6,30 @@ using Define;
 
 public class PlayerManager : MonoBehaviour
 {
-    public Transform                m_spawnPoint = null;
-
+	#region Variable
+	public Transform                m_spawnPoint = null;
     private List<PlayerController>  m_listPlayers = new List<PlayerController>();
     private PlayerController        m_mainPlayer = null;
 
+    #endregion
+
+    #region Property
     // 이름 추천 받음
     public List<PlayerController> List { get => m_listPlayers; }
-
     public PlayerController MainPlayer { get => m_mainPlayer; }
-
     public Vector3 SpanwPoint { get => m_spawnPoint.position; }
+
+    #endregion
+
+    #region Player Variable
+    private float           m_jumpRange = 4.0f;
+    #endregion
+
+    #region Player Property
+    public float JumpRange { get => m_jumpRange; }
+    #endregion
+
+
 
 
     void Update()
@@ -36,7 +49,12 @@ public class PlayerManager : MonoBehaviour
         m_mainPlayer?.OnUpdate();
     }
 
-    public PlayerController FindPlayer(int _id)
+	private void LateUpdate()
+	{
+        m_mainPlayer?.OnLateUpdate();
+	}
+
+	public PlayerController FindPlayer(int _id)
 	{
         foreach(PlayerController l_player in m_listPlayers) {
             // 아이디 검출을 인스턴스 아이디로 검출한다.
@@ -60,6 +78,7 @@ public class PlayerManager : MonoBehaviour
         // 메인 플레이어 설정
         if (m_mainPlayer == null) {
             m_mainPlayer = l_player;
+            m_mainPlayer.BombRange = Managers.UI.Root.GetComponentInChildren<UI_BombRange>();
         }
 
         // 플레이어 HP바 생성

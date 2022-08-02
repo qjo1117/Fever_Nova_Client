@@ -15,37 +15,21 @@ public class Boom : MonoBehaviour
 
 	[SerializeField]
     private BoomState           m_state = BoomState.Default;
-
-    [SerializeField]
     private float               m_explosionForce = 1000.0f;
-
-    [SerializeField]
-    private float               m_moveSpeed = 50000.0f;               // 폭탄의 가해지는 힘
-    [SerializeField]
+    private float               m_moveSpeed = 100.0f;               // 폭탄의 가해지는 힘
     private float               m_explosionRange = 5.0f;            // 폭발 반경
-    [SerializeField]
-    private float               m_detectRange = 2.0f;               // 감지 반경
-
     private float               m_explosionDelayTime = 0.0f;        // 현재 지연 시간
-    [SerializeField]
     private float               m_explosionMaxDelayTime = 5.0f;     // 최대 지연 시간
-    private bool                m_isExplosion = false;
-
-    private PlayerController    m_player = null;
     private Rigidbody           m_rigid = null;
-
     private int                 m_layer = 1 << (int)Layer.Monster | 1 << (int)Layer.Player;
-
-    private bool                m_isDelayState = false;
-
-    private bool                m_isGround = false;
-    private Vector3             m_groundPoint = Vector3.zero;
-    private Vector3             m_reflectionNormal = Vector3.zero;
 
 
     #region 프로퍼티
 
     public BoomState State { get => m_state; set => m_state = value; }
+    public float Speed { get => m_moveSpeed; set => m_moveSpeed = value; }
+    public float MaxDelayTime { get => m_explosionMaxDelayTime; set => m_explosionMaxDelayTime = value; }
+    public float ExplosionForce { get => m_explosionForce; set => m_explosionForce = value; }
 
     #endregion
 
@@ -60,20 +44,19 @@ public class Boom : MonoBehaviour
     }
 
     // 발사를 했을때 필요한 정보를 수집중
-    public void Shoot(Vector3 _position, Vector3 _direction, float _dist, Vector3 _move)
+    public void Shoot(Vector3 _position, Vector3 _direction, float _dist)
 	{
-        if(_dist >= m_moveSpeed) {
-            _dist = m_moveSpeed;
-        }
-        _move += _direction * _dist;
+        _direction *= _dist * m_moveSpeed;
         transform.position = _position;
-        m_rigid.AddForce(_move);
+        m_rigid.velocity = Vector3.zero;
+        m_rigid.AddForce(_direction);
 	}
 
-    public void JumpShoot(Vector3 _position, Vector3 _direction)
+    public void JumpShoot(Vector3 _position)
 	{
         transform.position = _position;
-        m_rigid.AddForce(_direction * m_moveSpeed);
+        m_rigid.velocity = Vector3.zero;
+        m_rigid.AddForce(-Vector3.up * m_moveSpeed);
         m_state = BoomState.Jump;
     }
 
@@ -97,7 +80,9 @@ public class Boom : MonoBehaviour
 
             }
             else if (l_layer == (int)Define.Layer.Monster) {
-                BehaviorTree l_monster = l_hit.collider.GetComponent<BehaviorTree>();
+                AI_Enemy l_monster = l_hit.collider.GetComponent<AI_Enemy>();
+                // TODO : 일단 직접적으로 대미지를 가하는 형식으로 테스트
+                l_monster.Demege(80, l_subVec / 2.0f);
             }
         }
 
@@ -105,12 +90,7 @@ public class Boom : MonoBehaviour
         m_explosionDelayTime = 0.0f;
         m_rigid.velocity = Vector3.zero;
 
-        // 파티클
-        GameObject particle = Managers.Resource.Instantiate(Path.Boom_Particle, Managers.Game.Boom.transform);
-        particle.transform.position = transform.position;
-        Managers.Resource.Destroy(particle, 7.0f);
-
-        Managers.Resource.Destroy(gameObject);
+        Managers.Game.Boom.DeSpawn(this);
     }
 
     public void JumpExplosion()
@@ -131,11 +111,11 @@ public class Boom : MonoBehaviour
             int l_layer = l_hit.collider.gameObject.layer;
             if (l_layer == (int)Define.Layer.Player) {
                 PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.collider.gameObject.GetInstanceID());
-                l_player.GetComponent<Rigidbody>().AddForce(l_subVec);
+                l_player.GetComponent<Rigidbody>().AddForce(l_subVec * 2.0f);
 
             }
             else if (l_layer == (int)Define.Layer.Monster) {
-                BehaviorTree l_monster = l_hit.collider.GetComponent<BehaviorTree>();
+                AI_Enemy l_monster = l_hit.collider.GetComponent<AI_Enemy>();
             }
         }
 
@@ -143,12 +123,7 @@ public class Boom : MonoBehaviour
         m_explosionDelayTime = 0.0f;
         m_rigid.velocity = Vector3.zero;
 
-        // 파티클
-        GameObject particle = Managers.Resource.Instantiate(Path.Boom_Particle, Managers.Game.Boom.transform);
-        particle.transform.position = transform.position;
-        Managers.Resource.Destroy(particle, 7.0f);
-
-        Managers.Resource.Destroy(gameObject);
+        Managers.Game.Boom.DeSpawn(this);
     }
 
     // 현재 폭발이 될 것인지를 카운팅한다.
@@ -168,10 +143,15 @@ public class Boom : MonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		if(m_state == BoomState.Jump && collision.collider.gameObject.layer == (int)Define.Layer.Ground) {
+        int l_layer = collision.collider.gameObject.layer;
+        // 점프 폭발을 일으킬때
+        if (m_state == BoomState.Jump && l_layer == (int)Define.Layer.Ground) {
             JumpExplosion();
         }
-
+        // 몬스터에게 부딪혔을때 (기본 상태)
+        else if(m_state == BoomState.Default && l_layer == (int)Define.Layer.Monster) {
+            Explosion();
+		}
 	}
 
 	private void OnDrawGizmos()

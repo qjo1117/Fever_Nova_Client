@@ -10,18 +10,17 @@ using UnityEngine;
 
 // ������ �༮���� ������ ��� �ִ´�.
 [System.Serializable]
-public struct SpawnerInfo 
 public struct SpawnerInfo
 {
-    public int Index;            // ���� ���� �ε���
-    public Vector3 Position;         // ������ ��ġ (��ȹ���ʿ��� �����ϱ�� �ؼ�)
+    public int Index;                   // ���� ���� �ε���
+    public Vector3 Position;            // ������ ��ġ (��ȹ���ʿ��� �����ϱ�� �ؼ�)
 }
 
 public class Spawner : MonoBehaviour
 {
 
-    #region Variable (����)
-    // --------- ��ȹ�� ���� UI ---------
+    #region Variable
+    // --------- UI ---------
     public Transform m_parentMonsterPoint = null;
 
     // --------- Spawn�� ���õ� ���� ---------

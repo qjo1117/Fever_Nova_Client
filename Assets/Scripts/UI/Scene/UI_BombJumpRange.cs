@@ -13,6 +13,7 @@ public class UI_BombJumpRange : UI_BombRange
     {
         base.Init();
         m_mainCam = Camera.main;
+        m_rangeRadius = Managers.Game.Player.JumpRange;
     }
 
 
@@ -22,8 +23,10 @@ public class UI_BombJumpRange : UI_BombRange
         Vector3 l_subVector = _point - transform.position;                      // 플레이어와 마우스 위치간의 거리 Vector
         Vector3 l_maxRangeVector = l_subVector.normalized * m_rangeRadius;      // 폭탄 점프 최대 사거리 Vector
 
+        l_subVector.y = 0.0f;
+
         // 현재 마우스의 위치가 폭탄점프 사거리 밖인경우
-        if (l_subVector.sqrMagnitude > l_maxRangeVector.sqrMagnitude)
+        if (l_subVector.sqrMagnitude > m_rangeRadius * m_rangeRadius)
         {
             // 화살표 이미지가 보여지고 있는경우 Close
             if (m_bombJumpArrow != null)

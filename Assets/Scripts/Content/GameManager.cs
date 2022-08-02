@@ -24,30 +24,21 @@ public class GameManager
 
     // 몬스터들에 대한 프리팹을 들고 있는다.
     private List<GameObject> m_listPrefab = new List<GameObject>();
+    #endregion
+
 
 
     #region Property
     public PlayerManager Player { get => m_player; }
     public MonsterManager Monster { get => m_monster; }
     public BoomManager Boom { get => m_boom; }
-	#endregion
-
-	#region Property
-	public PlayerManager Player { get => m_player; }
-    public MonsterManager Monster { get => m_monster; }
-    public BoomManager Boom { get => m_boom; }
     public RespawnManager Respawn { get => m_respawn; }
+    // Item Manager 추가 (문제 될시 삭제 바람)
+    public ItemManager Item { get => m_item; }
 
     public List<GameObject> Prefab { get => m_listPrefab; }
     public int Score { get => m_score; set => m_score = value; }
     public int RespawnIndex { get => m_respawnIndex; set => m_respawnIndex = value; }
-
-    // Item Manager 추가 (문제 될시 삭제 바람)
-    public ItemManager Item { get => m_item; }
-    public List<GameObject> Prefab { get => m_listPrefab; }
-    public int Score { get => m_score; set => m_score = value; }
-
-
     // 플레이 타임 UI에 출력시키기 위해
     public float BeginPlayTime { get => m_beginPlayTime; set => m_beginPlayTime = value; }
     public float EndPlayTime { get => m_endPlayTime; set => m_endPlayTime = value; }
@@ -61,6 +52,7 @@ public class GameManager
 
     }
 
+    // 참견 : 차라리 각 씬을 로드했을때 시작하는 함수를 정하는게 어떨까 예를들어 StartGame처럼
     // 점수 초기화 (각 씬에서 전환때 처리해주자)
     public void ScoreInit()
 	{
@@ -72,45 +64,24 @@ public class GameManager
     // 게임이 시작할때 가장 필요한 요소들을 셋팅한다.
     public void StartGame()
 	{
+        // Manager 맵핑
         {
-            m_player = GameObject.FindObjectOfType<PlayerManager>();
-            m_monster = GameObject.FindObjectOfType<MonsterManager>();
-            m_boom = GameObject.FindObjectOfType<BoomManager>();
-            m_respawn = GameObject.FindObjectOfType<RespawnManager>();
+            m_player = Util.FindGetOrAddGameObject<PlayerManager>("PlayerManager");
+            m_monster = Util.FindGetOrAddGameObject<MonsterManager>("MonsterManager");
+            m_boom = Util.FindGetOrAddGameObject<BoomManager>("BoomManager");
+            m_respawn = Util.FindGetOrAddGameObject<RespawnManager>("RespawnManager");
+            m_item = Util.FindGetOrAddGameObject<ItemManager>("ItemManager");
         }
 
         m_player.Init();
         m_monster.Init();
         m_respawn.Init();
+        m_item.Init();
 
-        {
-            GameObject obj = GameObject.Find("@BoomManager");
-            if (obj == null)
-            {
-                obj = new GameObject { name = "@BoomManager" };
-            }
-            m_boom = obj.GetOrAddComponent<BoomManager>();
-        }
-
-        // Item Manager 추가 
-        {
-            GameObject obj = GameObject.Find("@ItemManager");
-            if (obj == null)
-            {
-                obj = new GameObject { name = "@ItemManager" };
-            }
-            m_item = obj.GetOrAddComponent<ItemManager>();
-        }
-
-        Managers.Game.Player.Init();
-        Managers.Game.Monster.Init();
-        // Item Manager Init 추가
-        Managers.Game.Item.Init();
-
+        // 중력을 조금 강하게 셋팅한다. 움직임에 대한 기본 마찰력이 강하기 때문
         Physics.gravity = -9.8f * Vector3.up * 5.0f;
 
         // 시작 시간을 가져온다.
-        //m_beginPlayTime = DateTime.Now.Second + DateTime.Now.Month * 60;
         m_beginPlayTime = Time.time;
     }
 

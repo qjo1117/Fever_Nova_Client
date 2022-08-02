@@ -85,10 +85,6 @@ MonoBehaviour:
     m_Address: UI/WorldSpace/UI_MonsterHPBar
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 83b7d91550ef8174cbff5321343c5509
-    m_Address: Assets/05Prefabs/Player
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 0595d41ce59907e49a1470b1c5b66176
     m_Address: Assets/05Prefabs/Boom_Particle
     m_ReadOnly: 0
@@ -119,6 +115,18 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: f6cacec20cd8aa7409d148db1f1cf676
     m_Address: UI/Popup/UI_StageSelect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1be27df8c4d466646a48f52b467bd1ea
+    m_Address: UI/Scene/UI_MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b5e1b4e2d1b0dde448f8d9bc87251221
+    m_Address: UI/Popup/UI_KeyInput
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 83b7d91550ef8174cbff5321343c5509
+    m_Address: Assets/05Prefabs/Player
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

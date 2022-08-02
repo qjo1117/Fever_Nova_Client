@@ -37,29 +37,21 @@ public class SpawnerJson
 
 public class MonsterManager : MonoBehaviour
 {
-	#region 변수
-
-	// --------- Monster Data ---------
-	[SerializeField]
-    private List<BehaviorTree>  m_listMonster = new List<BehaviorTree>();
-    private List<TargetData>    m_listTargetData = new List<TargetData>();                 // 
-    #region ����
-
-    // --------- ���� ���� ���� ---------
+    #region Variabel
+    // --------- Monster Data ---------
     [SerializeField]
-    private List<AI_Enemy> m_listMonster = new List<AI_Enemy>();
-    private List<TargetData> m_listTargetData = new List<TargetData>();                 // ���� ���޿�
+    private List<AI_Enemy>      m_listMonster = new List<AI_Enemy>();
+    private List<TargetData>    m_listTargetData = new List<TargetData>();                 // 
 
     // --------- UI Test ---------
     private UI_Goal m_goal;
 
     private int m_allMonsterCount;     // 
     private int m_killCount;           // 
-    private int m_allMonsterCount;     // ������ ������ �� ��
-    private int m_killCount;           // ���� ������ �� ��
+	#endregion
 
-
-    public int AllMonsterCount
+	#region Property
+	public int AllMonsterCount
     {
         get
         {
@@ -89,9 +81,6 @@ public class MonsterManager : MonoBehaviour
     public Transform            m_parentSpawner = null;
 	[SerializeField]
     private List<Spawner>       m_listSpawner = new List<Spawner>();
-    public Transform m_parentSpawner = null;
-    [SerializeField]
-    private List<Spawner> m_listSpawner = new List<Spawner>();
 
     #endregion
 
@@ -191,8 +180,7 @@ public class MonsterManager : MonoBehaviour
         for (int i = 0; i < l_size; ++i)
         {
             Spawner l_spawner = null;
-            if (m_parentSpawner.GetChild(i).TryGetComponent(out l_spawner) == true)
-            {
+            if (m_parentSpawner.GetChild(i).TryGetComponent(out l_spawner) == true) {
                 m_listSpawner.Add(l_spawner);
             }
         }
@@ -233,6 +221,4 @@ public class MonsterManager : MonoBehaviour
 	}
 
 	#endregion
-
-}
 }

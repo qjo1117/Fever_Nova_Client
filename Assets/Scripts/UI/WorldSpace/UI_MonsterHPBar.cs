@@ -17,20 +17,20 @@ public class UI_MonsterHPBar : UI_WorldSpaceHPBar
         base.Update();
 
         // 몬스터 hp바 테스트용
-        if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            if (m_hp > 0)
-            {
-                HP = m_hp - 10;
-            }
+        //if (Input.GetKeyDown(KeyCode.Keypad4))
+        //{
+        //    if (m_hp > 0)
+        //    {
+        //        HP = m_hp - 10;
+        //    }
 
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad5))
-        {
-            if (m_hp < m_maxHp)
-            {
-                HP = m_hp + 10;
-            }
-        }
+        //}
+        //if (Input.GetKeyDown(KeyCode.Keypad5))
+        //{
+        //    if (m_hp < m_maxHp)
+        //    {
+        //        HP = m_hp + 10;
+        //    }
+        //}
     }
 }

@@ -11,8 +11,9 @@ public class PlayerStat
     public int      hp = 100;
     public int      maxHp = 100;
     public int      attack = 70;
-    public float    moveSpeed = 50.0f;
-    public float    evasionSpeed = 5000.0f;
+    public float    mass = 2.0f;
+    public float    moveSpeed = 1000.0f;
+    public float    evasionSpeed = 4000.0f;
     public int      score = 0;
     public int      totalScore = 0;
 }
@@ -32,54 +33,54 @@ public class PlayerController : MonoBehaviour
     #region 변수
 
     [SerializeField]
-    private PlayerStat      m_stat = new PlayerStat();
+    private PlayerStat          m_stat = new PlayerStat();
 
     [SerializeField]
-    private PlayerState     m_state = PlayerState.Idle;
+    private PlayerState         m_state = PlayerState.Idle;
 
-    private Vector3         m_move = Vector3.zero;
-    private float           m_inputPress = 0.0f;
-    private Vector3         m_mousePos = Vector3.zero;
+    private Vector3             m_move = Vector3.zero;
+    private float               m_inputPress = 0.0f;
+    private Vector3             m_mousePos = Vector3.zero;
 
-    private float           m_lookRotation = 0.0f;
-    private float           m_explosionDelayTime = 0.5f;
-    private float           m_explosionTime = 0.0f;
-    private bool            m_isExplosion = false;
+    private float               m_lookRotation = 0.0f;
+    private float               m_explosionDelayTime = 0.5f;
+    private float               m_explosionTime = 0.0f;
+    private bool                m_isExplosion = false;
 
     // 폭탄 쿨타임 테스트용
-    public float            m_coolTime = 2.0f;
-    private bool            m_isCoolTime = false;
+    public float                m_coolTime = 2.0f;
+    private bool                m_isCoolTime = false;
 
     // 총 애니메이션 딜레이
-    private float           m_shotMaxDelay = 3.0f;
-    private float           m_shotDelay = 0.0f;
+    private float               m_shotMaxDelay = 3.0f;
+    private float               m_shotDelay = 0.0f;
 
-    private float           m_explosionJumpRadius = 4.0f;
+    private float               m_explosionJumpRadius = 4.0f;
 
     [SerializeField]
-    private float           m_evasionDelayTime = 1.0f;      // 대기 시간
-    private float           m_evasionTime = 0.0f;           // 현재 시간
+    private float               m_evasionDelayTime = 1.0f;      // 대기 시간
+    private float               m_evasionTime = 0.0f;           // 현재 시간
 
-    private Boom            m_boom = null;
+    private Boom                m_boom = null;
 
-    private Rigidbody       m_rigid = null;
-    private Animator        m_anim = null;
+    private Rigidbody           m_rigid = null;
+    private Animator            m_anim = null;
 
-    private Transform       m_handler = null;
+    private Transform           m_handler = null;
 
 
     // 죽인 몬스터의수, 멀티킬의 횟수는 플레이어 마다 다르기떄문에
     // MonsterManager에서 PlayerController로 이동시켰다.
     // --------- Goal UI Test ---------
-    private UI_Goal m_goal;
+    private UI_Goal             m_goal;
 
-    private int m_hitCount;
-    private int m_killCount;           // 죽인 몬스터 수
-    private int m_multiKillCount;      // 멀티킬한 횟수
+    private int                 m_hitCount;
+    private int                 m_killCount;           // 죽인 몬스터 수
+    private int                 m_multiKillCount;      // 멀티킬한 횟수
 
     // --------- player hp bar ---------
-    private UI_PlayerHPBar m_playerHPBar = null;
-
+    private UI_PlayerHPBar      m_playerHPBar = null;
+    private UI_BombRange        m_bombRange = null;
     #endregion
 
     #region 프로퍼티
@@ -111,6 +112,7 @@ public class PlayerController : MonoBehaviour
     // (Player hp Bar 생성하는 코드 자체는 PlayerManager에 존재한다. PlayerSpawn함수에서 생성하기떄문)
     // --------- player hp bar ---------
     public UI_PlayerHPBar PlayerHPBar { get => m_playerHPBar; set => m_playerHPBar = value; }
+    public UI_BombRange BombRange { get => m_bombRange; set => m_bombRange = value; }
 
     #endregion
 
@@ -120,20 +122,36 @@ public class PlayerController : MonoBehaviour
         m_rigid  = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
         m_handler = Util.FindChild(gameObject, "@Handler", true).transform;
+        
+        m_explosionJumpRadius = Managers.Game.Player.JumpRange;
+
+        // 폭탄의 범위를 전달해준다.
+        if (m_bombRange != null) {
+            //m_bombRange.RangeRadius = (m_mousePos - transform.position).magnitude;
+            m_bombRange.RangeRadius = 4.0f;
+        }
+    }
+
+    public void OnLateUpdate()
+	{
+
     }
 
     public void OnUpdate()
     {
         UpdateState();
         UpdateInput();
+
     }
 
 
-    public void Demege(int p_attack)
+    public void Demege(int _attack)
     {
         m_hitCount++;
-        m_stat.hp -= p_attack;
+        m_stat.hp -= _attack;
 
+        // Player Dead ---> Result
+        // 이거 그렇게 바로 보여주는거 아님
         if (m_stat.hp <= 0)
         {
             if (Util.FindChild<UI_ResultScreen>(Managers.UI.Root, "UI_ResultScreen") != null)
@@ -161,8 +179,7 @@ public class PlayerController : MonoBehaviour
     // 플레이어 hp 체력바 회복 테스트용
     public void Recover(int p_recoverHp)
     {
-        if (m_stat.hp >= m_stat.maxHp)
-        {
+        if (m_stat.hp >= m_stat.maxHp) {
             return;
         }
 
@@ -197,12 +214,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // Player 기준으로 마우스가 앞에 있으면 앞을 보게 만들어야한다.
     public void RunState()
 	{
+        // 마우스와 플레이어 사이의 Normal Vector를 추출
+        // 기저벡트를 이용해서 축을 판별한다.
         float l_moveX = Mathf.Clamp(m_mousePos.x - transform.position.x, -1.0f, 1.0f) * m_move.x;
         float l_moveZ = Mathf.Clamp(m_mousePos.z - transform.position.z, -1.0f, 1.0f) * m_move.z;
 
-        m_anim.SetFloat("MoveX", -l_moveX * m_inputPress);
+        m_anim.SetFloat("MoveX", l_moveX * m_inputPress);
         m_anim.SetFloat("MoveZ", l_moveZ * m_inputPress);
     }
 
@@ -259,21 +279,25 @@ public class PlayerController : MonoBehaviour
         // ----------------------------------------------------------
         Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit l_hit;
-        Physics.Raycast(l_ray, out l_hit);
-        Vector3 l_position = l_hit.point - transform.position;
-        l_position.y = 0.0f;
-        m_mousePos = l_hit.point;
+        if(Physics.Raycast(l_ray, out l_hit, 100.0f, 1 << (int)Define.Layer.Ground) == true) {
+            Vector3 l_position = l_hit.point - transform.position;
+            l_position.y = 0.0f;
+            m_mousePos = l_hit.point;
 
-        // 폭탄 반경보다 좁으면
-        if (l_position.sqrMagnitude <= m_explosionJumpRadius * m_explosionJumpRadius) {
-            m_anim.SetBool("Jump", true);
-            m_state = PlayerState.Jump;
-        }
-        else {
-            m_anim.SetBool("Jump", false);
+
+
+            Color l_color = Color.red;
+            // 폭탄 반경보다 좁으면
+            if (l_position.sqrMagnitude <= m_explosionJumpRadius * m_explosionJumpRadius) {
+                m_state = PlayerState.Jump;
+                m_anim.SetBool("Jump", false);
+                m_bombRange.RangeRadius = 4.0f;
+                l_color = Color.blue;
+            }
+
+            Debug.DrawRay(Camera.main.transform.position, l_ray.direction * 1000.0f, l_color);
         }
 
-        Debug.DrawRay(Camera.main.transform.position, l_ray.direction * 1000.0f, Color.red);
     }
 
     public void InputShoot()
@@ -345,15 +369,15 @@ public class PlayerController : MonoBehaviour
     // Animation Player-Shooting-CM / Event
     public void ShotEnd()
 	{
-        m_boom = Managers.Resource.Instantiate("Boom", Managers.Game.Boom.transform).GetComponent<Boom>();
-
         // 현재 점프 상태이면 아래로 폭탄을 쏘자
         if (m_state == PlayerState.Jump) {
-            m_boom.JumpShoot(m_handler.position, -Vector3.up);
+            m_boom = Managers.Game.Boom.JumpSpawn(m_handler.position);
         }
         else {
-            // 가장 최신의 폭탄을 가지고 있는다.      TODO : 지금 벡터로 처리해서 범위 체크를 어떻게 해야할지 모르겠다.
-            m_boom.Shoot(m_handler.position, transform.forward, 50000.0f, m_move * m_stat.moveSpeed * 3.0f);
+            // 가장 최신의 폭탄을 가지고 있는다.      
+            Vector3 l_subVector = m_mousePos - m_handler.position;
+            l_subVector.y = 0.0f;
+            m_boom = Managers.Game.Boom.ShootSpawn(m_handler.position, l_subVector.normalized, m_bombRange.RangeRadius);
         }
     }
 
@@ -420,7 +444,7 @@ public class PlayerController : MonoBehaviour
 
         if(m_move != Vector3.zero) {
             m_state = PlayerState.Run;
-            m_rigid.AddForce(m_stat.moveSpeed * m_move.normalized);
+            m_rigid.AddForce((m_stat.moveSpeed * m_stat.mass * 4.0f * Time.deltaTime) * m_move.normalized);
             if (m_inputPress >= 0.5f) {
                 m_inputPress = 0.5f;
             }

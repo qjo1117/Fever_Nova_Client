@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Util
 {
+    public static T FindGetOrAddGameObject<T>(string _name) where T : UnityEngine.Component
+    {
+        T l_component = GameObject.FindObjectOfType<T>();
+        if(l_component == null) {
+            GameObject l_manager = new GameObject { };
+            l_component = l_manager.GetOrAddComponent<T>();
+		}
+        l_component.name = $"@{_name}";
+        return l_component;
+    }
+
     public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component
     {
         T component = go.GetComponent<T>();

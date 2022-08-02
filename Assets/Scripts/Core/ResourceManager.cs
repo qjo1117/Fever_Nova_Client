@@ -190,6 +190,7 @@ public class ResourceManager
 				}
 				GameObject result = p_obj.Result;
 				result.name = name;
+				result.GetOrAddComponent<Poolable>();
 				Managers.Pool.CreatePool(result, _count);
 				m_listAddressable.Add(p_obj);               // Ref카운딩
 

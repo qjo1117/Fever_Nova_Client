@@ -38,8 +38,6 @@ public class InGameScene : BaseScene
 
 	protected override void Init()
 	{
-
-        UIInit();
         InitUI();
         Managers.Game.StartGame();
 

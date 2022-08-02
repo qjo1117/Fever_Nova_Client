@@ -129,11 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_state: 0
-  m_explosionForce: 4000
-  m_moveSpeed: 600
-  m_explosionRange: 5
-  m_detectRange: 2
-  m_explosionMaxDelayTime: 3
 --- !u!114 &-206134500718372266
 MonoBehaviour:
   m_ObjectHideFlags: 0
