@@ -220,9 +220,7 @@ public class PlayerController : MonoBehaviour
         float l_moveX = m_mousePos.x - transform.position.x;
         float l_moveZ = m_mousePos.z - transform.position.z;
 
-        float l_angle = Mathf.Atan2(l_moveZ, l_moveX) * Mathf.Rad2Deg;
-        Vector3 l_direction = Quaternion.Euler(0.0f, l_angle - 90.0f, 0.0f) * m_move;
-        Debug.Log(l_direction);
+        Vector3 l_direction = Quaternion.Euler(0.0f, (Mathf.Atan2(l_moveZ, l_moveX) * Mathf.Rad2Deg) - 90.0f, 0.0f) * m_move;
 
         m_anim.SetFloat("MoveX", l_direction.x * m_inputPress);
         m_anim.SetFloat("MoveZ", l_direction.z * m_inputPress);
@@ -297,7 +295,7 @@ public class PlayerController : MonoBehaviour
             if (l_magnitude >= l_explosionRange) {
                 l_magnitude = l_explosionRange;
             }
-            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 3.0f), l_explosionRange) / l_explosionRange;
+            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 2.5f), l_explosionRange) / l_explosionRange;
             m_anim.SetFloat("Aiming", l_magnitude);
 
             Debug.DrawRay(Camera.main.transform.position, l_ray.direction * 1000.0f, l_color);

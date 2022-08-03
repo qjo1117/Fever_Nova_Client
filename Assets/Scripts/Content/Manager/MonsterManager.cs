@@ -120,11 +120,10 @@ public class MonsterManager : MonoBehaviour
     public AI_Enemy Spawn(int _index)
     {
         // 굳이 HpBar랑 나눠서 해야함?
-        AI_Enemy l_monster = Managers.Resource.Instantiate("Monster", transform).GetOrAddComponent<AI_Enemy_01>();
+        AI_Enemy l_monster = Managers.Resource.Instantiate("Monster", transform).GetOrAddComponent<AI_Enemy>();
         m_listMonster.Add(l_monster);
 
         // TODO : 테이블에 접근해서 객체를 생성및 스탯 반영하는 코드를 추가하면 될 것 같음
-
         l_monster.m_hpBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(l_monster.transform, "UI_MonsterHPBar");
         l_monster.m_hpBar.MaxHP = l_monster.m_stat.MaxHp;
         l_monster.m_hpBar.HP = l_monster.m_stat.Hp;

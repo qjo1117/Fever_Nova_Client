@@ -5,7 +5,7 @@ using UnityEngine;
 public class AI_Enemy : MonoBehaviour
 {
     [SerializeField]
-    public MonsterStat m_stat;
+    public MonsterStat m_stat = new MonsterStat();
     public UI_MonsterHPBar m_hpBar;
     //스킬리스트 추가해둘것
     //주석처리한 이유 = 스킬이 정형화된 문서가 없어...

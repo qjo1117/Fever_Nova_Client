@@ -328,23 +328,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dba4d584d1f0984db6264a5fea3c48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_stat:
-    Id: -1
-    Name: Unkown
-    Hp: 100
-    MaxHp: 100
-    MoveSpeed: 10
-    Mass: 1
-    Score: 1
-    TreeId: 0
-    Path: 
-  m_hpBar: {fileID: 0}
   Detect_Range: 30
-  Alarm_Range: 15
   Chase_MoveSpeed: 10
   Patrol_MoveSpeed: 5
-  LineRenderMat: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
-  WayPointMat: {fileID: 2100000, guid: faaba991bbc47b54f84d50d44dcdba4c, type: 2}
+  Patrol_WaypointList: []
+  material1: {fileID: 2100000, guid: 5b7aca6fa58fc694bbc3627fea75f5f8, type: 2}
+  material2: {fileID: 2100000, guid: faaba991bbc47b54f84d50d44dcdba4c, type: 2}
 --- !u!114 &4487138549576368772
 MonoBehaviour:
   m_ObjectHideFlags: 0
