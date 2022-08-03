@@ -11,6 +11,12 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     GameObject m_player = null;
 
+    [SerializeField]
+    private float m_anlge = 0.0f;
+
+    [SerializeField]
+    private Vector3 m_direction = Vector3.right;
+
     public void SetPlayer(GameObject player) { m_player = player; }
 
     void Start()
@@ -20,16 +26,17 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     { 
-         if (m_player == null) {
-             return;
-         }
+        if (m_player == null) {
+            return;
+        }
 
-         RaycastHit hit;
-         if (Physics.Raycast(m_player.transform.position, m_delta, out hit, m_delta.magnitude, 1 << (int)Define.Layer.Block)) {
-             float dist = (hit.point - m_player.transform.position).magnitude * 0.8f;
-             transform.position = m_player.transform.position + m_delta.normalized * dist;
-         }
-         else {
+        RaycastHit hit;
+        Vector3 l_delta = Quaternion.AngleAxis(m_anlge, m_direction) * m_delta;
+        if (Physics.Raycast(m_player.transform.position, l_delta, out hit, m_delta.magnitude, 1 << (int)Define.Layer.Block)) {
+            float dist = (hit.point - m_player.transform.position).magnitude * 0.8f;
+            transform.position = m_player.transform.position + m_delta.normalized * dist;
+        }
+        else {
             transform.position = m_player.transform.position + m_delta;
             transform.LookAt(m_player.transform);
         }

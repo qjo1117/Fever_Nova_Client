@@ -20,7 +20,12 @@ public class BombManager : MonoBehaviour
 	[SerializeField]
 	private float m_ratio = 9.0f;
 
-    public Bomb ShootSpawn(Vector3 _position, Vector3 _direction, float _dist)
+	public void OnUpdate()
+	{
+		
+	}
+
+	public Bomb ShootSpawn(Vector3 _position, Vector3 _direction, float _dist)
 	{
 		Bomb l_boom = Managers.Resource.Instantiate("Bomb", transform).GetComponent<Bomb>();
 		

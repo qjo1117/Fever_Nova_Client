@@ -6,7 +6,6 @@ using UnityEngine;
 public class GameManager
 {
 	#region Variable
-
 	private PlayerManager m_player = null;
     private MonsterManager m_monster = null;
     private BombManager m_boom = null;
@@ -93,6 +92,6 @@ public class GameManager
 
 	public void Update()
     {
-        
+
     }
 }

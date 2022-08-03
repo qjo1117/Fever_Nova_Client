@@ -102,6 +102,11 @@ public class PlayerManager : MonoBehaviour
 
     }
 
+    public void OnUpdate()
+    {
+
+    }
+
     public void Clear()
 	{
         //      // 만약 하이라키에 플레이어가 생존해 있으면 삭제 시켜버린다.

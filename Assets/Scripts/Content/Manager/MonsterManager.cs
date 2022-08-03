@@ -83,8 +83,7 @@ public class MonsterManager : MonoBehaviour
     private List<Spawner>       m_listSpawner = new List<Spawner>();
 
     #endregion
-
-    void Update()
+    public void OnUpdate()
     {
         AttackUpdate();
         DieUpdate();
@@ -95,7 +94,6 @@ public class MonsterManager : MonoBehaviour
     {
         m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
         // BehaviorTree 구성
-
 
         // 시작할때 스포너에 있는 데이터를 가져온다.
         InitSpawner();

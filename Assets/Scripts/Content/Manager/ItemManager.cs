@@ -15,23 +15,26 @@ public class ItemManager : MonoBehaviour
     // 데이터시트와 함께 사용하기 위해서는 데이터 시트 변경 될떄 마다 m_ItemPath 같이 변경 해주어야함.
     // ex)  
 
-    public string[]                    m_ItemPath =             
+    public string[] m_ItemPath =             
     {
         Path.Health
     };
 
-    public Transform                m_parentItemPoint;      // 아이템이 생성될 오브젝트들의 부모 Transfrom
-
+    public Transform                        m_parentItemPoint;      // 아이템이 생성될 오브젝트들의 부모 Transfrom
     [SerializeField]
-    private List<ItemInfo>       m_listItemInfo;         // Json에서 가져온 ItemInfo리스트
-
-    private ItemSave                      m_saveLoadBuf;          // Json 세이브, 로드한 데이터 임시저장하는 버퍼
+    private List<ItemInfo>                  m_listItemInfo;         // Json에서 가져온 ItemInfo리스트
+    private ItemSave                        m_saveLoadBuf;          // Json 세이브, 로드한 데이터 임시저장하는 버퍼
 
 
     public void Init()
     {
         ItemInfoLoad();
         ItemLoad();
+    }
+
+    public void OnUpdate()
+    {
+
     }
 
     // ItemPoints 오브젝트 아래에 존재하는 SpawnPoint 오브젝트들을 찾아서 Transform.position (Vector3)값과 id값을
