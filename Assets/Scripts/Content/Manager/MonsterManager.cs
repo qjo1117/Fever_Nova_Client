@@ -164,8 +164,7 @@ public class MonsterManager : MonoBehaviour
 
     public void Damege(List<TargetData> p_listTargetData)
     {
-        foreach (TargetData data in p_listTargetData)
-        {
+        foreach (TargetData data in p_listTargetData) {
             m_listTargetData.Add(data);
         }
     }
@@ -173,8 +172,7 @@ public class MonsterManager : MonoBehaviour
 
     private void AttackUpdate()
     {
-        if (m_listTargetData.Count == 0)
-        {
+        if (m_listTargetData.Count == 0) {
             return;
         }
 

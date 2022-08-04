@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class AI_Enemy_01 : AI_Enemy
 {
-    public float Detect_Range;
-    public float Alarm_Range;
-    public float Chase_MoveSpeed;
-    public float Patrol_MoveSpeed;
+    public float Detect_Range = 10.0f;
+    public float Alarm_Range = 10.0f;
+    public float Chase_MoveSpeed = 10.0f;
+    public float Patrol_MoveSpeed = 10.0f;
 
     private List<Vector3> Patrol_WaypointList = new List<Vector3>();
     public Material LineRenderMat;
