@@ -43,19 +43,26 @@ public class AI_Enemy : MonoBehaviour
     // 피해를 입었을때
     // Vector에 대한 Defualt정의가 안되므로 함수를 두개로 나눠서 작동시킨 것
 
-    public void Demege(int _attack)
+    // Ret : 죽었는가?
+    // Parameter : PlayerController / 타격한 녀석 | int 피격당한 대미지
+    public bool Demege(PlayerController _player, int _attack)
 	{
         m_stat.HP -= _attack;
         m_hpBar.HP = m_stat.HP;
         // Die
         if (m_stat.HP <= 0) {
+            _player.MonsterKillCount += 1;
             Managers.Game.Monster.DeSpawn(this);
-		}
+            return true;
+        }
+        return false;
     }
 
-    public void Demege(int _attack, Vector3 _force)
+    // Parameter : PlayerController / 타격한 녀석 | int 피격당한 대미지 | Vector3 힘
+    public bool Demege(PlayerController _player, int _attack, Vector3 _force)
 	{
         m_rigid.AddForce(_force);
-        Demege(_attack);
+        return Demege(_player, _attack);
+        
     }
 }

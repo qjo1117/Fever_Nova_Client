@@ -56,7 +56,6 @@ public class InGameScene : BaseScene
         m_camera = GameObject.FindObjectOfType<CameraController>();
         m_camera.SetPlayer(l_player.gameObject);
 
-        Managers.Game.Monster.Spawn(0).transform.position = Vector3.forward * 100.0f;
     }
 
     private void InitUI()

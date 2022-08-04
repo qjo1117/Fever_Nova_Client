@@ -57,14 +57,13 @@ public class Managers : MonoBehaviour
 			DontDestroyOnLoad(go);
 			m_instance = go.GetOrAddComponent<Managers>();
 
-			GameObject data = GameObject.FindObjectOfType<DataManager>().gameObject;
+			GameObject data = GameObject.Find("@DataManager");
 			if (data == null) {
 				data = new GameObject { name = "@DataManager" };
-				data.GetOrAddComponent<DataManager>();
 			}
-			DontDestroyOnLoad(data);
-			m_instance.m_data = data.GetComponent<DataManager>();
+			m_instance.m_data = data.GetOrAddComponent<DataManager>();
 			m_instance.m_data.LoadData();
+			DontDestroyOnLoad(data);
 
 			m_instance.m_resource.Init();
 			m_instance.m_pool.Init();

@@ -35,7 +35,7 @@ using UnityEngine;
 [System.Serializable]
 public class Data$CLASS
 {
-    public List<$CLASS> list$CLASS;
+    public List<$CLASS> list$CLASS = new List<$CLASS>();
 
     public void DataParsing()
     {

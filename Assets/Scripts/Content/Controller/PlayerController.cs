@@ -74,9 +74,9 @@ public class PlayerController : MonoBehaviour
     // --------- Goal UI Test ---------
     private UI_Goal             m_goal = null;
 
-    private int                 m_hitCount;
-    private int                 m_killCount;           // 죽인 몬스터 수
-    private int                 m_multiKillCount;      // 멀티킬한 횟수
+    private int                 m_hitCount = 0;
+    private int                 m_killCount = 0;           // 죽인 몬스터 수
+    private int                 m_multiKillCount = 0;      // 멀티킬한 횟수
 
     // --------- player hp bar ---------
     private UI_PlayerHPBar      m_playerHPBar = null;
@@ -130,6 +130,7 @@ public class PlayerController : MonoBehaviour
         UI_BombJumpRange l_bombJumpArrow = Managers.UI.Root.GetComponentsInChildren<UI_BombJumpRange>()[1];
         l_bombJumpArrow.RangeRadius = m_explosionJumpRange;
 
+        m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
     }
 
     public void OnLateUpdate()
@@ -366,13 +367,13 @@ public class PlayerController : MonoBehaviour
         float l_dist = (m_mousePos - transform.position).magnitude;
         m_currentMosueRadius = l_dist > m_explosionRange ? m_explosionRange : l_dist;
 
-        m_bomb = Managers.Game.Boom.ShootSpawn(m_handler.position, l_subVector.normalized, m_currentMosueRadius);
+        m_bomb = Managers.Game.Boom.ShootSpawn(this, m_handler.position, l_subVector.normalized, m_currentMosueRadius);
     }
 
     public void ShotJumpEnd()
 	{
         if (m_state == PlayerState.Jump || m_state == PlayerState.Run) {
-            Managers.Game.Boom.JumpSpawn(m_handler.position);
+            Managers.Game.Boom.JumpSpawn(this, m_handler.position);
         }
     }
 

@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class DataMonsterStatTable
 {
-    public List<MonsterStatTable> listMonsterStatTable;
+    public List<MonsterStatTable> listMonsterStatTable = new List<MonsterStatTable>();
 
     public void DataParsing()
     {
@@ -32,6 +32,7 @@ public class DataMonsterStatTable
         if((0 <= _index && _index < listMonsterStatTable.Count) == false) {
             return null;
 		}
+
         return listMonsterStatTable[_index];
 	}
 }

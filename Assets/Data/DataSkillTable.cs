@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class DataSkillTable
 {
-    public List<SkillTable> listSkillTable;
+    public List<SkillTable> listSkillTable = new List<SkillTable>();
 
     public void DataParsing()
     {

@@ -23,6 +23,7 @@ public class Bomb : MonoBehaviour
     private Rigidbody           m_rigid = null;
     private int                 m_layer = 1 << (int)Layer.Monster | 1 << (int)Layer.Player;
 
+    private PlayerController    m_owner = null;
 
     #region 프로퍼티
 
@@ -44,26 +45,31 @@ public class Bomb : MonoBehaviour
     }
 
     // 발사를 했을때 필요한 정보를 수집중
-    public void Shoot(Vector3 _position, Vector3 _direction, float _dist)
+    public void Shoot(PlayerController _owner, Vector3 _position, Vector3 _direction, float _dist)
 	{
         _direction *= _dist * m_moveSpeed;
         transform.position = _position;
         m_rigid.velocity = Vector3.zero;
         m_rigid.AddForce(_direction);
-	}
 
-    public void JumpShoot(Vector3 _position)
+        m_owner = _owner;
+    }
+
+    public void JumpShoot(PlayerController _owner, Vector3 _position)
 	{
         transform.position = _position;
         m_rigid.velocity = Vector3.zero;
         m_rigid.AddForce(-Vector3.up * m_moveSpeed);
         m_state = BoomState.Jump;
+
+        m_owner = _owner;
     }
 
     public void Explosion()
     {
         RaycastHit[] l_colliders =  Physics.SphereCastAll(transform.position, m_explosionRange, Vector3.up, 1.0f, m_layer);
 
+        int l_multikillCount = 0;
         // 순회를 하여 체크를 진행
         foreach(RaycastHit l_hit in l_colliders) {
             Transform l_trans = l_hit.transform;
@@ -77,13 +83,18 @@ public class Bomb : MonoBehaviour
             if (l_layer == (int)Define.Layer.Player) {
                 PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.collider.gameObject.GetInstanceID());
                 l_player.GetComponent<Rigidbody>().AddExplosionForce(l_subVec.magnitude, transform.position, 100.0f);
-
             }
             else if (l_layer == (int)Define.Layer.Monster) {
                 AI_Enemy l_monster = l_hit.collider.GetComponent<AI_Enemy>();
-                // TODO : 일단 직접적으로 대미지를 가하는 형식으로 테스트
-                l_monster.Demege(80, l_subVec / 2.0f);
+                // 만약 몬스터가 죽었다면
+                if(l_monster.Demege(m_owner, 80, l_subVec / 2.0f) == true) {
+                    l_multikillCount += 1;
+                }
             }
+        }
+
+        if(m_owner.MonsterMultiKillCount < l_multikillCount) {
+            m_owner.MonsterMultiKillCount = l_multikillCount;
         }
 
         m_state = BoomState.Default;

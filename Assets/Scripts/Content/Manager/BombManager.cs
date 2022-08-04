@@ -25,7 +25,7 @@ public class BombManager : MonoBehaviour
 		
 	}
 
-	public Bomb ShootSpawn(Vector3 _position, Vector3 _direction, float _dist)
+	public Bomb ShootSpawn(PlayerController _owner, Vector3 _position, Vector3 _direction, float _dist)
 	{
 		Bomb l_boom = Managers.Resource.Instantiate("Bomb", transform).GetComponent<Bomb>();
 		
@@ -35,13 +35,13 @@ public class BombManager : MonoBehaviour
 		l_boom.ExplosionForce = m_explosionForce;
 
 		// ÆøÅºÀ» ³¯¸°´Ù.
-		l_boom.Shoot(_position, _direction, _dist / m_ratio);
+		l_boom.Shoot(_owner, _position, _direction, _dist / m_ratio);
 		m_listBoom.Add(l_boom);
 
 		return l_boom;
 	}
 
-	public Bomb JumpSpawn(Vector3 _position)
+	public Bomb JumpSpawn(PlayerController _owner, Vector3 _position)
 	{
 		Bomb l_boom = Managers.Resource.Instantiate("Bomb", transform).GetComponent<Bomb>();
 
@@ -50,7 +50,7 @@ public class BombManager : MonoBehaviour
 		l_boom.ExplosionForce = m_jumpForce;
 
 		// ÆøÅºÀ» ³¯¸°´Ù.
-		l_boom.JumpShoot(_position);
+		l_boom.JumpShoot(_owner, _position);
 		m_listBoom.Add(l_boom);
 
 		return l_boom;
