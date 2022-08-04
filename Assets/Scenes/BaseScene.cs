@@ -17,9 +17,10 @@ public abstract class BaseScene : MonoBehaviour
 
 	protected virtual void Begin()
 	{
-		Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
+		GameObject obj = GameObject.FindObjectOfType<EventSystem>()?.gameObject;
 		if(obj == null) {
-			Managers.Resource.NewPrefab("EventSystem").name = "@EventSystem";
+			obj = Managers.Resource.NewPrefab("EventSystem");
+			obj.name = "@EventSystem";
 		}
 
 		LoadGameObject();

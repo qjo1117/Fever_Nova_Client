@@ -72,7 +72,7 @@ public class PlayerManager : MonoBehaviour
     // 스폰을 시킨다.
     public PlayerController Spawn(Vector3 _position, PlayerStat _stat)
 	{
-        PlayerController l_player = Managers.Resource.Instantiate(Path.Player, transform).GetComponent<PlayerController>();
+        PlayerController l_player = Managers.Resource.Instantiate(Path.Player, transform).GetOrAddComponent<PlayerController>();
         l_player.transform.position = _position;        // 좌표 반영
         l_player.Stat.id = m_listPlayers.Count;         // 아이디 발급
         l_player.Stat = _stat;                          // 스텟 반영

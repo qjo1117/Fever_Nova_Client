@@ -126,7 +126,15 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 83b7d91550ef8174cbff5321343c5509
-    m_Address: Assets/05Prefabs/Player
+    m_Address: Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9d6944272ca1ef448a6c08e77fec10f0
+    m_Address: daggerSoldier
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9724bf37757803a4997ef69d34974e3d
+    m_Address: rifleSoldier
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 static class Path {
-	public const string Player = "Assets/05Prefabs/Player";
+	public const string Player = "Player";
+	public const string Test = "Asset/Prefabs/Player";
 	public const string Monster = "Monster";
 	public const string Bomb = "Bomb";
 	public const string Bomb_Particle = "Assets/05Prefabs/Boom_Particle";
+
+	
+	public const string Monster_1 = "daggerSoldier";
+	public const string Monster_2 = "rifleSoldier";
+
 
 	public const string UI_MonsterHPBar = "UI/WorldSpace/UI_MonsterHPBar";
 
@@ -46,9 +52,11 @@ namespace Define
 	}
 
 	public enum Scene {
-		Unknown,
+		Unknown = -1,
 		Main,
+		InGame_1,
 		InGame,//씬 이름이랑 일치해야해서 변경
+
 	}
 
 

@@ -46,4 +46,13 @@ public class DataSkillTable
             listSkillTable.Add(info);
         }
 	}
+
+    public SkillTable At(int _index)
+	{
+        if((0 <= _index && _index < listSkillTable.Count) == false) {
+            return null;
+		}
+
+        return listSkillTable[_index];
+	}
 }

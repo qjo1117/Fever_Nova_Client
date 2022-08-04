@@ -117,14 +117,23 @@ public class MonsterManager : MonoBehaviour
     // ID를 Parameter로 받을 것인가에 대해 생각해야함
     public AI_Enemy Spawn(int _index)
     {
+        MonsterStatTable l_stat = Managers.Data.MonsterStat.At(_index);
+
         // 굳이 HpBar랑 나눠서 해야함?
-        AI_Enemy l_monster = Managers.Resource.Instantiate("Monster", transform).GetOrAddComponent<AI_Enemy>();
+        AI_Enemy l_monster = Managers.Resource.Instantiate(l_stat.name, transform).GetOrAddComponent<AI_Enemy_01>();
         m_listMonster.Add(l_monster);
 
         // TODO : 테이블에 접근해서 객체를 생성및 스탯 반영하는 코드를 추가하면 될 것 같음
-        l_monster.m_hpBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(l_monster.transform, "UI_MonsterHPBar");
-        l_monster.m_hpBar.MaxHP = l_monster.m_stat.MaxHp;
-        l_monster.m_hpBar.HP = l_monster.m_stat.Hp;
+        l_monster.Stat = l_stat;
+        l_monster.GetComponent<Rigidbody>().mass = l_stat.weight;
+        l_monster.name = l_stat.name;
+
+
+        l_monster.HpBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(l_monster.transform, "UI_MonsterHPBar");
+        l_monster.HpBar.MaxHP = l_monster.Stat.HP;
+        l_monster.HpBar.HP = l_monster.Stat.HP;
+
+        l_monster.Init();
 
         return l_monster;
     }

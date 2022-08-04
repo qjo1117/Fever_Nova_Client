@@ -37,6 +37,10 @@ public class AI_Patrol_Waypoint : BT_Action
 
     private void OnMove()
     {
+        if(waypointList.Count <= 0) {
+            return;
+		}
+
         // 해설 용도 : 현재 가고자하는 WayPoint를 선택함
         Vector3 WayPoint = waypointList[currentWayPoint];
 

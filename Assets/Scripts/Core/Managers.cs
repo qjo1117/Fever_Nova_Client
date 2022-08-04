@@ -8,12 +8,13 @@ public class Managers : MonoBehaviour
 	public static Managers Instance { get { Init(); return m_instance; } }
 
 	#region Core
-	ResourceManager		m_resource = new ResourceManager();
-	PoolManager			m_pool = new PoolManager();
-	SceneManagerEx		m_scene = new SceneManagerEx();
-	InputManager		m_input = new InputManager();
-	UIManager			m_ui = new UIManager();
+	private ResourceManager		m_resource = new ResourceManager();
+	private PoolManager			m_pool = new PoolManager();
+	private SceneManagerEx		m_scene = new SceneManagerEx();
+	private InputManager		m_input = new InputManager();
+	private UIManager			m_ui = new UIManager();
 
+	private DataManager			m_data = null;
 	public static ResourceManager Resource {  get { return Instance.m_resource; } }
 	public static PoolManager Pool {  get { return Instance.m_pool; } }
 	public static SceneManagerEx Scene {  get { return Instance.m_scene; } }
@@ -21,11 +22,12 @@ public class Managers : MonoBehaviour
 	public static InputManager Input { get { return Instance.m_input; } }
 
 	public static UIManager UI { get => Instance.m_ui; }
+	public static DataManager Data { get => Instance.m_data; }
 	#endregion
 
 	#region Content
 
-	GameManager m_game = new GameManager();
+	private GameManager			m_game = new GameManager();
 	public static GameManager Game { get { return Instance.m_game; } }
 
 	#endregion
@@ -53,12 +55,22 @@ public class Managers : MonoBehaviour
 
 			// 삭제 방지
 			DontDestroyOnLoad(go);
-			m_instance = go.GetComponent<Managers>();
+			m_instance = go.GetOrAddComponent<Managers>();
+
+			GameObject data = GameObject.FindObjectOfType<DataManager>().gameObject;
+			if (data == null) {
+				data = new GameObject { name = "@DataManager" };
+				data.GetOrAddComponent<DataManager>();
+			}
+			DontDestroyOnLoad(data);
+			m_instance.m_data = data.GetComponent<DataManager>();
+			m_instance.m_data.LoadData();
 
 			m_instance.m_resource.Init();
 			m_instance.m_pool.Init();
 			m_instance.m_game.Init();
 			m_instance.m_input.Init();
+			
 		}
 
 	}
@@ -79,6 +91,7 @@ public class Managers : MonoBehaviour
 	{
 		m_instance.m_input.Clear();
 		m_instance.m_pool.Clear();
+		m_instance.m_game.Clear();
 		m_instance.m_scene.Clear();
 		m_instance.m_resource.Clear();
 	}

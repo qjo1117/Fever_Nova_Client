@@ -8,12 +8,12 @@ public class RespawnManager : MonoBehaviour
 
 	public void Init()
 	{
-		int l_size = transform.childCount;
-		for (int i = 0; i < l_size; ++i) {
-			RespawnPoint l_point = transform.GetChild(i).GetComponent<RespawnPoint>();
-			l_point.Index = i;
-			m_listRespawnPoint.Add(l_point);
-		}
+		//int l_size = transform.childCount;
+		//for (int i = 0; i < l_size; ++i) {
+		//	RespawnPoint l_point = transform.GetChild(i).GetComponent<RespawnPoint>();
+		//	l_point.Index = i;
+		//	m_listRespawnPoint.Add(l_point);
+		//}
 	}
 
 

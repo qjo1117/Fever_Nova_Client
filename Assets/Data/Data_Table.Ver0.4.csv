@@ -1,0 +1,6 @@
+1,식별,,,기본 스탯 factor,,,1
+,번호,이름,ID,체력,이동속도,무게,
+,index,name,id,HP,moveSpeed,weight,
+,int,string,int,int,int,float,
+,1,daggerSoldier,10201,100,10,200,
+,2,rifleSoldier,10202,50,7,100,

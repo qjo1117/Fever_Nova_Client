@@ -5,8 +5,8 @@ using UnityEngine;
 public class AI_Enemy : MonoBehaviour
 {
     [SerializeField]
-    public MonsterStat m_stat = new MonsterStat();
-    public UI_MonsterHPBar m_hpBar;
+    private MonsterStatTable m_stat = new MonsterStatTable();
+    private UI_MonsterHPBar m_hpBar = null;
     //스킬리스트 추가해둘것
     //주석처리한 이유 = 스킬이 정형화된 문서가 없어...
     //AI 변경 예정 사항
@@ -22,6 +22,8 @@ public class AI_Enemy : MonoBehaviour
 
     private Rigidbody m_rigid = null;
 
+    public MonsterStatTable Stat { get => m_stat; set => m_stat = value; }
+    public UI_MonsterHPBar HpBar { get => m_hpBar; set => m_hpBar = value; }
 
     public void Init()
     {
@@ -43,10 +45,10 @@ public class AI_Enemy : MonoBehaviour
 
     public void Demege(int _attack)
 	{
-        m_stat.Hp -= _attack;
-        m_hpBar.HP = m_stat.Hp;
+        m_stat.HP -= _attack;
+        m_hpBar.HP = m_stat.HP;
         // Die
-        if (m_stat.Hp <= 0) {
+        if (m_stat.HP <= 0) {
             Managers.Game.Monster.DeSpawn(this);
 		}
     }

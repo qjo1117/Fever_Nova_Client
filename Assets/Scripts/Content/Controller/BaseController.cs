@@ -47,8 +47,6 @@ public abstract class BaseController : MonoBehaviour
 
 	private float				m_gravity = 1.0f;
     private float               m_gravityForce = 0.98f;
-    [SerializeField]
-    private float               m_groundCheckDistance = 0.5f;
     private Vector3             m_groundPoint = Vector3.zero;
 
     private float               m_moveCheckDistance = 0.2f;

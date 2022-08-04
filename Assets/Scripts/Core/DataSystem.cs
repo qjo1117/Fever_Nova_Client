@@ -48,6 +48,15 @@ $ROW_MEMBER_CODE
             list$CLASS.Add(info);
         }
 	}
+
+    public $CLASS At(int _index)
+	{
+        if((0 <= _index && _index < list$CLASS.Count) == false) {
+            return null;
+		}
+
+        return list$CLASS[_index];
+	}
 }
 ";
 

@@ -7,36 +7,40 @@ using UnityEngine;
 // 나중에 Manager로 빼둘생각
 public class DataManager : MonoBehaviour
 {
-	public string[] m_filePath;
 
 	#region Variable
 	[SerializeField]
 	private DataSkillTable m_skillTable = new DataSkillTable();
 	[SerializeField]
-	private List<MonsterStat> m_monsterStat = new List<MonsterStat>();
+	private DataMonsterStatTable m_monsterStat = new DataMonsterStatTable();
 	#endregion
 
 	#region Property
 	public DataSkillTable SkillTable { get => m_skillTable; }
-	public List<MonsterStat> MonsterStat { get => m_monsterStat; }
+	public DataMonsterStatTable MonsterStat { get => m_monsterStat; }
 	#endregion
 
 	[ContextMenu("CreateScript")]
 	public void CreateScript()
 	{
 		DataSystem.CreateGenerateScript("SkillTable.ver.0.3", "SkillTable");
+		DataSystem.CreateGenerateScript("Data_Table.Ver0.4", "MonsterStatTable");
 	}
 
 	[ContextMenu("LoadData")]
 	public void LoadData()
 	{
+		ClearData();
+
 		m_skillTable.DataParsing();
+		m_monsterStat.DataParsing();
 	}
 
 	[ContextMenu("Clear")]
 	public void ClearData()
 	{
 		m_skillTable.listSkillTable.Clear();
+		m_monsterStat.listMonsterStatTable.Clear();
 	}
 
 }

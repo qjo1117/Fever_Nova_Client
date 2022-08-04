@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     // 죽인 몬스터의수, 멀티킬의 횟수는 플레이어 마다 다르기떄문에
     // MonsterManager에서 PlayerController로 이동시켰다.
     // --------- Goal UI Test ---------
-    private UI_Goal             m_goal;
+    private UI_Goal             m_goal = null;
 
     private int                 m_hitCount;
     private int                 m_killCount;           // 죽인 몬스터 수

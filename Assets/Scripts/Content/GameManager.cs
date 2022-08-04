@@ -64,13 +64,11 @@ public class GameManager
     public void StartGame()
 	{
         // Manager 맵핑
-        {
-            m_player = Util.FindGetOrAddGameObject<PlayerManager>("PlayerManager");
-            m_monster = Util.FindGetOrAddGameObject<MonsterManager>("MonsterManager");
-            m_boom = Util.FindGetOrAddGameObject<BombManager>("BombManager");
-            m_respawn = Util.FindGetOrAddGameObject<RespawnManager>("RespawnManager");
-            m_item = Util.FindGetOrAddGameObject<ItemManager>("ItemManager");
-        }
+        m_player = Util.FindGetOrAddGameObject<PlayerManager>("PlayerManager");
+        m_monster = Util.FindGetOrAddGameObject<MonsterManager>("MonsterManager");
+        m_boom = Util.FindGetOrAddGameObject<BombManager>("BombManager");
+        m_respawn = Util.FindGetOrAddGameObject<RespawnManager>("RespawnManager");
+        m_item = Util.FindGetOrAddGameObject<ItemManager>("ItemManager");
 
         m_player.Init();
         m_monster.Init();

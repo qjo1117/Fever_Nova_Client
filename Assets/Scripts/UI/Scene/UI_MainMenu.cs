@@ -51,7 +51,6 @@ public class UI_MainMenu : UI_Scene
     {
         if (data.button == PointerEventData.InputButton.Left)
         {
-            Debug.Log("게임시작");
             Managers.UI.ShowPopupUI<UI_GamePlaySelect>("UI_GamePlaySelect");
         }
     }
@@ -69,7 +68,6 @@ public class UI_MainMenu : UI_Scene
         if (data.button == PointerEventData.InputButton.Left)
         {
 #if UNITY_EDITOR
-            Debug.Log("게임종료");
             UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();

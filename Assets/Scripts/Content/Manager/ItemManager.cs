@@ -28,8 +28,8 @@ public class ItemManager : MonoBehaviour
 
     public void Init()
     {
-        ItemInfoLoad();
-        ItemLoad();
+        //ItemInfoLoad();
+        //ItemLoad();
     }
 
     public void OnUpdate()

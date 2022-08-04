@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 290c5c223a2c69d419b6ba38f7ebdf1e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - LineRenderMat: {fileID: 2100000, guid: 639ba09dbd54ea44c9155c110ff85e70, type: 2}
+  - WayPointMat: {fileID: 2100000, guid: 20ddcacc043ac6d44b58ae318a0b54b4, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

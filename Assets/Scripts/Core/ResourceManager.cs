@@ -15,8 +15,8 @@ public class ResourceManager
 	}
 
 
-	public int DataAsyncCount = 0;
-	public int DataMaxAsyncCount = 0;
+	volatile public int DataAsyncCount = 0;
+	volatile public int DataMaxAsyncCount = 0;
 
 	private List<DestroyObject> m_destroys = new List<DestroyObject>();
 	private Stack<DestroyObject> m_destroyPool = new Stack<DestroyObject>();

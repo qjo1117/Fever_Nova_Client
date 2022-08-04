@@ -13,6 +13,14 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.Monster, 30);
         Managers.Resource.RegisterPoolGameObject(Path.Player, 5);
 
+        // 몬스터 전용
+        {
+            DataMonsterStatTable l_monsterTable = Managers.Data.MonsterStat;
+            foreach (MonsterStatTable stat in l_monsterTable.listMonsterStatTable) {
+                Managers.Resource.RegisterPoolGameObject(stat.name, 50);
+            }
+        }
+
         int l_count = 2;
         Managers.Resource.RegisterPoolGameObject(Path.UI_PopupMsg, l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_Aim, l_count);
@@ -41,15 +49,20 @@ public class InGameScene : BaseScene
         InitUI();
         Managers.Game.StartGame();
 
+        PlayerController l_player = Managers.Game.Player.Spawn(Managers.Game.Player.SpanwPoint, new PlayerStat { id = 0, name = "Sample_Player" });
+        //AI_Enemy l_player_1 = Managers.Game.Monster.Spawn(0);
+        //AI_Enemy l_player_2 = Managers.Game.Monster.Spawn(0);
         // Init Camera
         m_camera = GameObject.FindObjectOfType<CameraController>();
-        m_camera.SetPlayer(Managers.Game.Player.Spawn(Managers.Game.Player.SpanwPoint, new PlayerStat { id = 0, name = "Sample_Player" }).gameObject);
+        m_camera.SetPlayer(l_player.gameObject);
+
+        Managers.Game.Monster.Spawn(0).transform.position = Vector3.forward * 100.0f;
     }
 
     private void InitUI()
     {
         UI_PopupMsg l_popupMsg = Managers.UI.ShowPopupUI<UI_PopupMsg>("UI_PopupMsg");
-        l_popupMsg.Message = "�� ����";
+        l_popupMsg.Message = "폐기된 공장";
         l_popupMsg.DelayDeleteTime = 3.0f;
 
         Managers.UI.ShowSceneUI<UI_Aim>("UI_Aim");

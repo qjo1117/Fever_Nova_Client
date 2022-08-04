@@ -316,24 +316,6 @@ CapsuleCollider:
   m_Height: 1.9
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &3059735493817408689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3472199594695416382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dba4d584d1f0984db6264a5fea3c48d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Detect_Range: 30
-  Chase_MoveSpeed: 10
-  Patrol_MoveSpeed: 5
-  Patrol_WaypointList: []
-  material1: {fileID: 2100000, guid: 5b7aca6fa58fc694bbc3627fea75f5f8, type: 2}
-  material2: {fileID: 2100000, guid: faaba991bbc47b54f84d50d44dcdba4c, type: 2}
 --- !u!114 &4487138549576368772
 MonoBehaviour:
   m_ObjectHideFlags: 0
