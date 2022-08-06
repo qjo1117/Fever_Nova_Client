@@ -8,15 +8,12 @@ public class General_enemy : Object_AI
     protected override void CreateTree()
     {
         BT_Selector bT_Selector = new BT_Selector();
-        
-     
 
         BT_Sequence bT_DieCheck_Sequence = new BT_Sequence();
-        Condition_Die condition_DIe = new Condition_Die(this.gameObject, this.hp);
+        General_AI_Condition_Die condition_DIe = new General_AI_Condition_Die(this.gameObject, this.hp);
         General_AI_Action_Die aI_DIE_Action = new General_AI_Action_Die(this.gameObject);
         bT_DieCheck_Sequence.AddChild(condition_DIe);
         bT_DieCheck_Sequence.AddChild(aI_DIE_Action);
-
 
         BT_Selector bT_MonsterBehavior = new BT_Selector();
 

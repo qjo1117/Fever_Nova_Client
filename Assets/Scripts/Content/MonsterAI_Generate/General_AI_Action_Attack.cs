@@ -55,7 +55,7 @@ public class General_AI_Action_Attack : BT_Action
             //현재 타입값 초기화
             //성공을 리턴
             m_current_time = 0f;
-                return AI.State.FAILURE;
+            return AI.State.FAILURE;
         }
         return AI.State.FAILURE;
     }

@@ -33,7 +33,7 @@ public class General_AI_Combat_Chase : BT_Action
 
     private void OnChase()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = Managers.Game.Player.MainPlayer.gameObject;
         if (player)
         {
             Vector3 Dir = player.transform.position - m_object.transform.position;

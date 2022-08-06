@@ -137,6 +137,10 @@ MonoBehaviour:
     m_Address: rifleSoldier
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: e8c86410ab6e4ff44933b68d0e7385b5
+    m_Address: Assets/05Prefabs/AI_Monster.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aa1c45dd9f67c694eb5b8e4a529c5a60, type: 2}
   m_SchemaSet:
