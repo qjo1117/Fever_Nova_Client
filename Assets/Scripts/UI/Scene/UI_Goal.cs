@@ -48,7 +48,7 @@ public class UI_Goal : UI_Scene
         }
         set
         {
-            if (value >= 0 && value <= m_allMonsterCount) 
+            if (0 <= value && value <= m_allMonsterCount) 
             {
                 m_monsterKillCount = value;
                 UpdateGoalText();

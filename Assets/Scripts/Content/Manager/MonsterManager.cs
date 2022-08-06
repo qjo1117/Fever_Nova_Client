@@ -44,6 +44,7 @@ public class MonsterManager : MonoBehaviour
     [SerializeField]
     private List<AI_Enemy>      m_listMonster = new List<AI_Enemy>();
     private List<TargetData>    m_listTargetData = new List<TargetData>();                 // 
+    private Stack<AI_Enemy>     m_stackDestroy = new Stack<AI_Enemy>();
 
     // --------- UI Test ---------
     private UI_Goal m_goal;
@@ -120,7 +121,7 @@ public class MonsterManager : MonoBehaviour
     // ID를 Parameter로 받을 것인가에 대해 생각해야함
     public AI_Enemy Spawn(int _index)
     {
-        MonsterStatTable l_stat = Managers.Data.MonsterStat.At(_index);
+        MonsterStatTable l_stat = (Managers.Data.MonsterStat.At(_index).Clone());
 
         // 굳이 HpBar랑 나눠서 해야함?
         AI_Enemy l_monster = Managers.Resource.Instantiate(l_stat.name, transform).GetOrAddComponent<AI_Enemy_01>();
@@ -181,13 +182,20 @@ public class MonsterManager : MonoBehaviour
 
         foreach (TargetData data in m_listTargetData) {
             PlayerController l_player = Managers.Game.Player.List[data.hitId];
+           
             if (m_listMonster[data.id].Demege(l_player) == true) {
-
+                m_stackDestroy.Push(m_listMonster[data.id]);
             }
 		}
 
         m_listTargetData.Clear();
 
+
+        while (m_stackDestroy.Count > 0) {
+            AI_Enemy l_monster = m_stackDestroy.Pop();
+            m_listMonster.Remove(l_monster);
+            Managers.Resource.Destroy(l_monster.gameObject);
+        }
     }
 
     private void DieUpdate()

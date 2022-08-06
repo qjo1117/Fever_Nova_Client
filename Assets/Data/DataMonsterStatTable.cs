@@ -19,8 +19,8 @@ public class DataMonsterStatTable
 			info.name = (System.String)item["name"];
 			info.id = (System.Int32)item["id"];
 			info.HP = (System.Int32)item["HP"];
-			info.moveSpeed = (System.Int32)item["moveSpeed"];
-			info.weight = (System.Int32)item["weight"];
+			info.moveSpeed = (System.Single)item["moveSpeed"];
+			info.weight = (System.Single)item["weight"];
 
         
             listMonsterStatTable.Add(info);

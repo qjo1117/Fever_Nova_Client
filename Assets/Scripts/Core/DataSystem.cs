@@ -24,6 +24,8 @@ $DEFINE_ENUM
 public class $CLASS
 {
 $ROW_MEMBER_CODE
+
+$CLONE
 }
 ";
     const string codeListTemplate = @"
@@ -113,7 +115,7 @@ $ROW_MEMBER_CODE
                 }
                 else if (type[j].Contains("float") == true) {
                     if (float.TryParse(value, out fTemp)) {
-                        finalValue = iTemp;
+                        finalValue = fTemp;
                     }
                 }
                 else if (type[j].Contains("bool") == true) {
@@ -145,15 +147,15 @@ $ROW_MEMBER_CODE
     {
 
         _listData = Load(_csvText);
-
+        string code = codeTemplate;
         string rowMemberCode = "";
         // Enum에 대한 데이터를 맵핑해둔다.
         Dictionary<string, List<string>> l_dicEnumData = new Dictionary<string, List<string>>();
 
-        foreach(var item in _listData[0]) {
+        foreach (var item in _listData[0]) {
             // Enum일 경우 두번째 있는 타입이 Enum의 명칭이 된다.
-            if(item.Key.Contains("enum") == true) {
-				l_dicEnumData.Add(item.Key, new List<string>());
+            if (item.Key.Contains("enum") == true) {
+                l_dicEnumData.Add(item.Key, new List<string>());
             }
 
             string key = item.Key;
@@ -168,6 +170,34 @@ $ROW_MEMBER_CODE
                 rowMemberCode += string.Format("\t\tpublic {1} {0};\n", key, item.Value.GetType().ToString());
             }
         }
+        
+        string cloneCode = 
+@"public $CLASS Clone() 
+{
+    $CLASS info = new $CLASS();
+    $CLONE
+    return info;
+}";
+        string clone = "";
+
+        foreach (var item in _listData[0]) {
+            string key = item.Key;
+            if (key == "" || key[0] == '\0') {
+                continue;
+            }
+
+            if (key.Contains("enum") == true) {
+                string[] splitEnum = key.Split('|');
+                clone += string.Format("\t\tinfo.{0} = {0};\n", splitEnum[2]);
+            }
+            else {
+                clone += string.Format("\t\tinfo.{0} = {0};\n", key);
+            }
+        }
+        cloneCode = cloneCode.Replace("$CLASS", _className);
+        cloneCode = cloneCode.Replace("$CLONE", clone);
+
+        code = code.Replace("$CLONE", cloneCode);
 
         int l_size = _listData.Count;
         for (int i = 0; i < l_size; ++i) {
@@ -192,7 +222,7 @@ $ROW_MEMBER_CODE
             }
         }
 
-        string code = codeTemplate;
+
         code = code.Replace("$CLASS", _className);
         code = code.Replace("$ROW_MEMBER_CODE", rowMemberCode);
 

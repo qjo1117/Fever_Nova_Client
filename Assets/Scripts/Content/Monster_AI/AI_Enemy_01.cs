@@ -134,7 +134,7 @@ public class AI_Enemy_01 : AI_Enemy
     {
         // 현재 구조는 대략적으로 이렇다고 한다.
         //                                    Main (Selecter)
-        //                Combat (Sequence)                    Patrol (Sequence)                
+        //                Combat (Sequence)                    Patrol (Sequence)        
         //      Detect (Action)      Chase (Action)             Patrol (Action)      
 
         m_enemyType = AI.EnemyType.Melee;
@@ -152,7 +152,6 @@ public class AI_Enemy_01 : AI_Enemy
 
         l_combatSQ.AddChild(l_detect);
         l_combatSQ.AddChild(l_chase);
-
 
         BT_Sequence l_patrolSQ = new BT_Sequence();
 

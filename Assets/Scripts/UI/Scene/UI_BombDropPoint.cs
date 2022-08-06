@@ -34,16 +34,16 @@ public class UI_BombDropPoint : UI_Scene
         Ray l_ray = m_mainCam.ScreenPointToRay(Input.mousePosition);
 
         // ray를 쏴봐서 마우스 위치의 월드 위치값을 구함
-        if (Physics.Raycast(l_ray, out l_hit, 100.0f, 1 << (int)Define.Layer.Ground))
-        {
+        if (Physics.Raycast(l_ray, out l_hit, 100.0f, 1 << (int)Define.Layer.Ground)) {
             // 현재 마우스 위치 폭탄 사거리 범위안인지 체크
-            if(BombRangeInnerCheck(l_hit.point))
-            {
+            if(BombRangeInnerCheck(l_hit.point)) {
                 transform.position = l_hit.point;
             }
 
             // 현재 마우스 위치 폭탄 점프 사거리 범위내인지 체크
-            m_bombJumpRange.BombJumpRangeInnerCheck(l_hit.point);
+            if(m_bombJumpRange != null) {
+                m_bombJumpRange.BombJumpRangeInnerCheck(l_hit.point);
+            }
         }
     }
 

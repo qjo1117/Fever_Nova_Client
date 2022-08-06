@@ -52,7 +52,6 @@ public class AI_Enemy : MonoBehaviour
         // Die
         if (m_stat.HP <= 0) {
             _player.MonsterKillCount += 1;
-            Managers.Game.Monster.DeSpawn(this);
             return true;
         }
         return false;
