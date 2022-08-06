@@ -13,6 +13,7 @@ public class Managers : MonoBehaviour
 	private SceneManagerEx		m_scene = new SceneManagerEx();
 	private InputManager		m_input = new InputManager();
 	private UIManager			m_ui = new UIManager();
+	private NetWorkManager		m_network = new NetWorkManager();
 
 	private DataManager			m_data = null;
 	public static ResourceManager Resource {  get { return Instance.m_resource; } }
@@ -23,6 +24,8 @@ public class Managers : MonoBehaviour
 
 	public static UIManager UI { get => Instance.m_ui; }
 	public static DataManager Data { get => Instance.m_data; }
+	public static NetWorkManager Network { get => Instance.m_network; }
+
 	#endregion
 
 	#region Content
@@ -69,7 +72,7 @@ public class Managers : MonoBehaviour
 			m_instance.m_pool.Init();
 			m_instance.m_game.Init();
 			m_instance.m_input.Init();
-			
+
 		}
 
 	}
@@ -81,6 +84,7 @@ public class Managers : MonoBehaviour
 		if(m_instance.m_game.IsPlay == true) {
 			m_instance.m_game.Update();
 		}
+
 	}
 
 	private void FixedUpdate()

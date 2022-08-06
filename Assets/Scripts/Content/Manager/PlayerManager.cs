@@ -11,6 +11,8 @@ public class PlayerManager : MonoBehaviour
     private List<PlayerController>  m_listPlayers = new List<PlayerController>();
     private PlayerController        m_mainPlayer = null;
 
+    private int m_id = 0;
+
 	#endregion
 
 	#region Property
@@ -32,9 +34,6 @@ public class PlayerManager : MonoBehaviour
     public float JumpRange { get => m_jumpRange; }
     #endregion
 
-
-
-
     void Update()
     {
         
@@ -52,7 +51,26 @@ public class PlayerManager : MonoBehaviour
         m_mainPlayer?.OnUpdate();
     }
 
-	private void LateUpdate()
+	private void FixedUpdate()
+	{
+        MoveUpdate();
+
+    }
+
+	private void MoveUpdate()
+	{
+		//bool l_isMove = true;
+  //      float x = 0, y = 0;
+
+		//if (l_isMove == true) {
+  //          foreach(PlayerController player in m_listPlayers) {
+  //              Vector3 l_position = player.transform.position;
+  //              Managers.Network.Session.Write((int)E_PROTOCOL.MOVE, l_position.x, l_position.z);
+  //          }
+		//}
+	}
+
+    private void LateUpdate()
 	{
         m_mainPlayer?.OnLateUpdate();
 	}
@@ -81,6 +99,9 @@ public class PlayerManager : MonoBehaviour
         // 메인 플레이어 설정
         if (m_mainPlayer == null) {
             m_mainPlayer = l_player;
+            
+            CameraController l_camera = GameObject.FindObjectOfType<CameraController>();
+            l_camera.SetPlayer(l_player.gameObject);
 
             m_mainPlayer.ExplosionRadius = m_explosionRange;
             m_mainPlayer.ExplosionJumpRadius = m_jumpRange;
@@ -99,7 +120,14 @@ public class PlayerManager : MonoBehaviour
     // 초기화 작업을 한다.
     public void Init()
     {
+        Managers.Network.Register(E_PROTOCOL.INUSER, InuserProcess);
+    }
 
+    public void InuserProcess()
+	{
+        int l_id = 0;
+        Managers.Network.Session.GetInData(out l_id);
+        Managers.Game.Player.Spawn(Managers.Game.Player.SpanwPoint, new PlayerStat { id = l_id, name = "Sample_Player" });
     }
 
     public void OnUpdate()
@@ -135,6 +163,16 @@ public class PlayerManager : MonoBehaviour
 	{
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(m_spawnPoint.position, Vector3.one * 3.0f);
+	}
+
+    public PlayerController At(int _index)
+	{
+        foreach(PlayerController player in m_listPlayers) {
+            if(player.Stat.id == _index) {
+                return player;
+			}
+		}
+        return null;
 	}
 
 }

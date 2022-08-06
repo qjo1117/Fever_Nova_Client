@@ -73,6 +73,8 @@ public class GameManager
         m_respawn = Util.FindGetOrAddGameObject<RespawnManager>("RespawnManager");
         m_item = Util.FindGetOrAddGameObject<ItemManager>("ItemManager");
 
+        Managers.Network.Init();
+
         m_player.Init();
         m_monster.Init();
         m_respawn.Init();
@@ -85,6 +87,8 @@ public class GameManager
         m_beginPlayTime = Time.time;
 
         Managers.Game.IsPlay = true;
+
+
     }
 
     public void Clear()
@@ -96,5 +100,6 @@ public class GameManager
 	public void Update()
     {
         m_monster.OnUpdate();
+        Managers.Network.Update();
     }
 }

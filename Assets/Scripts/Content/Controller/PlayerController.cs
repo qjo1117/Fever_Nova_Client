@@ -453,6 +453,8 @@ public class PlayerController : MonoBehaviour
             else {
                 m_inputPress += 0.5f * Time.deltaTime;
             }
+            Managers.Network.Session.Write((int)E_PROTOCOL.MOVE, transform.position.x, transform.position.y);
+            Debug.LogError("잘 되었어요");
         }
 	}
 

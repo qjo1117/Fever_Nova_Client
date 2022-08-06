@@ -55,9 +55,10 @@ public class UI_BombRange : UI_Scene
     private void PositionUpdate()
     {
         PlayerController l_player = Managers.Game.Player.MainPlayer;
-
-        // 바닥과 겹쳐서 UI가 안보이므로 설정할 위치 Vector의 y값에 0.1f를 더함
-        transform.position = new Vector3(l_player.transform.position.x, l_player.transform.position.y + 0.2f, l_player.transform.position.z);
+        if (l_player != null) {
+            // 바닥과 겹쳐서 UI가 안보이므로 설정할 위치 Vector의 y값에 0.1f를 더함
+            transform.position = new Vector3(l_player.transform.position.x, l_player.transform.position.y + 0.2f, l_player.transform.position.z);
+        }
     }
 
 

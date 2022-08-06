@@ -138,7 +138,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: e8c86410ab6e4ff44933b68d0e7385b5
-    m_Address: Assets/05Prefabs/AI_Monster.prefab
+    m_Address: ssets/05Prefabs/AI_Monster
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

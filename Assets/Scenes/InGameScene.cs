@@ -49,12 +49,11 @@ public class InGameScene : BaseScene
         InitUI();
         Managers.Game.StartGame();
 
-        PlayerController l_player = Managers.Game.Player.Spawn(Managers.Game.Player.SpanwPoint, new PlayerStat { id = 0, name = "Sample_Player" });
+        PlayerController l_player = Managers.Game.Player.MainPlayer;
         //AI_Enemy l_player_1 = Managers.Game.Monster.Spawn(0);
         //AI_Enemy l_player_2 = Managers.Game.Monster.Spawn(0);
         // Init Camera
-        m_camera = GameObject.FindObjectOfType<CameraController>();
-        m_camera.SetPlayer(l_player.gameObject);
+
 
     }
 
