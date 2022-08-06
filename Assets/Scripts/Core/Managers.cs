@@ -81,12 +81,15 @@ public class Managers : MonoBehaviour
 	{
 		m_instance.m_input.Update();
 		m_instance.m_resource.Update();
-		m_instance.m_game.Update();
+		if(m_instance.m_game.IsPlay == true) {
+			m_instance.m_game.Update();
+		}
+
 	}
 
 	private void FixedUpdate()
 	{
-		m_instance.m_game.FixedUpdate();
+		
 	}
 
 
@@ -94,10 +97,7 @@ public class Managers : MonoBehaviour
 	{
 		m_instance.m_input.Clear();
 		m_instance.m_pool.Clear();
-		if(m_instance.m_game.IsPlay == true) {
-			m_instance.m_game.Clear();
-			m_instance.m_game.IsPlay = false;
-		}
+		m_instance.m_game.Clear();
 		m_instance.m_scene.Clear();
 		m_instance.m_resource.Clear();
 	}

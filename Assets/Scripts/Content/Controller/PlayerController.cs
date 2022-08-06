@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviour
     // 총 애니메이션 딜레이
     private float               m_shotMaxDelay = 3.0f;
     private float               m_shotDelay = 0.0f;
-    private bool                m_isCanJump = false;
 
     // 폭탄 사거리 관련
     private float               m_explosionJumpRange = 5.0f;
@@ -118,11 +117,18 @@ public class PlayerController : MonoBehaviour
     #endregion
 
 
-    public void Init()
+    private void Start()
 	{
         m_rigid  = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
         m_handler = Util.FindChild(gameObject, "@Handler", true).transform;
+
+        // MainPlayer전용 UI셋팅
+        UI_BombRange l_bombRange = Managers.UI.Root.GetComponentInChildren<UI_BombRange>();
+        l_bombRange.RangeRadius = m_explosionRange;
+
+        UI_BombJumpRange l_bombJumpArrow = Managers.UI.Root.GetComponentsInChildren<UI_BombJumpRange>()[1];
+        l_bombJumpArrow.RangeRadius = m_explosionJumpRange;
 
         m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
     }
@@ -276,22 +282,21 @@ public class PlayerController : MonoBehaviour
         RaycastHit l_hit;
         if(Physics.Raycast(l_ray, out l_hit, 100.0f, 1 << (int)Define.Layer.Ground) == true) {
             Vector3 l_position = l_hit.point - transform.position;
+            l_position.y = 0.0f;
             m_mousePos = l_hit.point;
 
             Color l_color = Color.red;
             float l_magnitude = l_position.sqrMagnitude;
             // 폭탄 반경보다 좁으면
             if (l_magnitude <= m_explosionJumpRange * m_explosionJumpRange) {
-                m_isCanJump = true;
-            }
-            else {
-                m_isCanJump = false; 
+                m_state = PlayerState.Jump;
+                l_color = Color.blue;
             }
             float l_explosionRange = m_explosionRange * m_explosionRange;
             if (l_magnitude >= l_explosionRange) {
                 l_magnitude = l_explosionRange;
             }
-            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 3.0f), l_explosionRange) / l_explosionRange;
+            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 2.5f), l_explosionRange) / l_explosionRange;
             m_anim.SetFloat("Aiming", l_magnitude);
 
             Debug.DrawRay(Camera.main.transform.position, l_ray.direction * 1000.0f, l_color);
@@ -303,8 +308,8 @@ public class PlayerController : MonoBehaviour
 	{
         if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
             m_shotDelay = 0.0f;
-            if (m_isCanJump == true) {
-                m_anim.CrossFade("GunJump", 0.15f);
+            if (m_state == PlayerState.Jump) {
+                m_anim.CrossFade("GunJump", 0.3f);
             }
             else {
                 m_anim.SetBool("Shot", true);
@@ -347,21 +352,16 @@ public class PlayerController : MonoBehaviour
             // 정해진 시간을 초과할 경우
             if (m_explosionTime >= m_explosionDelayTime) {
                 // 폭탄의 상태를 변환시킨다.
-                if (m_bomb != null && m_bomb.State == Bomb.BoomState.Default) {
+                if (m_bomb != null) {
                     m_bomb.State = Bomb.BoomState.Delay;
                 }
             }
 		}
     }
 
-
     // Animation Player-Shooting-CM / Event
     public void ShotEnd()
 	{
-        if(m_isCanJump == true) {
-            return;
-		}
-
         // 가장 최신의 폭탄을 가지고 있는다.      
         Vector3 l_subVector = m_mousePos - m_handler.position;
         l_subVector.y = 0.0f;
@@ -374,7 +374,7 @@ public class PlayerController : MonoBehaviour
 
     public void ShotJumpEnd()
 	{
-        if (m_isCanJump == true) {
+        if (m_state == PlayerState.Jump || m_state == PlayerState.Run) {
             Managers.Game.Boom.JumpSpawn(this, m_handler.position);
         }
     }
@@ -453,7 +453,8 @@ public class PlayerController : MonoBehaviour
             else {
                 m_inputPress += 0.5f * Time.deltaTime;
             }
-
+            Managers.Network.Session.Write((int)E_PROTOCOL.MOVE, transform.position.x, transform.position.y);
+            Debug.LogError("잘 되었어요");
         }
 	}
 

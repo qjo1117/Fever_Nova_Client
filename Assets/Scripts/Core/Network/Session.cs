@@ -4,64 +4,46 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Runtime.InteropServices;// Marshal 쓰기우함
 
 public enum E_PROTOCOL
 {
     CRYPTOKEY,      // 서버 -> 클라				:	초기 암복호화키 전송 신호
+    SPAWN,          // 서버 -> 클라, 클라 -> 서버 :  스폰 신호
+    MOVE,           // 서버 -> 클라, 클라 -> 서버 :  이동 신호
+    EXIT,           // 서버 -> 클라, 클라 -> 서버 :  종료 신호	
 
-    STC_IDCREATE,
-    CTS_IDCREATE,
-
-    STC_SPAWN,
-    CTS_SPAWN,
-
-    STC_MOVE,
-    CTS_MOVE,
-
-    STC_OUT,
-    CTS_OUT,
-
-    STC_EXIT,
-    CTS_EXIT,
+    INUSER = 10,
+    MOVEUSER = 20,
+    OUTUSER = 30,
 };
 public class Session
 {
-    #region 상수
-    const int MAXPACKETNUM = 210000000; // 패킷 넘버링 체크
-    const int ProtocolOffset = 0; // 버퍼에서의 프로토콜 위치
-    const int PacketNumberOffset = 4;// 버퍼에서의 패킷 넘버 위치
-    const int DataOffset = 8;// 버퍼에서의 데이터 위치
-    #endregion
-
-    #region 데이터 영역
     SocketEx socket;
 
-    bool m_IsGetKey; // 암호화 키 받은 여부 체크
+    bool m_IsGetKey;
 
-    // uint => unsigned int 암호키
+    // uint => unsigned int
     uint m_cryptionMainKey;
     uint m_cryptionSubKey1;
     uint m_cryptionSubKey2;
 
-    // 패킷 넘버링 
-    int m_sendCounter = 0;
-    int m_recvCounter = 0;
-
     public Thread recvThread;
     public Thread sendThread;
-    static AutoResetEvent autoEvent = new AutoResetEvent(false);
-    static AutoResetEvent autoSendEndEvent = new AutoResetEvent(false);
-    static AutoResetEvent autoRecvEndEvent = new AutoResetEvent(false);
-
-    private bool _running = true;
-    private Queue<byte[]> _sendQ = new Queue<byte[]>();
-    private Queue<byte[]> _recvQ = new Queue<byte[]>();
-    #endregion
-
     public Session()
     {
         socket = new SocketEx();
+    }
+
+    public void TestTreadEnd()
+    {
+        recvThread.Join();
+        sendThread.Join();
+        autoSendEndEvent.WaitOne();
+        autoRecvEndEvent.WaitOne();
+    }
+    public void CloseSocket()
+    {
+        socket.CloseSocket();
     }
 
     public bool CheckConnecting()
@@ -81,19 +63,14 @@ public class Session
         return true;
     }
 
-    public void TreadEnd()
-    {
-        recvThread.Join();
-        sendThread.Join();
-        autoSendEndEvent.WaitOne();
-        autoRecvEndEvent.WaitOne();
-    }
-    public void CloseSocket()
-    {
-        socket.CloseSocket();
-    }
+    static AutoResetEvent autoEvent = new AutoResetEvent(false);
+    static AutoResetEvent autoSendEndEvent = new AutoResetEvent(false);
+    static AutoResetEvent autoRecvEndEvent = new AutoResetEvent(false);
 
-    #region Send 관련
+    private bool _running = true;
+    private Queue<byte[]> _sendQ = new Queue<byte[]>();
+    private Queue<byte[]> _recvQ = new Queue<byte[]>();
+
     void SendThread()
     {
         int l_sendSize = 0;
@@ -120,62 +97,6 @@ public class Session
         }
         autoSendEndEvent.Set();
     }
-    private int SendPacketCountUp()
-    {
-        int l_tempCounter = m_sendCounter;
-        ++m_sendCounter;
-        if (m_sendCounter > MAXPACKETNUM) // 패킷 넘버 돌리기
-        {
-            m_sendCounter = 0;
-        }
-        return l_tempCounter;
-    }
-    // 프로토콜과 데이터를 보내는 함수
-    public void Write<Data>(int _protocol, Data _data)
-    {
-        byte[] sendBuffer = new byte[1024];
-        int offset = 0;
-        int size = 0;
-        // 프로토콜
-        offset += sizeof(int); // 사이즈 뒤로 프로토콜 4
-        Buffer.BlockCopy(BitConverter.GetBytes(_protocol), 0, sendBuffer, offset, sizeof(int));
-        size += sizeof(int);
-        // 패킷넘버
-        offset += sizeof(int);// 프로토콜 뒤로 패킷 넘버 8
-        Buffer.BlockCopy(BitConverter.GetBytes(SendPacketCountUp()), 0, sendBuffer, offset, sizeof(int));
-        size += sizeof(int);
-
-        offset += sizeof(int);// 패킷넘버 뒤에 구조체
-        Buffer.BlockCopy(StructToByteArray(_data), 0, sendBuffer, offset, Marshal.SizeOf(typeof(Data)));
-        size += Marshal.SizeOf(typeof(Data));
-
-        // 사이즈 넣기
-        offset = 0;
-        Buffer.BlockCopy(BitConverter.GetBytes(size), 0, sendBuffer, offset, sizeof(int));
-        _sendQ.Enqueue(sendBuffer);
-        autoEvent.Set();
-    }
-    // 데이터를 보내지 않는 프로토콜만 보내는 함수
-    public void Write(int _protocol)
-    {
-        byte[] sendBuffer = new byte[32];
-        int size = 0;
-
-        // 프로토콜
-        size += sizeof(int);
-        Buffer.BlockCopy(BitConverter.GetBytes(_protocol), 0, sendBuffer, size, sizeof(int));
-        // 패킷넘버
-        size += sizeof(int);
-        Buffer.BlockCopy(BitConverter.GetBytes(SendPacketCountUp()), 0, sendBuffer, size, sizeof(int));
-
-        // 사이즈 넣기
-        Buffer.BlockCopy(BitConverter.GetBytes(size), 0, sendBuffer, 0, sizeof(int));
-        _sendQ.Enqueue(sendBuffer);
-        autoEvent.Set();
-    }
-    #endregion
-
-    #region Recv 관련
     void RecvThread()
     {
         int l_recvedSize = 0;
@@ -191,7 +112,7 @@ public class Session
                     Decryption(l_recvedSize, recvBuffer);
                 }
 
-                if (BitConverter.ToInt32(recvBuffer, 0) == (int)E_PROTOCOL.STC_EXIT)
+                if (BitConverter.ToInt32(recvBuffer, 0) == (int)E_PROTOCOL.EXIT)
                 {
                     _running = false;
                     autoEvent.Set();
@@ -206,6 +127,20 @@ public class Session
             }
         }
         autoRecvEndEvent.Set();
+    }
+
+    const int MAXPACKETNUM = 210000000;
+    int m_sendCounter = 0;
+    int m_recvCounter = 0;
+    private int SendPacketCountUp()
+    {
+        int l_tempCounter = m_sendCounter;
+        ++m_sendCounter;
+        if (m_sendCounter > MAXPACKETNUM) // 패킷 넘버 돌리기
+        {
+            m_sendCounter = 0;
+        }
+        return l_tempCounter;
     }
     private bool RecvPacketCountUp(int _counter)
     {
@@ -223,6 +158,47 @@ public class Session
             return true;
         }
     }
+    public void Write(int _protocol, float _x, float _y)
+    {
+        byte[] sendBuffer = new byte[32];
+        int size = 0;
+        // 프로토콜
+        size += sizeof(int);
+        Buffer.BlockCopy(BitConverter.GetBytes(_protocol), 0, sendBuffer, size, sizeof(int));
+        // 패킷넘버
+        size += sizeof(int);
+        Buffer.BlockCopy(BitConverter.GetBytes(SendPacketCountUp()), 0, sendBuffer, size, sizeof(int));
+
+        // X 좌표
+        size += sizeof(float);
+        Buffer.BlockCopy(BitConverter.GetBytes(_x), 0, sendBuffer, size, sizeof(float));
+        // Y 좌표
+        size += sizeof(float);
+        Buffer.BlockCopy(BitConverter.GetBytes(_y), 0, sendBuffer, size, sizeof(float));
+
+        // 사이즈 넣기
+        Buffer.BlockCopy(BitConverter.GetBytes(size), 0, sendBuffer, 0, sizeof(int));
+        _sendQ.Enqueue(sendBuffer);
+        autoEvent.Set();
+    }
+    public void Write(int _protocol)
+    {
+        byte[] sendBuffer = new byte[32];
+        int size = 0;
+
+        // 프로토콜
+        size += sizeof(int);
+        Buffer.BlockCopy(BitConverter.GetBytes(_protocol), 0, sendBuffer, size, sizeof(int));
+        // 패킷넘버
+        size += sizeof(int);
+        Buffer.BlockCopy(BitConverter.GetBytes(SendPacketCountUp()), 0, sendBuffer, size, sizeof(int));
+
+        // 사이즈 넣기
+        Buffer.BlockCopy(BitConverter.GetBytes(size), 0, sendBuffer, 0, sizeof(int));
+        _sendQ.Enqueue(sendBuffer);
+        autoEvent.Set();
+    }
+
     public bool CheckRead()
     {
         if (_recvQ.Count > 0)
@@ -237,60 +213,50 @@ public class Session
     public int GetProtocol()
     {
         byte[] recvBuffer = _recvQ.Peek();
-        return BitConverter.ToInt32(recvBuffer, ProtocolOffset);
+        return BitConverter.ToInt32(recvBuffer, 0);
     }
     public int GetPacketNumber()
     {
         byte[] recvBuffer = _recvQ.Peek();
-        return BitConverter.ToInt32(recvBuffer, PacketNumberOffset);
+        return BitConverter.ToInt32(recvBuffer, 4);
     }
-    public void GetData<Data>(out Data _data) where Data : struct
+
+    public void GetIdData(out int _id)
     {
         byte[] recvBuffer = _recvQ.Dequeue();
-        _data = ByteArrayToStruct<Data>(SubArray(recvBuffer, DataOffset,
-            (Marshal.SizeOf(typeof(Data))) + DataOffset)
-            );
+        _id = BitConverter.ToInt32(recvBuffer, 8);
     }
-    #endregion
 
-    #region Util Function
-    private byte[] StructToByteArray(object obj)
+    public void GetInData(out int _id)
     {
-        int size = Marshal.SizeOf(obj);
-        byte[] arr = new byte[size];
-        IntPtr ptr = Marshal.AllocHGlobal(size);
-
-        Marshal.StructureToPtr(obj, ptr, true);
-        Marshal.Copy(ptr, arr, 0, size);
-        Marshal.FreeHGlobal(ptr);
-        return arr;
+        byte[] recvBuffer = _recvQ.Dequeue();
+        _id = BitConverter.ToInt32(recvBuffer, 8);
     }
-
-    private T ByteArrayToStruct<T>(byte[] buffer) where T : struct
+    public void GetMoveData(out int _id, out float _x, out float _y)
     {
-        int size = Marshal.SizeOf(typeof(T));
-        if (size > buffer.Length)
-        {
-            throw new Exception();
-        }
-
-        IntPtr ptr = Marshal.AllocHGlobal(size);
-        Marshal.Copy(buffer, 0, ptr, size);
-        T obj = (T)Marshal.PtrToStructure(ptr, typeof(T));
-        Marshal.FreeHGlobal(ptr);
-        return obj;
+        byte[] recvBuffer = _recvQ.Dequeue();
+        _id = BitConverter.ToInt32(recvBuffer, 8);
+        _x = BitConverter.ToSingle(recvBuffer, 12);
+        _y = BitConverter.ToSingle(recvBuffer, 16);
     }
+    public void GetOutData(out int _id)
+    {
+        byte[] recvBuffer = _recvQ.Dequeue();
+        _id = BitConverter.ToInt32(recvBuffer, 8);
+    }
+
+
     private byte[] SubArray(byte[] _data, int _startIndex, int _endIndex)
     {
         int length = _endIndex - _startIndex + 1;
 
         byte[] result = new byte[length];
-        Array.Copy(_data, _startIndex, result, 0, length);
+        Buffer.BlockCopy(_data, _startIndex, result, 0, length);
         return result;
     }
-    #endregion
 
-    #region Encryption & Decryption
+
+    #region 암복호화
     private void Encryption(int _dataSize, byte[] _data)
     {
         // size필드 암호화하지 않기위한 offset값

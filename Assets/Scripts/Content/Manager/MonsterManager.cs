@@ -181,6 +181,10 @@ public class MonsterManager : MonoBehaviour
 
             if (m_listMonster[data.id].Damage(l_player) == true)
             {
+        foreach (TargetData data in m_listTargetData) {
+            PlayerController l_player = Managers.Game.Player.At(data.hitId);
+           
+            if (m_listMonster[data.id].Demege(l_player) == true) {
                 m_stackDestroy.Push(m_listMonster[data.id]);
             }
         }
