@@ -45,9 +45,9 @@ public class AI_Enemy : MonoBehaviour
 
     // Ret : 죽었는가?
     // Parameter : PlayerController / 타격한 녀석 | int 피격당한 대미지
-    public bool Demege(PlayerController _player, int _attack)
+    public bool Demege(PlayerController _player)
 	{
-        m_stat.HP -= _attack;
+        m_stat.HP -= _player.Stat.attack;
         m_hpBar.HP = m_stat.HP;
         // Die
         if (m_stat.HP <= 0) {
@@ -59,10 +59,9 @@ public class AI_Enemy : MonoBehaviour
     }
 
     // Parameter : PlayerController / 타격한 녀석 | int 피격당한 대미지 | Vector3 힘
-    public bool Demege(PlayerController _player, int _attack, Vector3 _force)
+    public bool Demege(PlayerController _player, Vector3 _force)
 	{
         m_rigid.AddForce(_force);
-        return Demege(_player, _attack);
-        
+        return Demege(_player);
     }
 }

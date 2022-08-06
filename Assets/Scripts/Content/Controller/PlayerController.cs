@@ -352,7 +352,9 @@ public class PlayerController : MonoBehaviour
             // 정해진 시간을 초과할 경우
             if (m_explosionTime >= m_explosionDelayTime) {
                 // 폭탄의 상태를 변환시킨다.
-                m_bomb.State = Bomb.BoomState.Delay;
+                if (m_bomb != null) {
+                    m_bomb.State = Bomb.BoomState.Delay;
+                }
             }
 		}
     }

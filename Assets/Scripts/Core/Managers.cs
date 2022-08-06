@@ -78,6 +78,9 @@ public class Managers : MonoBehaviour
 	{
 		m_instance.m_input.Update();
 		m_instance.m_resource.Update();
+		if(m_instance.m_game.IsPlay == true) {
+			m_instance.m_game.Update();
+		}
 	}
 
 	private void FixedUpdate()

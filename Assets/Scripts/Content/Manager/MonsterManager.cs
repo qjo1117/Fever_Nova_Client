@@ -5,13 +5,15 @@ using UnityEngine;
 // ������ �������� ����
 public class TargetData
 {
-    public TargetData(int p_id, int p_attack, Vector3 p_force)
+    public TargetData(int p_id, int _hitId, int p_attack, Vector3 p_force)
     {
         id = p_id;
         attack = p_attack;
         force = p_force;
+        hitId = _hitId;
     }
     public int id = -1;
+    public int hitId = -1;
     public int attack = 0;
     public Vector3 force = Vector3.zero;
 }
@@ -77,6 +79,8 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
+    public List<AI_Enemy> List { get => m_listMonster; }
+
     // --------- Spawner ���� ���� ---------
     public Transform            m_parentSpawner = null;
 	[SerializeField]
@@ -86,7 +90,6 @@ public class MonsterManager : MonoBehaviour
     public void OnUpdate()
     {
         AttackUpdate();
-        DieUpdate();
     }
 
     // InGameScene에서 호출하도록 한다.
@@ -147,7 +150,7 @@ public class MonsterManager : MonoBehaviour
     public void DeSpawn(AI_Enemy _monster)
 	{
         m_listMonster.Remove(_monster);
-        Managers.Resource.Destroy(_monster.gameObject, 1.0f);
+        Managers.Resource.Destroy(_monster.gameObject);
 	}
 
     public void Register(AI_Enemy _monster)
@@ -157,14 +160,14 @@ public class MonsterManager : MonoBehaviour
 
 
     // TODO : Server
-    public void Damege(int p_id, int p_attack, Vector3 p_force)
+    public void Damege(int _id, int _hitId, int _attack, Vector3 _force)
     {
-        m_listTargetData.Add(new TargetData(p_id, p_attack, p_force));
+        m_listTargetData.Add(new TargetData(_id, _hitId, _attack, _force));
     }
 
-    public void Damege(List<TargetData> p_listTargetData)
+    public void Damege(List<TargetData> _listTargetData)
     {
-        foreach (TargetData data in p_listTargetData) {
+        foreach (TargetData data in _listTargetData) {
             m_listTargetData.Add(data);
         }
     }
@@ -176,11 +179,12 @@ public class MonsterManager : MonoBehaviour
             return;
         }
 
-        foreach (TargetData data in m_listTargetData)
-        {
-            //Debug.Log(data.id);
-            //m_listMonster[data.id].Stat.Hp -= data.attack;
-        }
+        foreach (TargetData data in m_listTargetData) {
+            PlayerController l_player = Managers.Game.Player.List[data.hitId];
+            if (m_listMonster[data.id].Demege(l_player) == true) {
+
+            }
+		}
 
         m_listTargetData.Clear();
 

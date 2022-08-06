@@ -23,6 +23,8 @@ public class GameManager
 
     // 몬스터들에 대한 프리팹을 들고 있는다.
     private List<GameObject> m_listPrefab = new List<GameObject>();
+
+    private bool m_isPlay = false;
     #endregion
 
 
@@ -41,6 +43,7 @@ public class GameManager
     // 플레이 타임 UI에 출력시키기 위해
     public float BeginPlayTime { get => m_beginPlayTime; set => m_beginPlayTime = value; }
     public float EndPlayTime { get => m_endPlayTime; set => m_endPlayTime = value; }
+    public bool IsPlay { get => m_isPlay; set => m_isPlay = value; }
     #endregion
 
 
@@ -80,16 +83,18 @@ public class GameManager
 
         // 시작 시간을 가져온다.
         m_beginPlayTime = Time.time;
+
+        Managers.Game.IsPlay = true;
     }
 
     public void Clear()
 	{
-
-	}
+        Managers.Game.IsPlay = false;
+    }
 
 
 	public void Update()
     {
-
+        m_monster.OnUpdate();
     }
 }

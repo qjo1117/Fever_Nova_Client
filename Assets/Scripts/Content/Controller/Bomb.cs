@@ -16,16 +16,16 @@ public class Bomb : MonoBehaviour
 	[SerializeField]
     private BoomState           m_state = BoomState.Default;
     private float               m_explosionForce = 1000.0f;
-    private float               m_moveSpeed = 100.0f;               // ÆøÅºÀÇ °¡ÇØÁö´Â Èû
-    private float               m_explosionRange = 5.0f;            // Æø¹ß ¹İ°æ
-    private float               m_explosionDelayTime = 0.0f;        // ÇöÀç Áö¿¬ ½Ã°£
-    private float               m_explosionMaxDelayTime = 5.0f;     // ÃÖ´ë Áö¿¬ ½Ã°£
+    private float               m_moveSpeed = 100.0f;               // ï¿½ï¿½Åºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    private float               m_explosionRange = 7.0f;            // ï¿½ï¿½ï¿½ï¿½ ï¿½İ°ï¿½
+    private float               m_explosionDelayTime = 0.0f;        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    private float               m_explosionMaxDelayTime = 5.0f;     // ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     private Rigidbody           m_rigid = null;
     private int                 m_layer = 1 << (int)Layer.Monster | 1 << (int)Layer.Player;
 
     private PlayerController    m_owner = null;
 
-    #region ÇÁ·ÎÆÛÆ¼
+    #region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼
 
     public BoomState State { get => m_state; set => m_state = value; }
     public float Speed { get => m_moveSpeed; set => m_moveSpeed = value; }
@@ -44,7 +44,7 @@ public class Bomb : MonoBehaviour
         CheckExplosionTime();
     }
 
-    // ¹ß»ç¸¦ ÇßÀ»¶§ ÇÊ¿äÇÑ Á¤º¸¸¦ ¼öÁıÁß
+    // ï¿½ß»ç¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void Shoot(PlayerController _owner, Vector3 _position, Vector3 _direction, float _dist)
 	{
         _direction *= _dist * m_moveSpeed;
@@ -67,35 +67,63 @@ public class Bomb : MonoBehaviour
 
     public void Explosion()
     {
-        RaycastHit[] l_colliders =  Physics.SphereCastAll(transform.position, m_explosionRange, Vector3.up, 1.0f, m_layer);
+        // OverlapSphereê°€ ì œëŒ€ë¡œ ì•ˆë¨
+        List<PlayerController> l_players = Managers.Game.Player.List;
 
-        int l_multikillCount = 0;
-        // ¼øÈ¸¸¦ ÇÏ¿© Ã¼Å©¸¦ ÁøÇà
-        foreach(RaycastHit l_hit in l_colliders) {
-            Transform l_trans = l_hit.transform;
 
-            // ÇöÀç ¸ó½ºÅÍ¿Í ÆøÅº°£ÀÇ °Å¸®¸¦ ¾Ë¾Æ³½´Ù.
-            Vector3 l_subVec = l_trans.position - transform.position;
-            l_subVec *= m_explosionForce / l_subVec.magnitude;             // °Å¸®°¡ ¸Ö ¼ö·Ï ´õ Àû°Ô ÈûÀ» ¹Ş´Â´Ù.
+		foreach (PlayerController l_player in l_players) {
+            Vector3 l_destPos = l_player.transform.position;      // í”Œë ˆì´ì–´ ìœ„ì¹˜
+            Vector3 l_pos = transform.position;                 // í­íƒ„ ìœ„ì¹˜
 
-            // TODO : ´ë¹ÌÁö È÷Æ® °ªÀ» Àü´ŞÇÏ¸é µÊ
-            int l_layer = l_hit.collider.gameObject.layer;
-            if (l_layer == (int)Define.Layer.Player) {
-                PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.collider.gameObject.GetInstanceID());
-                l_player.GetComponent<Rigidbody>().AddExplosionForce(l_subVec.magnitude, transform.position, 100.0f);
-            }
-            else if (l_layer == (int)Define.Layer.Monster) {
-                AI_Enemy l_monster = l_hit.collider.GetComponent<AI_Enemy>();
-                // ¸¸¾à ¸ó½ºÅÍ°¡ Á×¾ú´Ù¸é
-                if(l_monster.Demege(m_owner, 80, l_subVec / 2.0f) == true) {
-                    l_multikillCount += 1;
-                }
+            Vector3 l_dist = l_destPos - l_pos;
+            // ì¶©ëŒ ê²€ì‚¬
+            if (l_dist.sqrMagnitude < m_explosionRange * m_explosionRange) {
+                l_dist *= m_explosionForce / l_dist.magnitude;             // ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş´Â´ï¿½.
+                l_player.GetComponent<Rigidbody>().AddForce(l_dist * 2.0f);
             }
         }
 
-        if(m_owner.MonsterMultiKillCount < l_multikillCount) {
-            m_owner.MonsterMultiKillCount = l_multikillCount;
+        List<AI_Enemy> l_monsters = Managers.Game.Monster.List;
+        List<TargetData> l_datas = new List<TargetData>();
+        int l_size = l_monsters.Count;
+        for (int i = 0; i < l_size; ++i) {
+            AI_Enemy l_monster = l_monsters[i];
+            Vector3 l_dist = l_monster.transform.position - transform.position;
+            // ì¶©ëŒ ê²€ì‚¬
+            if (l_dist.sqrMagnitude < m_explosionRange * m_explosionRange) {
+                l_dist *= m_explosionForce / l_dist.magnitude;             // ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş´Â´ï¿½.
+                l_datas.Add(new TargetData(i, m_owner.Stat.id, m_owner.Stat.attack, l_dist));
+            }
         }
+        Managers.Game.Monster.Damege(l_datas);
+
+        //Collider[] l_colliders =  Physics.OverlapSphere(transform.position, m_explosionRange, m_layer);
+        //int l_multikillCount = 0;
+        //// ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ï¿ï¿½ Ã¼Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        //foreach(Collider l_hit in l_colliders) {
+        //    Transform l_trans = l_hit.transform;
+
+        //    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Ë¾Æ³ï¿½ï¿½ï¿½.
+        //    Vector3 l_subVec = l_trans.position - transform.position;
+        //    l_subVec *= m_explosionForce / l_subVec.magnitude;             // ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş´Â´ï¿½.
+
+        //    // TODO : ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½
+        //    int l_layer = l_hit.GetComponent<Collider>().gameObject.layer;
+        //    if (l_layer == (int)Define.Layer.Player) {
+        //        PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.GetComponent<Collider>().gameObject.GetInstanceID());
+        //        l_player.GetComponent<Rigidbody>().AddExplosionForce(l_subVec.magnitude, transform.position, 100.0f);
+        //    }
+        //    else if (l_layer == (int)Define.Layer.Monster) {
+        //        AI_Enemy l_monster = l_hit.GetComponent<Collider>().GetComponent<AI_Enemy>();
+        //        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½×¾ï¿½ï¿½Ù¸ï¿½
+        //        if(l_monster.Demege(m_owner, 80, l_subVec / 2.0f) == true) {
+        //            l_multikillCount += 1;
+        //        }
+        //    }
+        //}
+        //if(m_owner.MonsterMultiKillCount < l_multikillCount) {
+        //    m_owner.MonsterMultiKillCount = l_multikillCount;
+        //}
 
         m_state = BoomState.Default;
         m_explosionDelayTime = 0.0f;
@@ -106,29 +134,58 @@ public class Bomb : MonoBehaviour
 
     public void JumpExplosion()
 	{
-        RaycastHit[] l_colliders = Physics.SphereCastAll(transform.position, m_explosionRange, Vector3.up, 1.0f, m_layer);
+        // OverlapSphereê°€ ì œëŒ€ë¡œ ì•ˆë¨
+        List<PlayerController> l_players = Managers.Game.Player.List;
+        foreach(PlayerController l_player in l_players) {
+            Vector3 l_destPos = l_player.transform.position;      // í”Œë ˆì´ì–´ ìœ„ì¹˜
+            Vector3 l_pos = transform.position;                 // í­íƒ„ ìœ„ì¹˜
 
-        // ¼øÈ¸¸¦ ÇÏ¿© Ã¼Å©¸¦ ÁøÇà
-        foreach (RaycastHit l_hit in l_colliders) {
-            Transform l_trans = l_hit.transform;
-
-            // ÇöÀç ¸ó½ºÅÍ¿Í ÆøÅº°£ÀÇ °Å¸®¸¦ ¾Ë¾Æ³½´Ù.
-            Vector3 l_subVec = l_trans.position - transform.position;
-            l_subVec.y += 10.0f;
-            l_subVec *= m_explosionForce / l_subVec.magnitude;             // °Å¸®°¡ ¸Ö ¼ö·Ï ´õ Àû°Ô ÈûÀ» ¹Ş´Â´Ù.
-
-
-            // TODO : ´ë¹ÌÁö È÷Æ® °ªÀ» Àü´ŞÇÏ¸é µÊ
-            int l_layer = l_hit.collider.gameObject.layer;
-            if (l_layer == (int)Define.Layer.Player) {
-                PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.collider.gameObject.GetInstanceID());
-                l_player.GetComponent<Rigidbody>().AddForce(l_subVec * 2.0f);
-
+            Vector3 l_dist = l_destPos - l_pos;
+            // ì¶©ëŒ ê²€ì‚¬
+            if(l_dist.sqrMagnitude < m_explosionRange * m_explosionRange) {
+                l_dist.y += 10.0f;
+                l_dist *= m_explosionForce / l_dist.magnitude;             // ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş´Â´ï¿½.
+                l_player.GetComponent<Rigidbody>().AddForce(l_dist * 2.0f);
             }
-            else if (l_layer == (int)Define.Layer.Monster) {
-                AI_Enemy l_monster = l_hit.collider.GetComponent<AI_Enemy>();
+		}
+
+        List<AI_Enemy> l_monsters = Managers.Game.Monster.List;
+        List<TargetData> l_datas = new List<TargetData>();
+        int l_size = l_monsters.Count;
+        for (int i = 0; i < l_size; ++i) {
+            AI_Enemy l_monster = l_monsters[i];
+            Vector3 l_dist = l_monster.transform.position - transform.position;
+            // ì¶©ëŒ ê²€ì‚¬
+            if (l_dist.sqrMagnitude < m_explosionRange * m_explosionRange) {
+                l_dist *= m_explosionForce / l_dist.magnitude;             // ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş´Â´ï¿½.
+                l_datas.Add(new TargetData(i, m_owner.Stat.id, m_owner.Stat.attack, l_dist));
             }
         }
+        Managers.Game.Monster.Damege(l_datas);
+
+
+        //Collider[] l_colliders = Physics.OverlapSphere(transform.position, m_explosionRange, m_layer);
+        //// ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ï¿ï¿½ Ã¼Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        //foreach (Collider l_hit in l_colliders) {
+        //    Transform l_trans = l_hit.transform;
+
+        //    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Ë¾Æ³ï¿½ï¿½ï¿½.
+        //    Vector3 l_subVec = l_trans.position - transform.position;
+        //    l_subVec.y += 10.0f;
+        //    l_subVec *= m_explosionForce / l_subVec.magnitude;             // ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş´Â´ï¿½.
+
+
+        //    // TODO : ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½
+        //    int l_layer = l_hit.gameObject.layer;
+        //    if (l_layer == (int)Define.Layer.Player) {
+        //        PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.gameObject.GetInstanceID());
+        //        l_player.GetComponent<Rigidbody>().AddForce(l_subVec * 2.0f);
+
+        //    }
+        //    else if (l_layer == (int)Define.Layer.Monster) {
+        //        AI_Enemy l_monster = l_hit.GetComponent<AI_Enemy>();
+        //    }
+        //}
 
         m_state = BoomState.Default;
         m_explosionDelayTime = 0.0f;
@@ -137,29 +194,29 @@ public class Bomb : MonoBehaviour
         Managers.Game.Boom.DeSpawn(this);
     }
 
-    // ÇöÀç Æø¹ßÀÌ µÉ °ÍÀÎÁö¸¦ Ä«¿îÆÃÇÑ´Ù.
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
     private void CheckExplosionTime()
 	{
-        // ¸¸¾à ½Ã°£ÀÌ ºÎÁ·ÇÏ¸é Ãß°¡ÇÑ´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ß°ï¿½ï¿½Ñ´ï¿½.
         m_explosionDelayTime += Time.deltaTime;
 
-        // Áö¿¬»óÅÂÀÏ °æ¿ì Ã¼Å© ÀÚÃ¼¸¦ ¾ÈÇÑ´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¼Å© ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
         if (m_state == BoomState.Delay || m_explosionDelayTime < m_explosionMaxDelayTime) {
             return;
 		}
 
-        // ´ë±â ½Ã°£ÀÌ ´Ù³¡³ª¸é Á¾·á
+        // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ù³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Explosion();
     }
 
 	private void OnCollisionEnter(Collision collision)
 	{
         int l_layer = collision.collider.gameObject.layer;
-        // Á¡ÇÁ Æø¹ßÀ» ÀÏÀ¸Å³¶§
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å³ï¿½ï¿½
         if (m_state == BoomState.Jump && l_layer == (int)Define.Layer.Ground) {
             JumpExplosion();
         }
-        // ¸ó½ºÅÍ¿¡°Ô ºÎµúÇûÀ»¶§ (±âº» »óÅÂ)
+        // ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½âº» ï¿½ï¿½ï¿½ï¿½)
         else if(m_state == BoomState.Default && l_layer == (int)Define.Layer.Monster) {
             Explosion();
 		}
