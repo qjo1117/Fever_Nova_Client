@@ -53,6 +53,8 @@ public class Bomb : MonoBehaviour
         m_rigid.AddForce(_direction);
 
         m_owner = _owner;
+
+        transform.rotation = Quaternion.identity;
     }
 
     public void JumpShoot(PlayerController _owner, Vector3 _position)
@@ -63,6 +65,8 @@ public class Bomb : MonoBehaviour
         m_state = BoomState.Jump;
 
         m_owner = _owner;
+
+        transform.rotation = Quaternion.identity;
     }
 
     public void Explosion()

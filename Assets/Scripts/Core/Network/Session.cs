@@ -9,13 +9,21 @@ using System.Runtime.InteropServices;// Marshal 쓰기우함
 public enum E_PROTOCOL
 {
     CRYPTOKEY,      // 서버 -> 클라				:	초기 암복호화키 전송 신호
-    SPAWN,          // 서버 -> 클라, 클라 -> 서버 :  스폰 신호
-    MOVE,           // 서버 -> 클라, 클라 -> 서버 :  이동 신호
-    EXIT,           // 서버 -> 클라, 클라 -> 서버 :  종료 신호	
 
-    INUSER = 10,
-    MOVEUSER = 20,
-    OUTUSER = 30,
+    STC_IDCREATE,
+    CTS_IDCREATE,
+
+    STC_SPAWN,
+    CTS_SPAWN,
+
+    STC_MOVE,
+    CTS_MOVE,
+
+    STC_OUT,
+    CTS_OUT,
+
+    STC_EXIT,
+    CTS_EXIT,
 };
 public class Session
 {
@@ -183,7 +191,7 @@ public class Session
                     Decryption(l_recvedSize, recvBuffer);
                 }
 
-                if (BitConverter.ToInt32(recvBuffer, 0) == (int)E_PROTOCOL.EXIT)
+                if (BitConverter.ToInt32(recvBuffer, 0) == (int)E_PROTOCOL.STC_EXIT)
                 {
                     _running = false;
                     autoEvent.Set();

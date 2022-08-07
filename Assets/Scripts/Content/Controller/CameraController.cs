@@ -38,7 +38,7 @@ public class CameraController : MonoBehaviour
         }
         else {
             transform.position = m_player.transform.position + m_delta;
-            transform.LookAt(m_player.transform);
+            transform.rotation = Quaternion.LookRotation(m_direction);
         }
     }
 

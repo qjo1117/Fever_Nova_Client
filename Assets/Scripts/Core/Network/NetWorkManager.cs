@@ -8,10 +8,11 @@ public class NetWorkManager
 {
     private Session session;
     private Dictionary<int, Action> m_dicProtocol = new Dictionary<int, Action>();
-
+    private int m_clientId = -1;
 
     public Dictionary<int, Action> ProtocolAction { get => m_dicProtocol; }
     public Session Session { get => session; }
+    public int ClientId { get => m_clientId; }
 
 
     public void Init()
@@ -24,6 +25,7 @@ public class NetWorkManager
     public void Register()
 	{
         m_dicProtocol.Add((int)E_PROTOCOL.CRYPTOKEY, KeyProcess);
+        m_dicProtocol.Add((int)E_PROTOCOL.STC_IDCREATE, IdProcess);
 
     }
 
@@ -37,8 +39,17 @@ public class NetWorkManager
     private void KeyProcess()
 	{
 		session.CryptoKeyDataSetting();
-		session.Write((int)E_PROTOCOL.SPAWN); // 접속
+		session.Write((int)E_PROTOCOL.CTS_IDCREATE); // 접속
 	}
+
+    private void IdProcess()
+	{
+        int l_id = -1;
+        session.GetData(out l_id);
+        m_clientId = l_id;
+
+        session.Write((int)E_PROTOCOL.CTS_SPAWN); // 스폰요청
+    }
 
 
     public GameObject playerUnit;
@@ -52,7 +63,7 @@ public class NetWorkManager
         //MoveTest.GetInstance().CloseSocket();
         if (session.CheckConnecting())
         {
-            session.Write((int)E_PROTOCOL.EXIT);// 종료
+            session.Write((int)E_PROTOCOL.CTS_EXIT);// 종료
             session.TreadEnd();
             session.CloseSocket();
         }

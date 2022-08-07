@@ -5,8 +5,8 @@ using UnityEngine;
 public class UI_BombJumpRange : UI_BombRange
 {
     #region 변수
-    private Camera           m_mainCam;
-    private UI_BombJumpArrow m_bombJumpArrow;           // 폭탄 점프 화살표 UI (폭탄 점프 화살표 UI 표시위해 필요함)
+    private Camera           m_mainCam = null;
+    private UI_BombJumpArrow m_bombJumpArrow = null;           // 폭탄 점프 화살표 UI (폭탄 점프 화살표 UI 표시위해 필요함)
     #endregion
 
     public override void Init()

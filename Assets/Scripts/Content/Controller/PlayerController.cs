@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     // 총 애니메이션 딜레이
     private float               m_shotMaxDelay = 3.0f;
     private float               m_shotDelay = 0.0f;
+    private bool                m_isCanJump = false;
 
     // 폭탄 사거리 관련
     private float               m_explosionJumpRange = 5.0f;
@@ -275,15 +276,16 @@ public class PlayerController : MonoBehaviour
         RaycastHit l_hit;
         if(Physics.Raycast(l_ray, out l_hit, 100.0f, 1 << (int)Define.Layer.Ground) == true) {
             Vector3 l_position = l_hit.point - transform.position;
-            l_position.y = 0.0f;
             m_mousePos = l_hit.point;
 
             Color l_color = Color.red;
             float l_magnitude = l_position.sqrMagnitude;
             // 폭탄 반경보다 좁으면
-            if (l_magnitude < m_explosionJumpRange * m_explosionJumpRange) {
-                m_state = PlayerState.Jump;
-                l_color = Color.blue;
+            if (l_magnitude <= m_explosionJumpRange * m_explosionJumpRange) {
+                m_isCanJump = true;
+            }
+            else {
+                m_isCanJump = false; 
             }
             float l_explosionRange = m_explosionRange * m_explosionRange;
             if (l_magnitude >= l_explosionRange) {
@@ -301,8 +303,8 @@ public class PlayerController : MonoBehaviour
 	{
         if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
             m_shotDelay = 0.0f;
-            if (m_state == PlayerState.Jump) {
-                m_anim.CrossFade("GunJump", 0.33f);
+            if (m_isCanJump == true) {
+                m_anim.CrossFade("GunJump", 0.15f);
             }
             else {
                 m_anim.SetBool("Shot", true);
@@ -352,12 +354,14 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
+
     // Animation Player-Shooting-CM / Event
     public void ShotEnd()
 	{
-        if (m_state == PlayerState.Jump) {
+        if(m_isCanJump == true) {
             return;
 		}
+
         // 가장 최신의 폭탄을 가지고 있는다.      
         Vector3 l_subVector = m_mousePos - m_handler.position;
         l_subVector.y = 0.0f;
@@ -370,7 +374,7 @@ public class PlayerController : MonoBehaviour
 
     public void ShotJumpEnd()
 	{
-        if (m_state == PlayerState.Jump || m_state == PlayerState.Run) {
+        if (m_isCanJump == true) {
             Managers.Game.Boom.JumpSpawn(this, m_handler.position);
         }
     }
@@ -449,11 +453,7 @@ public class PlayerController : MonoBehaviour
             else {
                 m_inputPress += 0.5f * Time.deltaTime;
             }
-            // 멀티
-            if (Managers.Game.IsMulti == true) {
-                //Managers.Network.Session.Write((int)E_PROTOCOL.MOVE, transform.position.x, transform.position.y);
-                //Debug.Log("잘 되었어요");
-            }
+
         }
 	}
 

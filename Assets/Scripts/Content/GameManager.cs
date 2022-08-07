@@ -108,10 +108,33 @@ public class GameManager
 
 	public void Update()
     {
+        if (m_isPlay == false) {
+            return;
+        }
+        
         m_monster.OnUpdate();
+
         if (m_isMulti == true) {
             Managers.Network.Update();
         }
 
     }
+
+    // 12FPS
+    private float m_currentTime = 0.0f;
+    private float m_currentMaxTime = 12.0f;
+    public void FixedUpdate()
+	{
+        m_currentTime += 1;
+        if(m_currentTime < m_currentMaxTime) {
+            return;
+		}
+        m_currentTime -= m_currentMaxTime;
+
+        if (m_isPlay == false) {
+            return;
+        }
+
+        m_player.OnFixedUpdate();
+	}
 }
