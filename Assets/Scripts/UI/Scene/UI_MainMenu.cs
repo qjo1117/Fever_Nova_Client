@@ -65,7 +65,6 @@ public class UI_MainMenu : UI_Scene
 
     public void ExitButtonClicked(PointerEventData data)
     {
-        Managers.Network.End();
 
         if (data.button == PointerEventData.InputButton.Left)
         {

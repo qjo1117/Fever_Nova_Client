@@ -25,6 +25,7 @@ public class GameManager
     private List<GameObject> m_listPrefab = new List<GameObject>();
 
     private bool m_isPlay = false;
+    private bool m_isMulti = false;
     #endregion
 
 
@@ -44,6 +45,7 @@ public class GameManager
     public float BeginPlayTime { get => m_beginPlayTime; set => m_beginPlayTime = value; }
     public float EndPlayTime { get => m_endPlayTime; set => m_endPlayTime = value; }
     public bool IsPlay { get => m_isPlay; set => m_isPlay = value; }
+    public bool IsMulti { get => m_isMulti; set => m_isMulti = value; }
     #endregion
 
 
@@ -73,7 +75,9 @@ public class GameManager
         m_respawn = Util.FindGetOrAddGameObject<RespawnManager>("RespawnManager");
         m_item = Util.FindGetOrAddGameObject<ItemManager>("ItemManager");
 
-        Managers.Network.Init();
+        if (m_isMulti == true) {
+            Managers.Network.Init();
+        }
 
         m_player.Init();
         m_monster.Init();
@@ -87,19 +91,27 @@ public class GameManager
         m_beginPlayTime = Time.time;
 
         Managers.Game.IsPlay = true;
-
-
+        if(m_isMulti == false) {
+            m_player.Spawn(m_player.SpanwPoint, new PlayerStat { id = 0, name = "SamplePlayer" });
+		}
     }
 
     public void Clear()
 	{
         Managers.Game.IsPlay = false;
+        if (m_isMulti == true) {
+            Managers.Network.End();
+            m_isMulti = false;
+        }
     }
 
 
 	public void Update()
     {
         m_monster.OnUpdate();
-        Managers.Network.Update();
+        if (m_isMulti == true) {
+            Managers.Network.Update();
+        }
+
     }
 }
