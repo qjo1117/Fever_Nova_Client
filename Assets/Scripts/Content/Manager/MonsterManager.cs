@@ -129,6 +129,7 @@ public class MonsterManager : MonoBehaviour
 
         // TODO : 테이블에 접근해서 객체를 생성및 스탯 반영하는 코드를 추가하면 될 것 같음
         l_monster.Stat = l_stat;
+        l_monster.Stat.index = m_index++;
         l_monster.GetComponent<Rigidbody>().mass = l_stat.weight;
         l_monster.name = l_stat.name;
 
@@ -159,7 +160,7 @@ public class MonsterManager : MonoBehaviour
         m_listTargetData.Add(new TargetData(_id, _hitId, _attack, _force));
     }
 
-    public void Damege(List<TargetData> _listTargetData)
+    public void Demege(List<TargetData> _listTargetData)
     {
         foreach (TargetData data in _listTargetData)
         {
@@ -183,9 +184,13 @@ public class MonsterManager : MonoBehaviour
             {
         foreach (TargetData data in m_listTargetData) {
             PlayerController l_player = Managers.Game.Player.At(data.hitId);
-           
-            if (m_listMonster[data.id].Demege(l_player) == true) {
-                m_stackDestroy.Push(m_listMonster[data.id]);
+            AI_Enemy l_monster = At(data.id);
+            if(l_monster == null) {
+                continue;
+			}
+
+            if (l_monster.Demege(l_player) == true) {
+                m_stackDestroy.Push(l_monster);
             }
         }
 
@@ -198,6 +203,16 @@ public class MonsterManager : MonoBehaviour
             m_listMonster.Remove(l_monster);
             Managers.Resource.Destroy(l_monster.gameObject);
         }
+    }
+
+    public AI_Enemy At(int _index)
+    {
+        foreach (AI_Enemy monster in m_listMonster) {
+            if(monster.Stat.index == _index) {
+                return monster;
+			}
+        }
+        return null;
     }
 
     private void DieUpdate()

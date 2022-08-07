@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
 
     #region Player Property
     public float JumpRange { get => m_jumpRange; }
+    public float ExplosionRange { get => m_explosionRange; }
     #endregion
 
     void Update()
@@ -103,16 +104,21 @@ public class PlayerManager : MonoBehaviour
             CameraController l_camera = GameObject.FindObjectOfType<CameraController>();
             l_camera.SetPlayer(l_player.gameObject);
 
-            m_mainPlayer.ExplosionRadius = m_explosionRange;
             m_mainPlayer.ExplosionJumpRadius = m_jumpRange;
-        }
+            m_mainPlayer.ExplosionRadius = m_explosionRange;
 
-        // 플레이어 HP바 생성
-        UI_PlayerHPBar l_playerHPBar = Managers.UI.ShowSceneUI<UI_PlayerHPBar>("UI_PlayerHPBar");
-        l_playerHPBar.HP = l_player.Stat.hp;
-        l_playerHPBar.MaxHP = l_player.Stat.maxHp;
-        Managers.UI.SetCanvas(l_playerHPBar.gameObject, false);
-        l_player.PlayerHPBar = l_playerHPBar;
+            // 플레이어 HP바 생성
+            UI_PlayerHPBar l_playerHPBar = Managers.UI.ShowSceneUI<UI_PlayerHPBar>("UI_PlayerHPBar");
+            l_playerHPBar.HP = m_mainPlayer.Stat.hp;
+            l_playerHPBar.MaxHP = m_mainPlayer.Stat.maxHp;
+            Managers.UI.SetCanvas(l_playerHPBar.gameObject, false);
+            m_mainPlayer.PlayerHPBar = l_playerHPBar;
+
+            // MainPlayer전용 UI셋팅
+            UI_BombDropPoint l_bombRange = Managers.UI.Root.GetComponentInChildren<UI_BombDropPoint>();
+            l_bombRange.BombJumpRange.RangeRadius = m_jumpRange;
+            l_bombRange.BombRange.RangeRadius = m_explosionRange;
+        }
 
         l_player.Init();
 
@@ -128,7 +134,7 @@ public class PlayerManager : MonoBehaviour
     public void InuserProcess()
 	{
         int l_id = 0;
-        Managers.Network.Session.GetInData(out l_id);
+        Managers.Network.Session.GetData(out l_id);
         Managers.Game.Player.Spawn(Managers.Game.Player.SpanwPoint, new PlayerStat { id = l_id, name = "Sample_Player" });
     }
 

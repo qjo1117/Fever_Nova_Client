@@ -5,9 +5,11 @@ using UnityEngine;
 public class UI_BombDropPoint : UI_Scene
 {
     #region 변수
-    private Camera              m_mainCam = null;
-    private UI_BombRange        m_bombRange = null;        // 폭탄 최대 사거리 표시 UI (착탄지점 UI가 폭탄 최대 사거리를 벗어나지 못하도록 하기 위해 필요)
-    private UI_BombJumpRange    m_bombJumpRange = null;    // 폭탄 점프 범위 표시 UI (폭탄점프 화살표 UI표시 위해 필요)
+    private Camera              m_mainCam;
+
+    
+    private UI_BombRange        m_bombRange;        // 폭탄 최대 사거리 표시 UI (착탄지점 UI가 폭탄 최대 사거리를 벗어나지 못하도록 하기 위해 필요)
+    private UI_BombJumpRange    m_bombJumpRange;    // 폭탄 점프 범위 표시 UI (폭탄점프 화살표 UI표시 위해 필요)
     #endregion
 
     #region 프로퍼티
@@ -39,10 +41,7 @@ public class UI_BombDropPoint : UI_Scene
             }
 
             // 현재 마우스 위치 폭탄 점프 사거리 범위내인지 체크
-            if(m_bombJumpRange != null) {
-                m_bombJumpRange.BombJumpRangeInnerCheck(l_hit.point);
-            }
-            
+            m_bombJumpRange?.BombJumpRangeInnerCheck(l_hit.point);
         }
     }
 
