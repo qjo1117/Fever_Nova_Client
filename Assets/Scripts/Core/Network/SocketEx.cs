@@ -29,7 +29,7 @@ public class SocketEx
             m_isConnected = true;
             return true;
         }
-        catch(SocketException ex)
+        catch (SocketException ex)
         {
             return false;
         }
@@ -38,7 +38,7 @@ public class SocketEx
     public void CloseSocket()
     {
         m_isConnected = false;
-        if(m_Socket != null)
+        if (m_Socket != null)
         {
             m_Socket.Close();
             m_Socket = null;
@@ -64,7 +64,7 @@ public class SocketEx
             {
                 sendValue = m_Socket.Send(_sendBuffer, offset, size, SocketFlags.None);
             }
-            catch(SocketException ex)
+            catch (SocketException ex)
             {
                 return false;
             }
@@ -83,55 +83,6 @@ public class SocketEx
         }
     }
 
-    //public int Receive(byte[] _receiveBuffer)
-    //{
-    //    if (m_isConnected == false)
-    //    {
-    //        return 0;
-    //    }
-
-    //    int size = 4;
-    //    bool sizeflag = false;
-    //    int offset = 0;
-    //    int totalRead = 0;
-    //    int readRemains = size;
-    //    while (true)
-    //    {
-    //        int readLen = 0;
-    //        try
-    //        {
-    //            readLen = m_Socket.Receive(_receiveBuffer, offset, readRemains, SocketFlags.None);
-    //        }
-    //        catch(SocketException ex)
-    //        {
-
-    //        }
-
-    //        if (readLen == 0)
-    //        {
-    //            //Close();
-    //            break;
-    //        }
-    //        totalRead += readLen;
-
-    //        if (totalRead == size && !sizeflag)
-    //        {
-    //            size = BitConverter.ToInt32(_receiveBuffer, 0);
-    //            sizeflag = true;
-    //            offset = 0;
-    //            totalRead = 0;
-    //            readRemains = size;
-    //            continue;
-    //        }
-    //        else if (totalRead == size && sizeflag)
-    //        {
-    //            break;
-    //        }
-    //        offset += readLen;
-    //        readRemains -= readLen;
-    //    }
-    //    return totalRead;
-    //}
 
     public bool Receive(byte[] _buffer, out int _recvedSize)
     {
@@ -189,7 +140,7 @@ public class SocketEx
             {
                 received = m_Socket.Receive(_buffer, offset, left, _socketFlag);
             }
-            catch(SocketException ex)
+            catch (SocketException ex)
             {
                 return -1;
             }
