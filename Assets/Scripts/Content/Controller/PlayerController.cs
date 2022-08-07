@@ -123,13 +123,6 @@ public class PlayerController : MonoBehaviour
         m_anim = GetComponent<Animator>();
         m_handler = Util.FindChild(gameObject, "@Handler", true).transform;
 
-        // MainPlayer전용 UI셋팅
-        UI_BombRange l_bombRange = Managers.UI.Root.GetComponentInChildren<UI_BombRange>();
-        l_bombRange.RangeRadius = m_explosionRange;
-
-        UI_BombJumpRange l_bombJumpArrow = Managers.UI.Root.GetComponentsInChildren<UI_BombJumpRange>()[1];
-        l_bombJumpArrow.RangeRadius = m_explosionJumpRange;
-
         m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
     }
 
@@ -288,7 +281,7 @@ public class PlayerController : MonoBehaviour
             Color l_color = Color.red;
             float l_magnitude = l_position.sqrMagnitude;
             // 폭탄 반경보다 좁으면
-            if (l_magnitude <= m_explosionJumpRange * m_explosionJumpRange) {
+            if (l_magnitude < m_explosionJumpRange * m_explosionJumpRange) {
                 m_state = PlayerState.Jump;
                 l_color = Color.blue;
             }
@@ -296,7 +289,7 @@ public class PlayerController : MonoBehaviour
             if (l_magnitude >= l_explosionRange) {
                 l_magnitude = l_explosionRange;
             }
-            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 2.5f), l_explosionRange) / l_explosionRange;
+            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 3.0f), l_explosionRange) / l_explosionRange;
             m_anim.SetFloat("Aiming", l_magnitude);
 
             Debug.DrawRay(Camera.main.transform.position, l_ray.direction * 1000.0f, l_color);
@@ -309,7 +302,7 @@ public class PlayerController : MonoBehaviour
         if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
             m_shotDelay = 0.0f;
             if (m_state == PlayerState.Jump) {
-                m_anim.CrossFade("GunJump", 0.3f);
+                m_anim.CrossFade("GunJump", 0.33f);
             }
             else {
                 m_anim.SetBool("Shot", true);
@@ -352,7 +345,7 @@ public class PlayerController : MonoBehaviour
             // 정해진 시간을 초과할 경우
             if (m_explosionTime >= m_explosionDelayTime) {
                 // 폭탄의 상태를 변환시킨다.
-                if (m_bomb != null) {
+                if (m_bomb != null && m_bomb.State == Bomb.BoomState.Default) {
                     m_bomb.State = Bomb.BoomState.Delay;
                 }
             }
@@ -362,6 +355,9 @@ public class PlayerController : MonoBehaviour
     // Animation Player-Shooting-CM / Event
     public void ShotEnd()
 	{
+        if (m_state == PlayerState.Jump) {
+            return;
+		}
         // 가장 최신의 폭탄을 가지고 있는다.      
         Vector3 l_subVector = m_mousePos - m_handler.position;
         l_subVector.y = 0.0f;
@@ -455,8 +451,8 @@ public class PlayerController : MonoBehaviour
             }
             // 멀티
             if (Managers.Game.IsMulti == true) {
-                Managers.Network.Session.Write((int)E_PROTOCOL.MOVE, transform.position.x, transform.position.y);
-                Debug.Log("잘 되었어요");
+                //Managers.Network.Session.Write((int)E_PROTOCOL.MOVE, transform.position.x, transform.position.y);
+                //Debug.Log("잘 되었어요");
             }
         }
 	}

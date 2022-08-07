@@ -25,7 +25,7 @@ public class UI_BombJumpArrow : UI_Scene
         m_isReady = true;
     }
 
-     
+    
     // 폭탄점프 화살표 UI 위치 Set
     public void SetPosition(Vector2 _position)
     {

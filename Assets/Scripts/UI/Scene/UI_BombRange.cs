@@ -36,7 +36,7 @@ public class UI_BombRange : UI_Scene
 
     public override void Init()
     {
-
+        int size = 0;
     }
 
     private void FixedUpdate()

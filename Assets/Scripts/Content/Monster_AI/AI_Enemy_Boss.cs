@@ -44,9 +44,7 @@ public class AI_Enemy_Boss : AI_Enemy
 
 
         //BT_Sequence l_idleSQ = new BT_Sequence();
-
         //l_idleSQ.AddChild(l_idleSQ);
-
         l_mainSelector.AddChild(l_combatSQ);
         //l_mainSelector.AddChild(l_idleSQ);
 

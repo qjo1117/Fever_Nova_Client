@@ -41,9 +41,7 @@ public class UI_BombDropPoint : UI_Scene
             }
 
             // 현재 마우스 위치 폭탄 점프 사거리 범위내인지 체크
-            if(m_bombJumpRange != null) {
-                m_bombJumpRange.BombJumpRangeInnerCheck(l_hit.point);
-            }
+            m_bombJumpRange?.BombJumpRangeInnerCheck(l_hit.point);
         }
     }
 

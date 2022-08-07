@@ -7,7 +7,6 @@ using UnityEngine;
 public class NetWorkManager
 {
     private Session session;
-
     private Dictionary<int, Action> m_dicProtocol = new Dictionary<int, Action>();
 
 
@@ -30,8 +29,9 @@ public class NetWorkManager
 
     public void Register(E_PROTOCOL _protocol, Action _action)
 	{
-		m_dicProtocol.Add((int)_protocol, _action);
-        int size = 0;
+        if (m_dicProtocol.ContainsKey((int)_protocol) == false) {
+            m_dicProtocol.Add((int)_protocol, _action);
+		}
     }
 
     private void KeyProcess()
@@ -53,7 +53,7 @@ public class NetWorkManager
         if (session.CheckConnecting())
         {
             session.Write((int)E_PROTOCOL.EXIT);// Á¾·á
-            session.TestTreadEnd();
+            session.TreadEnd();
             session.CloseSocket();
         }
 

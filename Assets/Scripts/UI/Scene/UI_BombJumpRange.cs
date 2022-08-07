@@ -13,7 +13,6 @@ public class UI_BombJumpRange : UI_BombRange
     {
         base.Init();
         m_mainCam = Camera.main;
-        m_rangeRadius = Managers.Game.Player.JumpRange;
     }
 
 

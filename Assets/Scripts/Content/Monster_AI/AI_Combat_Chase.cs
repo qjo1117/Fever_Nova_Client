@@ -13,6 +13,7 @@ public class AI_Combat_Chase : BT_Action
         m_object = _object;
         m_moveSpeed = _moveSpeed;
         m_rigid = _object.GetComponent<Rigidbody>();
+
     }
 
     public override void Initialize()

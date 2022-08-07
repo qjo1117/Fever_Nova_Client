@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class AI_Enemy : MonoBehaviour
 {
     [SerializeField]
@@ -19,7 +20,6 @@ public class AI_Enemy : MonoBehaviour
     //public List<Skill> m_skills;
     protected BT_Root m_brain;
     protected AI.EnemyType m_enemyType;
-
     private Rigidbody m_rigid = null;
 
     public MonsterStatTable Stat { get => m_stat; set => m_stat = value; }
