@@ -44,7 +44,7 @@ public class UI_GamePlaySelect : UI_Popup
 
         Get<Button>((int)Buttons.BackButton).onClick.AddListener(() => { ClosePopupUI(); });
         Get<Button>((int)Buttons.SinglePlayButton).onClick.AddListener(SinglePlayClick);
-        Get<Button>((int)Buttons.SinglePlayButton).onClick.AddListener(MultiPlayClick);
+        Get<Button>((int)Buttons.MultiPlayButton).onClick.AddListener(MultiPlayClick);
     }
 
     private void Update()
@@ -62,12 +62,15 @@ public class UI_GamePlaySelect : UI_Popup
     private void SinglePlayClick()
     {
         Managers.UI.ShowPopupUI<UI_StageSelect>();
+        Managers.Game.IsMulti = false;
     }
 
     // 멀티 플레이 버튼 클릭시  (현재 미구현,멀티플레이 아직 추가 X)
+    // 일단 서버 접속때문에 같이 구현 - 박 -
     private void MultiPlayClick()
     {
-
+        Managers.UI.ShowPopupUI<UI_StageSelect>();
+        Managers.Game.IsMulti = true;
     }
 
     #region EasterEgg

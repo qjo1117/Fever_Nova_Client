@@ -114,6 +114,8 @@ public class PlayerManager : MonoBehaviour
         Managers.UI.SetCanvas(l_playerHPBar.gameObject, false);
         l_player.PlayerHPBar = l_playerHPBar;
 
+        l_player.Init();
+
         return l_player;
     }
 

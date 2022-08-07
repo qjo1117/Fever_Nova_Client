@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
 
-    private void Start()
+    public void Init()
 	{
         m_rigid  = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
@@ -453,8 +453,11 @@ public class PlayerController : MonoBehaviour
             else {
                 m_inputPress += 0.5f * Time.deltaTime;
             }
-            Managers.Network.Session.Write((int)E_PROTOCOL.MOVE, transform.position.x, transform.position.y);
-            Debug.LogError("잘 되었어요");
+            // 멀티
+            if (Managers.Game.IsMulti == true) {
+                Managers.Network.Session.Write((int)E_PROTOCOL.MOVE, transform.position.x, transform.position.y);
+                Debug.Log("잘 되었어요");
+            }
         }
 	}
 
