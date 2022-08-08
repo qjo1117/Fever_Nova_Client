@@ -6,14 +6,11 @@ public class AI_Combat_Chase : BT_Action
 {
     private GameObject m_object;
     private float m_moveSpeed;
-    private Rigidbody m_rigid = null;
 
     public AI_Combat_Chase(GameObject _object, float _moveSpeed)
     {
         m_object = _object;
         m_moveSpeed = _moveSpeed;
-        m_rigid = _object.GetComponent<Rigidbody>();
-
     }
 
     public override void Initialize()
@@ -44,7 +41,6 @@ public class AI_Combat_Chase : BT_Action
                 Time.deltaTime * 4);
 
             m_object.transform.Translate(Vector3.forward * m_moveSpeed * Time.deltaTime);
-            //m_rigid.AddForce(Vector3.forward * m_moveSpeed);
         }
     }
 }

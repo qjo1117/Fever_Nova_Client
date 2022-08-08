@@ -26,4 +26,9 @@ public class BT_Action : BehaviorTree
         }
         return State;
     }
+
+    public object Copy()
+    {
+        return this.MemberwiseClone();
+    }
 }

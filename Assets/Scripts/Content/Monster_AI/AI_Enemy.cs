@@ -7,6 +7,7 @@ public class AI_Enemy : MonoBehaviour
 {
     [SerializeField]
     private MonsterStatTable m_stat = new MonsterStatTable();
+    Animator animator;
     private UI_MonsterHPBar m_hpBar = null;
     //스킬리스트 추가해둘것
     //주석처리한 이유 = 스킬이 정형화된 문서가 없어...
@@ -16,8 +17,6 @@ public class AI_Enemy : MonoBehaviour
     //  선정된 스킬의 사정거리까지만 접근시킬 생각
     //  지금은 뭐...스킬이 정형화된 문서도 없고 해서 바로 chase로 넘어가게 해놨음
     //  AI_Enemy_01,AI_Enemy_Boss 스크립트에 해당사항 적용예정
-    //[SerializeField]
-    //public List<Skill> m_skills;
     protected BT_Root m_brain;
     protected AI.EnemyType m_enemyType;
     private Rigidbody m_rigid = null;
@@ -46,11 +45,12 @@ public class AI_Enemy : MonoBehaviour
     // Ret : 죽었는가?
     // Parameter : PlayerController / 타격한 녀석 | int 피격당한 대미지
     public bool Demege(PlayerController _player)
-	{
+    {
         m_stat.HP -= _player.Stat.attack;
         m_hpBar.HP = m_stat.HP;
         // Die
-        if (m_stat.HP <= 0) {
+        if (m_stat.HP <= 0)
+        {
             _player.MonsterKillCount += 1;
             return true;
         }
@@ -59,7 +59,7 @@ public class AI_Enemy : MonoBehaviour
 
     // Parameter : PlayerController / 타격한 녀석 | int 피격당한 대미지 | Vector3 힘
     public bool Demege(PlayerController _player, Vector3 _force)
-	{
+    {
         m_rigid.AddForce(_force);
         return Demege(_player);
     }
