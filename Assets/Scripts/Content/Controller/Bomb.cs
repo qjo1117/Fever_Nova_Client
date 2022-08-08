@@ -102,19 +102,19 @@ public class Bomb : MonoBehaviour
 		List<TargetData> l_datas = new List<TargetData>();
 		Collider[] l_colliders = Physics.OverlapSphere(transform.position, m_explosionRange, m_layer);
 		int l_multikillCount = 0;
-		foreach (Collider l_hit in l_colliders) {
-			Transform l_trans = l_hit.transform;
+		foreach (Collider hit in l_colliders) {
+			Transform l_trans = hit.transform;
 
 			Vector3 l_subVec = l_trans.position - transform.position;
 			l_subVec *= m_explosionForce / l_subVec.magnitude;             // �Ÿ��� �� ���� �� ���� ���� �޴´�.
 
-			int l_layer = l_hit.GetComponent<Collider>().gameObject.layer;
+			int l_layer = hit.GetComponent<Collider>().gameObject.layer;
 			if (l_layer == (int)Define.Layer.Player) {
-				PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.GetComponent<Collider>().gameObject.GetInstanceID());
-				l_player.GetComponent<Rigidbody>().AddExplosionForce(l_subVec.magnitude, transform.position, 100.0f);
+				PlayerController l_player = hit.GetComponent<PlayerController>();
+                l_player.GetComponent<Rigidbody>().AddExplosionForce(l_subVec.magnitude, transform.position, 100.0f);
 			}
 			else if (l_layer == (int)Define.Layer.Monster){
-				AI_Enemy l_monster = l_hit.GetComponent<Collider>().GetComponent<AI_Enemy>();
+				AI_Enemy l_monster = hit.GetComponent<Collider>().GetComponent<AI_Enemy>();
                 l_datas.Add(new TargetData(l_monster.Stat.index, m_owner.Stat.id, m_owner.Stat.attack, l_subVec / 2.0f));
 			}
 		}
@@ -126,7 +126,8 @@ public class Bomb : MonoBehaviour
 		m_state = BoomState.Default;
         m_explosionDelayTime = 0.0f;
         m_rigid.velocity = Vector3.zero;
-
+        m_owner.NullBomb();
+        
         Managers.Game.Boom.DeSpawn(this);
     }
 
@@ -164,23 +165,20 @@ public class Bomb : MonoBehaviour
 
         List<TargetData> l_datas = new List<TargetData>();
         Collider[] l_colliders = Physics.OverlapSphere(transform.position, m_explosionRange, m_layer);
-		foreach (Collider l_hit in l_colliders)
-		{
-			Transform l_trans = l_hit.transform;
+		foreach (Collider hit in l_colliders) {
+			Transform l_trans = hit.transform;
 			Vector3 l_subVec = l_trans.position - transform.position;
 			l_subVec.y += 10.0f;
 			l_subVec *= m_explosionForce / l_subVec.magnitude;             // �Ÿ��� �� ���� �� ���� ���� �޴´�.
 
-			int l_layer = l_hit.gameObject.layer;
-			if (l_layer == (int)Define.Layer.Player)
-			{
-				PlayerController l_player = Managers.Game.Player.FindPlayer(l_hit.gameObject.GetInstanceID());
-				l_player.GetComponent<Rigidbody>().AddForce(l_subVec * 2.0f);
+			int l_layer = hit.gameObject.layer;
+			if (l_layer == (int)Define.Layer.Player) {
+				PlayerController l_player = hit.GetComponent<PlayerController>();
+                l_player.GetComponent<Rigidbody>().AddForce(l_subVec * 2.0f);
 
 			}
-			else if (l_layer == (int)Define.Layer.Monster)
-			{
-                AI_Enemy l_monster = l_hit.GetComponent<AI_Enemy>();
+			else if (l_layer == (int)Define.Layer.Monster) {
+                AI_Enemy l_monster = hit.GetComponent<AI_Enemy>();
                 l_subVec *= m_explosionForce / l_subVec.magnitude;
                 l_datas.Add(new TargetData(l_monster.Stat.index, m_owner.Stat.id, m_owner.Stat.attack, l_subVec));
             }
@@ -190,6 +188,7 @@ public class Bomb : MonoBehaviour
 		m_state = BoomState.Default;
         m_explosionDelayTime = 0.0f;
         m_rigid.velocity = Vector3.zero;
+        m_owner.NullBomb();
 
         Managers.Game.Boom.DeSpawn(this);
     }
@@ -197,26 +196,19 @@ public class Bomb : MonoBehaviour
     // ���� ������ �� �������� ī�����Ѵ�.
     private void CheckExplosionTime()
 	{
-        // ���� �ð��� �����ϸ� �߰��Ѵ�.
         m_explosionDelayTime += Time.deltaTime;
-
-        // ���������� ��� üũ ��ü�� ���Ѵ�.
-        if (m_state == BoomState.Delay || m_explosionDelayTime < m_explosionMaxDelayTime) {
+        if (m_explosionDelayTime < m_explosionMaxDelayTime) {
             return;
 		}
-
-        // ��� �ð��� �ٳ����� ����
         Explosion();
     }
 
 	private void OnCollisionEnter(Collision collision)
 	{
         int l_layer = collision.collider.gameObject.layer;
-        // ���� ������ ����ų��
         if (m_state == BoomState.Jump && l_layer == (int)Define.Layer.Ground) {
             JumpExplosion();
         }
-        // ���Ϳ��� �ε������� (�⺻ ����)
         else if(m_state == BoomState.Default && l_layer == (int)Define.Layer.Monster) {
             Explosion();
 		}
