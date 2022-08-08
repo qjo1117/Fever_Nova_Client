@@ -122,7 +122,7 @@ public class GameManager
 
     // 12FPS
     private float m_currentTime = 0.0f;
-    private float m_currentMaxTime = 12.0f;
+    private float m_currentMaxTime = 5.0f;
     public void FixedUpdate()
 	{
         m_currentTime += 1;

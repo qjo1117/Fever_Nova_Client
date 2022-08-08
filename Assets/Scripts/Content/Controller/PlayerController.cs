@@ -14,7 +14,7 @@ public class PlayerStat
     public int      attack = 70;
     public float    mass = 2.0f;
     public float    moveSpeed = 1000.0f;
-    public float    evasionSpeed = 4000.0f;
+    public float    evasionSpeed = 2500.0f;
     public int      score = 0;
     public int      totalScore = 0;
 }
@@ -40,8 +40,10 @@ public class PlayerController : MonoBehaviour
     private PlayerState         m_state = PlayerState.Idle;
 
     private Vector3             m_move = Vector3.zero;
+    private Vector3             m_animMove = Vector3.zero;
     private float               m_inputPress = 0.0f;
     private Vector3             m_mousePos = Vector3.zero;
+    private float               m_aiming = 0.0f;
 
     private float               m_lookRotation = 0.0f;
     private float               m_explosionDelayTime = 0.5f;
@@ -89,6 +91,9 @@ public class PlayerController : MonoBehaviour
     public PlayerStat Stat { get => m_stat; set => m_stat = value; }
     public PlayerState State { get => m_state; set => m_state = value; }
 
+    public Vector3 AnimMove { get => m_animMove; set => m_animMove = value; }
+    public float Aiming { get => m_aiming; set => m_aiming = value; }
+
     public float ExplosionJumpRadius { get => m_explosionJumpRange; set => m_explosionJumpRange = value; }
     public float ExplosionRadius { get => m_explosionRange; set => m_explosionRange = value; }
 
@@ -121,6 +126,10 @@ public class PlayerController : MonoBehaviour
     public void Init()
 	{
         m_rigid  = GetComponent<Rigidbody>();
+        if(Managers.Game.Player.MainPlayer.Stat.id != m_stat.id) {
+            m_rigid.useGravity = false;
+        }
+
         m_anim = GetComponent<Animator>();
         m_handler = Util.FindChild(gameObject, "@Handler", true).transform;
 
@@ -136,6 +145,11 @@ public class PlayerController : MonoBehaviour
     {
         UpdateState();
         UpdateInput();
+    }
+
+    public void NetworkUpdate()
+	{
+        UpdateState();
     }
 
 
@@ -184,7 +198,9 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateState()
 	{
-        switch(m_state) {
+        m_anim.SetFloat("Aiming", m_aiming);
+
+        switch (m_state) {
             case PlayerState.Evasion:
                 EvasionState();
                 break;
@@ -202,9 +218,11 @@ public class PlayerController : MonoBehaviour
 
     public void IdleUpdate()
 	{
-        m_anim.SetFloat("MoveX", 0.0f);
-        m_anim.SetFloat("MoveZ", 0.0f);
+        m_animMove.x = 0.0f;
+        m_animMove.z = 0.0f;
 
+        m_anim.SetFloat("MoveX", m_animMove.x);
+        m_anim.SetFloat("MoveZ", m_animMove.z);
     }
 
     // Player 기준으로 마우스가 앞에 있으면 앞을 보게 만들어야한다.
@@ -212,13 +230,18 @@ public class PlayerController : MonoBehaviour
 	{
         // 마우스와 플레이어 사이의 Normal Vector를 추출
         // 기저벡트를 이용해서 축을 판별한다.
-        float l_moveX = m_mousePos.x - transform.position.x;
-        float l_moveZ = m_mousePos.z - transform.position.z;
+        if (Managers.Game.IsMulti == false) { 
+            float l_moveX = m_mousePos.x - transform.position.x;
+            float l_moveZ = m_mousePos.z - transform.position.z;
 
-        Vector3 l_direction = Quaternion.Euler(0.0f, (Mathf.Atan2(l_moveZ, l_moveX) * Mathf.Rad2Deg) - 90.0f, 0.0f) * m_move;
+            Vector3 l_direction = Quaternion.Euler(0.0f, (Mathf.Atan2(l_moveZ, l_moveX) * Mathf.Rad2Deg) - 90.0f, 0.0f) * m_move;
 
-        m_anim.SetFloat("MoveX", l_direction.x * m_inputPress);
-        m_anim.SetFloat("MoveZ", l_direction.z * m_inputPress);
+            m_animMove.x = l_direction.x * m_inputPress;
+            m_animMove.z = l_direction.z * m_inputPress;
+        }
+
+        m_anim.SetFloat("MoveX", m_animMove.x);
+        m_anim.SetFloat("MoveZ", m_animMove.z);
     }
 
     public void EvasionState()
@@ -274,8 +297,9 @@ public class PlayerController : MonoBehaviour
         // ----------------------------------------------------------
         Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit l_hit;
-        if(Physics.Raycast(l_ray, out l_hit, 100.0f, 1 << (int)Define.Layer.Ground) == true) {
+        if(Physics.Raycast(l_ray, out l_hit, 100.0f, 1 << (int)Define.Layer.Ground | 1 << (int)Define.Layer.Monster) == true) {
             Vector3 l_position = l_hit.point - transform.position;
+            l_position.y = 0.0f;
             m_mousePos = l_hit.point;
 
             Color l_color = Color.red;
@@ -291,8 +315,8 @@ public class PlayerController : MonoBehaviour
             if (l_magnitude >= l_explosionRange) {
                 l_magnitude = l_explosionRange;
             }
-            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 3.0f), l_explosionRange) / l_explosionRange;
-            m_anim.SetFloat("Aiming", l_magnitude);
+            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 2.0f), l_explosionRange) / l_explosionRange;
+            m_aiming = l_magnitude;
 
             Debug.DrawRay(Camera.main.transform.position, l_ray.direction * 1000.0f, l_color);
         }
@@ -320,7 +344,7 @@ public class PlayerController : MonoBehaviour
         m_anim.SetFloat("Fire", m_shotDelay);
 
         // 현재 폭탄을 가지고 있지 않는다면 넘어가자.
-        if (m_bomb?.gameObject.IsValid() == false) {
+        if (m_bomb == null) {
             return;
 		}
 
@@ -328,22 +352,6 @@ public class PlayerController : MonoBehaviour
         if (Managers.Input.GetKey(UserKey.Shoot) == true) {
             m_isExplosion = true;
             m_explosionTime += Time.deltaTime;
-        }
-
-        // Up을 했을때 현재 상태를 전부 초기화해준다.
-        if (Managers.Input.GetKeyUp(UserKey.Shoot) == true) {
-            // TODO : 분기해서 지연상태일때는 다른 경우도 체크해준다.
-            if (m_bomb?.State == Bomb.BoomState.Delay) {
-                m_bomb.Explosion();
-            }
-
-            m_explosionTime = 0.0f;
-            m_isExplosion = false;
-        }
-
-
-        // 폭탄이 있을 경우
-        if (m_isExplosion == true) {
             // 정해진 시간을 초과할 경우
             if (m_explosionTime >= m_explosionDelayTime) {
                 // 폭탄의 상태를 변환시킨다.
@@ -351,7 +359,19 @@ public class PlayerController : MonoBehaviour
                     m_bomb.State = Bomb.BoomState.Delay;
                 }
             }
-		}
+        }
+
+        // Up을 했을때 현재 상태를 전부 초기화해준다.
+        if (Managers.Input.GetKeyUp(UserKey.Shoot) == true) {
+            // TODO : 분기해서 지연상태일때는 다른 경우도 체크해준다.
+            if (m_bomb.State == Bomb.BoomState.Delay) {
+                m_bomb.Explosion();
+                m_bomb = null;
+            }
+
+            m_explosionTime = 0.0f;
+            m_isExplosion = false;
+        }
     }
 
 
@@ -369,7 +389,7 @@ public class PlayerController : MonoBehaviour
         float l_dist = (m_mousePos - transform.position).magnitude;
         m_currentMosueRadius = l_dist > m_explosionRange ? m_explosionRange : l_dist;
 
-        m_bomb = Managers.Game.Boom.ShootSpawn(this, m_handler.position, l_subVector.normalized, m_currentMosueRadius);
+        m_bomb = Managers.Game.Boom.ShootSpawn(this, m_handler.position, l_subVector.normalized, m_currentMosueRadius * 1.5f);
     }
 
     public void ShotJumpEnd()
@@ -469,6 +489,10 @@ public class PlayerController : MonoBehaviour
     //    m_isCoolTime = false;
     //}
 
+    public void NullBomb()
+	{
+        m_bomb = null;
+    }
 
     private void OnDrawGizmosSelected()
 	{

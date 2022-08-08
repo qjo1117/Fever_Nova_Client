@@ -13,11 +13,13 @@ public class PlayerManager : MonoBehaviour
 
     private int m_id = 0;
 
-	#endregion
+    private PacketMoveData m_moveData = new PacketMoveData();
 
-	#region Property
-	// 이름 추천 받음
-	public List<PlayerController> List { get => m_listPlayers; }
+    #endregion
+
+    #region Property
+    // 이름 추천 받음
+    public List<PlayerController> List { get => m_listPlayers; }
     public PlayerController MainPlayer { get => m_mainPlayer; }
     public Vector3 SpanwPoint { get => m_spawnPoint.position; }
 
@@ -54,21 +56,19 @@ public class PlayerManager : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-        MoveUpdate();
+        PlayerUpdate();
 
     }
 
-	private void MoveUpdate()
+	private void PlayerUpdate()
 	{
-		//bool l_isMove = true;
-  //      float x = 0, y = 0;
+		foreach(PlayerController player in m_listPlayers) {
+            if(player.Stat.id == m_mainPlayer.Stat.id) {
+                continue;
+			}
 
-		//if (l_isMove == true) {
-  //          foreach(PlayerController player in m_listPlayers) {
-  //              Vector3 l_position = player.transform.position;
-  //              Managers.Network.Session.Write((int)E_PROTOCOL.MOVE, l_position.x, l_position.z);
-  //          }
-		//}
+            player.NetworkUpdate();
+		}
 	}
 
     private void LateUpdate()
@@ -76,11 +76,12 @@ public class PlayerManager : MonoBehaviour
         m_mainPlayer?.OnLateUpdate();
 	}
 
+	#region Player Spawn
 	public PlayerController FindPlayer(int _id)
 	{
         foreach(PlayerController l_player in m_listPlayers) {
             // 아이디 검출을 인스턴스 아이디로 검출한다.
-            if (l_player.gameObject.GetInstanceID() == _id) {
+            if (l_player.Stat.id == _id) {
                 return l_player;
 			}
 		}
@@ -124,11 +125,30 @@ public class PlayerManager : MonoBehaviour
         return l_player;
     }
 
-    // 초기화 작업을 한다.
-    public void Init()
+    public void DeSpawn(PlayerController _player)
+    {
+        m_listPlayers.Remove(_player);
+    }
+
+    public void DeSpawn(int _id)
+	{
+        foreach(PlayerController player in m_listPlayers) {
+            if(player.Stat.id == _id) {
+                m_listPlayers.Remove(player);
+                Managers.Resource.Destroy(player.gameObject);
+                return;
+			}
+		}    
+	}
+
+	#endregion
+
+	// 초기화 작업을 한다.
+	public void Init()
     {
         Managers.Network.Register(E_PROTOCOL.STC_SPAWN, InuserProcess);
         Managers.Network.Register(E_PROTOCOL.STC_MOVE, PositionProcess);
+        Managers.Network.Register(E_PROTOCOL.STC_OUT, GuestOutProcess);
     }
 
     public void InuserProcess()
@@ -156,7 +176,7 @@ public class PlayerManager : MonoBehaviour
 
     public void PositionProcess()
 	{
-        RecvMoveData l_data;
+        PacketMoveData l_data;
         Session l_session = Managers.Network.Session;
         l_session.GetData(out l_data);
 
@@ -164,8 +184,24 @@ public class PlayerManager : MonoBehaviour
             return;
 		}
 
-        Managers.Game.Player.At(l_data.m_id).transform.position = new Vector3(l_data.m_x, 0.0f, l_data.m_y);
+        PlayerController l_player = Managers.Game.Player.At(l_data.m_id);
+
+        l_player.transform.position = new Vector3(l_data.m_positionX, l_data.m_positionY, l_data.m_positionZ);
+        l_player.transform.rotation = new Quaternion(l_data.m_rotationX, l_data.m_rotationY, l_data.m_rotationZ, l_data.m_rotationW);
+        l_player.AnimMove = new Vector3(l_data.m_moveX, 0.0f, l_data.m_moveZ);
+        l_player.Aiming = l_data.m_animing;
+        l_player.State = (PlayerController.PlayerState)l_data.m_state;
     }
+
+    public void GuestOutProcess()
+	{
+        int l_data = -1;
+        Session l_session = Managers.Network.Session;
+        l_session.GetData(out l_data);
+
+        Managers.Game.Player.DeSpawn(l_data);
+    }
+
 
     public void OnUpdate()
     {
@@ -176,12 +212,30 @@ public class PlayerManager : MonoBehaviour
 	{
         // 멀0
         if (Managers.Game.IsMulti == true && m_mainPlayer != null) {
-            MoveData l_data = new MoveData();
-            l_data.m_x = m_mainPlayer.transform.position.x;
-            l_data.m_y = m_mainPlayer.transform.position.z;
-            Managers.Network.Session.Write((int)E_PROTOCOL.CTS_MOVE, l_data);
+            m_moveData.m_id = m_mainPlayer.Stat.id;
+
+            Vector3 l_position = m_mainPlayer.transform.position;
+            m_moveData.m_positionX = l_position.x;
+            m_moveData.m_positionY = l_position.y;
+            m_moveData.m_positionZ = l_position.z;
+
+            m_moveData.m_rotationX = m_mainPlayer.transform.rotation.x;
+            m_moveData.m_rotationY = m_mainPlayer.transform.rotation.y;
+            m_moveData.m_rotationZ = m_mainPlayer.transform.rotation.z;
+            m_moveData.m_rotationW = m_mainPlayer.transform.rotation.w;
+
+            m_moveData.m_moveX = m_mainPlayer.AnimMove.x;
+            m_moveData.m_moveZ = m_mainPlayer.AnimMove.z;
+
+            m_moveData.m_animing = m_mainPlayer.Aiming;
+
+            m_moveData.m_state = (int)m_mainPlayer.State;
+
+            Managers.Network.Session.Write((int)E_PROTOCOL.CTS_MOVE, m_moveData);
         }
     }
+
+    
 
     public void Clear()
 	{
