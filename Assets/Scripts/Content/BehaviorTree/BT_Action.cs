@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BT_Action : BehaviorTree
 {
+    protected GameObject m_object;
+    protected Animator m_animator;
+
     public BT_Action() => NodeType = AI.NodeType.ACTION;
 
     public override void Initialize() { }
@@ -30,5 +33,15 @@ public class BT_Action : BehaviorTree
     public object Copy()
     {
         return this.MemberwiseClone();
+    }
+
+    public void SetAnimation(string _stateName, float _timing)
+    {
+        if (m_animator == null)
+        {
+            m_object.GetComponent<Animator>();
+        }
+
+        m_animator.CrossFade(_stateName, _timing);
     }
 }

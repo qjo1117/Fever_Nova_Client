@@ -141,6 +141,10 @@ MonoBehaviour:
     m_Address: ssets/05Prefabs/AI_Monster
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 87ded70eb660f5d42a1993054dcf8136
+    m_Address: Assets/Prefabs/FX_Slash_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aa1c45dd9f67c694eb5b8e4a529c5a60, type: 2}
   m_SchemaSet:

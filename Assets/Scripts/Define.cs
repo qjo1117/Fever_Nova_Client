@@ -38,6 +38,8 @@ static class Path {
 	public const string UI_KeyInput = "UI/Popup/UI_KeyInput";
 
 	public const string Health = "Health";
+
+	public const string Slash_Particle = "Assets/Prefabs/FX_Slash_01";
 }
 
 

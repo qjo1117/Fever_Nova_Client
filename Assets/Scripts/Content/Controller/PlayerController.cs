@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void Demege(int _attack)
+    public void Damage(int _attack)
     {
         m_hitCount++;
         m_stat.hp -= _attack;

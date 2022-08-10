@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class AI_DeathCheck : BT_Action
 {
-    private GameObject m_object;
     private MonsterStatTable m_stat;
+    private bool m_isPlayingAnimation;
 
     public AI_DeathCheck(GameObject _object, MonsterStatTable _Stat)
     {
         m_object = _object;
         m_stat = _Stat;
+        m_isPlayingAnimation = false;
     }
 
     public override AI.State Update()
@@ -27,6 +28,11 @@ public class AI_DeathCheck : BT_Action
 
         // 사망 작업 처리
         // 오브젝트 삭제 및 애니메이션 제거 등
+        if (!m_isPlayingAnimation)
+        {
+            m_isPlayingAnimation = true;
+            m_animator.CrossFade("Death", 0.15f);
+        }
         return AI.State.SUCCESS;
     }
 }

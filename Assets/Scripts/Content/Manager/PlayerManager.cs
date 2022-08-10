@@ -39,7 +39,7 @@ public class PlayerManager : MonoBehaviour
     {
         
         if (Input.GetKeyDown(KeyCode.Keypad1)) {
-            m_mainPlayer.Demege(10);
+            m_mainPlayer.Damage(10);
             m_mainPlayer.PlayerHPBar.HP= m_mainPlayer.Stat.hp;
         }
 
