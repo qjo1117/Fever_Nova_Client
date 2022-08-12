@@ -1485,6 +1485,7 @@ GameObject:
   - component: {fileID: 4724872944711514}
   - component: {fileID: 95002627717350384}
   - component: {fileID: 5375077729617843184}
+  - component: {fileID: 4546364252174396727}
   m_Layer: 0
   m_Name: AI_Monster
   m_TagString: Untagged
@@ -1549,6 +1550,19 @@ MonoBehaviour:
   MoveSpeed: 0
   enemy_type: 0
   enemy_state: 0
+--- !u!114 &4546364252174396727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915102008071246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b558c8407412d86459d080767b46a2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0
 --- !u!1 &1925287821121812
 GameObject:
   m_ObjectHideFlags: 0

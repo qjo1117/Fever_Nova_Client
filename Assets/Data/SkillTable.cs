@@ -67,7 +67,7 @@ public SkillTable Clone()
 		info.skillAnimation1 = skillAnimation1;
 		info.skillAnimation2 = skillAnimation2;
 		info.eventName = eventName;
-		info.fxSkillCasting =  fxSkillCasting;
+		info. fxSkillCasting =  fxSkillCasting;
 		info.fxSkillCollsion = fxSkillCollsion;
 
     return info;

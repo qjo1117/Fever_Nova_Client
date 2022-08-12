@@ -42,7 +42,7 @@ public class UI_StageSelect : UI_Popup
 
     private void Stage1Click()
     {
-        Managers.Scene.LoadScene(Define.Scene.InGame_1);
+        Managers.Scene.LoadScene(Define.Scene.InGame);
     }
 
     // 아직 Stage 2~3은 미구현
