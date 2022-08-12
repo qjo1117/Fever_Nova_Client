@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_Patrol_Waypoint : BT_Action
+public class Action_WayPointPatrol : BT_Action
 {
     private GameObject m_object;
     private float m_moveSpeed;
@@ -13,7 +13,7 @@ public class AI_Patrol_Waypoint : BT_Action
 
     private Rigidbody m_rigid = null;
 
-    public AI_Patrol_Waypoint(GameObject _object, float _moveSpeed, List<Vector3> _waypointList)
+    public Action_WayPointPatrol(GameObject _object, float _moveSpeed, List<Vector3> _waypointList)
     {
         m_object = _object;
         m_moveSpeed = _moveSpeed;
@@ -24,7 +24,7 @@ public class AI_Patrol_Waypoint : BT_Action
 
     public override void Initialize()
     {
-      
+
     }
 
     public override void Terminate() { }
@@ -37,9 +37,10 @@ public class AI_Patrol_Waypoint : BT_Action
 
     private void OnMove()
     {
-        if(waypointList.Count <= 0) {
+        if (waypointList.Count <= 0)
+        {
             return;
-		}
+        }
 
         // 해설 용도 : 현재 가고자하는 WayPoint를 선택함
         Vector3 WayPoint = waypointList[currentWayPoint];

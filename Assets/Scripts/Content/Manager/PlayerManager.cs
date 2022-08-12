@@ -195,16 +195,16 @@ public class PlayerManager : MonoBehaviour
     }
 
     // 대미지를 입힐때 쓰인다.
-    public void Demege(int p_id, int p_attack, Vector3 p_force)
+    public void Damage(int p_id, int p_attack, Vector3 p_force)
 	{
-        //m_listPlayers[p_id].Demege(p_attack);
+        //m_listPlayers[p_id].Damage(p_attack);
         //m_listPlayers[p_id].Rigid.AddForce(p_force);
     }
 
-    public void Demege(PlayerController p_player, int p_attack, Vector3 p_force)
+    public void Damage(PlayerController p_player, int p_attack, Vector3 p_force)
 	{
         //// 위에 있는 함수 호출
-        //Demege(p_player.ID, p_attack, p_force);
+        //Damage(p_player.ID, p_attack, p_force);
     }
 
 	private void OnDrawGizmos()

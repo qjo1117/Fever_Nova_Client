@@ -23,6 +23,7 @@ namespace AI
     public enum EnemyType
     {
         Melee,
+        Range,
         Boss,
     }
 

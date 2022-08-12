@@ -1,57 +1,67 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_Boss : AI_Enemy
+public class AI_Boss : Interface_Enemy
 {
+    public float m_detectRange = 10.0f;
+    public float m_alarmRange = 10.0f;
     public float m_chaseMoveSpeed = 10.0f;
-    private AI_Skill m_SelectedSkill;
-    private bool m_isSkillSelected;
+    public float m_patrolMoveSpeed = 10.0f;
+    private List<Vector3> Patrol_WaypointList = new List<Vector3>();
 
     protected override void CreateBehaviorTreeAIState()
     {
-        m_enemyType = AI.EnemyType.Boss;
+        m_enemyType = AI.EnemyType.Melee;
         m_brain = new BT_Root();
-        m_SelectedSkill = null;
+        m_selectedSkill = null;
         m_isSkillSelected = false;
-
+        m_isChaseComplete = false;
+        m_isPlayingChaseAnimation = false;
 
         // 메인 셀렉터
         BT_Selector l_mainSelector = new BT_Selector();
 
+        BT_Sequence l_DeathSQ = new BT_Sequence();
+        l_DeathSQ.AddChild(new Condition_IsDeath(gameObject, Stat));
+        l_DeathSQ.AddChild(new Action_Death(gameObject, 10));
+        l_mainSelector.AddChild(l_DeathSQ);
 
-        // 전투 시퀀스
-        BT_Sequence l_combatSQ = new BT_Sequence();
-
-        // 스킬 선정 액션 준비 및 스킬 부착
-        AI_SkillSelector l_skillselector
-            = new AI_SkillSelector(gameObject, m_isSkillSelected, m_SelectedSkill);
-
-        //l_skillselector.AddSkill(근접);
-        //l_skillselector.AddSkill(원거리);
-
-        // 돌진 스킬 추가 
-        l_skillselector.AddSkill(new Skill_Charge(gameObject,
-            new Vector3(5, 5, 5), 20, 5, 30));
-
-        //l_skillselector.AddSkill();
-
-        // 전투 시퀀스 1 : 스킬 선정 액션
-        l_combatSQ.AddChild(l_skillselector);
-
-        // 전투 시퀀스 2 : 스킬 사거리까지 추적 액션
-        l_combatSQ.AddChild(new AI_Combat_Chase(gameObject, m_SelectedSkill, m_chaseMoveSpeed));
-
-        // 전투 시퀀스 3 : 선정된 스킬 사용 액션
-        l_combatSQ.AddChild(new AI_SkillDelegator(gameObject, m_isSkillSelected, m_SelectedSkill));
+        // Gameobject
+        // SkillId
+        // CoolTime
+        // Range
+        // Priority
+        // ETC
+        Condition_SkillSelector l_skillselector = new Condition_SkillSelector(gameObject);
+        l_skillselector.AddSkill(new Skill_Bombarment(gameObject, 1001, 5, 8, 1,
+            20, 8, 0.5f, 6));
+        l_skillselector.AddSkill(new Skill_Charge(gameObject, 1002, 15, 16, 3,
+            30, 25, 2, new Vector3(2, 2, 2)));
+        l_skillselector.AddSkill(new Skill_Range(gameObject, 1003, 0.5f, 8, 4,
+            15, 0.8f, 15, 10, "Pistol-Attack-R1", Path.FX_GlowSpot_01));
+        l_skillselector.AddSkill(new Skill_Melee(gameObject, 1004, 0.1f, 2.25f, 5,
+            20, 1, "Shield-Attack1", Path.FX_SwordStab_01));
 
 
-        // 메인 1 : 사망 체크 액션
-        l_mainSelector.AddChild(new AI_DeathCheck(gameObject, Stat));
+        BT_Sequence l_ReadyforSkillSQ = new BT_Sequence();
+        l_ReadyforSkillSQ.AddChild(new Condition_PlayerDetect(gameObject, m_detectRange));
+        l_ReadyforSkillSQ.AddChild(l_skillselector);
+        l_ReadyforSkillSQ.AddChild(new Condition_IsOutofSkillRange(gameObject));
+        l_ReadyforSkillSQ.AddChild(new Action_Chase(gameObject, m_chaseMoveSpeed));
+        l_mainSelector.AddChild(l_ReadyforSkillSQ);
 
-        // 메인 2 : 전투 시퀀스
-        l_mainSelector.AddChild(l_combatSQ);
+        BT_Sequence l_UseSkillSQ = new BT_Sequence();
+        l_UseSkillSQ.AddChild(new Condition_IsSkillRuning(gameObject));
+        l_UseSkillSQ.AddChild(new Action_SkillDelegator(gameObject));
+        l_mainSelector.AddChild(l_UseSkillSQ);
+
+        l_mainSelector.AddChild(new Action_WayPointPatrol(gameObject, m_patrolMoveSpeed, Patrol_WaypointList));
 
         m_brain.Child = l_mainSelector;
+    }
+
+    public override void AddPatrolPoint(Vector3 _position)
+    {
+        Patrol_WaypointList.Add(_position);
     }
 }

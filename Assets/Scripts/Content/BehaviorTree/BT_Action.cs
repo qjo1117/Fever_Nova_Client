@@ -5,7 +5,7 @@ using UnityEngine;
 public class BT_Action : BehaviorTree
 {
     protected GameObject m_object;
-    protected Animator m_animator;
+    protected Animator m_animator = null;
 
     public BT_Action() => NodeType = AI.NodeType.ACTION;
 
@@ -35,13 +35,25 @@ public class BT_Action : BehaviorTree
         return this.MemberwiseClone();
     }
 
-    public void SetAnimation(string _stateName, float _timing)
+    public void SetAnimation(string _filename, float _timing, float _playTime = 1)
     {
-        if (m_animator == null)
-        {
-            m_object.GetComponent<Animator>();
-        }
+        AnimationClip[] l_clips = m_animator.runtimeAnimatorController.animationClips;
 
-        m_animator.CrossFade(_stateName, _timing);
+        foreach (AnimationClip _clip in l_clips)
+        {
+            if (_clip.name.Contains(_filename))
+            {
+                m_animator.speed = _clip.length / _playTime;
+                if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(_filename))
+                {
+                    m_animator.Play(_filename, 0, 0);
+                }
+                else
+                {
+                    m_animator.CrossFade(_filename, _timing);
+                }
+                return;
+            }
+        }
     }
 }

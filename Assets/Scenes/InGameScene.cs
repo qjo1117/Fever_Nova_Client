@@ -13,10 +13,19 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.Monster, 30);
         Managers.Resource.RegisterPoolGameObject(Path.Player, 5);
 
+        Managers.Resource.RegisterPoolGameObject(Path.Slash_Particle, 20);
+        Managers.Resource.RegisterPoolGameObject(Path.Fire_Particle, 20);
+        Managers.Resource.RegisterPoolGameObject(Path.FX_SwordStab_01, 20);
+        Managers.Resource.RegisterPoolGameObject(Path.FX_GlowSpot_01, 20);
+        Managers.Resource.RegisterPoolGameObject(Path.Bombardment_Charge_Indicator, 2);
+        Managers.Resource.RegisterPoolGameObject(Path.Bombardment_IndiCator, 2);
+        Managers.Resource.RegisterPoolGameObject(Path.Bombardment_Effect, 20);
+
         // 몬스터 전용
         {
             DataMonsterStatTable l_monsterTable = Managers.Data.MonsterStat;
-            foreach (MonsterStatTable stat in l_monsterTable.listMonsterStatTable) {
+            foreach (MonsterStatTable stat in l_monsterTable.listMonsterStatTable)
+            {
                 Managers.Resource.RegisterPoolGameObject(stat.name, 50);
             }
         }
@@ -45,8 +54,8 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.Health, 20);
     }
 
-	protected override void Init()
-	{
+    protected override void Init()
+    {
         InitUI();
         Managers.Game.StartGame();
 
@@ -75,7 +84,7 @@ public class InGameScene : BaseScene
         l_bombJumpRange.RangeRadius = 12.0f;
 
         UI_BombRange l_bombRange = Managers.UI.ShowSceneUI<UI_BombRange>("UI_BombRange");
-        l_bombRange.RangeRadius = 5.0f; 
+        l_bombRange.RangeRadius = 5.0f;
 
         UI_BombDropPoint l_dropPoint = Managers.UI.ShowSceneUI<UI_BombDropPoint>("UI_BombDropPoint");
         l_dropPoint.BombRange = l_bombRange;
@@ -85,13 +94,14 @@ public class InGameScene : BaseScene
 
 
     protected override void OnUpdate()
-	{
-		if(Input.GetKeyDown(KeyCode.V) == true) {
+    {
+        if (Input.GetKeyDown(KeyCode.V) == true)
+        {
             Managers.Input.ChangeKey(Define.UserKey.Forward, KeyCode.UpArrow);
         }
-	}
+    }
 
-	public override void Clear()
+    public override void Clear()
     {
         Managers.Log("InGame Clear");
     }

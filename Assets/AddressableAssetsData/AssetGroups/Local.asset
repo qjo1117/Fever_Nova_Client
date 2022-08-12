@@ -145,6 +145,30 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/FX_Slash_01
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 80ba72e991346cc4d8c7566cbb557790
+    m_Address: Assets/05Prefabs/FX_Fire_Small_03.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 16b154ffbfe6c5841b0a46456345a632
+    m_Address: Assets/06FX/PolygonParticleFX/Prefabs/FX_SwordStab_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: da1ecf939c5a6ec4c82fa64118a01ddb
+    m_Address: Assets/05Prefabs/FX_SwordStab_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3c8a4b92c48ef6a4f98dabdb5d739f4a
+    m_Address: Assets/05Prefabs/FX_GlowSpot_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 36a1fe207fed39d4ab3e38e7d0f927a0
+    m_Address: Assets/05Prefabs/Bombardment_Charge_Indicator.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5fafb1bf7bdae984182a2da48100a84e
+    m_Address: Assets/05Prefabs/Bombardment_IndiCator.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aa1c45dd9f67c694eb5b8e4a529c5a60, type: 2}
   m_SchemaSet:

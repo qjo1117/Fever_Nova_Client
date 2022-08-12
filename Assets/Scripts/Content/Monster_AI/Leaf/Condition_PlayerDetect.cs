@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_Combat_Detect : BT_Action
+public class Condition_PlayerDetect : BT_Condition
 {
+    private GameObject m_object;
     private float m_detectRange;
 
-    public AI_Combat_Detect(GameObject _object, float _detectRange)
+    public Condition_PlayerDetect(GameObject _object, float _detectRange)
     {
         m_object = _object;
         m_detectRange = _detectRange;

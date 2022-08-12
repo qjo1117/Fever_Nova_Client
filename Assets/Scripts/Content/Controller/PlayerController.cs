@@ -9,7 +9,7 @@ public class PlayerStat
 {
     public int      id = 1;
     public string   name = "Hello_Player";
-    public int      hp = 100;
+    public int      hp = 20000;
     public int      maxHp = 100;
     public int      attack = 70;
     public float    mass = 2.0f;

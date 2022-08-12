@@ -33,7 +33,7 @@ public class BehaviorTree
 
     public virtual void Reset() => m_state = AI.State.INVALID;
 
-    public bool IsTerminated() => m_state == AI.State.SUCCESS || m_state == AI.State.FAILURE;
+    public bool IsTerminated() => m_state == AI.State.SUCCESS | m_state == AI.State.FAILURE;
 
     public bool IsRunning() => m_state == AI.State.RUNNING;
 

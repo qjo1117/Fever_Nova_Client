@@ -42,20 +42,19 @@ public class MonsterManager : MonoBehaviour
     #region Variabel
     // --------- Monster Data ---------
     [SerializeField]
-    private List<AI_Enemy>      m_listMonster = new List<AI_Enemy>();
-    private List<TargetData>    m_listTargetData = new List<TargetData>();                 // 
-    private Stack<AI_Enemy>     m_stackDestroy = new Stack<AI_Enemy>();
+    private List<Interface_Enemy> m_listMonster = new List<Interface_Enemy>();
+    private List<TargetData> m_listTargetData = new List<TargetData>();                 // 
+    private Stack<Interface_Enemy> m_stackDestroy = new Stack<Interface_Enemy>();
 
     // --------- UI Test ---------
     private UI_Goal m_goal;
 
     private int m_allMonsterCount;     // 
     private int m_killCount;           // 
-    private int m_index = 0;
-	#endregion
+    #endregion
 
-	#region Property
-	public int AllMonsterCount
+    #region Property
+    public int AllMonsterCount
     {
         get
         {
@@ -81,12 +80,12 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
-    public List<AI_Enemy> List { get => m_listMonster; }
+    public List<Interface_Enemy> List { get => m_listMonster; }
 
     // --------- Spawner ���� ���� ---------
-    public Transform            m_parentSpawner = null;
-	[SerializeField]
-    private List<Spawner>       m_listSpawner = new List<Spawner>();
+    public Transform m_parentSpawner = null;
+    [SerializeField]
+    private List<Spawner> m_listSpawner = new List<Spawner>();
 
     #endregion
     public void OnUpdate()
@@ -120,17 +119,16 @@ public class MonsterManager : MonoBehaviour
 
     // 지금 파라미터는 테이블에서 참조할 인덱스임
     // ID를 Parameter로 받을 것인가에 대해 생각해야함
-    public AI_Enemy Spawn(int _index)
+    public Interface_Enemy Spawn(int _index)
     {
         MonsterStatTable l_stat = (Managers.Data.MonsterStat.At(_index).Clone());
 
         // 굳이 HpBar랑 나눠서 해야함?
-        AI_Enemy l_monster = Managers.Resource.Instantiate(l_stat.name, transform).GetOrAddComponent<AI_Enemy_01>();
+        Interface_Enemy l_monster = Managers.Resource.Instantiate(l_stat.name, transform).GetOrAddComponent<AI_Melee>();
         m_listMonster.Add(l_monster);
 
         // TODO : 테이블에 접근해서 객체를 생성및 스탯 반영하는 코드를 추가하면 될 것 같음
         l_monster.Stat = l_stat;
-        l_monster.Stat.index = m_index++;
         l_monster.GetComponent<Rigidbody>().mass = l_stat.weight;
         l_monster.name = l_stat.name;
 
@@ -143,20 +141,13 @@ public class MonsterManager : MonoBehaviour
         return l_monster;
     }
 
-    // 일단 구현체만 만듬
-    public AI_Enemy_Boss BossSpawn(int _index)
-	{
-        AI_Enemy_Boss l_boss = null;
-        return l_boss;
-	}
-
-    public void DeSpawn(AI_Enemy _monster)
-	{
+    public void DeSpawn(Interface_Enemy _monster)
+    {
         m_listMonster.Remove(_monster);
         Managers.Resource.Destroy(_monster.gameObject);
-	}
+    }
 
-    public void Register(AI_Enemy _monster)
+    public void Register(Interface_Enemy _monster)
     {
         m_listMonster.Add(_monster);
     }
@@ -168,9 +159,10 @@ public class MonsterManager : MonoBehaviour
         m_listTargetData.Add(new TargetData(_id, _hitId, _attack, _force));
     }
 
-    public void Demege(List<TargetData> _listTargetData)
+    public void Damege(List<TargetData> _listTargetData)
     {
-        foreach (TargetData data in _listTargetData) {
+        foreach (TargetData data in _listTargetData)
+        {
             m_listTargetData.Add(data);
         }
     }
@@ -178,40 +170,30 @@ public class MonsterManager : MonoBehaviour
 
     private void AttackUpdate()
     {
-        if (m_listTargetData.Count == 0) {
+        if (m_listTargetData.Count == 0)
+        {
             return;
         }
 
-        foreach (TargetData data in m_listTargetData) {
-            PlayerController l_player = Managers.Game.Player.At(data.hitId);
-            AI_Enemy l_monster = At(data.id);
-            if(l_monster == null) {
-                continue;
-			}
+        foreach (TargetData data in m_listTargetData)
+        {
+            PlayerController l_player = Managers.Game.Player.List[data.hitId];
 
-            if (l_monster.Demege(l_player) == true) {
-                m_stackDestroy.Push(l_monster);
+            if (m_listMonster[data.id].Damage(l_player) == true)
+            {
+                m_stackDestroy.Push(m_listMonster[data.id]);
             }
-		}
+        }
 
         m_listTargetData.Clear();
 
 
-        while (m_stackDestroy.Count > 0) {
-            AI_Enemy l_monster = m_stackDestroy.Pop();
+        while (m_stackDestroy.Count > 0)
+        {
+            Interface_Enemy l_monster = m_stackDestroy.Pop();
             m_listMonster.Remove(l_monster);
             Managers.Resource.Destroy(l_monster.gameObject);
         }
-    }
-
-    public AI_Enemy At(int _index)
-    {
-        foreach (AI_Enemy monster in m_listMonster) {
-            if(monster.Stat.index == _index) {
-                return monster;
-			}
-        }
-        return null;
     }
 
     private void DieUpdate()
@@ -234,13 +216,15 @@ public class MonsterManager : MonoBehaviour
         for (int i = 0; i < l_size; ++i)
         {
             Spawner l_spawner = null;
-            if (m_parentSpawner.GetChild(i).TryGetComponent(out l_spawner) == true) {
+            if (m_parentSpawner.GetChild(i).TryGetComponent(out l_spawner) == true)
+            {
                 m_listSpawner.Add(l_spawner);
             }
         }
 
         // Spanwer Info -> Transform To Position
-        foreach (Spawner spawner in m_listSpawner) {
+        foreach (Spawner spawner in m_listSpawner)
+        {
             spawner.TransformToPosition();
         }
     }
@@ -248,11 +232,12 @@ public class MonsterManager : MonoBehaviour
     #region SpanwerData / Save Load
 
     public void SpanwerSave()
-	{
-        SpawnerJson l_spawnerJson = new SpawnerJson();    
+    {
+        SpawnerJson l_spawnerJson = new SpawnerJson();
 
         // 현재 들고 있는 스포너의 데이터를 저장한다.
-        foreach (Spawner spawner in m_listSpawner) {
+        foreach (Spawner spawner in m_listSpawner)
+        {
             SpawnerJsonInfo info = new SpawnerJsonInfo();
             // 스포너의 위치
             info.Position = spawner.transform.position;
@@ -264,7 +249,8 @@ public class MonsterManager : MonoBehaviour
             // 위치랑 인덱스만 있는 몬스터의 정보
             int l_size = spawner.ListSpawnerInfo.Count;
             List<SpawnerInfo> l_listSpawner = spawner.ListSpawnerInfo;
-            for (int i = 0; i < l_size; ++i) {
+            for (int i = 0; i < l_size; ++i)
+            {
                 info.ListSpawnerInfo.Add(l_listSpawner[i]);
             }
             l_spawnerJson.ListJson.Add(info);
@@ -272,7 +258,7 @@ public class MonsterManager : MonoBehaviour
 
         string l_json = JsonUtility.ToJson(l_spawnerJson);
         Debug.Log(l_json);
-	}
+    }
 
-	#endregion
+    #endregion
 }

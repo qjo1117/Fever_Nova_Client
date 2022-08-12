@@ -1424,6 +1424,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8800083277538530045}
   - component: {fileID: 8898277729433548163}
+  - component: {fileID: -8861022940843084865}
   m_Layer: 0
   m_Name: AI_Monster_Melee
   m_TagString: Untagged
@@ -1468,6 +1469,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-8861022940843084865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8803706161486506943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 290c5c223a2c69d419b6ba38f7ebdf1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_stat:
+    index: 0
+    name: 
+    id: 0
+    HP: 0
+    moveSpeed: 0
+    weight: 0
+  m_detectRange: 10
+  m_alarmRange: 10
+  m_chaseMoveSpeed: 10
+  m_patrolMoveSpeed: 10
 --- !u!1 &8803707410526770031
 GameObject:
   m_ObjectHideFlags: 0

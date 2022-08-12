@@ -2,23 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class AI_Enemy : MonoBehaviour
+public class Interface_Enemy : MonoBehaviour
 {
     [SerializeField]
     private MonsterStatTable m_stat = new MonsterStatTable();
-    Animator animator;
-    private UI_MonsterHPBar m_hpBar = null;
-    //스킬리스트 추가해둘것
-    //주석처리한 이유 = 스킬이 정형화된 문서가 없어...
-    //AI 변경 예정 사항
-    //  현재는 Detect가 성공하면 무작정 플레이어 위치까지 따라감
-    //  이걸 Detect 성공 시 AI가 가진 skill 중 랜덤 혹은 행동양식에 따른 스킬을 선정 후
-    //  선정된 스킬의 사정거리까지만 접근시킬 생각
-    //  지금은 뭐...스킬이 정형화된 문서도 없고 해서 바로 chase로 넘어가게 해놨음
-    //  AI_Enemy_01,AI_Enemy_Boss 스크립트에 해당사항 적용예정
+    // TODO : 사유 찾자
+    volatile private UI_MonsterHPBar m_hpBar = null;
     protected BT_Root m_brain;
     protected AI.EnemyType m_enemyType;
+    public Interface_Skill m_selectedSkill;
+    public bool m_isSkillSelected;
+    public bool m_isChaseComplete;
+    public bool m_isPlayingChaseAnimation;
+
     private Rigidbody m_rigid = null;
 
     public MonsterStatTable Stat { get => m_stat; set => m_stat = value; }
@@ -28,6 +24,11 @@ public class AI_Enemy : MonoBehaviour
     {
         CreateBehaviorTreeAIState();
         m_rigid = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        Init();
     }
 
     public virtual void AddPatrolPoint(Vector3 _position) { }
@@ -44,7 +45,7 @@ public class AI_Enemy : MonoBehaviour
 
     // Ret : 죽었는가?
     // Parameter : PlayerController / 타격한 녀석 | int 피격당한 대미지
-    public bool Demege(PlayerController _player)
+    public bool Damage(PlayerController _player)
     {
         m_stat.HP -= _player.Stat.attack;
         m_hpBar.HP = m_stat.HP;
@@ -58,9 +59,9 @@ public class AI_Enemy : MonoBehaviour
     }
 
     // Parameter : PlayerController / 타격한 녀석 | int 피격당한 대미지 | Vector3 힘
-    public bool Demege(PlayerController _player, Vector3 _force)
+    public bool Damage(PlayerController _player, Vector3 _force)
     {
         m_rigid.AddForce(_force);
-        return Demege(_player);
+        return Damage(_player);
     }
 }

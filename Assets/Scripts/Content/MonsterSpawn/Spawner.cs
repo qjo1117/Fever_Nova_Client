@@ -132,7 +132,7 @@ public class Spawner : MonoBehaviour
         int l_spawnSize = m_listSpawnerInfo.Count;
         for (int i = 0; i < l_spawnSize; ++i) {
             // Spawner에서 지정한 몬스터를 소환하기 위해 인덱스로 구별
-            AI_Enemy l_monster = Managers.Game.Monster.Spawn(m_listSpawnerInfo[i].Index);
+            Interface_Enemy l_monster = Managers.Game.Monster.Spawn(m_listSpawnerInfo[i].Index);
             l_monster.transform.position = m_listSpawnerInfo[i].Position;
             
             // Patrol에 관련되어 맵핑
@@ -147,7 +147,7 @@ public class Spawner : MonoBehaviour
         // 만약 몬스터가 이미 등록되어 있다면 MonsterManager에게 등록하는 것만 해준다.
         l_spawnSize = m_monsters.transform.childCount;
         for (int i = 0; i < l_spawnSize; ++i) {
-            AI_Enemy l_monster = null;
+            Interface_Enemy l_monster = null;
             if (m_monsters.GetChild(i).TryGetComponent(out l_monster) == true) {
                 Managers.Game.Monster.Register(l_monster);
             }
