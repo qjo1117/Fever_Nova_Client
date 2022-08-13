@@ -67,6 +67,7 @@ public class UI_WorldSpaceHPBar : UI_Base
     {
         Bind<Image>(typeof(Images));
         Bind<GameObject>(typeof(GameObjects));
+        m_isReady = true;
 
         GetHpBoost();
 
@@ -74,7 +75,6 @@ public class UI_WorldSpaceHPBar : UI_Base
         {
             m_mainCamera = Camera.main;
         }
-        m_isReady = true;
 
         HpBarUpdate();
         CanvasScaleChange();
@@ -138,3 +138,4 @@ public class UI_WorldSpaceHPBar : UI_Base
         GetComponent<RectTransform>().sizeDelta = l_newCanvasSize;
     }
 }
+

@@ -14,7 +14,7 @@ public class PlayerStat
     public int      attack = 70;
     public float    mass = 2.0f;
     public float    moveSpeed = 1000.0f;
-    public float    evasionSpeed = 2500.0f;
+    public float    evasionSpeed = 1500.0f;
     public int      score = 0;
     public int      totalScore = 0;
 }
@@ -322,14 +322,13 @@ public class PlayerController : MonoBehaviour
             }
             l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 2.0f), l_explosionRange) / l_explosionRange;
             m_aiming = l_magnitude;
-
-            Debug.DrawRay(Camera.main.transform.position, l_ray.direction * 1000.0f, l_color);
         }
 
     }
 
     public void InputShoot()
 	{
+
         if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
             m_shotDelay = 0.0f;
             if (m_isCanJump == true) {
@@ -446,7 +445,7 @@ public class PlayerController : MonoBehaviour
 		if (Managers.Input.GetKeyDown(UserKey.Evasion) == true && m_state == PlayerState.Run) {
             m_anim.Play("Player-Evasion");
             m_move *= 2.0f;
-            m_rigid.AddForce(m_move * m_stat.evasionSpeed);
+            m_rigid.AddForce(m_move * m_statTable.dodgeSpeed * 350.0f);
 			m_evasionTime = 0.0f;
 			m_state = PlayerState.Evasion;
 		}
@@ -497,17 +496,5 @@ public class PlayerController : MonoBehaviour
     public void NullBomb()
 	{
         m_bomb = null;
-    }
-
-    private void OnDrawGizmosSelected()
-	{
-        Vector3 l_position = transform.position;
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(l_position, m_explosionJumpRange);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward * (transform.position - m_mousePos).magnitude);
-
     }
 }

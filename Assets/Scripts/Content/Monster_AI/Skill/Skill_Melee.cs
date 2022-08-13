@@ -10,7 +10,7 @@ public class Skill_Melee : Interface_Skill
 
     private float m_attackAngle = 135f;
     private ParticleSystem m_particle = null;
-    private List<PlayerController> m_targets = new List<PlayerController>();
+    private List<GameObject> m_targets = new List<GameObject>();
 
     private bool m_isSkillEnd = false;
     private float m_timeCheck = 0.0f;
@@ -50,7 +50,7 @@ public class Skill_Melee : Interface_Skill
 
     private AI.State OnMeleeAttack()
     {
-        FindTarget();
+
 
         if (!m_isSkillEnd) {
             if (m_particle == null) {
@@ -80,13 +80,20 @@ public class Skill_Melee : Interface_Skill
 
         m_timeCheck += Time.deltaTime;
 
-        if (m_timeCheck >= m_skillPlayTime) {
+        if((int)m_skillPlayTime / 2.0f == m_timeCheck) 
+        {
+            FindTarget();
+        }
+
+        if (m_timeCheck >= m_skillPlayTime) 
+        {
             m_timeCheck = 0;
             m_isSkillEnd = false;
-            foreach (var player in m_targets) {
+
+            foreach (var player in m_targets) 
+            {
                 player.GetComponent<PlayerController>().Damage(m_damage);
             }
-            Managers.Game.Player.MainPlayer.Damage(m_damage);
             return AI.State.SUCCESS;
         }
 
@@ -116,13 +123,16 @@ public class Skill_Melee : Interface_Skill
         //}
 
         Vector3 lookDir = AngleToDir(m_object.transform.eulerAngles.y);
-        foreach (Collider collider in l_colliders) {
-            Vector3 targetDir = (collider.transform.position -
-                (m_object.transform.position + Vector3.up * 0.5f)).normalized;
-            float targetAngle = Mathf.Acos(Vector3.Dot(lookDir, targetDir)) * Mathf.Rad2Deg;
+        foreach (var item in l_colliders)
+        {
+            Vector3 l_targetVector = item.transform.position - m_object.transform.position;
 
-            if (targetAngle <= m_attackAngle) {
-                m_targets.Add(collider.GetComponent<PlayerController>());
+            float dot = Vector3.Dot(l_targetVector.normalized, m_object.transform.forward);
+            float degree = Mathf.Rad2Deg * Mathf.Acos(dot);
+
+            if (degree <= m_attackAngle * 0.5f)
+            {
+                m_targets.Add(item.gameObject);
             }
         }
     }
