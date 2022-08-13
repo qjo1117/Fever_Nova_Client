@@ -138,10 +138,12 @@ public class MonsterManager : MonoBehaviour
         if (l_monster.Stat.hp >= 50) {
             l_monster.HpBar = Managers.UI.ShowSceneUI<UI_BossMonsterHPBar>("UI_BossMonsterHPBar");
             l_monster.HpBar.m_unitHp = 10;
+
         }
         else {
             l_monster.HpBar = Managers.UI.MakeWorldSpaceUI<UI_NormalMonsterHPBar>(l_monster.transform, "UI_NormalMonsterHPBar");
             l_monster.HpBar.m_unitHp = 5;
+
         }
 
         l_monster.HpBar.MaxHP = l_monster.Stat.hp;
