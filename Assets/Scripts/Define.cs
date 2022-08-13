@@ -18,7 +18,7 @@ static class Path
     public const string Bombardment_IndiCator           = "Assets/05Prefabs/Bombardment_IndiCator.prefab";
     public const string Bombardment_Effect              = "Assets/05Prefabs/Boom_Particle";
 
-    public const string UI_MonsterHPBar     = "UI/WorldSpace/UI_MonsterHPBar";
+    public const string UI_NormalMonsterHPBar     = "UI/WorldSpace/UI_NormalMonsterHPBar";
 
     public const string UI_Aim              = "UI/Scene/UI_Aim";
     public const string UI_BombRange        = "UI/Scene/UI_BombRange";
