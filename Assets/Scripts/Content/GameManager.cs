@@ -16,6 +16,7 @@ public class GameManager
 
 
     private int                 m_score = 0;
+    private int                 m_allMonsterCount = 0;
 
     // Unity의 Time을 이용하여 플레이타임 구현
     private float               m_beginPlayTime = 0;
@@ -40,6 +41,7 @@ public class GameManager
 
     public List<GameObject> Prefab { get => m_listPrefab; }
     public int Score { get => m_score; set => m_score = value; }
+    public int MonsterCount { get => m_allMonsterCount; set => m_allMonsterCount = value; }
     public int RespawnIndex { get => m_respawnIndex; set => m_respawnIndex = value; }
     // 플레이 타임 UI에 출력시키기 위해
     public float BeginPlayTime { get => m_beginPlayTime; set => m_beginPlayTime = value; }
@@ -61,7 +63,7 @@ public class GameManager
     public void ScoreInit()
 	{
         m_score = 0;
-
+        m_allMonsterCount = 0;
     }
 
 
@@ -94,6 +96,7 @@ public class GameManager
         if(m_isMulti == false) {
             m_player.Spawn(m_player.SpanwPoint, new PlayerStat { id = 0, name = "SamplePlayer" });
 		}
+
     }
 
     public void Clear()

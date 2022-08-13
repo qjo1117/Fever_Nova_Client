@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill_Range : Interface_Skill
+public class Skill_BossRange : Interface_Skill
 {
     private int m_damage = 10;
     private float m_skillPlayTime;
@@ -10,15 +10,13 @@ public class Skill_Range : Interface_Skill
     private float m_projectileSpeed = 3f;
     private float m_projectileLifeDuration = 5f;
 
-    private Vector3 m_attackPos;
-
     private bool m_isSkillEnd;
     private float m_timeCheck;
 
     private string m_animationFileName;
     private string m_effectFileName;
 
-    public Skill_Range(GameObject _object, int _id, float _cooltime, float _range, int _priority,
+    public Skill_BossRange(GameObject _object, int _id, float _cooltime, float _range, int _priority,
         int _damage, float _skillPlayTime, float _projectileSpeed, float _projectileLifeDuration,
         string _animationFileName = "Shooting-Fire-Rifle2", string _effectFileName = Path.Fire_Particle)
     {
@@ -57,14 +55,12 @@ public class Skill_Range : Interface_Skill
             m_object.transform.LookAt(new Vector3(Managers.Game.Player.MainPlayer.transform.position.x, 0, Managers.Game.Player.MainPlayer.transform.position.z));
             SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
 
-            m_attackPos = Managers.Game.Player.MainPlayer.transform.position;
-            m_attackPos += new Vector3(0, 1.5f, 0);
+            CreateBullet(m_object.transform.forward);
+            CreateBullet(m_object.transform.forward + m_object.transform.right);
+            CreateBullet(m_object.transform.forward - m_object.transform.right);
+            CreateBullet(m_object.transform.forward - m_object.transform.right / 2.0f);
+            CreateBullet(m_object.transform.forward + m_object.transform.right / 2.0f);
 
-            GameObject bullet = Managers.Resource.Instantiate(m_effectFileName, Managers.Game.Boom.transform);
-            bullet.transform.position = (m_object.transform.position + m_object.transform.forward * 2);
-
-            bullet.GetComponent<Projectile_Bullet>().Initialized(m_attackPos, m_damage, m_projectileSpeed);
-            Managers.Resource.Destroy(bullet, m_projectileLifeDuration);
             m_isSkillEnd = true;
         }
 
@@ -75,5 +71,14 @@ public class Skill_Range : Interface_Skill
             return AI.State.SUCCESS;
         }
         return AI.State.RUNNING;
+    }
+
+    public void CreateBullet(Vector3 _forward)
+	{
+        GameObject bullet = Managers.Resource.Instantiate(m_effectFileName, Managers.Game.Boom.transform);
+        bullet.transform.position = (m_object.transform.position + _forward * 2);
+
+        bullet.GetComponent<Projectile_Bullet>().Initialized(_forward * 2.0f, m_damage, m_projectileSpeed);
+        Managers.Resource.Destroy(bullet, m_projectileLifeDuration);
     }
 }

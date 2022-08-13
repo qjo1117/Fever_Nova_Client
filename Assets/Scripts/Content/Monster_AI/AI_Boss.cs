@@ -37,7 +37,7 @@ public class AI_Boss : Interface_Enemy
             20, 8, 0.5f, 6));
         l_skillselector.AddSkill(new Skill_Charge(gameObject, 1002, 15, 16, 3,
             30, 25, 2, new Vector3(2, 2, 2)));
-        l_skillselector.AddSkill(new Skill_Range(gameObject, 1003, 0.9f, 16, 4,
+        l_skillselector.AddSkill(new Skill_BossRange(gameObject, 1003, 0.9f, 16, 4,
             15, 0.8f, 15, 70.0f, "Pistol-Attack-R1", Path.FX_GlowSpot_01));
         l_skillselector.AddSkill(new Skill_Melee(gameObject, 1004, 0.25f, 8, 5,
             20, 1, "Shield-Attack1", Path.FX_SwordStab_01));

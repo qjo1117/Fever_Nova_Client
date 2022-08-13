@@ -96,6 +96,8 @@ public class Spawner : MonoBehaviour
             }
         }
 
+        Managers.Game.MonsterCount += l_listMonsterPoint.Count;
+
         // ������ ���� ���� ����
         l_spawnSize = l_listMonsterPoint.Count;
         for (int i = 0; i < l_spawnSize; ++i)

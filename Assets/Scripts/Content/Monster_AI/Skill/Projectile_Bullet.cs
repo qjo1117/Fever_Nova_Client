@@ -16,7 +16,7 @@ public class Projectile_Bullet : MonoBehaviour
         m_damage = _damage;
         m_speed = _speed;
 
-        m_attackDir = m_attackPos - gameObject.transform.position;
+        m_attackDir = m_attackPos;
         transform.LookAt(transform.position + m_attackDir);
     }
 

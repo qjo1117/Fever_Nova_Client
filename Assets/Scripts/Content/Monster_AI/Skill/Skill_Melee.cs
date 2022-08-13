@@ -129,7 +129,6 @@ public class Skill_Melee : Interface_Skill
             if (Vector3.Dot(direction.normalized, m_object.transform.forward) > dotValue)
             {
                 m_targets.Add(l_player.gameObject);
-                Debug.Log("Å¸°Ù °¨Áö");
             }
         }
     }

@@ -88,7 +88,7 @@ public class PlayerManager : MonoBehaviour
 	{
         PlayerController l_player = Managers.Resource.Instantiate(Path.Player, transform).GetOrAddComponent<PlayerController>();
         l_player.transform.position = _position;                        // 좌표 반영
-        //l_player.Stat = _stat;                                          // 스텟 반영
+        //l_player.Stat = _stat;                                        // 스텟 반영
         l_player.StatTable = Managers.Data.PlayerStat.At(_stat.id);     // 실제 CSV
         m_listPlayers.Add(l_player);                                    // 매니저 추가
 
