@@ -56,4 +56,15 @@ public class DataFieldSkillTable
 
         return listFieldSkillTable[_index];
 	}
+
+    public FieldSkillTable FindId(int _id)
+    {
+        foreach(FieldSkillTable obj in listFieldSkillTable) {
+            if(obj.id == _id) {
+                return obj;
+            }
+        }
+
+        return null;
+    }
 }

@@ -59,13 +59,24 @@ $ROW_MEMBER_CODE
 
         return list$CLASS[_index];
 	}
+
+    public $CLASS FindId(int _id)
+    {
+        foreach($CLASS obj in list$CLASS) {
+            if(obj.id == _id) {
+                return obj;
+            }
+        }
+
+        return null;
+    }
 }
 ";
 
     static public List<Dictionary<string, object>> Load(string file)
 	{
         List<Dictionary<string, object>> listData = new List<Dictionary<string, object>>();     // 데이터를 저장할 녀석
-        string data = File.ReadAllText(SAVE_FOLDER + file + ".csv");                                 // 일단 Resources쪽에서 로드하는 식으로
+        string data = File.ReadAllText(SAVE_FOLDER + file + ".csv", System.Text.Encoding.GetEncoding("ks_c_5601-1987"));                                // 일단 Resources쪽에서 로드하는 식으로
         string[] lines = Regex.Split(data, LINE_SPLIT_RE);                             // 자를껀 자르고 생각
 
         if (lines.Length <= 1) {

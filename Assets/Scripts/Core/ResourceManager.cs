@@ -32,7 +32,7 @@ public class ResourceManager
 		foreach(DestroyObject destory in m_destroys) {
 			destory.currentDelayTime += l_deltatime;
 			if (destory.currentDelayTime > destory.delayTime) {
-				Destroy(destory.obj);
+				Managers.Resource.Destroy(destory.obj);
 				m_destroyPool.Push(destory);
 				m_destroys.Remove(destory);
 				break;
@@ -183,16 +183,19 @@ public class ResourceManager
 		DataMaxAsyncCount += 1;
 		Addressables.LoadAssetAsync<GameObject>(_key).Completed +=
 			(AsyncOperationHandle<GameObject> p_obj) => {
+
 				string name = _key;
 				int index = name.LastIndexOf('/');
 				if (index >= 0) {
 					name = name.Substring(index + 1);
 				}
 				GameObject result = p_obj.Result;
+
 				result.name = name;
 				result.GetOrAddComponent<Poolable>();
 				Managers.Pool.CreatePool(result, _count);
 				m_listAddressable.Add(p_obj);               // Ref카운딩
+				
 
 				DataAsyncCount += 1;
 			};

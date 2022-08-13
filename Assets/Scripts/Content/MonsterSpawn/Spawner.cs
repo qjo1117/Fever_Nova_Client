@@ -56,7 +56,7 @@ public class Spawner : MonoBehaviour
             m_monsters = Util.FindChild<Transform>(gameObject, "Monsters");
         }
 
-        RegisterMonster();
+        
     }
 
     public void Update()
@@ -142,15 +142,6 @@ public class Spawner : MonoBehaviour
                 l_monster.AddPatrolPoint(m_listPatrolInfo[i][j]);
             }
             l_monster.Init();
-        }
-
-        // 만약 몬스터가 이미 등록되어 있다면 MonsterManager에게 등록하는 것만 해준다.
-        l_spawnSize = m_monsters.transform.childCount;
-        for (int i = 0; i < l_spawnSize; ++i) {
-            Interface_Enemy l_monster = null;
-            if (m_monsters.GetChild(i).TryGetComponent(out l_monster) == true) {
-                Managers.Game.Monster.Register(l_monster);
-            }
         }
 
 

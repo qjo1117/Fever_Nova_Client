@@ -21,12 +21,176 @@ MonoBehaviour:
     m_Address: Asset/Prefabs/Player
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: a057f50625e92fb47b0c3149c09fb239
-    m_Address: Bomb
+  - m_GUID: 676d0fee6c886bc469f37d912651bc99
+    m_Address: Assets/Barrel/FX_Barrel_Explosive_01
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 1a3b6f2d340903847a73c1bbb8670f5d
-    m_Address: Monster
+  - m_GUID: 0595d41ce59907e49a1470b1c5b66176
+    m_Address: Assets/05Prefabs/Boom_Particle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ab196ffc9d9b65e4693b15051e4e10dd
+    m_Address: Assets/05Prefabs/PC/SF-World_Characters/SM_Chr_ScifiWorlds_AlienSpikes_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 869bc2aa529be4d4987badf65386c72f
+    m_Address: Assets/05Prefabs/PC/SF-World_Characters/SM_Chr_ScifiWorlds_Strider_Male_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 76abcab92ff045d4083fdb3f1c4bbd9f
+    m_Address: Assets/05Prefabs/PC/SF_City_Characters/Character_Medical_Male_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0ad0eab167bb2974ab38b6df07f8d458
+    m_Address: Assets/05Prefabs/PC/SF_City_Characters/Character_Cop_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1b20caf01959ecb409333fb9aa0b81da
+    m_Address: Assets/05Prefabs/PC/SF_City_Characters/Character_CyborgNinja_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 292c23ebfcf66194caae3b5650a6e98b
+    m_Address: Assets/06FX/PolygonParticleFX/Materials/PolygonParticleFX_Swipe_Grid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ba1ddd059de115f44b44ff52413832aa
+    m_Address: Assets/06FX/PolygonParticleFX/Prefabs/FX_Slash_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 417cbbf4755e392408e489080c4ede09
+    m_Address: Assets/06FX/PolygonParticleFX/Materials/PolygonParticleFX_Default_01.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 90bdb8398e186b34282d968564dfec29
+    m_Address: Assets/06FX/PolygonParticleFX/Prefabs/FX_Fire_Small_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 16b154ffbfe6c5841b0a46456345a632
+    m_Address: Assets/06FX/PolygonParticleFX/Prefabs/FX_SwordStab_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6066b7833d493734a9af353bbd046758
+    m_Address: Assets/06FX/PolygonParticleFX/Prefabs/FX_GlowSpot_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6909982d91f86a04e831a86fff27cd80
+    m_Address: racters/Character_Robot_01.prefabcters/Character_Robot_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c7f93a0255162fd47bbe40874f339bf4
+    m_Address: Assets/06FX/PolygonParticleFX/Prefabs/FX_Heal_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0e56aef02a6fcc6408400ea7c75e13a7
+    m_Address: Assets/06FX/PolygonParticleFX/Prefabs/FX_Gunshot_Shotgun_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 71523446f900a0f479de5e0081c1b664
+    m_Address: Assets/05Prefabs/Weapons/Wep_Melee/SM_Wep_Dagger_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 054d57aa664d996428bfe7a619446454
+    m_Address: Assets/05Prefabs/Weapons/SM_Wep_Assault_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3c2a7872720e44a49b65c4cd4c6f8cb5
+    m_Address: Assets/05Prefabs/Weapons/Wep_Melee/SM_Wep_Shield_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8a5973e326885694c8eb4a575b705591
+    m_Address: Assets/05Prefabs/Weapons/SM_Wep_Pistol_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 95162642518613d49b8af7fe960d633e
+    m_Address: Assets/05Prefabs/Weapons/Wep_Melee/SM_Wep_BigAxe_07
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 599739502569ce24a92a65199a378698
+    m_Address: Assets/05Prefabs/Environments/Props/GameGimmick/SM_Prop_Shield_Bubble_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1d9d852396b3f9147ad4e1e7a1e5f5af
+    m_Address: Assets/05Prefabs/Environments/Props/GameGimmick/SM_Prop_Scav_Barrel_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5707ea791748db946bcf9d7227ff834f
+    m_Address: Assets/05Prefabs/Addressable/Character/Robot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: af26b43682a7dc54f8806c83a4169b24
+    m_Address: Assets/05Prefabs/Addressable/Character/Medical
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 58d4deb02f97911438dd8d4f6729dcd7
+    m_Address: Assets/05Prefabs/Addressable/Character/Cyborg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d38e45a03d59a6240b89766745d12b3d
+    m_Address: Assets/05Prefabs/Addressable/Character/Cop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c95e0bbb2d4c71a4e84c4c3ee8940e30
+    m_Address: Assets/05Prefabs/Addressable/Character/Strider
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b1d589de4cb337b47a6b60a449d26b2b
+    m_Address: Assets/05Prefabs/Addressable/Character/JunkyMale
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 31b637f8062aa3741bdb58dd0ce493e2
+    m_Address: Assets/05Prefabs/Addressable/Weapons/SM_Wep_Pistol_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0b51ee870f3c8ac4cbe5a36f4509dae7
+    m_Address: Assets/05Prefabs/Addressable/FX/FX_GlowSpot_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3e89dc1498dc7e44799479295ecee8b9
+    m_Address: Assets/05Prefabs/Addressable/FX/FX_Fire_Small_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 30c73a76be14e5a4cab785738211fcde
+    m_Address: Assets/05Prefabs/Addressable/Weapons/SM_Wep_Shield_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d990da269a21ad0408a36fcf55640f73
+    m_Address: Assets/05Prefabs/Addressable/Weapons/SM_Wep_Pistol_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6f08ddbc462b30d44a875c73782fcbcd
+    m_Address: Assets/05Prefabs/Addressable/Weapons/SM_Wep_Dagger_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ef219fd917251174a86826b61d501f87
+    m_Address: Assets/05Prefabs/Addressable/Weapons/SM_Wep_Assault_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4d7cbda5585a6144cb2669c3e35eca54
+    m_Address: Assets/02 Skill/Cop_Bullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 07581295240386d47a4b9a7a31b55682
+    m_Address: Assets/02 Skill/Cyborg_Shield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c3d0ae307dc22394a99c66e01b20b08a
+    m_Address: Assets/02 Skill/Medical_Dagger
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 76c8417938af62841a15fee5f06bc450
+    m_Address: Assets/02 Skill/Robot_Bombing
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 48620b27b3a48ee4e9b7d758517f6cbd
+    m_Address: Assets/02 Skill/Robot_Bullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 24f38dd9dd7127441a62ad903e1ffea8
+    m_Address: Assets/02 Skill/Robot_Shield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 87ded70eb660f5d42a1993054dcf8136
+    m_Address: Assets/Prefabs/FX_Slash_01
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 437a872a37fe952449ebea5a89870275
@@ -37,6 +201,10 @@ MonoBehaviour:
     m_Address: UI/Scene/UI_BombDropPoint
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 20d6dffa8f907454e85eac917d2f0297
+    m_Address: UI/Scene/UI_BombJumpArrow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   - m_GUID: cb11bab05ef29654aaf513ffd312d568
     m_Address: UI/Scene/UI_BombJumpRange
     m_ReadOnly: 0
@@ -45,20 +213,44 @@ MonoBehaviour:
     m_Address: UI/Scene/UI_BombRange
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: fd7a3f0ac0f442142b354f6f55d24290
+    m_Address: UI/Scene/UI_BossMonsterHPBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   - m_GUID: 8d74857b066b51f4687bdb84f4a64973
-    m_Address: UI/Popup/UI_Button
+    m_Address: Assets/05Prefabs/UI/UI_Button.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7ec17de4828f5de4e9ddb3f82ff06628
+    m_Address: UI/Popup/UI_GamePlaySelect
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 2c207d58607cda94ebaf120452cf3118
     m_Address: UI/Scene/UI_Goal
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: fd7a3f0ac0f442142b354f6f55d24290
-    m_Address: UI/Scene/UI_BossMonsterHPBar
+  - m_GUID: b5e1b4e2d1b0dde448f8d9bc87251221
+    m_Address: UI/Popup/UI_KeyInput
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1be27df8c4d466646a48f52b467bd1ea
+    m_Address: UI/Scene/UI_MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f3ce8b1c3e6cf2746ba2c278bc99f65b
+    m_Address: UI/WorldSpace/UI_MonsterHPBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 45434779224129840a2a907fd18c9030
+    m_Address: UI/Popup/UI_Option
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: b200fa546498b7e46b09b82d4bc2b188
     m_Address: UI/Scene/UI_Pause
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bdc3298330f10284ea5bbbf4b883c45d
+    m_Address: UI/Popup/UI_PauseScreen
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: fdd426797f1f13c4a94c7bc37f045f8d
@@ -69,104 +261,68 @@ MonoBehaviour:
     m_Address: UI/Popup/UI_PopupMsg
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: fab695b312fda67429c58c369720d21c
-    m_Address: UI/Scene/UI_Score
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 34c4d277bc8fd0b40b32d8422b5fa650
-    m_Address: UI/Popup/UI_Toggle
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 20d6dffa8f907454e85eac917d2f0297
-    m_Address: UI/Scene/UI_BombJumpArrow
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: f3ce8b1c3e6cf2746ba2c278bc99f65b
-    m_Address: UI/WorldSpace/UI_MonsterHPBar
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 0595d41ce59907e49a1470b1c5b66176
-    m_Address: Assets/05Prefabs/Boom_Particle
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: bdc3298330f10284ea5bbbf4b883c45d
-    m_Address: UI/Popup/UI_PauseScreen
+  - m_GUID: f35b7603510fcc6478facad6c40c9d5b
+    m_Address: UI/Popup/UI_Result
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: ab74b55775f9d5f45bbd529a1d7ea8e4
     m_Address: UI/Popup/UI_ResultScreen
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: f35b7603510fcc6478facad6c40c9d5b
-    m_Address: UI/Popup/UI_Result
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 45434779224129840a2a907fd18c9030
-    m_Address: UI/Popup/UI_Option
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: f5e34e048fe2b174b9842bee119c680d
-    m_Address: Health
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 7ec17de4828f5de4e9ddb3f82ff06628
-    m_Address: UI/Popup/UI_GamePlaySelect
+  - m_GUID: fab695b312fda67429c58c369720d21c
+    m_Address: UI/Scene/UI_Score
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: f6cacec20cd8aa7409d148db1f1cf676
     m_Address: UI/Popup/UI_StageSelect
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 1be27df8c4d466646a48f52b467bd1ea
-    m_Address: UI/Scene/UI_MainMenu
+  - m_GUID: 34c4d277bc8fd0b40b32d8422b5fa650
+    m_Address: Assets/05Prefabs/UI/UI_Toggle.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: b5e1b4e2d1b0dde448f8d9bc87251221
-    m_Address: UI/Popup/UI_KeyInput
+  - m_GUID: f5e34e048fe2b174b9842bee119c680d
+    m_Address: Health
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 83b7d91550ef8174cbff5321343c5509
     m_Address: Player
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 9d6944272ca1ef448a6c08e77fec10f0
-    m_Address: daggerSoldier
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 9724bf37757803a4997ef69d34974e3d
-    m_Address: rifleSoldier
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: e8c86410ab6e4ff44933b68d0e7385b5
-    m_Address: ssets/05Prefabs/AI_Monster
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 87ded70eb660f5d42a1993054dcf8136
-    m_Address: Assets/Prefabs/FX_Slash_01
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 80ba72e991346cc4d8c7566cbb557790
     m_Address: Assets/05Prefabs/FX_Fire_Small_03.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 16b154ffbfe6c5841b0a46456345a632
-    m_Address: Assets/06FX/PolygonParticleFX/Prefabs/FX_SwordStab_01.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: da1ecf939c5a6ec4c82fa64118a01ddb
-    m_Address: Assets/05Prefabs/FX_SwordStab_01.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 3c8a4b92c48ef6a4f98dabdb5d739f4a
     m_Address: Assets/05Prefabs/FX_GlowSpot_01.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 36a1fe207fed39d4ab3e38e7d0f927a0
-    m_Address: Assets/05Prefabs/Bombardment_Charge_Indicator.prefab
+  - m_GUID: da1ecf939c5a6ec4c82fa64118a01ddb
+    m_Address: Assets/05Prefabs/FX_SwordStab_01.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 5fafb1bf7bdae984182a2da48100a84e
     m_Address: Assets/05Prefabs/Bombardment_IndiCator.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 36a1fe207fed39d4ab3e38e7d0f927a0
+    m_Address: Assets/05Prefabs/Bombardment_Charge_Indicator.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a057f50625e92fb47b0c3149c09fb239
+    m_Address: Bomb
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c1db69479b557fe48aa3fc9d72b6efbf
+    m_Address: Assets/05Prefabs/Cop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0f045be0f29ec624f80dd27f36881d3c
+    m_Address: Assets/05Prefabs/Robot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 55ce43aa38311c04ea3bd8394d3cba7e
+    m_Address: Assets/05Prefabs/Medical
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

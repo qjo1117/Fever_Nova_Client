@@ -169,7 +169,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7750234582507392734}
   - component: {fileID: 7696387981600701044}
-  m_Layer: 0
+  - component: {fileID: 906885957011653546}
+  - component: {fileID: 7121745831827452417}
+  - component: {fileID: -2010569733496016597}
+  - component: {fileID: -6368004343635529329}
+  m_Layer: 7
   m_Name: AI_Monster_Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,8 +188,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7753045384050585034}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 20, z: 10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7750207091745076964}
@@ -206,13 +210,106 @@ Animator:
   m_Controller: {fileID: 9100000, guid: fb72153736530ac4b8cce32286f01860, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &906885957011653546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7753045384050585034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e202fd72e9f090b47bef30b0d298206c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_stat:
+    index: 0
+    name: 
+    id: 0
+    hp: 50
+    moveSpeed: 0
+    weight: 0
+    behaviorType: 0
+    dropId: 0
+    monsterGroupId: 0
+    detectingRangeRadius: 0
+    HoldingSkillId1: 0
+    skillPriority: 0
+    skillCond: 0
+    skillCondValue: 0
+    skillCoolTime: 0
+    attackDelay: 0
+    animIdle: 0
+    animMove: 0
+    animHit: 0
+    animStun: 0
+    animDead: 0
+    effectMove: 0
+    effectHit: 0
+    effectStun: 0
+    effectDead: 0
+    voiceIdle: 0
+    voiceChase: 0
+    voiceAttack: 0
+    voiceHit: 0
+  m_isSkillSelected: 0
+  m_isChaseComplete: 0
+  m_isPlayingChaseAnimation: 0
+  m_detectRange: 10
+  m_alarmRange: 10
+  m_chaseMoveSpeed: 10
+  m_patrolMoveSpeed: 10
+  m_muzzle: {fileID: 0}
+--- !u!136 &7121745831827452417
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7753045384050585034}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &-2010569733496016597
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7753045384050585034}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!114 &-6368004343635529329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7753045384050585034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b558c8407412d86459d080767b46a2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0
 --- !u!1 &7753050153475434078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1823,7 +1920,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 64673944400605482, guid: 054d57aa664d996428bfe7a619446454, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 054d57aa664d996428bfe7a619446454, type: 3}
 --- !u!4 &8232081936055572432 stripped
 Transform:

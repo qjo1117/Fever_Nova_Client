@@ -55,4 +55,15 @@ public class DataSkillTable
 
         return listSkillTable[_index];
 	}
+
+    public SkillTable FindId(int _id)
+    {
+        foreach(SkillTable obj in listSkillTable) {
+            if(obj.id == _id) {
+                return obj;
+            }
+        }
+
+        return null;
+    }
 }

@@ -56,4 +56,15 @@ public class DataMeleeSkillTable
 
         return listMeleeSkillTable[_index];
 	}
+
+    public MeleeSkillTable FindId(int _id)
+    {
+        foreach(MeleeSkillTable obj in listMeleeSkillTable) {
+            if(obj.id == _id) {
+                return obj;
+            }
+        }
+
+        return null;
+    }
 }

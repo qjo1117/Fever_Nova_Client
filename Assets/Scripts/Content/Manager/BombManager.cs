@@ -28,11 +28,14 @@ public class BombManager : MonoBehaviour
 	public Bomb ShootSpawn(PlayerController _owner, Vector3 _position, Vector3 _direction, float _dist)
 	{
 		Bomb l_boom = Managers.Resource.Instantiate("Bomb", transform).GetComponent<Bomb>();
-		
+
+		PlayerStatTable stat = Managers.Data.PlayerStat.At(0);
+
 		// ±âº»ÀûÀÎ ½ºÅÈ ¼ÂÆÃ
 		l_boom.Speed = m_speed;
-		l_boom.MaxDelayTime = m_explosionMaxDelayTime;
+		l_boom.MaxDelayTime = stat.explosionDelayTime;
 		l_boom.ExplosionForce = m_explosionForce;
+		l_boom.ExplosionDamage = stat.explosionDamage;
 
 		// ÆøÅºÀ» ³¯¸°´Ù.
 		l_boom.Shoot(_owner, _position, _direction, _dist / m_ratio);

@@ -22,7 +22,7 @@ public class Condition_IsDeath : BT_Condition
 
     private AI.State IsDeath()
     {
-        if (m_stat.HP > 0)
+        if (m_stat.hp > 0)
         {
             return AI.State.FAILURE;
         }

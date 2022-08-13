@@ -67,7 +67,7 @@ public class PlayerStatTable
 
 public PlayerStatTable Clone() 
 {
-		PlayerStatTable info = new PlayerStatTable();
+    PlayerStatTable info = new PlayerStatTable();
     		info.index = index;
 		info.name = name;
 		info.id = id;

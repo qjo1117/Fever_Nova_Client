@@ -8,10 +8,11 @@ public class AI_Range : Interface_Enemy
     public float m_chaseMoveSpeed = 10.0f;
     public float m_patrolMoveSpeed = 10.0f;
     public Transform m_muzzle;
-    private List<Vector3> Patrol_WaypointList = new List<Vector3>();
+
 
     protected override void CreateBehaviorTreeAIState()
     {
+
         m_enemyType = AI.EnemyType.Melee;
         m_brain = new BT_Root();
         m_selectedSkill = null;
@@ -34,7 +35,7 @@ public class AI_Range : Interface_Enemy
         // ETC
         Condition_SkillSelector l_skillselector = new Condition_SkillSelector(gameObject);
         l_skillselector.AddSkill(new Skill_Range(gameObject, 0101, 1, 8, 1,
-            10, 0.8f, 10, 10));
+            10, 0.8f, 10, 5.0f));
 
         BT_Sequence l_ReadyforSkillSQ = new BT_Sequence();
         l_ReadyforSkillSQ.AddChild(new Condition_PlayerDetect(gameObject, m_detectRange));
@@ -48,13 +49,10 @@ public class AI_Range : Interface_Enemy
         l_UseSkillSQ.AddChild(new Action_SkillDelegator(gameObject));
         l_mainSelector.AddChild(l_UseSkillSQ);
 
-        l_mainSelector.AddChild(new Action_WayPointPatrol(gameObject, m_patrolMoveSpeed, Patrol_WaypointList));
+        l_mainSelector.AddChild(new Action_WayPointPatrol(gameObject, m_patrolMoveSpeed, m_patrolWayPoint));
 
         m_brain.Child = l_mainSelector;
     }
 
-    public override void AddPatrolPoint(Vector3 _position)
-    {
-        Patrol_WaypointList.Add(_position);
-    }
+
 }

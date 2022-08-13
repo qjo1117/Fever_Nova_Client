@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     #region 변수
     [SerializeField]
     private PlayerStat          m_stat = new PlayerStat();
+    private PlayerStatTable     m_statTable = null;
 
     [SerializeField]
     private PlayerState         m_state = PlayerState.Idle;
@@ -91,6 +92,9 @@ public class PlayerController : MonoBehaviour
     public PlayerStat Stat { get => m_stat; set => m_stat = value; }
     public PlayerState State { get => m_state; set => m_state = value; }
 
+    public Rigidbody Rigid { get => m_rigid; }
+    public PlayerStatTable StatTable { get => m_statTable; set => m_statTable = value; }
+
     public Vector3 AnimMove { get => m_animMove; set => m_animMove = value; }
     public float Aiming { get => m_aiming; set => m_aiming = value; }
 
@@ -126,7 +130,7 @@ public class PlayerController : MonoBehaviour
     public void Init()
 	{
         m_rigid  = GetComponent<Rigidbody>();
-        if(Managers.Game.Player.MainPlayer.Stat.id != m_stat.id) {
+        if(Managers.Game.Player.MainPlayer.StatTable.id != m_statTable.id) {
             m_rigid.useGravity = false;
         }
 
@@ -158,14 +162,15 @@ public class PlayerController : MonoBehaviour
         m_hitCount++;
         m_stat.hp -= _attack;
 
+        if (m_playerHPBar != null) {
+            m_playerHPBar.HP = m_stat.hp;
+        }
+
         // Player Dead ---> Result
-        if (m_stat.hp <= 0)
-        {
-            if (Util.FindChild<UI_ResultScreen>(Managers.UI.Root, "UI_ResultScreen") != null)
-            {
+        if (m_stat.hp <= 0) {
+            if (Util.FindChild<UI_ResultScreen>(Managers.UI.Root, "UI_ResultScreen") != null) {
                 return;
             }
-
 
             // 게임 결과창 출력
             Managers.UI.ShowPopupUI<UI_ResultScreen>("UI_ResultScreen");

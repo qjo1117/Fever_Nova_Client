@@ -87,7 +87,6 @@ MonoBehaviour:
     - default
     - Fx
     - Prefab
-    - UI
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: acc086241fa567e49a5975ca1aa5912d, type: 2}

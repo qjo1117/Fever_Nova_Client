@@ -27,6 +27,7 @@ public class Action_Death : BT_Action
             //TODO
             //오브젝트 풀로 반환
             //필요하다면 시체 사라지는 이펙트?
+            Managers.Resource.Destroy(m_object);
         }
 
         return AI.State.RUNNING;

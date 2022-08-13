@@ -31,14 +31,12 @@ public class Projectile_Bullet : MonoBehaviour
         {
             case (int)Define.Layer.Ground:
                 Managers.Resource.Destroy(gameObject);
-                Debug.Log("벽 충돌:" + System.DateTime.Now);
                 break;
             case (int)Define.Layer.Monster:
                 break;
             case (int)Define.Layer.Player:
                 Managers.Resource.Destroy(gameObject);
                 other.GetComponent<PlayerController>().Damage(m_damage);
-                Debug.Log("원거리공격:" + System.DateTime.Now);
                 break;
             case (int)Define.Layer.Block:
                 break;

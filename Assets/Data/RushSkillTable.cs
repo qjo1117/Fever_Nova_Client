@@ -4,12 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum bT { 
- 	stay,
- };
-public enum SC { 
- 	stay,
- };
+
 
 [System.Serializable]
 public class RushSkillTable
@@ -17,32 +12,26 @@ public class RushSkillTable
 		public System.Int32 index;
 		public System.String name;
 		public System.Int32 id;
-		public System.Int32 hp;
-		public System.Single moveSpeed;
-		public System.Single weight;
-		public bT behaviorType;
-		public System.Int32 dropId;
-		public System.Int32 monsterGroupId;
-		public System.Single detectingRangeRadius;
-		public System.Int32 HoldingSkillId1;
-		public System.Int16 skillPriority;
-		public SC skillCond;
-		public System.Single skillCondValue;
-		public System.Single skillCoolTime;
-		public System.Single attackDelay;
-		public System.Int32 animIdle;
-		public System.Int32 animMove;
-		public System.Int32 animHit;
-		public System.Int32 animStun;
-		public System.Int32 animDead;
-		public System.Int32 effectMove;
-		public System.Int32 effectHit;
-		public System.Int32 effectStun;
-		public System.Int32 effectDead;
-		public System.Int32 voiceIdle;
-		public System.Int32 voiceChase;
-		public System.Int32 voiceAttack;
-		public System.Int32 voiceHit;
+		public System.Single skillRangeRadius;
+		public System.Int32 skillObName;
+		public System.Single skillObDelay;
+		public System.String skillObCastingPos;
+		public System.Int16 skillObQuantity;
+		public System.Int16 skillCastNumber;
+		public System.Single skillCastInterval;
+		public System.Single skillCoolTinme;
+		public System.Single rushDistance;
+		public System.Single rushSpeed;
+		public System.Single decalTime;
+		public System.Single stunDuration;
+		public System.Int32 skillDamage;
+		public System.Boolean kbOnOff;
+		public System.Single kbDistance;
+		public System.Int32 skillAnimation1;
+		public System.Int32 skillAnimation2;
+		public System.String eventName;
+		public System.Int32 fxSkillCasting;
+		public System.Int32 fxSkillCollsion;
 
 
 public RushSkillTable Clone() 
@@ -51,32 +40,26 @@ public RushSkillTable Clone()
     		info.index = index;
 		info.name = name;
 		info.id = id;
-		info.hp = hp;
-		info.moveSpeed = moveSpeed;
-		info.weight = weight;
-		info.behaviorType = behaviorType;
-		info.dropId = dropId;
-		info.monsterGroupId = monsterGroupId;
-		info.detectingRangeRadius = detectingRangeRadius;
-		info.HoldingSkillId1 = HoldingSkillId1;
-		info.skillPriority = skillPriority;
-		info.skillCond = skillCond;
-		info.skillCondValue = skillCondValue;
-		info.skillCoolTime = skillCoolTime;
-		info.attackDelay = attackDelay;
-		info.animIdle = animIdle;
-		info.animMove = animMove;
-		info.animHit = animHit;
-		info.animStun = animStun;
-		info.animDead = animDead;
-		info.effectMove = effectMove;
-		info.effectHit = effectHit;
-		info.effectStun = effectStun;
-		info.effectDead = effectDead;
-		info.voiceIdle = voiceIdle;
-		info.voiceChase = voiceChase;
-		info.voiceAttack = voiceAttack;
-		info.voiceHit = voiceHit;
+		info.skillRangeRadius = skillRangeRadius;
+		info.skillObName = skillObName;
+		info.skillObDelay = skillObDelay;
+		info.skillObCastingPos = skillObCastingPos;
+		info.skillObQuantity = skillObQuantity;
+		info.skillCastNumber = skillCastNumber;
+		info.skillCastInterval = skillCastInterval;
+		info.skillCoolTinme = skillCoolTinme;
+		info.rushDistance = rushDistance;
+		info.rushSpeed = rushSpeed;
+		info.decalTime = decalTime;
+		info.stunDuration = stunDuration;
+		info.skillDamage = skillDamage;
+		info.kbOnOff = kbOnOff;
+		info.kbDistance = kbDistance;
+		info.skillAnimation1 = skillAnimation1;
+		info.skillAnimation2 = skillAnimation2;
+		info.eventName = eventName;
+		info.fxSkillCasting = fxSkillCasting;
+		info.fxSkillCollsion = fxSkillCollsion;
 
     return info;
 }

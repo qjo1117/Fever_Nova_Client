@@ -7,14 +7,14 @@ using UnityEngine;
 [System.Serializable]
 public class DataPlayerStatTable
 {
-    public List<PlayerStatTable> listPCSkillTable = new List<PlayerStatTable>();
+    public List<PlayerStatTable> listPlayerStatTable = new List<PlayerStatTable>();
 
     public void DataParsing()
     {
         var data = DataSystem.Load("Data_Table_PC.Ver.0.5");
 
         foreach(var item in data) {
-			PlayerStatTable info = new PlayerStatTable();
+            PlayerStatTable info = new PlayerStatTable();
 			info.index = (System.Int32)item["index"];
 			info.name = (System.String)item["name"];
 			info.id = (System.Int32)item["id"];
@@ -71,16 +71,27 @@ public class DataPlayerStatTable
 			info.soundExplosion = (System.Int32)item["soundExplosion"];
 
         
-            listPCSkillTable.Add(info);
+            listPlayerStatTable.Add(info);
         }
 	}
 
     public PlayerStatTable At(int _index)
 	{
-        if((0 <= _index && _index < listPCSkillTable.Count) == false) {
+        if((0 <= _index && _index < listPlayerStatTable.Count) == false) {
             return null;
 		}
 
-        return listPCSkillTable[_index];
+        return listPlayerStatTable[_index];
 	}
+
+    public PlayerStatTable FindId(int _id)
+    {
+        foreach(PlayerStatTable obj in listPlayerStatTable) {
+            if(obj.id == _id) {
+                return obj;
+            }
+        }
+
+        return null;
+    }
 }

@@ -1171,7 +1171,10 @@ GameObject:
   - component: {fileID: 467220240462455208}
   - component: {fileID: 522226960165132952}
   - component: {fileID: -7477357292189683447}
-  m_Layer: 0
+  - component: {fileID: -8901961077793450110}
+  - component: {fileID: 3531851124713360489}
+  - component: {fileID: -802615296588374366}
+  m_Layer: 7
   m_Name: AI_Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1186,8 +1189,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463516822529818672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.423485, y: 0, z: 12.814579}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 460747756636279354}
@@ -1208,7 +1211,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: bd11638d9fec228498a3055a8066d93c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1231,10 +1234,82 @@ MonoBehaviour:
     index: 0
     name: 
     id: 0
-    HP: 0
+    hp: 50
     moveSpeed: 0
     weight: 0
+    behaviorType: 0
+    dropId: 0
+    monsterGroupId: 0
+    detectingRangeRadius: 0
+    HoldingSkillId1: 0
+    skillPriority: 0
+    skillCond: 0
+    skillCondValue: 0
+    skillCoolTime: 0
+    attackDelay: 0
+    animIdle: 0
+    animMove: 0
+    animHit: 0
+    animStun: 0
+    animDead: 0
+    effectMove: 0
+    effectHit: 0
+    effectStun: 0
+    effectDead: 0
+    voiceIdle: 0
+    voiceChase: 0
+    voiceAttack: 0
+    voiceHit: 0
+  m_isSkillSelected: 0
+  m_isChaseComplete: 0
+  m_isPlayingChaseAnimation: 0
+  m_detectRange: 10
+  m_alarmRange: 10
   m_chaseMoveSpeed: 10
+  m_patrolMoveSpeed: 10
+--- !u!54 &-8901961077793450110
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463516822529818672}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!136 &3531851124713360489
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463516822529818672}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.9
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.95, z: 0}
+--- !u!114 &-802615296588374366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463516822529818672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b558c8407412d86459d080767b46a2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0
 --- !u!1 &463517749775160588
 GameObject:
   m_ObjectHideFlags: 0

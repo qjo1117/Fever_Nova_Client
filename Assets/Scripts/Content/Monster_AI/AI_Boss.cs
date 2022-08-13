@@ -60,8 +60,4 @@ public class AI_Boss : Interface_Enemy
         m_brain.Child = l_mainSelector;
     }
 
-    public override void AddPatrolPoint(Vector3 _position)
-    {
-        Patrol_WaypointList.Add(_position);
-    }
 }

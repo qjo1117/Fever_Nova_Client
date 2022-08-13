@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class AI_Melee : Interface_Enemy
 {
-    public float m_detectRange = 10.0f;
-    public float m_alarmRange = 10.0f;
-    public float m_chaseMoveSpeed = 10.0f;
-    public float m_patrolMoveSpeed = 10.0f;
-    private List<Vector3> Patrol_WaypointList = new List<Vector3>();
+    public float            m_detectRange = 10.0f;
+    public float            m_alarmRange = 10.0f;
+    public float            m_chaseMoveSpeed = 10.0f;
+    public float            m_patrolMoveSpeed = 10.0f;
 
     protected override void CreateBehaviorTreeAIState()
     {
@@ -47,13 +46,9 @@ public class AI_Melee : Interface_Enemy
         l_UseSkillSQ.AddChild(new Action_SkillDelegator(gameObject));
         l_mainSelector.AddChild(l_UseSkillSQ);
 
-        l_mainSelector.AddChild(new Action_WayPointPatrol(gameObject, m_patrolMoveSpeed, Patrol_WaypointList));
+        l_mainSelector.AddChild(new Action_WayPointPatrol(gameObject, m_patrolMoveSpeed, m_patrolWayPoint));
 
         m_brain.Child = l_mainSelector;
     }
 
-    public override void AddPatrolPoint(Vector3 _position)
-    {
-        Patrol_WaypointList.Add(_position);
-    }
 }

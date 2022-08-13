@@ -5,17 +5,18 @@ using UnityEngine;
 public class Interface_Enemy : MonoBehaviour
 {
     [SerializeField]
-    private MonsterStatTable m_stat = new MonsterStatTable();
-    // TODO : 사유 찾자
-    volatile private UI_MonsterHPBar m_hpBar = null;
-    protected BT_Root m_brain;
-    protected AI.EnemyType m_enemyType;
-    public Interface_Skill m_selectedSkill;
-    public bool m_isSkillSelected;
-    public bool m_isChaseComplete;
-    public bool m_isPlayingChaseAnimation;
+    private MonsterStatTable    m_stat = null;
+    private UI_MonsterHPBar     m_hpBar = null;
+    protected BT_Root           m_brain = null;
+    protected AI.EnemyType      m_enemyType = AI.EnemyType.Melee;
+    public Interface_Skill      m_selectedSkill = null;
+    public bool                 m_isSkillSelected = false;
+    public bool                 m_isChaseComplete = false;
+    public bool                 m_isPlayingChaseAnimation = false;
 
-    private Rigidbody m_rigid = null;
+    [SerializeField]
+    protected List<Vector3>     m_patrolWayPoint = new List<Vector3>();
+    private Rigidbody           m_rigid = null;
 
     public MonsterStatTable Stat { get => m_stat; set => m_stat = value; }
     public UI_MonsterHPBar HpBar { get => m_hpBar; set => m_hpBar = value; }
@@ -31,7 +32,15 @@ public class Interface_Enemy : MonoBehaviour
         Init();
     }
 
-    public virtual void AddPatrolPoint(Vector3 _position) { }
+    public void AddPatrolPoint(Vector3 _position)
+    {
+        m_patrolWayPoint.Add(_position);
+    }
+
+    public void ClearPatrolPoint()
+    {
+        m_patrolWayPoint.Clear();
+    }
 
     protected virtual void CreateBehaviorTreeAIState() { }
 
@@ -47,12 +56,12 @@ public class Interface_Enemy : MonoBehaviour
     // Parameter : PlayerController / 타격한 녀석 | int 피격당한 대미지
     public bool Damage(PlayerController _player)
     {
-        m_stat.HP -= _player.Stat.attack;
-        m_hpBar.HP = m_stat.HP;
+        m_stat.hp -= _player.Stat.attack;
+        m_hpBar.HP = m_stat.hp;
         // Die
-        if (m_stat.HP <= 0)
-        {
+        if (m_stat.hp <= 0) {
             _player.MonsterKillCount += 1;
+            ClearPatrolPoint();
             return true;
         }
         return false;
@@ -64,4 +73,6 @@ public class Interface_Enemy : MonoBehaviour
         m_rigid.AddForce(_force);
         return Damage(_player);
     }
+
+
 }

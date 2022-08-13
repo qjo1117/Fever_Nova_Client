@@ -46,6 +46,8 @@ public class MonsterManager : MonoBehaviour
     private List<TargetData> m_listTargetData = new List<TargetData>();                 // 
     private Stack<Interface_Enemy> m_stackDestroy = new Stack<Interface_Enemy>();
 
+    private int m_index = 0;
+
     // --------- UI Test ---------
     private UI_Goal m_goal;
 
@@ -124,7 +126,7 @@ public class MonsterManager : MonoBehaviour
         MonsterStatTable l_stat = (Managers.Data.MonsterStat.At(_index).Clone());
 
         // 굳이 HpBar랑 나눠서 해야함?
-        Interface_Enemy l_monster = Managers.Resource.Instantiate(l_stat.name, transform).GetOrAddComponent<AI_Melee>();
+        Interface_Enemy l_monster = Managers.Resource.Instantiate(l_stat.name, transform).GetComponent<Interface_Enemy>();
         m_listMonster.Add(l_monster);
 
         // TODO : 테이블에 접근해서 객체를 생성및 스탯 반영하는 코드를 추가하면 될 것 같음
@@ -134,8 +136,8 @@ public class MonsterManager : MonoBehaviour
         l_monster.name = l_stat.name;
 
         l_monster.HpBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(l_monster.transform, "UI_MonsterHPBar");
-        l_monster.HpBar.MaxHP = l_monster.Stat.HP;
-        l_monster.HpBar.HP = l_monster.Stat.HP;
+        l_monster.HpBar.MaxHP = l_monster.Stat.hp;
+        l_monster.HpBar.HP = l_monster.Stat.hp;
 
         l_monster.Init();
 
@@ -176,38 +178,31 @@ public class MonsterManager : MonoBehaviour
             return;
         }
 
-        foreach (TargetData data in m_listTargetData)
-        {
-            PlayerController l_player = Managers.Game.Player.List[data.hitId];
-
-            if (m_listMonster[data.id].Damage(l_player) == true)
-            {
         foreach (TargetData data in m_listTargetData) {
             PlayerController l_player = Managers.Game.Player.At(data.hitId);
-            AI_Enemy l_monster = At(data.id);
-            if(l_monster == null) {
+            Interface_Enemy l_monster = At(data.id);
+            if (l_monster == null) {
                 continue;
-			}
+            }
 
-            if (l_monster.Demege(l_player) == true) {
+            if (l_monster.Damage(l_player) == true) {
                 m_stackDestroy.Push(l_monster);
             }
         }
+        
 
         m_listTargetData.Clear();
-
-
-        while (m_stackDestroy.Count > 0)
-        {
+     
+        while (m_stackDestroy.Count > 0) {
             Interface_Enemy l_monster = m_stackDestroy.Pop();
             m_listMonster.Remove(l_monster);
             Managers.Resource.Destroy(l_monster.gameObject);
         }
     }
 
-    public AI_Enemy At(int _index)
+    public Interface_Enemy At(int _index)
     {
-        foreach (AI_Enemy monster in m_listMonster) {
+        foreach (Interface_Enemy monster in m_listMonster) {
             if(monster.Stat.index == _index) {
                 return monster;
 			}

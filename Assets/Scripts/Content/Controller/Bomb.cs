@@ -20,6 +20,7 @@ public class Bomb : MonoBehaviour
     private float               m_explosionRange = 7.0f;            // ���� �ݰ�
     private float               m_explosionDelayTime = 0.0f;        // ���� ���� �ð�
     private float               m_explosionMaxDelayTime = 5.0f;     // �ִ� ���� �ð�
+    private float               m_explosionDamage = 100.0f;
     private Rigidbody           m_rigid = null;
     private int                 m_layer = 1 << (int)Layer.Monster | 1 << (int)Layer.Player;
 
@@ -31,6 +32,8 @@ public class Bomb : MonoBehaviour
     public float Speed { get => m_moveSpeed; set => m_moveSpeed = value; }
     public float MaxDelayTime { get => m_explosionMaxDelayTime; set => m_explosionMaxDelayTime = value; }
     public float ExplosionForce { get => m_explosionForce; set => m_explosionForce = value; }
+    public float ExplosionRange { get => m_explosionRange; set => m_explosionRange = value; }
+    public float ExplosionDamage { get => m_explosionDamage; set => m_explosionDamage = value; }
 
     #endregion
 
@@ -114,8 +117,8 @@ public class Bomb : MonoBehaviour
                 l_player.GetComponent<Rigidbody>().AddExplosionForce(l_subVec.magnitude, transform.position, 100.0f);
 			}
 			else if (l_layer == (int)Define.Layer.Monster){
-				AI_Enemy l_monster = hit.GetComponent<Collider>().GetComponent<AI_Enemy>();
-                l_datas.Add(new TargetData(l_monster.Stat.index, m_owner.Stat.id, m_owner.Stat.attack, l_subVec / 2.0f));
+                Interface_Enemy l_monster = hit.GetComponent<Collider>().GetComponent<Interface_Enemy>();
+                l_datas.Add(new TargetData(l_monster.Stat.index, m_owner.StatTable.id, (int)m_explosionDamage, l_subVec / 2.0f));
 			}
 		}
 		if (m_owner.MonsterMultiKillCount < l_multikillCount) {
@@ -178,9 +181,9 @@ public class Bomb : MonoBehaviour
 
 			}
 			else if (l_layer == (int)Define.Layer.Monster) {
-                AI_Enemy l_monster = hit.GetComponent<AI_Enemy>();
+                Interface_Enemy l_monster = hit.GetComponent<Interface_Enemy>();
                 l_subVec *= m_explosionForce / l_subVec.magnitude;
-                l_datas.Add(new TargetData(l_monster.Stat.index, m_owner.Stat.id, m_owner.Stat.attack, l_subVec));
+                l_datas.Add(new TargetData(l_monster.Stat.index, m_owner.StatTable.id, (int)m_explosionDamage, l_subVec));
             }
         }
         Managers.Game.Monster.Demege(l_datas);

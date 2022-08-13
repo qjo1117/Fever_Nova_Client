@@ -39,16 +39,6 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.Keypad1)) {
-            m_mainPlayer.Damage(10);
-            m_mainPlayer.PlayerHPBar.HP= m_mainPlayer.Stat.hp;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad2)) {
-            m_mainPlayer.Recover(10);
-            m_mainPlayer.PlayerHPBar.HP = m_mainPlayer.Stat.hp;
-        }
 
         // 업데이트
         m_mainPlayer?.OnUpdate();
@@ -63,7 +53,7 @@ public class PlayerManager : MonoBehaviour
 	private void PlayerUpdate()
 	{
 		foreach(PlayerController player in m_listPlayers) {
-            if(player.Stat.id == m_mainPlayer.Stat.id) {
+            if(player.StatTable.id == m_mainPlayer.StatTable.id) {
                 continue;
 			}
 
@@ -81,7 +71,7 @@ public class PlayerManager : MonoBehaviour
 	{
         foreach(PlayerController l_player in m_listPlayers) {
             // 아이디 검출을 인스턴스 아이디로 검출한다.
-            if (l_player.Stat.id == _id) {
+            if (l_player.StatTable.id == _id) {
                 return l_player;
 			}
 		}
@@ -93,9 +83,10 @@ public class PlayerManager : MonoBehaviour
     public PlayerController Spawn(Vector3 _position, PlayerStat _stat)
 	{
         PlayerController l_player = Managers.Resource.Instantiate(Path.Player, transform).GetOrAddComponent<PlayerController>();
-        l_player.transform.position = _position;        // 좌표 반영
-        l_player.Stat = _stat;                          // 스텟 반영
-        m_listPlayers.Add(l_player);                    // 매니저 추가
+        l_player.transform.position = _position;                        // 좌표 반영
+        //l_player.Stat = _stat;                                          // 스텟 반영
+        l_player.StatTable = Managers.Data.PlayerStat.At(_stat.id);     // 실제 CSV
+        m_listPlayers.Add(l_player);                                    // 매니저 추가
 
         // 메인 플레이어 설정
         if (m_mainPlayer == null) {
@@ -109,8 +100,8 @@ public class PlayerManager : MonoBehaviour
 
             // 플레이어 HP바 생성
             UI_PlayerHPBar l_playerHPBar = Managers.UI.ShowSceneUI<UI_PlayerHPBar>("UI_PlayerHPBar");
-            l_playerHPBar.HP = m_mainPlayer.Stat.hp;
-            l_playerHPBar.MaxHP = m_mainPlayer.Stat.maxHp;
+            l_playerHPBar.HP = m_mainPlayer.StatTable.hp;
+            l_playerHPBar.MaxHP = m_mainPlayer.StatTable.hp;
             Managers.UI.SetCanvas(l_playerHPBar.gameObject, false);
             m_mainPlayer.PlayerHPBar = l_playerHPBar;
 
@@ -133,7 +124,7 @@ public class PlayerManager : MonoBehaviour
     public void DeSpawn(int _id)
 	{
         foreach(PlayerController player in m_listPlayers) {
-            if(player.Stat.id == _id) {
+            if(player.StatTable.id == _id) {
                 m_listPlayers.Remove(player);
                 Managers.Resource.Destroy(player.gameObject);
                 return;
@@ -180,7 +171,7 @@ public class PlayerManager : MonoBehaviour
         Session l_session = Managers.Network.Session;
         l_session.GetData(out l_data);
 
-        if(m_mainPlayer.Stat.id == l_data.m_id) {
+        if(m_mainPlayer.StatTable.id == l_data.m_id) {
             return;
 		}
 
@@ -212,7 +203,7 @@ public class PlayerManager : MonoBehaviour
 	{
         // 멀0
         if (Managers.Game.IsMulti == true && m_mainPlayer != null) {
-            m_moveData.m_id = m_mainPlayer.Stat.id;
+            m_moveData.m_id = m_mainPlayer.StatTable.id;
 
             Vector3 l_position = m_mainPlayer.transform.position;
             m_moveData.m_positionX = l_position.x;
@@ -251,14 +242,14 @@ public class PlayerManager : MonoBehaviour
     // 대미지를 입힐때 쓰인다.
     public void Damage(int p_id, int p_attack, Vector3 p_force)
 	{
-        //m_listPlayers[p_id].Damage(p_attack);
-        //m_listPlayers[p_id].Rigid.AddForce(p_force);
-    }
+		At(p_id).Damage(p_attack);
+        At(p_id).Rigid.AddForce(p_force);
+	}
 
     public void Damage(PlayerController p_player, int p_attack, Vector3 p_force)
 	{
         //// 위에 있는 함수 호출
-        //Damage(p_player.ID, p_attack, p_force);
+        Damage(p_player.StatTable.id, p_attack, p_force);
     }
 
 	private void OnDrawGizmos()
@@ -270,7 +261,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerController At(int _index)
 	{
         foreach(PlayerController player in m_listPlayers) {
-            if(player.Stat.id == _index) {
+            if(player.StatTable.id == _index) {
                 return player;
 			}
 		}
@@ -280,8 +271,8 @@ public class PlayerManager : MonoBehaviour
     public int FindIndex(int _index)
 	{
         foreach(PlayerController player in m_listPlayers){
-            if(player.Stat.id == _index) {
-                return player.Stat.id;
+            if(player.StatTable.id == _index) {
+                return player.StatTable.id;
             }
 		}
         return -1;

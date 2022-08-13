@@ -10,7 +10,6 @@ public class InGameScene : BaseScene
     {
         Managers.Resource.RegisterPoolGameObject(Path.Bomb, 20);
         Managers.Resource.RegisterPoolGameObject(Path.Bomb_Particle, 20);
-        Managers.Resource.RegisterPoolGameObject(Path.Monster, 30);
         Managers.Resource.RegisterPoolGameObject(Path.Player, 5);
 
         Managers.Resource.RegisterPoolGameObject(Path.Slash_Particle, 20);
@@ -21,14 +20,23 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.Bombardment_IndiCator, 2);
         Managers.Resource.RegisterPoolGameObject(Path.Bombardment_Effect, 20);
 
+        Managers.Resource.RegisterPoolGameObject(Path.Monster_Melee, 30);
+        Managers.Resource.RegisterPoolGameObject(Path.Monster_Range, 30);
+        Managers.Resource.RegisterPoolGameObject(Path.Monster_Boss, 3);
+
         // 몬스터 전용
-        {
-            DataMonsterStatTable l_monsterTable = Managers.Data.MonsterStat;
-            foreach (MonsterStatTable stat in l_monsterTable.listMonsterStatTable)
-            {
-                Managers.Resource.RegisterPoolGameObject(stat.name, 50);
-            }
-        }
+        //{
+        //    DataMonsterStatTable l_monsterTable = Managers.Data.MonsterStat;
+        //    foreach (MonsterStatTable stat in l_monsterTable.listMonsterStatTable)
+        //    {
+        //        Managers.Resource.RegisterPoolGameObject(stat.name, 50);
+        //    }
+        //}
+
+        //List<PrefabTable> prefabs = Managers.Data.PrefabTable.listPrefabTable;
+        //foreach (PrefabTable prefab in prefabs) {
+        //    Managers.Resource.RegisterPoolGameObject(prefab.assetAdd, 40);
+        //}
 
         int l_count = 2;
         Managers.Resource.RegisterPoolGameObject(Path.UI_PopupMsg, l_count);
