@@ -1263,6 +1263,7 @@ MonoBehaviour:
   m_isSkillSelected: 0
   m_isChaseComplete: 0
   m_isPlayingChaseAnimation: 0
+  m_unitHp: 10
   m_patrolWayPoint: []
   m_detectRange: 100
   m_alarmRange: 10

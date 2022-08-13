@@ -148,6 +148,7 @@ public class MonsterManager : MonoBehaviour
 
         l_monster.HpBar.MaxHP = l_monster.Stat.hp;
         l_monster.HpBar.HP = l_monster.Stat.hp;
+        l_monster.HpBar.m_unitHp = l_monster.m_unitHp;
 
         l_monster.Init();
 
