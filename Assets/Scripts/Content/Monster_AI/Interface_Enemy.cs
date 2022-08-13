@@ -65,6 +65,10 @@ public class Interface_Enemy : MonoBehaviour
         m_hpBar.HP = m_stat.hp;
         // Die
         if (m_stat.hp <= 0) {
+            if(m_hpBar is UI_BossMonsterHPBar)
+            {
+                m_hpBar.CloseSceneUI();
+            }
             _player.MonsterKillCount += 1;
             ClearPatrolPoint();
             return true;

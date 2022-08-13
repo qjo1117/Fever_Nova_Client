@@ -53,7 +53,7 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.UI_Score, l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_Pause, l_count);
 
-        Managers.Resource.RegisterPoolGameObject(Path.UI_MonsterHPBar, 100);
+        Managers.Resource.RegisterPoolGameObject(Path.UI_NormalMonsterHPBar, 100);
 
         Managers.Resource.RegisterPoolGameObject(Path.UI_PauseScreen, l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_ResultScreen, l_count);

@@ -135,19 +135,13 @@ public class MonsterManager : MonoBehaviour
         l_monster.GetComponent<Rigidbody>().mass = l_stat.weight;
         l_monster.name = l_stat.name;
 
-
-        if(l_monster.HpBar == null)
-		{
-            l_monster.HpBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(l_monster.transform, "UI_MonsterHPBar");
-        }
-        
-        if (l_monster.Stat.hp >= 90) {
+        if (l_monster.Stat.hp >= 50) {
+            l_monster.HpBar = Managers.UI.ShowSceneUI<UI_BossMonsterHPBar>("UI_BossMonsterHPBar");
             l_monster.HpBar.m_unitHp = 10;
-
         }
         else {
+            l_monster.HpBar = Managers.UI.MakeWorldSpaceUI<UI_NormalMonsterHPBar>(l_monster.transform, "UI_NormalMonsterHPBar");
             l_monster.HpBar.m_unitHp = 5;
-
         }
 
         l_monster.HpBar.MaxHP = l_monster.Stat.hp;
