@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 405
+  controlID: 39969
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 517
+  controlID: 40106
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 527
+  controlID: 40107
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 497
+  controlID: 39970
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -500,7 +500,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-scene-view-toolbar
@@ -725,9 +725,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0, y: 0, z: 0}
+    m_Target: {x: 12.565599, y: 7.6336145, z: 8.454325}
     speed: 2
-    m_Value: {x: 2.766564, y: 2.6478803, z: 0.22965252}
+    m_Value: {x: 958.39, y: 539.9818, z: 0.070427835}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -774,13 +774,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.48488662, y: -0.11226825, z: 0.06298287, w: -0.8650328}
+    m_Target: {x: 0.5067627, y: 0.23026812, z: -0.14268264, w: 0.81848204}
     speed: 2
-    m_Value: {x: 0.056282926, y: -0.904985, z: 0.12650417, w: 0.4022823}
+    m_Value: {x: -0.005049569, y: -0.116920225, z: -0.0006686246, w: 0.9931283}
   m_Size:
-    m_Target: 0.8660254
+    m_Target: 15.55091
     speed: 2
-    m_Value: 0.8660254
+    m_Value: 8.104739
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -840,14 +840,14 @@ MonoBehaviour:
     - {fileID: 4978519962937430255, guid: fb72153736530ac4b8cce32286f01860, type: 2}
     - {fileID: 5463211284254940413, guid: 586a5fdff59ed884d865b415492ef7ec, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.614125
+    - e00: 0.9194332
       e01: 0
       e02: 0
-      e03: -44.87964
+      e03: -105.91574
       e10: 0
-      e11: 0.614125
+      e11: 0.9194332
       e12: 0
-      e13: -16.719376
+      e13: -93.25769
       e20: 0
       e21: 0
       e22: 1
@@ -979,20 +979,20 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 3c8c0600
       m_LastClickedID: 0
-      m_ExpandedIDs: b2f9ffff
+      m_ExpandedIDs: 243ec7ffc2dec8ff3447d1ff2e0ed2ff662dd2ff3cb7deff089ae5ff7a02e6ffbe0ef1ffd00ef1ff4c84f1ff4c85f1ff60a7f1ff407bf3ff527bf3ff607bf3ffb87ff3ffca7ff3ffd87ff3ff46f4f3ff46f5f3ff0443f4ff9834f5ffe618f6fffc4bf6ff0a4cf6ff50def6ff6601f7ff0a96f9ffa27cfaffde7efafff4ffffff4edb06007a9b07000c5d0800
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: '@Handler'
-        m_OriginalName: '@Handler'
+        m_Name: Image
+        m_OriginalName: Image
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 69360
+        m_UserData: 1535438
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
@@ -1054,14 +1054,14 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/05Prefabs
   m_LastFoldersGridSize: 16
-  m_LastProjectPath: C:\Users\jjch1\Desktop\Git\Fiver_Nobar
+  m_LastProjectPath: C:\Users\jjch1\Downloads\Fever_Nova_Client-main\Fever_Nova_Client-main
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ec7b0000
-    m_LastClickedID: 31724
-    m_ExpandedIDs: 00000000307a0000ec7b000000ca9a3b
+    scrollPos: {x: 0, y: 79}
+    m_SelectedIDs: 3c8c0600
+    m_LastClickedID: 429116
+    m_ExpandedIDs: 00000000328c06003c8c0600568c06003e9a0700469a070000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1089,7 +1089,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000307a000000ca9a3b
+    m_ExpandedIDs: 00000000328c06003c8c0600568c06003e9a0700469a070000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1120,18 +1120,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: 54c20000d0bc00000c8e0000fe9b000040c20000989a000072fa0000b8c50000de9a0000de9b0000ec0a010068120100f2f20300d0c600000cba04003ac500009490020076a4000078a40000fa8f0200ea8e020000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: UI_MonsterHPBar
+      m_OriginalName: UI_MonsterHPBar
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 1534928
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 13}
     m_CreateAssetUtility:
