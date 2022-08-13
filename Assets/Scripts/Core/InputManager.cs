@@ -39,26 +39,16 @@ public class InputManager
 {
     private Dictionary<UserKey, KeyInfo> m_dicKeys = new Dictionary<UserKey, KeyInfo>();
 
-	public Action KeyEvent = null;
-	public Action<Define.Mouse> MouseEvent = null;
-
-	private bool m_isPressed = false;
-	private float m_pressTime = 0.5f;
-
 	#region ������ ��ũ
 	public void Init()
 	{
 		m_dicKeys.Clear();
 
-		// �⺻���� ���� ���
 		AddKey(UserKey.Forward, KeyCode.W);
-		AddKey(UserKey.Forward, KeyCode.UpArrow);
 		AddKey(UserKey.Backward, KeyCode.S);
-		AddKey(UserKey.Backward, KeyCode.DownArrow);
 		AddKey(UserKey.Right, KeyCode.D);
-		AddKey(UserKey.Right, KeyCode.RightArrow);
 		AddKey(UserKey.Left, KeyCode.A);
-		AddKey(UserKey.Left, KeyCode.LeftArrow);
+
 		AddKey(UserKey.Evasion, KeyCode.Space);
 		AddKey(UserKey.Shoot, KeyCode.Mouse0);
 	}
@@ -68,65 +58,29 @@ public class InputManager
 		// ��ȸ
 		foreach (var pair in m_dicKeys) {
 			KeyInfo info = pair.Value;
-
-			// �ڵ尡 ���ȴ��� üũ�Ѵ�.
 			bool check = GetKeyCode(info.listKey);
 
-			// ��������
 			if(check == true) {
-				// ������ Ȯ�� �ȉ�����
 				if(info.down == false && info.press == false) {
 					info.down = true;
 					info.press = true;
 				}
-				// ��� ������ �־�����
 				else {
 					info.down = false;
 				}
 			}
-			// �ȴ�������
 			else {
-				// ���� Ű�� ��������
 				if(info.down == true || info.press == true) {
 					info.up = true;
 					info.down = false;
 					info.press = false;
 				}
-				// ���� Ű�� ������
 				else if(info.up == true) {
 					info.up = false;
 				}
 			}
 		}
 
-
-		if (EventSystem.current.IsPointerOverGameObject()) {
-			return;
-		}
-
-		if (Input.anyKey == true && KeyEvent != null) {
-			KeyEvent.Invoke();
-		}
-
-		if (MouseEvent != null) {
-			if (Input.GetMouseButton(0) == true) {
-				if (m_isPressed == false) {
-					MouseEvent.Invoke(Define.Mouse.PointerDown);
-					m_pressTime = Time.time;
-				}
-				MouseEvent.Invoke(Define.Mouse.Press);
-				m_isPressed = true;
-			}
-			else {
-				if (m_isPressed == true) {
-					if (Time.time < m_pressTime + 0.2f)
-						MouseEvent.Invoke(Define.Mouse.Click);
-					MouseEvent.Invoke(Define.Mouse.PointerUp);
-				}
-				m_isPressed = false;
-				m_pressTime = 0;
-			}
-		}
 	}
 
 	public void Clear()
@@ -152,18 +106,6 @@ public class InputManager
 		m_dicKeys.Clear();
 	}
 
-	public void RegisterKeyEvent(Action _keyEvent)
-	{
-		KeyEvent -= _keyEvent;
-		KeyEvent += _keyEvent;
-	}
-
-	public void RegisterMouseEvent(Action<Define.Mouse> _mouseEvent)
-	{
-		MouseEvent -= _mouseEvent;
-		MouseEvent += _mouseEvent;
-	}
-
 	#endregion
 
 	#region ��� �Լ�
@@ -185,49 +127,40 @@ public class InputManager
 
 	public bool GetKey(UserKey p_key)
 	{
-		// ��ϵ� Ű�� ���� ���
 		if(m_dicKeys.ContainsKey(p_key) == false) {
 			return false;
 		}
 
-		// Ŭ��������
 		if(m_dicKeys[p_key].down == true || m_dicKeys[p_key].press == true) {
 			return true;
 		}
 
-		// �ƹ��͵� �ƴϿ�����
 		return false;
 	}
 
 	public bool GetKeyDown(UserKey _key)
 	{
-		// ��ϵ� Ű�� ���� ���
 		if (m_dicKeys.ContainsKey(_key) == false) {
 			return false;
 		}
 
-		// Ŭ��������
 		if (m_dicKeys[_key].down == true) {
 			return true;
 		}
 
-		// �ƹ��͵� �ƴϿ�����
 		return false;
 	}
 
 	public bool GetKeyUp(UserKey _key)
 	{
-		// ��ϵ� Ű�� ���� ���
 		if (m_dicKeys.ContainsKey(_key) == false) {
 			return false;
 		}
 
-		// Ŭ��������
 		if (m_dicKeys[_key].up == true) {
 			return true;
 		}
 
-		// �ƹ��͵� �ƴϿ�����
 		return false;
 	}
 
@@ -249,38 +182,27 @@ public class InputManager
 
 	public void AddKey(UserKey _key, KeyCode _keycode)
 	{
-		// �ش��ϴ� Ű�� ��ü�� ���� ��� ����
 		if(m_dicKeys.ContainsKey(_key) == false)  {
 			m_dicKeys[_key] = new KeyInfo();
 			m_dicKeys[_key].key = _key;
 		}
 
-		// �迭 ���� ���� ����
 		KeyInfo l_info = m_dicKeys[_key];
-
-		// ���� ����Ʈ�ȿ� �ڵ尡 ������ ���
 		if(IsListKeyCode(l_info.listKey, _keycode) == true) {
 			return;
 		}
-
-		// ���� ���
 		l_info.listKey.Add(_keycode);
 	}
 	public void DelKey(UserKey _key, KeyCode _keycode = KeyCode.None)
 	{
-		// ����
 		if (m_dicKeys.ContainsKey(_key) == false) {
 			return;
 		}
 
-		// �迭 ���� ���� ����
 		KeyInfo l_info = m_dicKeys[_key];
-
-		// �ϴ� ����
 		if (_keycode == KeyCode.None) {
 			l_info.listKey.RemoveRange(0, l_info.listKey.Count);
 		}
-		// �����Ѱ� ������ ����
 		else {
 			l_info.listKey.Remove(_keycode);
 		}

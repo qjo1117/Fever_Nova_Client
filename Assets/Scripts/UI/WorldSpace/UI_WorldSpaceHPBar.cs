@@ -138,3 +138,4 @@ public class UI_WorldSpaceHPBar : UI_Base
         GetComponent<RectTransform>().sizeDelta = l_newCanvasSize;
     }
 }
+

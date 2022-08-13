@@ -52,6 +52,10 @@ public class PlayerManager : MonoBehaviour
 
 	private void PlayerUpdate()
 	{
+        if(Managers.Game.IsMulti == false){
+            return;
+		}
+
 		foreach(PlayerController player in m_listPlayers) {
             if(player.StatTable.id == m_mainPlayer.StatTable.id) {
                 continue;
