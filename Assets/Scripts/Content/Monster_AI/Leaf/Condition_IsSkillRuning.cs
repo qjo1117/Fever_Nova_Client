@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Condition_IsSkillRuning : BT_Condition
 {
-    private GameObject m_object;
+    private Interface_Enemy m_object;
     public Condition_IsSkillRuning(GameObject _object)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
     }
 
     public override AI.State Update()
@@ -17,7 +17,7 @@ public class Condition_IsSkillRuning : BT_Condition
 
     private AI.State IsSkillRuning()
     {
-        if (m_object.GetComponent<Interface_Enemy>().m_isSkillSelected)
+        if (m_object.m_isSkillSelected)
         {
             return AI.State.SUCCESS;
         }

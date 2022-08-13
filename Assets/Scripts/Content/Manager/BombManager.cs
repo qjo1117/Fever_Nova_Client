@@ -29,7 +29,7 @@ public class BombManager : MonoBehaviour
 	{
 		Bomb l_boom = Managers.Resource.Instantiate("Bomb", transform).GetComponent<Bomb>();
 
-		PlayerStatTable stat = Managers.Data.PlayerStat.At(0);
+		PlayerStatTable stat = _owner.StatTable;
 
 		// 기본적인 스탯 셋팅
 		l_boom.Speed = m_speed;

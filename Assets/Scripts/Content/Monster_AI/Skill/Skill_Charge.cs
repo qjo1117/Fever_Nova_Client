@@ -24,7 +24,7 @@ public class Skill_Charge : Interface_Skill
     public Skill_Charge(GameObject _object, int _id, float _coolTime, float _range, int _priority,
          int _damage, float _chargeSpeed, float _readyTime, Vector3 _colliderSize)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_animator = m_object.GetComponent<Animator>();
         m_id = _id;
         m_coolTime = _coolTime;

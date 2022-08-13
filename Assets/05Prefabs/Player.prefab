@@ -105,7 +105,7 @@ MonoBehaviour:
     name: Hello_Player
     hp: 100
     maxHp: 100
-    attack: 70
+    attack: 10
     mass: 2
     moveSpeed: 1000
     evasionSpeed: 7000

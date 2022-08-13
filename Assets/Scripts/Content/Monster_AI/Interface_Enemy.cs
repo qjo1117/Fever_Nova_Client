@@ -24,13 +24,17 @@ public class Interface_Enemy : MonoBehaviour
 
     public void Init()
     {
+        m_isPlayingChaseAnimation = false;
+        m_isChaseComplete = false;
+        m_isSkillSelected = false;
+
         CreateBehaviorTreeAIState();
         m_rigid = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
-        Init();
+        //Init();
     }
 
     public void AddPatrolPoint(Vector3 _position)

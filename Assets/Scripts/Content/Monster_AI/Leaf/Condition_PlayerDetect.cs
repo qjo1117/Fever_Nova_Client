@@ -15,14 +15,15 @@ public class Condition_PlayerDetect : BT_Condition
 
     public override AI.State Update()
     {
-        GameObject player = GameObject.Find("Player");
-        if (player)
+
+        foreach (PlayerController player in Managers.Game.Player.List)
         {
-            float Distance = Vector3.Distance(player.transform.position, m_object.transform.position);
-            if (Distance < m_detectRange)
+            float distance = Vector3.Distance(player.transform.position, m_object.transform.position);
+            if (distance < m_detectRange)
             {
                 return AI.State.SUCCESS;
             }
+            
         }
         return AI.State.FAILURE;
     }

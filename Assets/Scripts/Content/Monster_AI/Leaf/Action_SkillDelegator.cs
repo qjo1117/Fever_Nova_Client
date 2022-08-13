@@ -6,7 +6,7 @@ public class Action_SkillDelegator : BT_Action
 {
     public Action_SkillDelegator(GameObject _object)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_animator = m_object.GetComponent<Animator>();
     }
 
@@ -24,12 +24,12 @@ public class Action_SkillDelegator : BT_Action
 
     private AI.State UseSkill()
     {
-        if (m_object.GetComponent<Interface_Enemy>().m_selectedSkill != null)
+        if (m_object.m_selectedSkill != null)
         {
-            if (m_object.GetComponent<Interface_Enemy>().m_selectedSkill.Update() == AI.State.SUCCESS)
+            if (m_object.m_selectedSkill.Update() == AI.State.SUCCESS)
             {
-                m_object.GetComponent<Interface_Enemy>().m_selectedSkill.CoolDown = m_object.GetComponent<Interface_Enemy>().m_selectedSkill.CoolTime;
-                m_object.GetComponent<Interface_Enemy>().m_isSkillSelected = false;
+                m_object.m_selectedSkill.CoolDown = m_object.m_selectedSkill.CoolTime;
+                m_object.m_isSkillSelected = false;
                 m_animator.speed = 1;
                 m_animator.CrossFade("Idle", 0.1f);
             }

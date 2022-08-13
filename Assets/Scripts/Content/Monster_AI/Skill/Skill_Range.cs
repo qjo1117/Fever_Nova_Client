@@ -23,7 +23,7 @@ public class Skill_Range : Interface_Skill
         int _damage, float _skillPlayTime, float _projectileSpeed, float _projectileLifeDuration,
         string _animationFileName = "Shooting-Fire-Rifle2", string _effectFileName = Path.Fire_Particle)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_animator = m_object.GetComponent<Animator>();
         m_id = _id;
         m_coolTime = _cooltime;

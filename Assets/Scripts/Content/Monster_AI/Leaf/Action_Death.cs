@@ -8,7 +8,7 @@ public class Action_Death : BT_Action
 
     public Action_Death(GameObject _object, float _corpseTime)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_animator = m_object.GetComponent<Animator>();
         m_corpseTime = _corpseTime;
     }
@@ -27,7 +27,7 @@ public class Action_Death : BT_Action
             //TODO
             //오브젝트 풀로 반환
             //필요하다면 시체 사라지는 이펙트?
-            Managers.Resource.Destroy(m_object);
+            Managers.Resource.Destroy(m_object.gameObject, 2.5f);
         }
 
         return AI.State.RUNNING;

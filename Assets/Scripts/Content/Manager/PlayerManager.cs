@@ -27,7 +27,7 @@ public class PlayerManager : MonoBehaviour
 
 	#region Player Variable
 	[SerializeField]
-    private float           m_jumpRange = 5.0f;
+    private float           m_jumpRange = 3.0f;
 	[SerializeField]
     private float           m_explosionRange = 12.0f;
     #endregion

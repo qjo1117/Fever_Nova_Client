@@ -33,13 +33,13 @@ public class AI_Boss : Interface_Enemy
         // Priority
         // ETC
         Condition_SkillSelector l_skillselector = new Condition_SkillSelector(gameObject);
-        l_skillselector.AddSkill(new Skill_Bombarment(gameObject, 1001, 5, 30, 1,
+        l_skillselector.AddSkill(new Skill_Bombarment(gameObject, 1001, 20, 8, 1,
             20, 8, 0.5f, 6));
         l_skillselector.AddSkill(new Skill_Charge(gameObject, 1002, 15, 16, 3,
             30, 25, 2, new Vector3(2, 2, 2)));
-        l_skillselector.AddSkill(new Skill_Range(gameObject, 1003, 0.5f, 8, 4,
-            15, 0.8f, 15, 10, "Pistol-Attack-R1", Path.FX_GlowSpot_01));
-        l_skillselector.AddSkill(new Skill_Melee(gameObject, 1004, 0.1f, 7.0f, 5,
+        l_skillselector.AddSkill(new Skill_Range(gameObject, 1003, 0.9f, 16, 4,
+            15, 0.8f, 15, 70.0f, "Pistol-Attack-R1", Path.FX_GlowSpot_01));
+        l_skillselector.AddSkill(new Skill_Melee(gameObject, 1004, 0.25f, 8, 5,
             20, 1, "Shield-Attack1", Path.FX_SwordStab_01));
 
 
