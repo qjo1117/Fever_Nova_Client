@@ -13,6 +13,7 @@ public class Interface_Enemy : MonoBehaviour
     public bool                 m_isSkillSelected = false;
     public bool                 m_isChaseComplete = false;
     public bool                 m_isPlayingChaseAnimation = false;
+    public float                m_unitHp = 0;
 
     [SerializeField]
     protected List<Vector3>     m_patrolWayPoint = new List<Vector3>();

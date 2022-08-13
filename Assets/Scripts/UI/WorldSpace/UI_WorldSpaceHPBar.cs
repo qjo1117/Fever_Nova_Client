@@ -26,7 +26,7 @@ public class UI_WorldSpaceHPBar : UI_Base
     protected bool m_isReady;
 
     public int m_verticalOffset;               // 월드위치 Y좌표 offset값
-    public int m_unitHp;                       // 단위 hp 
+    public float m_unitHp;                       // 단위 hp 
                                                // (단위 hp가 낮을수록 최대 체력이 증가했을떄 하얀색 사각형이 촘촘하개 배열됨)
     #endregion
 
@@ -67,6 +67,7 @@ public class UI_WorldSpaceHPBar : UI_Base
     {
         Bind<Image>(typeof(Images));
         Bind<GameObject>(typeof(GameObjects));
+        m_isReady = true;
 
         GetHpBoost();
 
@@ -74,7 +75,6 @@ public class UI_WorldSpaceHPBar : UI_Base
         {
             m_mainCamera = Camera.main;
         }
-        m_isReady = true;
 
         HpBarUpdate();
         CanvasScaleChange();
@@ -92,7 +92,7 @@ public class UI_WorldSpaceHPBar : UI_Base
             return;
 
         // (단위 hp / 최대체력) 계산하여 하얀색 사각 프레임의 스케일값 구함
-        float l_scaleX = (float)m_unitHp / m_maxHp;
+        float l_scaleX = m_unitHp / m_maxHp;
 
         // hpLine 오브젝트의 자식들 (하얀색 사각 프레임들)의 스케일값을 변경
         // (HorizontalLayoutGroup 컴포넌트가 활성화 되어있으면 Scale이 제대로 적용이 안되므로 적용전에 잠시 비활성화 시켜줌)
