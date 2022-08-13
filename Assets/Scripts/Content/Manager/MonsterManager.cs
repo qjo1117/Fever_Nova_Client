@@ -135,7 +135,9 @@ public class MonsterManager : MonoBehaviour
         l_monster.GetComponent<Rigidbody>().mass = l_stat.weight;
         l_monster.name = l_stat.name;
 
-        l_monster.HpBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(l_monster.transform, "UI_MonsterHPBar");
+        if (l_monster.HpBar == null) {
+            l_monster.HpBar = Managers.UI.MakeWorldSpaceUI<UI_MonsterHPBar>(l_monster.transform, "UI_MonsterHPBar");
+        }
         l_monster.HpBar.MaxHP = l_monster.Stat.hp;
         l_monster.HpBar.HP = l_monster.Stat.hp;
 

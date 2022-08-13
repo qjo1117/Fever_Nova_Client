@@ -6,26 +6,26 @@ using UnityEngine;
 public class GameManager
 {
 	#region Variable
-	private PlayerManager m_player = null;
-    private MonsterManager m_monster = null;
-    private BombManager m_boom = null;
-    private RespawnManager m_respawn = null;
+	private PlayerManager       m_player = null;
+    private MonsterManager      m_monster = null;
+    private BombManager         m_boom = null;
+    private RespawnManager      m_respawn = null;
+    private ItemManager         m_item = null;
 
-    private int m_respawnIndex = 0;
+    private int                 m_respawnIndex = 0;
 
-    private ItemManager m_item = null;
 
-    private int m_score = 0;
+    private int                 m_score = 0;
 
     // Unity의 Time을 이용하여 플레이타임 구현
-    private float m_beginPlayTime = 0;
-    private float m_endPlayTime = 0;
+    private float               m_beginPlayTime = 0;
+    private float               m_endPlayTime = 0;
 
     // 몬스터들에 대한 프리팹을 들고 있는다.
-    private List<GameObject> m_listPrefab = new List<GameObject>();
+    private List<GameObject>    m_listPrefab = new List<GameObject>();
 
-    private bool m_isPlay = false;
-    private bool m_isMulti = false;
+    private bool                m_isPlay = false;
+    private bool                m_isMulti = false;
     #endregion
 
 

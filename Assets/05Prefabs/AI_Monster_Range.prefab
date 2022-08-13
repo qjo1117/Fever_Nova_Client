@@ -263,7 +263,7 @@ MonoBehaviour:
   m_isChaseComplete: 0
   m_isPlayingChaseAnimation: 0
   m_patrolWayPoint: []
-  m_detectRange: 10
+  m_detectRange: 20
   m_alarmRange: 10
   m_chaseMoveSpeed: 10
   m_patrolMoveSpeed: 10
