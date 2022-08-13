@@ -120,6 +120,30 @@ public class GameManager
         if (m_isMulti == true) {
             Managers.Network.Update();
         }
+        else {
+            // 게임을 끝내자
+            if(m_monster.MonsterKillCount >= m_allMonsterCount) {
+                if (Util.FindChild<UI_ResultScreen>(Managers.UI.Root, "UI_ResultScreen") != null)
+                {
+                    return;
+                }
+
+                // 게임 결과창 출력
+                Managers.UI.ShowPopupUI<UI_ResultScreen>("UI_ResultScreen");
+                UI_Result l_result = Managers.UI.ShowPopupUI<UI_Result>("UI_Result");
+
+                PlayerController player = m_player.MainPlayer;
+
+                l_result.PlayerId = 1;
+                l_result.Result = "Defeat...";
+                l_result.Score = player.Stat.score;
+                l_result.GameStartTime = Managers.Game.BeginPlayTime;
+                l_result.KillCount = player.MonsterKillCount;
+                l_result.MultiKillCount = player.MonsterMultiKillCount;
+                l_result.HitCount = player.HitCount;
+                l_result.TotalScore = player.Stat.totalScore;
+            }
+		}
 
     }
 

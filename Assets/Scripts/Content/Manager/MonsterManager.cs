@@ -135,6 +135,11 @@ public class MonsterManager : MonoBehaviour
         l_monster.GetComponent<Rigidbody>().mass = l_stat.weight;
         l_monster.name = l_stat.name;
 
+        if(l_monster.HpBar)
+		{
+            Managers.Resource.Destroy(l_monster.HpBar.gameObject);
+		}
+
         if (l_monster.Stat.hp >= 50) {
             l_monster.HpBar = Managers.UI.ShowSceneUI<UI_BossMonsterHPBar>("UI_BossMonsterHPBar");
             l_monster.HpBar.m_unitHp = 10;

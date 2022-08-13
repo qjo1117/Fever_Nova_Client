@@ -70,7 +70,7 @@ public class MonsterController : BaseController
         if (m_stat.Hp <= 0)
         {
             // »ç¸Á Ã³¸®
-            Managers.Game.Monster.MonsterKillCount++;
+            Managers.Game.Monster.MonsterKillCount += 1;
             Managers.Resource.Destroy(gameObject);
             if(m_isBoss)
             {

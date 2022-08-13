@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 AnimMove { get => m_animMove; set => m_animMove = value; }
     public float Aiming { get => m_aiming; set => m_aiming = value; }
+    public int HitCount { get => m_hitCount; set => m_hitCount = value; }
 
     public float ExplosionJumpRadius { get => m_explosionJumpRange; set => m_explosionJumpRange = value; }
     public float ExplosionRadius { get => m_explosionRange; set => m_explosionRange = value; }

@@ -238,7 +238,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: f3ce8b1c3e6cf2746ba2c278bc99f65b
-    m_Address: UI/WorldSpace/UI_MonsterHPBar
+    m_Address: UI/WorldSpace/UI_NormalMonsterHPBar
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 45434779224129840a2a907fd18c9030

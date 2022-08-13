@@ -70,6 +70,7 @@ public class Interface_Enemy : MonoBehaviour
                 m_hpBar.CloseSceneUI();
             }
             _player.MonsterKillCount += 1;
+            Managers.Game.Monster.MonsterKillCount += 1;
             ClearPatrolPoint();
             return true;
         }
