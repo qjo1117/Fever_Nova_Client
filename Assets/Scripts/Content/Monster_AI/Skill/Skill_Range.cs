@@ -63,7 +63,7 @@ public class Skill_Range : Interface_Skill
             GameObject bullet = Managers.Resource.Instantiate(m_effectFileName, Managers.Game.Boom.transform);
             bullet.transform.position = (m_object.transform.position + m_object.transform.forward * 2);
 
-            bullet.GetComponent<Projectile_Bullet>().Initialized(m_attackPos, m_damage, m_projectileSpeed);
+            bullet.GetComponent<Projectile_Bullet>().Initialized(m_object.transform.forward, m_damage, m_projectileSpeed);
             Managers.Resource.Destroy(bullet, m_projectileLifeDuration);
             m_isSkillEnd = true;
         }

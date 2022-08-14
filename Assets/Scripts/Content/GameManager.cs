@@ -70,6 +70,8 @@ public class GameManager
     // 게임이 시작할때 가장 필요한 요소들을 셋팅한다.
     public void StartGame()
 	{
+        ScoreInit();
+
         // Manager 맵핑
         m_player = Util.FindGetOrAddGameObject<PlayerManager>("PlayerManager");
         m_monster = Util.FindGetOrAddGameObject<MonsterManager>("MonsterManager");

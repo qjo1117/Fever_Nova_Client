@@ -10,7 +10,7 @@ public abstract class BaseItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (other.gameObject.layer == (int)Define.Layer.Player)
         {
             Active(other.gameObject.transform.GetComponent<PlayerController>());
         }

@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     private float               m_aiming = 0.0f;
 
     private float               m_lookRotation = 0.0f;
-    private float               m_explosionDelayTime = 0.5f;
+    private float               m_explosionDelayTime = 5.0f;
     private float               m_explosionTime = 0.0f;
     private bool                m_isExplosion = false;
 
