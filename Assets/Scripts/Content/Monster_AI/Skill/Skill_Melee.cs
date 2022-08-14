@@ -124,7 +124,7 @@ public class Skill_Melee : Interface_Skill
 
         float dotValue = Mathf.Cos(Mathf.Deg2Rad * (m_attackAngle / 2));
         Vector3 direction = l_player.transform.position - m_object.transform.position;
-        if (direction.magnitude < m_rangeForCastSkill)
+        if (direction.magnitude < m_rangeForCastSkill + m_object.transform.localScale.x)
         {
             if (Vector3.Dot(direction.normalized, m_object.transform.forward) > dotValue)
             {

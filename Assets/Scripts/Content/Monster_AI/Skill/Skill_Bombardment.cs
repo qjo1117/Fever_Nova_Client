@@ -16,6 +16,8 @@ public class Skill_Bombarment : Interface_Skill
     private GameObject      m_circleForCurrentRadius = null;
     private bool            m_isSkillStart = false;
 
+    const string            AnimationCrouch = "Shield-Idle-Crouch";
+
 
     public Skill_Bombarment(GameObject _object, int _id, float _coolTime, float _range, int _priority,
        int _damage, float _skillRange, float _readyTime,
@@ -91,7 +93,7 @@ public class Skill_Bombarment : Interface_Skill
         m_circleForTotalRadius.SetActive(true);
         m_circleForCurrentRadius.SetActive(true);
         m_isSkillStart = true;
-        SetAnimation("Shield-Idle-Crouch", 0.15f, 3);
+        SetAnimation(AnimationCrouch, 0.15f, 3);
 
         Managers.Resource.Destroy(m_circleForTotalRadius.gameObject, 3.0f);
         Managers.Resource.Destroy(m_circleForCurrentRadius.gameObject, 3.0f);

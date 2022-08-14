@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Health : BaseItem
 {
-    [SerializeField]
-    private                 int m_hpPlus;
+    private                 int m_hpPlus = 10;
 
     public override void Active(PlayerController _player)
     {
-        if(_player.Stat.hp < _player.Stat.maxHp)
-        {
-            _player.Recover(m_hpPlus);
-            Managers.Resource.Destroy(gameObject);
-        }
+        _player.Recover(m_hpPlus);
+        Managers.Resource.Destroy(gameObject);
     }
 }
