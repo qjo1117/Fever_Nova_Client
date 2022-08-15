@@ -5,19 +5,22 @@ using UnityEngine;
 public class Skill_BossRange : Interface_Skill
 {
     private int m_damage = 10;
-    private float m_skillPlayTime;
+    private float m_skillPlayTime = 0.0f;
 
     private float m_projectileSpeed = 3f;
-    private float m_projectileLifeDuration = 5f;
+    private float m_projectileLifeDuration = 4.0f;
 
-    private bool m_isSkillEnd;
-    private float m_timeCheck;
+    private bool m_isSkillEnd = false;
+    private float m_timeCheck = 0.0f;
 
     private string m_animationFileName;
     private string m_effectFileName;
 
+    private Transform m_muzzle = null;
+
+
     public Skill_BossRange(GameObject _object, int _id, float _cooltime, float _range, int _priority,
-        int _damage, float _skillPlayTime, float _projectileSpeed, float _projectileLifeDuration,
+        int _damage, float _skillPlayTime, float _projectileSpeed, float _projectileLifeDuration, Transform _muzzle,
         string _animationFileName = "Shooting-Fire-Rifle2", string _effectFileName = Path.Fire_Particle)
     {
         m_object = _object.GetComponent<Interface_Enemy>();
@@ -38,6 +41,13 @@ public class Skill_BossRange : Interface_Skill
 
         m_animationFileName = _animationFileName;
         m_effectFileName = _effectFileName;
+
+        if (_muzzle) {
+            m_muzzle = _muzzle;
+        }
+        else {
+            m_muzzle = m_object.transform;
+        }
     }
 
     public override void Initialize() { }
@@ -76,7 +86,7 @@ public class Skill_BossRange : Interface_Skill
     public void CreateBullet(Vector3 _forward)
 	{
         GameObject bullet = Managers.Resource.Instantiate(m_effectFileName, Managers.Game.Boom.transform);
-        bullet.transform.position = (m_object.transform.position + _forward * 2);
+        bullet.transform.position = (m_muzzle.position + _forward * 2);
 
         bullet.GetComponent<Projectile_Bullet>().Initialized(_forward * 2.0f, m_damage, m_projectileSpeed);
         Managers.Resource.Destroy(bullet, m_projectileLifeDuration);
