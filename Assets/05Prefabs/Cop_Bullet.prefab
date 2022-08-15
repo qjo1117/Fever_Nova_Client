@@ -13,7 +13,11 @@ GameObject:
   - component: {fileID: 7358520163475613152}
   - component: {fileID: 7616695867644818131}
   - component: {fileID: 8446529764849515890}
+<<<<<<< HEAD
   - component: {fileID: 2193791894869654782}
+=======
+  - component: {fileID: 3822084300259764718}
+>>>>>>> main
   m_Layer: 0
   m_Name: Cop_Bullet
   m_TagString: Untagged
@@ -4583,7 +4587,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f2a0733fbe37e46ae29547a365e563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!135 &2193791894869654782
+=======
+--- !u!135 &3822084300259764718
+>>>>>>> main
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4594,8 +4602,13 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
+<<<<<<< HEAD
   m_Radius: 0.82772195
   m_Center: {x: 0.00052058697, y: 0.0003463328, z: -0.53}
+=======
+  m_Radius: 0.8285332
+  m_Center: {x: -0.00026488304, y: -0.00025066733, z: -0.53}
+>>>>>>> main
 --- !u!1001 &5057068389531502273
 PrefabInstance:
   m_ObjectHideFlags: 0

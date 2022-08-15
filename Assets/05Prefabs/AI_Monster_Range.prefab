@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3561151890215788636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4059774609003548344}
+  m_Layer: 0
+  m_Name: '@Mulzze'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4059774609003548344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3561151890215788636}
+  m_LocalRotation: {x: -1, y: 0.000000027367056, z: -0.00000001862645, w: -0.00000006982687}
+  m_LocalPosition: {x: 0.0670368, y: -0.013906009, z: -0.02441737}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.099999994}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7750682687543620088}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7752988903017320424
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +299,7 @@ MonoBehaviour:
   m_alarmRange: 10
   m_chaseMoveSpeed: 10
   m_patrolMoveSpeed: 10
-  m_muzzle: {fileID: 0}
+  m_muzzle: {fileID: 4059774609003548344}
 --- !u!136 &7121745831827452417
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -565,6 +596,7 @@ Transform:
   - {fileID: 7750626526918975484}
   - {fileID: 7750988546303907148}
   - {fileID: 8232081936055572432}
+  - {fileID: 4059774609003548344}
   m_Father: {fileID: 7750807051094006498}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -13,6 +13,7 @@ public abstract class BaseItem : MonoBehaviour
         if (other.gameObject.layer == (int)Define.Layer.Player)
         {
             Active(other.gameObject.transform.GetComponent<PlayerController>());
+            Managers.Resource.Destroy(gameObject);
         }
     }
 

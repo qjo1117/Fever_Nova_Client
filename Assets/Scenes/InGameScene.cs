@@ -83,10 +83,11 @@ public class InGameScene : BaseScene
 
         Managers.UI.ShowSceneUI<UI_Aim>("UI_Aim");
 
+        // TODO : 시연용으로 끄기
         Managers.UI.ShowSceneUI<UI_Goal>("UI_Goal");
-
-        Managers.UI.ShowSceneUI<UI_Score>("UI_Score");
-        Managers.UI.ShowSceneUI<UI_Pause>("UI_Pause");
+        // TODO : 시연용으로 끄기
+        Managers.UI.ShowSceneUI<UI_Score>("UI_Score").gameObject.SetActive(false);
+        Managers.UI.ShowSceneUI<UI_Pause>("UI_Pause").gameObject.SetActive(false);
 
         UI_BombJumpRange l_bombJumpRange = Managers.UI.ShowSceneUI<UI_BombJumpRange>("UI_BombJumpRange");
         l_bombJumpRange.RangeRadius = 12.0f;
