@@ -11,9 +11,9 @@ static class Path
     public const string Bomb                            = "Bomb";
 
     public const string Bomb_Particle                   = "Assets/05Prefabs/Boom_Particle";
-    public const string Fire_Particle                   = "Assets/05Prefabs/FX_Fire_Small_03.prefab";
+    public const string Fire_Particle                   = "Assets/05Prefabs/Cop_Bullet";
     public const string FX_SwordStab_01                 = "Assets/05Prefabs/FX_SwordStab_01.prefab";
-    public const string FX_GlowSpot_01                  = "Assets/05Prefabs/FX_GlowSpot_01.prefab";
+    public const string Robot_Bullet                    = "Assets/02 Skill/Robot_Bullet";
     public const string Bombardment_Charge_Indicator    = "Assets/05Prefabs/Bombardment_Charge_Indicator.prefab";
     public const string Bombardment_IndiCator           = "Assets/05Prefabs/Bombardment_IndiCator.prefab";
     public const string Bombardment_Effect              = "Assets/05Prefabs/Boom_Particle";

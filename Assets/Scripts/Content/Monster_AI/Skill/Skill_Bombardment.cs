@@ -59,10 +59,12 @@ public class Skill_Bombarment : Interface_Skill
         l_speed.y = 0.0f;
         //서브 인디케이터의 반지름 증가
         m_circleForCurrentRadius.transform.localScale += l_speed;
+
         if (CheckRadius()) {
             //스킬을 발동
             Do_Skill();
             m_currentSkillCount++;
+            m_object.transform.LookAt(Managers.Game.Player.MainPlayer.transform.position);
         }
         if (m_currentSkillCount == m_totalSkillCount) {
             //인디케이터 삭제
@@ -133,8 +135,6 @@ public class Skill_Bombarment : Interface_Skill
         
         //파티클 삭제
         Managers.Resource.Destroy(particle.gameObject, 5.0f);
-
-        
     }
 
 

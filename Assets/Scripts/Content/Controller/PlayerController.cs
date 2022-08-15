@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
     private float               m_lookRotation = 0.0f;
     private float               m_explosionDelayTime = 5.0f;
     private float               m_explosionTime = 0.0f;
-    private bool                m_isExplosion = false;
 
     // 총 애니메이션 딜레이
     private float               m_shotMaxDelay = 3.0f;
@@ -355,7 +354,6 @@ public class PlayerController : MonoBehaviour
 
         // 현재 Press중일때 카운트를 세어서 현재 상태값을 전환시킨다.
         if (Managers.Input.GetKey(UserKey.Shoot) == true) {
-            m_isExplosion = true;
             m_explosionTime += Time.deltaTime;
             // 정해진 시간을 초과할 경우
             if (m_explosionTime >= m_explosionDelayTime) {
@@ -375,7 +373,6 @@ public class PlayerController : MonoBehaviour
             }
 
             m_explosionTime = 0.0f;
-            m_isExplosion = false;
         }
     }
 

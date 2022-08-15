@@ -16,6 +16,7 @@ public class Projectile_Bullet : MonoBehaviour
         m_speed = _speed;
 
         m_attackDir = m_attackPos;
+        m_attackDir.y = 0.0f;
         transform.LookAt(transform.position + m_attackDir);
     }
 

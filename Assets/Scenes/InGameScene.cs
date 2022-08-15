@@ -15,7 +15,7 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.Slash_Particle, 20);
         Managers.Resource.RegisterPoolGameObject(Path.Fire_Particle, 20);
         Managers.Resource.RegisterPoolGameObject(Path.FX_SwordStab_01, 20);
-        Managers.Resource.RegisterPoolGameObject(Path.FX_GlowSpot_01, 20);
+        Managers.Resource.RegisterPoolGameObject(Path.Robot_Bullet, 20);
         Managers.Resource.RegisterPoolGameObject(Path.Bombardment_Charge_Indicator, 2);
         Managers.Resource.RegisterPoolGameObject(Path.Bombardment_IndiCator, 2);
         Managers.Resource.RegisterPoolGameObject(Path.Bombardment_Effect, 20);
