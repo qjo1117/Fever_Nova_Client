@@ -21,7 +21,7 @@ public class AI_Melee : Interface_Enemy
 
         BT_Sequence l_DeathSQ = new BT_Sequence();
         l_DeathSQ.AddChild(new Condition_IsDeath(gameObject, Stat));
-        l_DeathSQ.AddChild(new Action_Death(gameObject, 10));
+        l_DeathSQ.AddChild(new Action_Death(gameObject, 2.0f));
         l_mainSelector.AddChild(l_DeathSQ);
 
         // Gameobject

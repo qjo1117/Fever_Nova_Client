@@ -127,7 +127,7 @@ public class Skill_Bombarment : Interface_Skill
 		{
             Vector3 direction = player.transform.position - m_object.transform.position;
             direction.y = 0.0f;
-            if (direction.magnitude < (m_skillRange + m_skillRange))
+            if (direction.sqrMagnitude < (m_skillRange + m_skillRange) * (m_skillRange + m_skillRange))
             {
                 player.Damage(m_damage);
             }

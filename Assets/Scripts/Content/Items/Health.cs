@@ -9,6 +9,6 @@ public class Health : BaseItem
     public override void Active(PlayerController _player)
     {
         _player.Recover(m_hpPlus);
-        Managers.Resource.Destroy(gameObject);
+
     }
 }

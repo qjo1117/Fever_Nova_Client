@@ -203,18 +203,12 @@ public class MonsterManager : MonoBehaviour
             }
 
             if (l_monster.Damage(l_player) == true) {
-                m_stackDestroy.Push(l_monster);
+                
             }
         }
         
 
         m_listTargetData.Clear();
-     
-        while (m_stackDestroy.Count > 0) {
-            Interface_Enemy l_monster = m_stackDestroy.Pop();
-            m_listMonster.Remove(l_monster);
-            Managers.Resource.Destroy(l_monster.gameObject);
-        }
     }
 
     public Interface_Enemy At(int _index)
