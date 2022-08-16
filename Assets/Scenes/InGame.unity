@@ -21166,10 +21166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b96bf15edb290438f306a6aa9b010a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_delta: {x: 0, y: 14, z: -10}
+  m_delta: {x: 0, y: 21.9, z: -12.34}
   m_player: {fileID: 0}
   m_anlge: 0
-  m_direction: {x: 0, y: -1.5, z: 1}
+  m_direction: {x: 0, y: -3, z: 1.5}
 --- !u!114 &718333237
 MonoBehaviour:
   m_ObjectHideFlags: 0
