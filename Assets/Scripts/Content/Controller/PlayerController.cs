@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     private float               m_explosionTime = 0.0f;
 
     // 총 애니메이션 딜레이
-    private float               m_shotMaxDelay = 3.0f;
+    private float               m_shotMaxDelay = 0.5f;
     private float               m_shotDelay = 0.0f;
     private bool                m_isCanJump = false;
 
