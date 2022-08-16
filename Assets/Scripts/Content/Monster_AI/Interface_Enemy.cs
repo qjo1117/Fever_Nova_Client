@@ -30,6 +30,9 @@ public class Interface_Enemy : MonoBehaviour
 
         CreateBehaviorTreeAIState();
         m_rigid = GetComponent<Rigidbody>();
+
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Collider>().isTrigger = false;
     }
 
     private void Start()
