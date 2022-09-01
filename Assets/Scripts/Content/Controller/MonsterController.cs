@@ -48,7 +48,6 @@ public class MonsterController : BaseController
 
 	public void PlayerAttack()
 	{
-        Debug.Log("때림");
 	}
 
 
@@ -71,7 +70,7 @@ public class MonsterController : BaseController
         if (m_stat.Hp <= 0)
         {
             // 사망 처리
-            Managers.Game.Monster.MonsterKillCount++;
+            Managers.Game.Monster.MonsterKillCount += 1;
             Managers.Resource.Destroy(gameObject);
             if(m_isBoss)
             {
@@ -84,23 +83,6 @@ public class MonsterController : BaseController
 
     void Update()
     {
-        // 몬스터 체력바 테스트 대미지 주기
-        if (Input.GetKeyDown(KeyCode.Keypad4)) {
-            Damege(10);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad5)) {
-            if (m_stat.Hp >= m_stat.MaxHp) {
-                return;
-            }
-
-            m_stat.Hp += 10;
-
-            if (m_isBoss) {
-                m_bossMonsterHPBar.HP = m_stat.Hp;
-            }
-            m_monsterHPBar.HP = m_stat.Hp;
-        }
     }
 
 

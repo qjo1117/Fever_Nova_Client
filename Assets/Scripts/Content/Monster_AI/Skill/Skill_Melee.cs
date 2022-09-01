@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity;
+using UnityEditor;
 
 public class Skill_Melee : Interface_Skill
 {
@@ -18,11 +19,13 @@ public class Skill_Melee : Interface_Skill
     private string m_animationFileName;
     private string m_effectFileName;
 
+    private List<int> m_hitId = new List<int>();
+
     public Skill_Melee(GameObject _object, int _id, float _coolTime, float _range, int _priority,
-        int _damage, float _skillPlayTime, 
+        int _damage, float _skillPlayTime,
         string _animationFileName = "Dagger-Attack-R3", string _effectFileName = Path.Slash_Particle)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_animator = m_object.GetComponent<Animator>();
         m_id = _id;
         m_coolTime = _coolTime;
@@ -50,10 +53,12 @@ public class Skill_Melee : Interface_Skill
 
     private AI.State OnMeleeAttack()
     {
+        if (!m_isSkillEnd)
+        {
 
 
-        if (!m_isSkillEnd) {
-            if (m_particle == null) {
+            if (m_particle == null)
+            {
                 m_particle = Managers.Resource.Instantiate(m_effectFileName, m_object.transform).GetComponent<ParticleSystem>();
 
                 //위치 조정
@@ -76,24 +81,34 @@ public class Skill_Melee : Interface_Skill
             m_particle.Play();
             SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
             m_isSkillEnd = true;
+
+            m_hitId.Clear();
         }
 
         m_timeCheck += Time.deltaTime;
 
-        if((int)m_skillPlayTime / 2.0f == m_timeCheck) 
+        if ((int)m_skillPlayTime * 5 == (int)(m_timeCheck * 10))
         {
             FindTarget();
+            foreach (GameObject obj in m_targets)
+            {
+                PlayerController player = obj.GetComponent<PlayerController>();
+
+                if(CheckHitID(player.StatTable.id) == true) {
+                    continue;
+				}
+
+                player.Damage(m_damage);
+                m_hitId.Add(player.StatTable.id);
+            }
         }
 
-        if (m_timeCheck >= m_skillPlayTime) 
+        if (m_timeCheck >= m_skillPlayTime)
         {
             m_timeCheck = 0;
             m_isSkillEnd = false;
 
-            foreach (var player in m_targets) 
-            {
-                player.GetComponent<PlayerController>().Damage(m_damage);
-            }
+
             return AI.State.SUCCESS;
         }
 
@@ -103,43 +118,31 @@ public class Skill_Melee : Interface_Skill
     //범위 내의 타켓 탐색
     void FindTarget()
     {
-        //특정 거리 내의 player 탐색
-        Collider[] l_colliders = Physics.OverlapSphere(m_object.transform.position, m_rangeForCastSkill, 1 << (int)Define.Layer.Player);
+        GameObject l_player = Managers.Game.Player.MainPlayer.gameObject;
 
         m_targets.Clear();//초기화
 
-        float l_radianRange = Mathf.Cos(Mathf.Deg2Rad * (m_attackAngle / 2));//라디안 범위
-
-        //범위 내의 player 타켓에 추가
-        //foreach (var item in l_colliders)
-        //{
-        //    float targetRadian = Vector3.Dot(m_object.transform.forward,
-        //        (item.transform.position - m_object.transform.forward).normalized);
-
-        //    if (targetRadian < l_radianRange)
-        //    {
-        //        m_targets.Add(item.gameObject);
-        //    }
-        //}
-
-        Vector3 lookDir = AngleToDir(m_object.transform.eulerAngles.y);
-        foreach (var item in l_colliders)
+        float dotValue = Mathf.Cos(Mathf.Deg2Rad * (m_attackAngle / 2));
+        Vector3 direction = l_player.transform.position - m_object.transform.position;
+        if (direction.magnitude < m_rangeForCastSkill + m_object.transform.localScale.x)
         {
-            Vector3 l_targetVector = item.transform.position - m_object.transform.position;
-
-            float dot = Vector3.Dot(l_targetVector.normalized, m_object.transform.forward);
-            float degree = Mathf.Rad2Deg * Mathf.Acos(dot);
-
-            if (degree <= m_attackAngle * 0.5f)
+            if (Vector3.Dot(direction.normalized, m_object.transform.forward) > dotValue)
             {
-                m_targets.Add(item.gameObject);
+                m_targets.Add(l_player.gameObject);
             }
         }
     }
 
-    Vector3 AngleToDir(float angle)
-    {
-        float radian = angle * Mathf.Deg2Rad;
-        return new Vector3(Mathf.Sin(radian), 0f, Mathf.Cos(radian));
-    }
+
+    public bool CheckHitID(int _id)
+	{
+        foreach(int id in m_hitId) {
+            if(_id == id) {
+                return true;
+			}
+		}
+        return false;
+	}
 }
+
+

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Action_WayPointPatrol : BT_Action
 {
-    private GameObject m_object;
+    private Interface_Enemy m_object = null;
     private float m_moveSpeed;
     private List<Vector3> waypointList = null;
 
@@ -15,10 +15,11 @@ public class Action_WayPointPatrol : BT_Action
 
     public Action_WayPointPatrol(GameObject _object, float _moveSpeed, List<Vector3> _waypointList)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_moveSpeed = _moveSpeed;
         waypointList = _waypointList;
         wayPointRadius = _object.transform.localScale.x + 0.25f;
+        m_animator = _object.GetComponent<Animator>();
 
         m_rigid = _object.GetComponent<Rigidbody>();
     }
@@ -44,6 +45,13 @@ public class Action_WayPointPatrol : BT_Action
         if (waypointList.Count <= 0)
         {
             return;
+        }
+
+        if (!m_object.m_isPlayingChaseAnimation)
+        {
+            m_animator.speed = 1;
+            m_animator.CrossFade("Move", 0.15f);
+            m_object.m_isPlayingChaseAnimation = true;
         }
 
         // 해설 용도 : 현재 가고자하는 WayPoint를 선택함

@@ -11,10 +11,10 @@ public class PlayerStat
     public string   name = "Hello_Player";
     public int      hp = 20000;
     public int      maxHp = 100;
-    public int      attack = 70;
+    public int      attack = 10;
     public float    mass = 2.0f;
-    public float    moveSpeed = 1000.0f;
-    public float    evasionSpeed = 1500.0f;
+    public float    moveSpeed = 800.0f;
+    public float    evasionSpeed = 1600.0f;
     public int      score = 0;
     public int      totalScore = 0;
 }
@@ -47,17 +47,16 @@ public class PlayerController : MonoBehaviour
     private float               m_aiming = 0.0f;
 
     private float               m_lookRotation = 0.0f;
-    private float               m_explosionDelayTime = 0.5f;
+    private float               m_explosionDelayTime = 5.0f;
     private float               m_explosionTime = 0.0f;
-    private bool                m_isExplosion = false;
 
     // 총 애니메이션 딜레이
-    private float               m_shotMaxDelay = 3.0f;
+    private float               m_shotMaxDelay = 0.5f;
     private float               m_shotDelay = 0.0f;
     private bool                m_isCanJump = false;
 
     // 폭탄 사거리 관련
-    private float               m_explosionJumpRange = 5.0f;
+    private float               m_explosionJumpRange = 2.0f;
     private float               m_explosionRange = 12.0f;
     private float               m_currentMosueRadius = 0.0f;
 
@@ -97,6 +96,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 AnimMove { get => m_animMove; set => m_animMove = value; }
     public float Aiming { get => m_aiming; set => m_aiming = value; }
+    public int HitCount { get => m_hitCount; set => m_hitCount = value; }
 
     public float ExplosionJumpRadius { get => m_explosionJumpRange; set => m_explosionJumpRange = value; }
     public float ExplosionRadius { get => m_explosionRange; set => m_explosionRange = value; }
@@ -320,7 +320,7 @@ public class PlayerController : MonoBehaviour
             if (l_magnitude >= l_explosionRange) {
                 l_magnitude = l_explosionRange;
             }
-            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 2.0f), l_explosionRange) / l_explosionRange;
+            l_magnitude = Mathf.Clamp(l_magnitude, Mathf.Pow(m_explosionJumpRange, 3.0f), l_explosionRange) / l_explosionRange;
             m_aiming = l_magnitude;
         }
 
@@ -354,7 +354,6 @@ public class PlayerController : MonoBehaviour
 
         // 현재 Press중일때 카운트를 세어서 현재 상태값을 전환시킨다.
         if (Managers.Input.GetKey(UserKey.Shoot) == true) {
-            m_isExplosion = true;
             m_explosionTime += Time.deltaTime;
             // 정해진 시간을 초과할 경우
             if (m_explosionTime >= m_explosionDelayTime) {
@@ -374,7 +373,6 @@ public class PlayerController : MonoBehaviour
             }
 
             m_explosionTime = 0.0f;
-            m_isExplosion = false;
         }
     }
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Action_Alarm : BT_Action
 {
-    private GameObject m_object;
-    private float m_alarmRange;
+    private GameObject m_object = null;
+    private float m_alarmRange = 0.0f;
 
     public Action_Alarm(GameObject _object, float _alarmRange)
     {

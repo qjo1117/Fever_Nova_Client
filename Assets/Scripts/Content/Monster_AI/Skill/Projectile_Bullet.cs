@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Projectile_Bullet : MonoBehaviour
 {
-    private Vector3 m_attackPos;
+    private Vector3 m_attackPos = Vector3.zero;
     private float m_speed = 3f;       //투사체 속도
     private int m_damage = 10;
-
-    Vector3 m_attackDir;
+    private Vector3 m_attackDir = Vector3.zero;
 
     public void Initialized(Vector3 _pos, int _damage, float _speed)
     {
@@ -16,7 +15,8 @@ public class Projectile_Bullet : MonoBehaviour
         m_damage = _damage;
         m_speed = _speed;
 
-        m_attackDir = m_attackPos - gameObject.transform.position;
+        m_attackDir = m_attackPos;
+        m_attackDir.y = 0.0f;
         transform.LookAt(transform.position + m_attackDir);
     }
 

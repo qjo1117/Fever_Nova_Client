@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BT_Action : BehaviorTree
 {
-    protected GameObject m_object = null;
+    protected Interface_Enemy m_object = null;
     protected Animator m_animator = null;
 
     public BT_Action() => NodeType = AI.NodeType.ACTION;

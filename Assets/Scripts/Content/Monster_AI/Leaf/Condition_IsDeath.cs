@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Condition_IsDeath : BT_Condition
 {
-    private GameObject m_object;
-    private MonsterStatTable m_stat;
-    private bool m_isPlayingAnimation;
+    private GameObject m_object = null;
+    private MonsterStatTable m_stat = null;
+    private bool m_isPlayingAnimation = false;
 
     public Condition_IsDeath(GameObject _object, MonsterStatTable _Stat)
     {

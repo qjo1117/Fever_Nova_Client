@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Action_Chase : BT_Action
 {
-    private float m_ChaseMoveSpeed;
+    private float m_ChaseMoveSpeed = 0.0f;
 
     public Action_Chase(GameObject _object, float _ChaseMoveSpeed)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_animator = m_object.GetComponent<Animator>();
         m_ChaseMoveSpeed = _ChaseMoveSpeed;
     }
@@ -20,11 +20,11 @@ public class Action_Chase : BT_Action
 
     private AI.State Chase()
     {
-        if (!m_object.GetComponent<Interface_Enemy>().m_isPlayingChaseAnimation)
+        if (!m_object.m_isPlayingChaseAnimation)
         {
             m_animator.speed = 1;
             m_animator.CrossFade("Move", 0.15f);
-            m_object.GetComponent<Interface_Enemy>().m_isPlayingChaseAnimation = true;
+            m_object.m_isPlayingChaseAnimation = true;
         }
 
         Vector3 Dir = Managers.Game.Player.MainPlayer.transform.position - m_object.transform.position;

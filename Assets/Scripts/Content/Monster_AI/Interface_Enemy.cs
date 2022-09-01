@@ -24,13 +24,20 @@ public class Interface_Enemy : MonoBehaviour
 
     public void Init()
     {
+        m_isPlayingChaseAnimation = false;
+        m_isChaseComplete = false;
+        m_isSkillSelected = false;
+
         CreateBehaviorTreeAIState();
         m_rigid = GetComponent<Rigidbody>();
+
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Collider>().isTrigger = false;
     }
 
     private void Start()
     {
-        Init();
+        //Init();
     }
 
     public void AddPatrolPoint(Vector3 _position)
@@ -66,6 +73,7 @@ public class Interface_Enemy : MonoBehaviour
                 m_hpBar.CloseSceneUI();
             }
             _player.MonsterKillCount += 1;
+            Managers.Game.Monster.MonsterKillCount += 1;
             ClearPatrolPoint();
             return true;
         }

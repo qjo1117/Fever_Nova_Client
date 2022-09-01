@@ -123,7 +123,7 @@ public class MonsterManager : MonoBehaviour
     // ID를 Parameter로 받을 것인가에 대해 생각해야함
     public Interface_Enemy Spawn(int _index)
     {
-        MonsterStatTable l_stat = (Managers.Data.MonsterStat.At(_index).Clone());
+        MonsterStatTable l_stat = Managers.Data.MonsterStat.At(_index).Clone();
 
         // 굳이 HpBar랑 나눠서 해야함?
         Interface_Enemy l_monster = Managers.Resource.Instantiate(l_stat.name, transform).GetComponent<Interface_Enemy>();
@@ -135,6 +135,10 @@ public class MonsterManager : MonoBehaviour
         l_monster.GetComponent<Rigidbody>().mass = l_stat.weight;
         l_monster.name = l_stat.name;
 
+        if(l_monster.HpBar) {
+            Managers.Resource.Destroy(l_monster.HpBar.gameObject);
+		}
+
         if (l_monster.Stat.hp >= 50) {
             l_monster.HpBar = Managers.UI.ShowSceneUI<UI_BossMonsterHPBar>("UI_BossMonsterHPBar");
             l_monster.HpBar.m_unitHp = 10;
@@ -142,7 +146,11 @@ public class MonsterManager : MonoBehaviour
         else {
             l_monster.HpBar = Managers.UI.MakeWorldSpaceUI<UI_NormalMonsterHPBar>(l_monster.transform, "UI_NormalMonsterHPBar");
             l_monster.HpBar.m_unitHp = 5;
+            // TODO : 시연용으로 끄기
+            l_monster.HpBar.gameObject.SetActive(false);
         }
+
+
 
         l_monster.HpBar.MaxHP = l_monster.Stat.hp;
         l_monster.HpBar.HP = l_monster.Stat.hp;
@@ -195,18 +203,12 @@ public class MonsterManager : MonoBehaviour
             }
 
             if (l_monster.Damage(l_player) == true) {
-                m_stackDestroy.Push(l_monster);
+                
             }
         }
         
 
         m_listTargetData.Clear();
-     
-        while (m_stackDestroy.Count > 0) {
-            Interface_Enemy l_monster = m_stackDestroy.Pop();
-            m_listMonster.Remove(l_monster);
-            Managers.Resource.Destroy(l_monster.gameObject);
-        }
     }
 
     public Interface_Enemy At(int _index)

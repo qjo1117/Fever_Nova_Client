@@ -16,12 +16,14 @@ public class Skill_Bombarment : Interface_Skill
     private GameObject      m_circleForCurrentRadius = null;
     private bool            m_isSkillStart = false;
 
+    const string            AnimationCrouch = "Shield-Idle-Crouch";
+
 
     public Skill_Bombarment(GameObject _object, int _id, float _coolTime, float _range, int _priority,
        int _damage, float _skillRange, float _readyTime,
         int _totalSkillCount)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_animator = m_object.GetComponent<Animator>();
         m_id = _id;
         m_coolTime = _coolTime;
@@ -57,10 +59,12 @@ public class Skill_Bombarment : Interface_Skill
         l_speed.y = 0.0f;
         //서브 인디케이터의 반지름 증가
         m_circleForCurrentRadius.transform.localScale += l_speed;
+
         if (CheckRadius()) {
             //스킬을 발동
             Do_Skill();
             m_currentSkillCount++;
+            m_object.transform.LookAt(Managers.Game.Player.MainPlayer.transform.position);
         }
         if (m_currentSkillCount == m_totalSkillCount) {
             //인디케이터 삭제
@@ -91,7 +95,10 @@ public class Skill_Bombarment : Interface_Skill
         m_circleForTotalRadius.SetActive(true);
         m_circleForCurrentRadius.SetActive(true);
         m_isSkillStart = true;
-        SetAnimation("Shield-Idle-Crouch", 0.15f, 3);
+        SetAnimation(AnimationCrouch, 0.15f, 3);
+
+        Managers.Resource.Destroy(m_circleForTotalRadius.gameObject, 3.0f);
+        Managers.Resource.Destroy(m_circleForCurrentRadius.gameObject, 3.0f);
     }
 
     public bool CheckRadius()
@@ -116,12 +123,16 @@ public class Skill_Bombarment : Interface_Skill
         particle.transform.position = new Vector3(m_object.transform.position.x, 0f, m_object.transform.position.z);
 
         //Distance Calc
-        Vector3 direction = Managers.Game.Player.MainPlayer.transform.position - m_object.transform.position;
-        if (direction.sqrMagnitude < (m_skillRange + m_localScaleRatio) * (m_skillRange + m_localScaleRatio)) {
-            //컨트롤러 받아서 데미지 부여
-            PlayerController player = Managers.Game.Player.MainPlayer;
-            player.Damage(m_damage);
+        foreach(PlayerController player in Managers.Game.Player.List)
+		{
+            Vector3 direction = player.transform.position - m_object.transform.position;
+            direction.y = 0.0f;
+            if (direction.sqrMagnitude < (m_skillRange + m_skillRange) * (m_skillRange + m_skillRange))
+            {
+                player.Damage(m_damage);
+            }
         }
+        
         //파티클 삭제
         Managers.Resource.Destroy(particle.gameObject, 5.0f);
     }
@@ -130,8 +141,7 @@ public class Skill_Bombarment : Interface_Skill
 
     public void DeleteIndicaotr()
     {
-        Managers.Resource.Destroy(m_circleForTotalRadius.gameObject);
-        Managers.Resource.Destroy(m_circleForCurrentRadius.gameObject);
+        
 
         m_isSkillStart = false;
         m_currentSkillCount = 0;

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Condition_IsOutofSkillRange : BT_Condition
 {
-    private GameObject m_object;
+    private Interface_Enemy m_object = null;
 
     public Condition_IsOutofSkillRange(GameObject _object)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
     }
 
     public override void Initialize()
@@ -30,7 +30,6 @@ public class Condition_IsOutofSkillRange : BT_Condition
             return AI.State.FAILURE;
         }
 
-
         if (Vector2.Distance(
             new Vector2(
                 Managers.Game.Player.MainPlayer.gameObject.transform.position.x,
@@ -38,10 +37,10 @@ public class Condition_IsOutofSkillRange : BT_Condition
             new Vector2(
                 m_object.transform.position.x,
                 m_object.transform.position.z))
-            <= m_object.GetComponent<Interface_Enemy>().m_selectedSkill.Range)
+            <= m_object.m_selectedSkill.Range)
         {
-            m_object.GetComponent<Interface_Enemy>().m_isChaseComplete = true;
-            m_object.GetComponent<Interface_Enemy>().m_isPlayingChaseAnimation = false;
+            m_object.m_isChaseComplete = true;
+            m_object.m_isPlayingChaseAnimation = false;
             return AI.State.FAILURE;
         }
 

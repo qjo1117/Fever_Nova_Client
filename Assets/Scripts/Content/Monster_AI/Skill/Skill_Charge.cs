@@ -16,15 +16,16 @@ public class Skill_Charge : Interface_Skill
 
     private GameObject      m_player = null;
     private Vector3         m_targetPosition = Vector3.zero;
-
-    private bool            m_isSkillStart;
-
+    private bool            m_isSkillStart = false;
     private List<int>       m_hitId = new List<int>();
+
+    const string            AnimationFowardCharge = "Shield-Run-Forward-Charge";
+    const string            AnimationIdle = "Shield-Idle-Crouch";
 
     public Skill_Charge(GameObject _object, int _id, float _coolTime, float _range, int _priority,
          int _damage, float _chargeSpeed, float _readyTime, Vector3 _colliderSize)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_animator = m_object.GetComponent<Animator>();
         m_id = _id;
         m_coolTime = _coolTime;
@@ -73,6 +74,8 @@ public class Skill_Charge : Interface_Skill
         l_returnLine.colorGradient = l_gradient;
         l_returnLine.enabled = false;
 
+        l_SkillRange.transform.SetParent(m_object.transform);
+
         return l_returnLine;
     }
 
@@ -99,7 +102,7 @@ public class Skill_Charge : Interface_Skill
             m_player = Managers.Game.Player.MainPlayer.gameObject;
             DrawLine();
             m_isSkillStart = true;
-            SetAnimation("Shield-Idle-Crouch", 0.15f, m_readyTime);
+            SetAnimation(AnimationIdle, 0.15f, m_readyTime);
         }
 
         if (m_currentTime < m_readyTime) {
@@ -107,7 +110,7 @@ public class Skill_Charge : Interface_Skill
             return AI.State.RUNNING;
         }
 
-        SetAnimation("Shield-Run-Forward-Charge", 0.15f);
+        SetAnimation(AnimationFowardCharge, 0.15f);
         m_line.enabled = false;
         m_object.transform.position = Vector3.MoveTowards(m_object.transform.position, m_targetPosition, m_chargeSpeed * Time.deltaTime);
 

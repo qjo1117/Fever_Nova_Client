@@ -21,7 +21,7 @@ public class AI_Melee : Interface_Enemy
 
         BT_Sequence l_DeathSQ = new BT_Sequence();
         l_DeathSQ.AddChild(new Condition_IsDeath(gameObject, Stat));
-        l_DeathSQ.AddChild(new Action_Death(gameObject, 10));
+        l_DeathSQ.AddChild(new Action_Death(gameObject, 2.0f));
         l_mainSelector.AddChild(l_DeathSQ);
 
         // Gameobject
@@ -31,7 +31,7 @@ public class AI_Melee : Interface_Enemy
         // Priority
         // ETC
         Condition_SkillSelector l_skillselector = new Condition_SkillSelector(gameObject);
-        l_skillselector.AddSkill(new Skill_Melee(gameObject, 0011, 0.1f, 2f, 1,
+        l_skillselector.AddSkill(new Skill_Melee(gameObject, 0011, 0.1f, 3.0f, 1,
             10, 1));
 
         BT_Sequence l_ReadyforSkillSQ = new BT_Sequence();

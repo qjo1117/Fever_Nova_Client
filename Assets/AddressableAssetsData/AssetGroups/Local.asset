@@ -166,7 +166,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4d7cbda5585a6144cb2669c3e35eca54
-    m_Address: Assets/02 Skill/Cop_Bullet
+    m_Address: Assets/05Prefabs/Cop_Bullet
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 07581295240386d47a4b9a7a31b55682
@@ -238,7 +238,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: f3ce8b1c3e6cf2746ba2c278bc99f65b
-    m_Address: UI/WorldSpace/UI_MonsterHPBar
+    m_Address: UI/WorldSpace/UI_NormalMonsterHPBar
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 45434779224129840a2a907fd18c9030

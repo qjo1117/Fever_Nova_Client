@@ -16,6 +16,7 @@ public class GameManager
 
 
     private int                 m_score = 0;
+    private int                 m_allMonsterCount = 0;
 
     // Unity의 Time을 이용하여 플레이타임 구현
     private float               m_beginPlayTime = 0;
@@ -40,6 +41,7 @@ public class GameManager
 
     public List<GameObject> Prefab { get => m_listPrefab; }
     public int Score { get => m_score; set => m_score = value; }
+    public int MonsterCount { get => m_allMonsterCount; set => m_allMonsterCount = value; }
     public int RespawnIndex { get => m_respawnIndex; set => m_respawnIndex = value; }
     // 플레이 타임 UI에 출력시키기 위해
     public float BeginPlayTime { get => m_beginPlayTime; set => m_beginPlayTime = value; }
@@ -61,13 +63,15 @@ public class GameManager
     public void ScoreInit()
 	{
         m_score = 0;
-
+        m_allMonsterCount = 0;
     }
 
 
     // 게임이 시작할때 가장 필요한 요소들을 셋팅한다.
     public void StartGame()
 	{
+        ScoreInit();
+
         // Manager 맵핑
         m_player = Util.FindGetOrAddGameObject<PlayerManager>("PlayerManager");
         m_monster = Util.FindGetOrAddGameObject<MonsterManager>("MonsterManager");
@@ -94,6 +98,7 @@ public class GameManager
         if(m_isMulti == false) {
             m_player.Spawn(m_player.SpanwPoint, new PlayerStat { id = 0, name = "SamplePlayer" });
 		}
+
     }
 
     public void Clear()
@@ -117,6 +122,30 @@ public class GameManager
         if (m_isMulti == true) {
             Managers.Network.Update();
         }
+        else {
+            // 게임을 끝내자
+            if(m_monster.MonsterKillCount >= m_allMonsterCount) {
+                if (Util.FindChild<UI_ResultScreen>(Managers.UI.Root, "UI_ResultScreen") != null)
+                {
+                    return;
+                }
+
+                // 게임 결과창 출력
+                Managers.UI.ShowPopupUI<UI_ResultScreen>("UI_ResultScreen");
+                UI_Result l_result = Managers.UI.ShowPopupUI<UI_Result>("UI_Result");
+
+                PlayerController player = m_player.MainPlayer;
+
+                l_result.PlayerId = 1;
+                l_result.Result = "Defeat...";
+                l_result.Score = player.Stat.score;
+                l_result.GameStartTime = Managers.Game.BeginPlayTime;
+                l_result.KillCount = player.MonsterKillCount;
+                l_result.MultiKillCount = player.MonsterMultiKillCount;
+                l_result.HitCount = player.HitCount;
+                l_result.TotalScore = player.Stat.totalScore;
+            }
+		}
 
     }
 

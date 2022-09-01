@@ -11,19 +11,20 @@ public class Skill_Range : Interface_Skill
     private float m_projectileLifeDuration = 5f;
 
     private Vector3 m_attackPos;
-    static GameObject m_bulletPool = new GameObject();
 
     private bool m_isSkillEnd;
     private float m_timeCheck;
+
+    private Transform m_muzzle = null;
 
     private string m_animationFileName;
     private string m_effectFileName;
 
     public Skill_Range(GameObject _object, int _id, float _cooltime, float _range, int _priority,
-        int _damage, float _skillPlayTime, float _projectileSpeed, float _projectileLifeDuration,
+        int _damage, float _skillPlayTime, float _projectileSpeed, float _projectileLifeDuration, Transform _muzzle,
         string _animationFileName = "Shooting-Fire-Rifle2", string _effectFileName = Path.Fire_Particle)
     {
-        m_object = _object;
+        m_object = _object.GetComponent<Interface_Enemy>();
         m_animator = m_object.GetComponent<Animator>();
         m_id = _id;
         m_coolTime = _cooltime;
@@ -41,6 +42,13 @@ public class Skill_Range : Interface_Skill
 
         m_animationFileName = _animationFileName;
         m_effectFileName = _effectFileName;
+
+        if(_muzzle) {
+            m_muzzle = _muzzle;
+        }
+        else {
+            m_muzzle = m_object.transform;
+		}
     }
 
     public override void Initialize() { }
@@ -61,10 +69,10 @@ public class Skill_Range : Interface_Skill
             m_attackPos = Managers.Game.Player.MainPlayer.transform.position;
             m_attackPos += new Vector3(0, 1.5f, 0);
 
-            GameObject bullet = Managers.Resource.Instantiate(m_effectFileName, m_bulletPool.transform);
-            bullet.transform.position = (m_object.transform.position + m_object.transform.forward * 2);
+            GameObject bullet = Managers.Resource.Instantiate(m_effectFileName, Managers.Game.Boom.transform);
+            bullet.transform.position = (m_muzzle.position + m_object.transform.forward * 2);
 
-            bullet.GetComponent<Projectile_Bullet>().Initialized(m_attackPos, m_damage, m_projectileSpeed);
+            bullet.GetComponent<Projectile_Bullet>().Initialized(m_object.transform.forward, m_damage, m_projectileSpeed);
             Managers.Resource.Destroy(bullet, m_projectileLifeDuration);
             m_isSkillEnd = true;
         }

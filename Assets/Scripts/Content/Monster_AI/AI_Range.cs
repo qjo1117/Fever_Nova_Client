@@ -7,7 +7,7 @@ public class AI_Range : Interface_Enemy
     public float m_alarmRange = 10.0f;
     public float m_chaseMoveSpeed = 10.0f;
     public float m_patrolMoveSpeed = 10.0f;
-    public Transform m_muzzle;
+    public Transform m_muzzle = null;
 
 
     protected override void CreateBehaviorTreeAIState()
@@ -24,7 +24,7 @@ public class AI_Range : Interface_Enemy
 
         BT_Sequence l_DeathSQ = new BT_Sequence();
         l_DeathSQ.AddChild(new Condition_IsDeath(gameObject, Stat));
-        l_DeathSQ.AddChild(new Action_Death(gameObject, 10));
+        l_DeathSQ.AddChild(new Action_Death(gameObject, 2.0f));
         l_mainSelector.AddChild(l_DeathSQ);
 
         // Gameobject
@@ -35,7 +35,7 @@ public class AI_Range : Interface_Enemy
         // ETC
         Condition_SkillSelector l_skillselector = new Condition_SkillSelector(gameObject);
         l_skillselector.AddSkill(new Skill_Range(gameObject, 0101, 1, 8, 1,
-            10, 0.8f, 10, 5.0f));
+            10, 0.8f, 10, 5.0f,m_muzzle));
 
         BT_Sequence l_ReadyforSkillSQ = new BT_Sequence();
         l_ReadyforSkillSQ.AddChild(new Condition_PlayerDetect(gameObject, m_detectRange));
