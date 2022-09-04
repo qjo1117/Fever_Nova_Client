@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Condition_SkillSelector : BT_Condition
+public class Action_SkillSelector : BT_Action
 {
-    private GameObject m_object;
-    private List<Interface_Skill> m_skills;
+    private List<Interface_Skill> m_skills = new List<Interface_Skill>();
 
-    public Condition_SkillSelector(GameObject _object)
+    public Action_SkillSelector(Interface_Enemy _object, params Interface_Skill[] _skills)
     {
         m_object = _object;
-        m_skills = new List<Interface_Skill>();
+        for (int i = 0; i < _skills.Length; i++)
+        {
+            m_skills.Add(_skills[i]);
+        }
     }
 
     public void AddSkill(Interface_Skill _skill)
@@ -18,12 +20,7 @@ public class Condition_SkillSelector : BT_Condition
         m_skills.Add(_skill);
     }
 
-    public override AI.State Update()
-    {
-        return SelectSkill();
-    }
-
-    private AI.State SelectSkill()
+    protected override AI.State Function()
     {
         foreach (Interface_Skill _skill in m_skills)
         {

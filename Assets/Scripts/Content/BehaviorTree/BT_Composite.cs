@@ -1,29 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class BT_Composite : BehaviorTree
 {
-    protected List<BehaviorTree> m_childList;
+    protected List<BehaviorTree> m_nodeList = new List<BehaviorTree>();
 
-    public BT_Composite() => m_childList = new List<BehaviorTree>();
-
-    public override void Reset()
+    public BT_Composite(params BehaviorTree[] _nodes)
     {
-        foreach (BehaviorTree child in m_childList)
+        for (int i = 0; i < _nodes.Length; i++)
         {
-            child.Reset();
+            m_nodeList.Add(_nodes[i]);
         }
     }
 
-    public BehaviorTree GetChild(int _index) => m_childList[_index];
-
-    public void AddChild(BehaviorTree _child)
+    public void Attach(BehaviorTree _node)
     {
-        m_childList.Add(_child);
-        _child.Index = m_childList.Count - 1;
-        _child.Parent = this;
+        m_nodeList.Add(_node);
+        _node.Parent = this;
     }
-
-    public int ChildListCount => m_childList.Count;
 }

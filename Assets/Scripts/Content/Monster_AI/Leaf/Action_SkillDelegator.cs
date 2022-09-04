@@ -10,23 +10,11 @@ public class Action_SkillDelegator : BT_Action
         m_animator = m_object.GetComponent<Animator>();
     }
 
-    public override void Initialize()
-    {
-
-    }
-
-    public override void Terminate() { }
-
-    public override AI.State Update()
-    {
-        return UseSkill();
-    }
-
-    private AI.State UseSkill()
+    protected override AI.State Function()
     {
         if (m_object.m_selectedSkill != null)
         {
-            if (m_object.m_selectedSkill.Update() == AI.State.SUCCESS)
+            if (m_object.m_selectedSkill.Tick() == AI.State.SUCCESS)
             {
                 m_object.m_selectedSkill.CoolDown = m_object.m_selectedSkill.CoolTime;
                 m_object.m_isSkillSelected = false;

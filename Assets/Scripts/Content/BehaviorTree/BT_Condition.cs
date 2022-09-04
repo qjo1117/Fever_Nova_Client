@@ -1,86 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using AI;
+
 
 public class BT_Condition : BehaviorTree
 {
-    public BT_Condition() => NodeType = AI.NodeType.CONDITION;
+    protected BehaviorTree m_node = null;
 
-    public override AI.State Tick()
+    public BT_Condition(BehaviorTree _node)
     {
-        State = Update();
-
-        if (State == AI.State.RUNNING)
-        {
-            //error function
-        }
-
-        if (State == AI.State.SUCCESS)
-        {
-            TerminateRunningStateByOtherAction();
-        }
-
-        return State;
+        m_node = _node;
     }
 
-    public void TerminateRunningStateByOtherAction()
+    public void Attach(BehaviorTree _node)
     {
-        BehaviorTree FindRoot = Parent;
-        int ErrorCount = 0;
-
-        if (FindRoot != null)
-        {
-            while (ErrorCount < 100)
-            {
-                FindRoot = FindRoot.Parent;
-                if (FindRoot.Parent == null)
-                {
-                    break;
-                }
-                ++ErrorCount;
-            }
-        }
-
-        if (FindRoot != null)
-        {
-            if (FindRoot.State == AI.State.RUNNING)
-            {
-                BehaviorTree RunningAction = FindRunningAction(((BT_Root)FindRoot).Child);
-                if (RunningAction != null)
-                {
-                    if (Parent != RunningAction.Parent
-                        || Parent.NodeType != AI.NodeType.SEQUENCE)
-                    {
-                        RunningAction.Terminate();
-                    }
-                }
-            }
-        }
+        m_node = _node;
+        _node.Parent = this;
     }
 
-    public BehaviorTree FindRunningAction(BehaviorTree _child)
+    public override State Tick()
     {
-        BehaviorTree RunningAction = null;
-
-        if (_child != null)
+        State CurrentState = Function();
+        if (CurrentState == State.SUCCESS)
         {
-            if (_child.NodeType == AI.NodeType.SELECTOR
-                || _child.NodeType == AI.NodeType.SEQUENCE)
-            {
-                for (int i = 0; i < ((BT_Composite)_child).ChildListCount; ++i)
-                {
-                    RunningAction = FindRunningAction(((BT_Composite)_child).GetChild(i));
-                    if (RunningAction != null)
-                    {
-                        return RunningAction;
-                    }
-                }
-            }
-            if (_child.NodeType == AI.NodeType.ACTION && _child.State == AI.State.RUNNING)
-            {
-                return _child;
-            }
+            return m_node.Tick();
         }
-        return RunningAction;
+        return CurrentState;
     }
 }
