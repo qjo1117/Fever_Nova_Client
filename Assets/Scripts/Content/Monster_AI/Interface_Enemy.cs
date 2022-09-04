@@ -28,7 +28,7 @@ public class Interface_Enemy : MonoBehaviour
         m_isChaseComplete = false;
         m_isSkillSelected = false;
 
-        CreateBehaviorTreeAIState();
+        CreateBrain();
         m_rigid = GetComponent<Rigidbody>();
 
         GetComponent<Rigidbody>().isKinematic = false;
@@ -50,7 +50,7 @@ public class Interface_Enemy : MonoBehaviour
         m_patrolWayPoint.Clear();
     }
 
-    protected virtual void CreateBehaviorTreeAIState() { }
+    protected virtual void CreateBrain() { }
 
     protected void Update()
     {
