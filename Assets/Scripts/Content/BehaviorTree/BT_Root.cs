@@ -1,47 +1,33 @@
+using AI;
+
 public class BT_Root : BehaviorTree
 {
-    private BehaviorTree m_child;
+    private BehaviorTree m_node = null;
 
-    public BT_Root()
+    public BT_Root(BehaviorTree _node = null)
     {
-        NodeType = AI.NodeType.ROOT;
         Parent = null;
+        m_node = _node;
     }
 
-    public BehaviorTree Child
+    public BehaviorTree Node
     {
-        get => m_child;
+        get => m_node;
         set
         {
-            m_child = value;
-            m_child.Parent = this;
+            m_node = value;
+            m_node.Parent = this;
         }
     }
 
-    public override void Terminate()
+    public override State Tick()
     {
-        m_child.Terminate();
-        base.Terminate();
-    }
-
-    public override AI.State Tick()
-    {
-        if (m_child == null)
+        if (m_node == null)
         {
-            return AI.State.INVALID;
+            /*디버그 - AI*/
+            UnityEngine.Debug.Log("ROOT : 하위 노드 없음");
+            return State.ERROR;
         }
-        else if (m_child.State == AI.State.INVALID)
-        {
-            m_child.Initialize();
-            m_child.State = AI.State.RUNNING;
-        }
-
-        m_child.State = State = m_child.Update();
-
-        if (State != AI.State.RUNNING)
-        {
-            Terminate();
-        }
-        return State;
+        return m_node.Tick();
     }
 }

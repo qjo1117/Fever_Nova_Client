@@ -6,24 +6,12 @@ public class Condition_IsOutofSkillRange : BT_Condition
 {
     private Interface_Enemy m_object = null;
 
-    public Condition_IsOutofSkillRange(GameObject _object)
+    public Condition_IsOutofSkillRange(GameObject _object, BehaviorTree _node = null) : base(_node)
     {
         m_object = _object.GetComponent<Interface_Enemy>();
     }
 
-    public override void Initialize()
-    {
-
-    }
-
-    public override void Terminate() { }
-
-    public override AI.State Update()
-    {
-        return IsOutofSkillRange();
-    }
-
-    private AI.State IsOutofSkillRange()
+    protected override AI.State Function()
     {
         if (m_object.GetComponent<Interface_Enemy>().m_isChaseComplete)
         {

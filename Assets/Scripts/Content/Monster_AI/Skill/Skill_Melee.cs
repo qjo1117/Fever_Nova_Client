@@ -43,10 +43,8 @@ public class Skill_Melee : Interface_Skill
         m_effectFileName = _effectFileName;
     }
 
-    public override void Initialize() { }
-    public override void Terminate() { }
 
-    public override AI.State Update()
+    protected override AI.State Function()
     {
         return OnMeleeAttack();
     }
@@ -94,9 +92,10 @@ public class Skill_Melee : Interface_Skill
             {
                 PlayerController player = obj.GetComponent<PlayerController>();
 
-                if(CheckHitID(player.StatTable.id) == true) {
+                if (CheckHitID(player.StatTable.id) == true)
+                {
                     continue;
-				}
+                }
 
                 player.Damage(m_damage);
                 m_hitId.Add(player.StatTable.id);
@@ -135,14 +134,16 @@ public class Skill_Melee : Interface_Skill
 
 
     public bool CheckHitID(int _id)
-	{
-        foreach(int id in m_hitId) {
-            if(_id == id) {
+    {
+        foreach (int id in m_hitId)
+        {
+            if (_id == id)
+            {
                 return true;
-			}
-		}
+            }
+        }
         return false;
-	}
+    }
 }
 
 

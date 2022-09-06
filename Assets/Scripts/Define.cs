@@ -44,6 +44,10 @@ static class Path
     public const string Health = "Health";
 
     public const string Slash_Particle = "Assets/Prefabs/FX_Slash_01";
+
+    public const string SoundMixer = "SoundMixer";
+    public const string Main_BGM = "Wellerman";//파일 이름
+    public const string Test_EffectSound = "";
 }
 
 
@@ -114,4 +118,12 @@ namespace Define
         Monster
     }
 
+
+    public enum Sound
+    {
+        Master,
+        Bgm,
+        Effect,
+        MaxCount,  // 아무것도 아님. 그냥 Sound enum의 개수 세기 위해 추가. (0, 1, '2' 이렇게 2개) 
+    }
 }

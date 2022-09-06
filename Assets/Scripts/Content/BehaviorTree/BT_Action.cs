@@ -7,34 +7,6 @@ public class BT_Action : BehaviorTree
     protected Interface_Enemy m_object = null;
     protected Animator m_animator = null;
 
-    public BT_Action() => NodeType = AI.NodeType.ACTION;
-
-    public override void Initialize() { }
-
-    public override void Terminate() { }
-
-    public override void Reset() => State = AI.State.INVALID;
-
-    public override AI.State Tick()
-    {
-        if (State == AI.State.INVALID)
-        {
-            Initialize();
-            State = AI.State.RUNNING;
-        }
-        State = Update();
-        if (State != AI.State.RUNNING)
-        {
-            Terminate();
-        }
-        return State;
-    }
-
-    public object Copy()
-    {
-        return this.MemberwiseClone();
-    }
-
     public void SetAnimation(string _filename, float _timing, float _playTime = 1)
     {
         AnimationClip[] l_clips = m_animator.runtimeAnimatorController.animationClips;

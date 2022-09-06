@@ -18,16 +18,12 @@ public class Action_Death : BT_Action
         m_stat = m_object.Stat;
     }
 
-    public override AI.State Update()
+    protected override AI.State Function()
     {
-        return Death();
-    }
-
-    private AI.State Death()
-    {
-
-        if (m_stat.hp <= 0) {
-            if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(AnimationDeath) == false) {
+        if (m_stat.hp <= 0)
+        {
+            if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(AnimationDeath) == false)
+            {
                 m_animator.CrossFade(AnimationDeath, 0.15f);
                 m_object.GetComponent<Rigidbody>().isKinematic = true;
                 m_object.GetComponent<Collider>().isTrigger = true;
@@ -44,5 +40,5 @@ public class Action_Death : BT_Action
         }
 
         return AI.State.RUNNING;
-    }
+    }  
 }

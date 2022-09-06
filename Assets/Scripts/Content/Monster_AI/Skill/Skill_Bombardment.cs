@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Skill_Bombarment : Interface_Skill
 {
-    private int             m_damage = 0;
-    private int             m_totalSkillCount = 0;
-    private int             m_currentSkillCount = 0;
-    private float           m_readyTime = 0.0f;
-    private float           m_skillRange = 0.0f;
-    private float           m_localScaleRatio = 0.0f;
+    private int m_damage = 0;
+    private int m_totalSkillCount = 0;
+    private int m_currentSkillCount = 0;
+    private float m_readyTime = 0.0f;
+    private float m_skillRange = 0.0f;
+    private float m_localScaleRatio = 0.0f;
 
-    private GameObject      m_particle = null;
-    private GameObject      m_circleForTotalRadius = null;
-    private GameObject      m_circleForCurrentRadius = null;
-    private bool            m_isSkillStart = false;
+    private GameObject m_particle = null;
+    private GameObject m_circleForTotalRadius = null;
+    private GameObject m_circleForCurrentRadius = null;
+    private bool m_isSkillStart = false;
 
-    const string            AnimationCrouch = "Shield-Idle-Crouch";
+    const string AnimationCrouch = "Shield-Idle-Crouch";
 
 
     public Skill_Bombarment(GameObject _object, int _id, float _coolTime, float _range, int _priority,
@@ -41,12 +41,14 @@ public class Skill_Bombarment : Interface_Skill
     }
 
 
-    public override AI.State Update()
+    protected override AI.State Function()
     {
-        if (!m_isSkillStart) {
+        if (!m_isSkillStart)
+        {
             DrawCircle();
         }
-        else {
+        else
+        {
             return On_BomBardment();
         }
         return AI.State.RUNNING;
@@ -60,13 +62,15 @@ public class Skill_Bombarment : Interface_Skill
         //서브 인디케이터의 반지름 증가
         m_circleForCurrentRadius.transform.localScale += l_speed;
 
-        if (CheckRadius()) {
+        if (CheckRadius())
+        {
             //스킬을 발동
             Do_Skill();
             m_currentSkillCount++;
             m_object.transform.LookAt(Managers.Game.Player.MainPlayer.transform.position);
         }
-        if (m_currentSkillCount == m_totalSkillCount) {
+        if (m_currentSkillCount == m_totalSkillCount)
+        {
             //인디케이터 삭제
             DeleteIndicaotr();
             return AI.State.SUCCESS;
@@ -104,12 +108,14 @@ public class Skill_Bombarment : Interface_Skill
     public bool CheckRadius()
     {
         //현재 서브 인디케이터가 메인 인디케이터를 넘어설때
-        if (m_circleForCurrentRadius.transform.localScale.x > m_skillRange * m_localScaleRatio) {
+        if (m_circleForCurrentRadius.transform.localScale.x > m_skillRange * m_localScaleRatio)
+        {
             //Sub_Skill_Radius_Reset
             m_circleForCurrentRadius.transform.localScale = new Vector3(0f, 0.2f, 0f);
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
@@ -123,8 +129,8 @@ public class Skill_Bombarment : Interface_Skill
         particle.transform.position = new Vector3(m_object.transform.position.x, 0f, m_object.transform.position.z);
 
         //Distance Calc
-        foreach(PlayerController player in Managers.Game.Player.List)
-		{
+        foreach (PlayerController player in Managers.Game.Player.List)
+        {
             Vector3 direction = player.transform.position - m_object.transform.position;
             direction.y = 0.0f;
             if (direction.sqrMagnitude < (m_skillRange + m_skillRange) * (m_skillRange + m_skillRange))
@@ -132,7 +138,7 @@ public class Skill_Bombarment : Interface_Skill
                 player.Damage(m_damage);
             }
         }
-        
+
         //파티클 삭제
         Managers.Resource.Destroy(particle.gameObject, 5.0f);
     }
@@ -141,7 +147,7 @@ public class Skill_Bombarment : Interface_Skill
 
     public void DeleteIndicaotr()
     {
-        
+
 
         m_isSkillStart = false;
         m_currentSkillCount = 0;

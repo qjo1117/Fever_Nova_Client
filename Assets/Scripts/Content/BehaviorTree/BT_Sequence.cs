@@ -1,30 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using AI;
 
 public class BT_Sequence : BT_Composite
 {
-    public BT_Sequence() => NodeType = AI.NodeType.SEQUENCE;
+    public BT_Sequence(params BehaviorTree[] _nodes) : base(_nodes) { }
 
-    public override AI.State Update()
+    protected override State Function()
     {
-        AI.State CurrentState = AI.State.INVALID;
+        State CurrentState = State.FAILURE;
 
-        for (int i = 0; i < ChildListCount; i++)
+        for (int i = 0; i < m_nodeList.Count; i++)
         {
-            CurrentState = GetChild(i).State;
-
-            if (GetChild(i).NodeType != AI.NodeType.ACTION
-                || GetChild(i).State != AI.State.SUCCESS)
-            {
-                CurrentState = GetChild(i).Tick();
-            }
-
-            if (CurrentState != AI.State.SUCCESS)
+            CurrentState = m_nodeList[i].Tick();
+            if (CurrentState != State.SUCCESS)
             {
                 return CurrentState;
             }
         }
-        return AI.State.SUCCESS;
+        return State.SUCCESS;
     }
 }

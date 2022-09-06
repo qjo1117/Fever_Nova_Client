@@ -19,5 +19,4 @@ public class SkillManager : MonoBehaviour
 
     }
 
-    public object Skills(SkillList _index) => m_skills[_index].Copy();
 }

@@ -43,26 +43,25 @@ public class Skill_Range : Interface_Skill
         m_animationFileName = _animationFileName;
         m_effectFileName = _effectFileName;
 
-        if(_muzzle) {
+        if (_muzzle)
+        {
             m_muzzle = _muzzle;
         }
-        else {
+        else
+        {
             m_muzzle = m_object.transform;
-		}
+        }
     }
 
-    public override void Initialize() { }
-
-    public override void Terminate() { }
-
-    public override AI.State Update()
+    protected override AI.State Function()
     {
         return OnRangeAttack();
     }
 
     private AI.State OnRangeAttack()
     {
-        if (!m_isSkillEnd) {
+        if (!m_isSkillEnd)
+        {
             m_object.transform.LookAt(new Vector3(Managers.Game.Player.MainPlayer.transform.position.x, 0, Managers.Game.Player.MainPlayer.transform.position.z));
             SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
 
@@ -78,7 +77,8 @@ public class Skill_Range : Interface_Skill
         }
 
         m_timeCheck += Time.deltaTime;
-        if (m_timeCheck >= m_skillPlayTime) {
+        if (m_timeCheck >= m_skillPlayTime)
+        {
             m_timeCheck = 0;
             m_isSkillEnd = false;
             return AI.State.SUCCESS;

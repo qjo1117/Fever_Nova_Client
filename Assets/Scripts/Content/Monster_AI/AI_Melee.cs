@@ -3,52 +3,33 @@ using UnityEngine;
 
 public class AI_Melee : Interface_Enemy
 {
-    public float            m_detectRange = 10.0f;
-    public float            m_alarmRange = 10.0f;
-    public float            m_chaseMoveSpeed = 10.0f;
-    public float            m_patrolMoveSpeed = 10.0f;
+    public float m_detectRange = 10.0f;
+    public float m_alarmRange = 10.0f;
+    public float m_chaseMoveSpeed = 10.0f;
+    public float m_patrolMoveSpeed = 10.0f;
 
-    protected override void CreateBehaviorTreeAIState()
+    protected override void CreateBrain()
     {
         m_enemyType = AI.EnemyType.Melee;
-        m_brain = new BT_Root();
         m_selectedSkill = null;
         m_isSkillSelected = false;
         m_isChaseComplete = false;
+        m_brain = new BT_Root(
+            new BT_Selector(
+                new BT_Sequence(
+                    new Condition_IsDeath(gameObject, Stat,
+                    new Action_Death(gameObject, 2.0f))),
 
-        // ∏ﬁ¿Œ ºø∑∫≈Õ
-        BT_Selector l_mainSelector = new BT_Selector();
+                new BT_Sequence(
+                    new Action_SkillSelector(this,
+                        new Skill_Melee(gameObject, 0011, 0.1f, 3.0f, 1, 10, 1)),
 
-        BT_Sequence l_DeathSQ = new BT_Sequence();
-        l_DeathSQ.AddChild(new Condition_IsDeath(gameObject, Stat));
-        l_DeathSQ.AddChild(new Action_Death(gameObject, 2.0f));
-        l_mainSelector.AddChild(l_DeathSQ);
+                    new Condition_IsOutofSkillRange(gameObject,
+                    new Action_Chase(gameObject, m_chaseMoveSpeed))),
 
-        // Gameobject
-        // SkillId
-        // CoolTime
-        // Range
-        // Priority
-        // ETC
-        Condition_SkillSelector l_skillselector = new Condition_SkillSelector(gameObject);
-        l_skillselector.AddSkill(new Skill_Melee(gameObject, 0011, 0.1f, 3.0f, 1,
-            10, 1));
-
-        BT_Sequence l_ReadyforSkillSQ = new BT_Sequence();
-        l_ReadyforSkillSQ.AddChild(new Condition_PlayerDetect(gameObject, m_detectRange));
-        l_ReadyforSkillSQ.AddChild(l_skillselector);
-        l_ReadyforSkillSQ.AddChild(new Condition_IsOutofSkillRange(gameObject));
-        l_ReadyforSkillSQ.AddChild(new Action_Chase(gameObject, m_chaseMoveSpeed));
-        l_mainSelector.AddChild(l_ReadyforSkillSQ);
-
-        BT_Sequence l_UseSkillSQ = new BT_Sequence();
-        l_UseSkillSQ.AddChild(new Condition_IsSkillRuning(gameObject));
-        l_UseSkillSQ.AddChild(new Action_SkillDelegator(gameObject));
-        l_mainSelector.AddChild(l_UseSkillSQ);
-
-        l_mainSelector.AddChild(new Action_WayPointPatrol(gameObject, m_patrolMoveSpeed, m_patrolWayPoint));
-
-        m_brain.Child = l_mainSelector;
+                new BT_Sequence(
+                    new Condition_IsSkillRuning(gameObject,
+                    new Action_SkillDelegator(gameObject)))
+                ));
     }
-
 }

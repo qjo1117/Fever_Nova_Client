@@ -13,7 +13,7 @@ public class Action_Chase : BT_Action
         m_ChaseMoveSpeed = _ChaseMoveSpeed;
     }
 
-    public override AI.State Update()
+    public override AI.State Tick()
     {
         return Chase();
     }

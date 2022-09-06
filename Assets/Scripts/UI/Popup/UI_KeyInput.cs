@@ -64,7 +64,7 @@ public class UI_KeyInput : UI_Popup
         if (data.button == PointerEventData.InputButton.Left)
         {
             
-            m_uiOption.InputDataAppry(GetText((int)Texts.KeyValueText).text);
+            m_uiOption.InputOptionAppry(GetText((int)Texts.KeyValueText).text);
             m_isInitialize = false;
             m_isOnButton = false;
             ClosePopupUI();
