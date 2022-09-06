@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using Define;
+using UnityEngine.Audio;
 
 public class UI_Option : UI_Popup
 {
@@ -133,10 +134,12 @@ public class UI_Option : UI_Popup
     }
     #endregion
 
+    AudioMixer audioMixer;
+
     private bool m_isInitialize;
     private bool m_isChange;
 
-    private float m_defaultSound = 1f;
+    private float m_defaultSound = 0;
     private float m_curSoundVolume;
     private float m_soundVolume;
 
@@ -144,6 +147,7 @@ public class UI_Option : UI_Popup
     {
         if (m_isInitialize == false)
         {
+            audioMixer = Managers.Resource.Load<AudioMixer>($"Sounds/{Path.SoundMixer}");
             SetOption();
             m_isInitialize = true;
             m_isChange = false;
@@ -154,7 +158,10 @@ public class UI_Option : UI_Popup
         {
             m_curSoundVolume = GetSlider((int)Sliders.SoundBar).value;
 
-            GetText((int)Texts.SoundValue).text = $"{((int)(m_curSoundVolume * 100)).ToString()}%";
+            if (m_curSoundVolume == -40f) audioMixer.SetFloat("Master", -80);
+            else audioMixer.SetFloat("Master", m_curSoundVolume);
+
+            GetText((int)Texts.SoundValue).text = $"{((int)(100+(2.5f* m_curSoundVolume))).ToString()}%";
 
             GetButton((int)Buttons.ApplyButton).interactable = true;
             m_isChange = true;
@@ -172,7 +179,6 @@ public class UI_Option : UI_Popup
 
     void KeyApply()
     {
-        //변경된 옵션 적용(팝업으로 바꿔서 다시 열면 저장 안됨)
         m_soundVolume = m_curSoundVolume;
         
         Managers.Input.ChangeKey(UserKey.Forward, (KeyCode)Enum.Parse(typeof(KeyCode), GetText((int)Texts.ForwardText).text));
@@ -183,11 +189,8 @@ public class UI_Option : UI_Popup
         Managers.Input.ChangeKey(UserKey.Shoot, (KeyCode)Enum.Parse(typeof(KeyCode), GetText((int)Texts.ShootText).text));
     }
 
-    public void InputDataAppry(string _string)
+    public void InputOptionAppry(string _string)
     {
-
-
-
         for (int i = 0; i < Enum.GetValues(typeof(UserKey)).Length; i++)
         {
             if (GetText(i).text == _string)
@@ -210,7 +213,5 @@ public class UI_Option : UI_Popup
         GetText((int)Texts.RightText).text = Managers.Input.GetKeyData(UserKey.Right).ToString();
         GetText((int)Texts.EvasionText).text = Managers.Input.GetKeyData(UserKey.Evasion).ToString();
         GetText((int)Texts.ShootText).text = Managers.Input.GetKeyData(UserKey.Shoot).ToString();
-
-
     }
 }

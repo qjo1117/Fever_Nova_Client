@@ -14,6 +14,7 @@ public class Managers : MonoBehaviour
 	private InputManager		m_input = new InputManager();
 	private UIManager			m_ui = new UIManager();
 	private NetWorkManager		m_network = new NetWorkManager();
+	private SoundManager m_sound = new SoundManager();
 
 	private DataManager			m_data = null;
 	public static ResourceManager Resource {  get { return Instance.m_resource; } }
@@ -21,10 +22,11 @@ public class Managers : MonoBehaviour
 	public static SceneManagerEx Scene {  get { return Instance.m_scene; } }
 
 	public static InputManager Input { get { return Instance.m_input; } }
-
+	
 	public static UIManager UI { get => Instance.m_ui; }
 	public static DataManager Data { get => Instance.m_data; }
 	public static NetWorkManager Network { get => Instance.m_network; }
+	public static SoundManager Sound { get { return Instance.m_sound; } }
 
 	#endregion
 
@@ -60,6 +62,8 @@ public class Managers : MonoBehaviour
 			DontDestroyOnLoad(go);
 			m_instance = go.GetOrAddComponent<Managers>();
 
+			
+
 			GameObject data = GameObject.Find("@DataManager");
 			if (data == null) {
 				data = new GameObject { name = "@DataManager" };
@@ -72,9 +76,8 @@ public class Managers : MonoBehaviour
 			m_instance.m_pool.Init();
 			m_instance.m_game.Init();
 			m_instance.m_input.Init();
-
+			m_instance.m_sound.Init(); //SoundManager의 Init() 호출
 		}
-
 	}
 
 	private void Update()
@@ -100,6 +103,7 @@ public class Managers : MonoBehaviour
 		}
 		m_instance.m_scene.Clear();
 		m_instance.m_resource.Clear();
+		m_instance.m_sound.Clear();
 	}
 }
 

@@ -22,7 +22,7 @@ public class Action_Death : BT_Action
     {
         if (m_stat.hp <= 0)
         {
-            // ÇöÀç State°¡ DeathÀÎÁö È®ÀÎ¿ëÀ¸·Î, if¹®Àº ³²±è
+            // ï¿½ï¿½ï¿½ï¿½ Stateï¿½ï¿½ Deathï¿½ï¿½ï¿½ï¿½ È®ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½, ifï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (m_animator.GetCurrentStateInfo().IsName(AnimationDeath) == false)
             {
                 m_animator.FlagClear();

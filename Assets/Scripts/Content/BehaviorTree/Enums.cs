@@ -2,10 +2,10 @@ namespace AI
 {
     public enum State
     {
-        SUCCESS, //¼º°ø
-        FAILURE, //½ÇÆÐ
-        RUNNING, //µ¿ÀÛÁß
-        ERROR //¿¡·¯
+        SUCCESS, //ï¿½ï¿½ï¿½ï¿½
+        FAILURE, //ï¿½ï¿½ï¿½ï¿½
+        RUNNING, //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        ERROR //ï¿½ï¿½ï¿½ï¿½
     }
 
     public enum EnemyType
@@ -22,27 +22,27 @@ namespace AI
         Conflict
     }
 
-    #region ÂùÇõÀÇ Animation Define¿¡ °üÇÑ ÁÖ¼®(ÀÐ¾îÁÖ¼¼¿ä)
-    // ¿©·¯ ¾Ö´Ï¸ÞÀÌÅÍ¿¡¼­ °øÅëÀûÀ¸·Î »ç¿ëµÇ´Â ÆÄ¶ó¸ÞÅÍ, Animation »óÅÂ´Â »óÅÂ ¾Õ¿¡ ÁÖÃ¼(´©±¸ÀÇ StateÀÎ°¡) Ç¥½Ã X
-    // ÀÌ°Í ¿ÜÀÇ ÆÄ¶ó¸ÞÅÍ³ª, Animation »óÅÂµéÀº °¢ÀÚ »ç¿ëµÇ´Â ¾Ö´Ï¸ÞÀÌÅÍÀÇ ÁÖÃ¼¸¦ ¾Õ¿¡ Ç¥½ÃÇÔ
+    #region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Animation Defineï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½(ï¿½Ð¾ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½)
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½, Animation ï¿½ï¿½ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ¿ï¿½ ï¿½ï¿½Ã¼(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Stateï¿½Î°ï¿½) Ç¥ï¿½ï¿½ X
+    // ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½Í³ï¿½, Animation ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Õ¿ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½
     // ex) Player_ ... / Meele_ ...
 
-    // ¾Ö´Ï¸ÞÀÌÅÍ¿¡ »ç¿ëµÇ´Â ÆÄ¶ó¸ÞÅÍµé ¼±¾ð
+    // ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    // ¼±¾ðÇÏ´Â ´Ü¾îµéÀÇ ¸¶Áö¸·Àº,ÆÄ¶ó¸ÞÅÍÀÇ ÀÚ·áÇü¿¡ µû¶ó ´Þ¶óÁø´Ù.
-    // Bool°ª .. Flag·Î ³¡³²
-    // Int°ª .. Int·Î ³¡³²
-    // Float°ª ... Float·Î ³¡³²
-    // Trigger°ª ... Trigger·Î ³¡³²
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¶ï¿½ï¿½ï¿½ï¿½ï¿½.
+    // Boolï¿½ï¿½ .. Flagï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // Intï¿½ï¿½ .. Intï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // Floatï¿½ï¿½ ... Floatï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // Triggerï¿½ï¿½ ... Triggerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    // ÁÖÀÇ !!)
-    // MyAnimatorÀÇ Animation Patametar name, Animator Clip nameÀ» ÀÚµ¿À¸·Î ÃÊ±âÈ­ ÇØÁÖ´Â AutoParametarInitialize(),
-    // AutoAniFileNameInitialize() ÇÔ¼ö´Â enum°ª¿¡ ÇÒ´çµÈ ¹®ÀÚ¿­À» ±âÁØÀ¸·Î ÇÏ±â‹š¹®¿¡
+    // ï¿½ï¿½ï¿½ï¿½ !!)
+    // MyAnimatorï¿½ï¿½ Animation Patametar name, Animator Clip nameï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½Ö´ï¿½ AutoParametarInitialize(),
+    // AutoAniFileNameInitialize() ï¿½Ô¼ï¿½ï¿½ï¿½ enumï¿½ï¿½ï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï±â‹šï¿½ï¿½ï¿½ï¿½
 
-    // State enum¿¡´Â ½ÇÁ¦ State ÀÌ¸§ÀÌ Æ÷ÇÔµÇ¾î¾ßÇÏ°í, AniParametar enum¿¡´Â ½ÇÁ¦ Animator Parametar ÀÌ¸§ÀÌ Æ÷ÇÔµÇ¾î¾ßÇÔ.
-    // ex) ½ÇÁ¦ State¸í : Run, => State enum¿¡¼­ Melee_Run, Boss_Run, Run ....,
-    // ½ÇÁ¦ Parametar¸í : Shot (Trigger) => Parametar enum¿¡¼­ ShotTrigger
-    // ½ÇÁ¦ Parametar¸í : Move (Bool) => MoveFlag
+    // State enumï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ State ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ï¿½ï¿½Ï°ï¿½, AniParametar enumï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Animator Parametar ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ï¿½ï¿½ï¿½.
+    // ex) ï¿½ï¿½ï¿½ï¿½ Stateï¿½ï¿½ : Run, => State enumï¿½ï¿½ï¿½ï¿½ Melee_Run, Boss_Run, Run ....,
+    // ï¿½ï¿½ï¿½ï¿½ Parametarï¿½ï¿½ : Shot (Trigger) => Parametar enumï¿½ï¿½ï¿½ï¿½ ShotTrigger
+    // ï¿½ï¿½ï¿½ï¿½ Parametarï¿½ï¿½ : Move (Bool) => MoveFlag
     #endregion
 
     // ------------------------------- Enemy Animation Define

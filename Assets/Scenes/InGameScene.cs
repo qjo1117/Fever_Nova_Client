@@ -67,6 +67,7 @@ public class InGameScene : BaseScene
         InitUI();
         Managers.Game.StartGame();
 
+
         PlayerController l_player = Managers.Game.Player.MainPlayer;
         //AI_Enemy l_player_1 = Managers.Game.Monster.Spawn(0);
         //AI_Enemy l_player_2 = Managers.Game.Monster.Spawn(0);
