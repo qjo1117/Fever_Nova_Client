@@ -68,11 +68,17 @@ public class Skill_Range : Interface_Skill
             m_attackPos = Managers.Game.Player.MainPlayer.transform.position;
             m_attackPos += new Vector3(0, 1.5f, 0);
 
-            GameObject bullet = Managers.Resource.Instantiate(m_effectFileName, Managers.Game.Boom.transform);
-            bullet.transform.position = (m_muzzle.position + m_object.transform.forward * 2);
+            ParticleSystem l_effect=  Managers.Effect.CreateEffect(Define.Effect.Projectile, m_effectFileName, (m_muzzle.position + m_object.transform.forward * 2), m_object.transform.forward, 0, 0, m_projectileLifeDuration, Managers.Game.Boom.transform);
+            l_effect.Play();
+            l_effect.GetComponent<Projectile_Bullet>().Initialized(m_object.transform.forward, m_damage, m_projectileSpeed);
+           
 
-            bullet.GetComponent<Projectile_Bullet>().Initialized(m_object.transform.forward, m_damage, m_projectileSpeed);
-            Managers.Resource.Destroy(bullet, m_projectileLifeDuration);
+            //GameObject bullet = Managers.Resource.Instantiate(m_effectFileName, Managers.Game.Boom.transform);
+            //bullet.transform.position = (m_muzzle.position + m_object.transform.forward * 2);
+            //
+            //bullet.GetComponent<Projectile_Bullet>().Initialized(m_object.transform.forward, m_damage, m_projectileSpeed);
+            //Managers.Resource.Destroy(bullet, m_projectileLifeDuration);
+
             m_isSkillEnd = true;
         }
 

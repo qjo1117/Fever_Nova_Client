@@ -53,8 +53,16 @@ public class Skill_Melee : Interface_Skill
     {
         if (!m_isSkillEnd)
         {
+            Vector3 vec = m_object.transform.position + m_object.transform.forward;
+            vec.y += 2.0f;
+            if (m_particle == null)
+            {
+                m_particle = Managers.Effect.CreateEffect(Define.Effect.OneOff, m_effectFileName, vec, m_object.transform.forward, 1f, m_skillPlayTime, 0, m_object.transform);
+            }
+            m_particle.Play();
 
-
+            /*
+            //이펙트 매니저 미적용 버전
             if (m_particle == null)
             {
                 m_particle = Managers.Resource.Instantiate(m_effectFileName, m_object.transform).GetComponent<ParticleSystem>();
@@ -77,6 +85,8 @@ public class Skill_Melee : Interface_Skill
 
             }
             m_particle.Play();
+            */
+
             SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
             m_isSkillEnd = true;
 
@@ -85,7 +95,10 @@ public class Skill_Melee : Interface_Skill
 
         m_timeCheck += Time.deltaTime;
 
-        if ((int)m_skillPlayTime * 5 == (int)(m_timeCheck * 10))
+        
+        if ((int)m_skillPlayTime * 5 == (int)(m_timeCheck * 10)
+            //Managers.Effect.GetHitTiming(m_particle)
+            )
         {
             FindTarget();
             foreach (GameObject obj in m_targets)
