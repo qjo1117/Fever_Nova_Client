@@ -53,19 +53,27 @@ public class Skill_Melee : Interface_Skill
     {
         if (!m_isSkillEnd)
         {
+            Vector3 vec = m_object.transform.position + m_object.transform.forward;
+            vec.y += 2.0f;
+            if (m_particle == null)
+            {
+                m_particle = Managers.Effect.CreateEffect(Define.Effect.OneOff, m_effectFileName, vec, m_object.transform.forward, 1f, m_skillPlayTime, 0, m_object.transform);
+            }
+            m_particle.Play();
 
-
+            /*
+            //ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Å´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (m_particle == null)
             {
                 m_particle = Managers.Resource.Instantiate(m_effectFileName, m_object.transform).GetComponent<ParticleSystem>();
 
-                //À§Ä¡ Á¶Á¤
+                //ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
                 Vector3 vec = m_object.transform.position + m_object.transform.forward;
                 //vec = new Vector3(vec.x, vec.y + 2, vec.z);
                 vec.y += 2.0f;
                 m_particle.transform.position = vec;
 
-                //È¸Àü È¸¿À¸®
+                //È¸ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½
                 m_particle.transform.Rotate(Quaternion.FromToRotation(m_particle.transform.forward,
                     m_object.transform.forward).eulerAngles);
 
@@ -90,7 +98,10 @@ public class Skill_Melee : Interface_Skill
 
         m_timeCheck += Time.deltaTime;
 
-        if ((int)m_skillPlayTime * 5 == (int)(m_timeCheck * 10))
+        
+        if ((int)m_skillPlayTime * 5 == (int)(m_timeCheck * 10)
+            //Managers.Effect.GetHitTiming(m_particle)
+            )
         {
             FindTarget();
             foreach (GameObject obj in m_targets)
@@ -119,12 +130,12 @@ public class Skill_Melee : Interface_Skill
         return AI.State.RUNNING;
     }
 
-    //¹üÀ§ ³»ÀÇ Å¸ÄÏ Å½»ö
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ Å½ï¿½ï¿½
     void FindTarget()
     {
         GameObject l_player = Managers.Game.Player.MainPlayer.gameObject;
 
-        m_targets.Clear();//ÃÊ±âÈ­
+        m_targets.Clear();//ï¿½Ê±ï¿½È­
 
         float dotValue = Mathf.Cos(Mathf.Deg2Rad * (m_attackAngle / 2));
         Vector3 direction = l_player.transform.position - m_object.transform.position;

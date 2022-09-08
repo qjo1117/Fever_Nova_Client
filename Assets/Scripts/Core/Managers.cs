@@ -15,6 +15,7 @@ public class Managers : MonoBehaviour
 	private UIManager			m_ui = new UIManager();
 	private NetWorkManager		m_network = new NetWorkManager();
 	private SoundManager m_sound = new SoundManager();
+	private EffectManager m_effect = new EffectManager();
 
 	private DataManager			m_data = null;
 	public static ResourceManager Resource {  get { return Instance.m_resource; } }
@@ -27,6 +28,7 @@ public class Managers : MonoBehaviour
 	public static DataManager Data { get => Instance.m_data; }
 	public static NetWorkManager Network { get => Instance.m_network; }
 	public static SoundManager Sound { get { return Instance.m_sound; } }
+	public static EffectManager Effect { get { return Instance.m_effect; } }
 
 	#endregion
 
@@ -104,6 +106,7 @@ public class Managers : MonoBehaviour
 		m_instance.m_scene.Clear();
 		m_instance.m_resource.Clear();
 		m_instance.m_sound.Clear();
+		m_instance.m_effect.Clear();
 	}
 }
 

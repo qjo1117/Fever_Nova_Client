@@ -126,6 +126,13 @@ namespace Define
         Effect,
         MaxCount,  // 아무것도 아님. 그냥 Sound enum의 개수 세기 위해 추가. (0, 1, '2' 이렇게 2개) 
     }
+
+    public enum Effect
+    {
+        Common,
+        OneOff,//1번만 사용되는것
+        Projectile,//발사체 적중하거나 시간이 될때까지 생존
+    }
     #region 찬혁의 Animation Define에 관한 주석(읽어주세요)
     // Player는 여러 애니메이터에서 사용되지 않으므로, 앞에 주체를 표시X
     // 여러 애니메이터에서 공통적으로 사용되는 파라메터, Animation 상태는 상태 앞에 주체(누구의 State인가) 표시 X
