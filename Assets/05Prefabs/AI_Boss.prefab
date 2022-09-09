@@ -1175,6 +1175,7 @@ GameObject:
   - component: {fileID: -8901961077793450110}
   - component: {fileID: 3531851124713360489}
   - component: {fileID: -802615296588374366}
+  - component: {fileID: -8161032202364926040}
   m_Layer: 7
   m_Name: AI_Boss
   m_TagString: Untagged
@@ -1314,6 +1315,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
+--- !u!114 &-8161032202364926040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463516822529818672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb42a7168e810c1479d97d65f0b734c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultAnimationSpeed: 1
+  m_playerId: -1
+  m_subjectType: 1
+  m_enemysubjectType: 2
 --- !u!1 &463517749775160588
 GameObject:
   m_ObjectHideFlags: 0

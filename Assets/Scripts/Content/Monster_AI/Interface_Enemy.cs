@@ -27,6 +27,8 @@ public class Interface_Enemy : MonoBehaviour
         m_isPlayingChaseAnimation = false;
         m_isChaseComplete = false;
         m_isSkillSelected = false;
+        // Death Flag 지우기 위함.
+        GetComponent<MyAnimator>().FlagClear();
 
         CreateBrain();
         m_rigid = GetComponent<Rigidbody>();

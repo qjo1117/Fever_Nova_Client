@@ -12,7 +12,7 @@ public class Action_Death : BT_Action
     public Action_Death(GameObject _object, float _corpseTime)
     {
         m_object = _object.GetComponent<Interface_Enemy>();
-        m_animator = m_object.GetComponent<Animator>();
+        m_animator = m_object.GetComponent<MyAnimator>();
         m_corpseTime = _corpseTime;
 
         m_stat = m_object.Stat;
@@ -22,9 +22,11 @@ public class Action_Death : BT_Action
     {
         if (m_stat.hp <= 0)
         {
-            if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(AnimationDeath) == false)
+            // 현재 State가 Death인지 확인용으로, if문은 남김
+            if (m_animator.GetCurrentStateInfo().IsName(AnimationDeath) == false)
             {
-                m_animator.CrossFade(AnimationDeath, 0.15f);
+                m_animator.FlagClear();
+                m_animator.SetBool(AI.Enemy_AniParametar.DeathFlag, true);
                 m_object.GetComponent<Rigidbody>().isKinematic = true;
                 m_object.GetComponent<Collider>().isTrigger = true;
             }

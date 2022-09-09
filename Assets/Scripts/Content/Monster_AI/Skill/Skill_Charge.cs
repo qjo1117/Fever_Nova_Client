@@ -26,7 +26,7 @@ public class Skill_Charge : Interface_Skill
          int _damage, float _chargeSpeed, float _readyTime, Vector3 _colliderSize)
     {
         m_object = _object.GetComponent<Interface_Enemy>();
-        m_animator = m_object.GetComponent<Animator>();
+        m_animator = m_object.GetComponent<MyAnimator>();
         m_id = _id;
         m_coolTime = _coolTime;
         m_coolDown = 0;
@@ -103,7 +103,10 @@ public class Skill_Charge : Interface_Skill
             m_player = Managers.Game.Player.MainPlayer.gameObject;
             DrawLine();
             m_isSkillStart = true;
-            SetAnimation(AnimationIdle, 0.15f, m_readyTime);
+            m_animator.SetAnimationSpeed_Second(AI.Enemy_AniState.Boss_Idle_Crouch, m_readyTime);
+            m_animator.SetBool(AI.Enemy_AniParametar.Boss_Idle_CrouchFlag, true);
+
+            //SetAnimation(AnimationIdle, 0.15f, m_readyTime);
         }
 
         if (m_currentTime < m_readyTime)
@@ -112,7 +115,10 @@ public class Skill_Charge : Interface_Skill
             return AI.State.RUNNING;
         }
 
-        SetAnimation(AnimationFowardCharge, 0.15f);
+        m_animator.FlagClear();
+        m_animator.SetAnimationSpeed_Second(AI.Enemy_AniState.Boss_ChargeAttack);
+        m_animator.SetBool(AI.Enemy_AniParametar.Boss_ChargeAttackFlag, true);
+        //SetAnimation(AnimationFowardCharge, 0.15f);
         m_line.enabled = false;
         m_object.transform.position = Vector3.MoveTowards(m_object.transform.position, m_targetPosition, m_chargeSpeed * Time.deltaTime);
 

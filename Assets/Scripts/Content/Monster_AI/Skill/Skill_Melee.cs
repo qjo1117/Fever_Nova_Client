@@ -26,7 +26,7 @@ public class Skill_Melee : Interface_Skill
         string _animationFileName = "Dagger-Attack-R3", string _effectFileName = Path.Slash_Particle)
     {
         m_object = _object.GetComponent<Interface_Enemy>();
-        m_animator = m_object.GetComponent<Animator>();
+        m_animator = m_object.GetComponent<MyAnimator>();
         m_id = _id;
         m_coolTime = _coolTime;
         m_coolDown = 0;
@@ -77,7 +77,12 @@ public class Skill_Melee : Interface_Skill
 
             }
             m_particle.Play();
-            SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
+
+            m_animator.SetAnimationSpeed_Second(AI.Enemy_AniState.NormalAttack, m_skillPlayTime);
+            m_animator.GetTransitionFromState(AI.Enemy_AniState.Idle, AI.Enemy_AniState.NormalAttack).offset = 0.15f;
+            m_animator.SetBool(AI.Enemy_AniParametar.AttackFlag, true);
+
+            //SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
             m_isSkillEnd = true;
 
             m_hitId.Clear();

@@ -25,7 +25,7 @@ public class Skill_Range : Interface_Skill
         string _animationFileName = "Shooting-Fire-Rifle2", string _effectFileName = Path.Fire_Particle)
     {
         m_object = _object.GetComponent<Interface_Enemy>();
-        m_animator = m_object.GetComponent<Animator>();
+        m_animator = m_object.GetComponent<MyAnimator>();
         m_id = _id;
         m_coolTime = _cooltime;
         m_coolDown = 0;
@@ -63,7 +63,11 @@ public class Skill_Range : Interface_Skill
         if (!m_isSkillEnd)
         {
             m_object.transform.LookAt(new Vector3(Managers.Game.Player.MainPlayer.transform.position.x, 0, Managers.Game.Player.MainPlayer.transform.position.z));
-            SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
+            m_animator.SetAnimationSpeed_Second(AI.Enemy_AniState.NormalAttack, m_skillPlayTime);
+            m_animator.GetTransitionFromState(AI.Enemy_AniState.Idle, AI.Enemy_AniState.NormalAttack).offset = 0.15f;
+            m_animator.SetBool(AI.Enemy_AniParametar.AttackFlag, true);
+
+            //SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
 
             m_attackPos = Managers.Game.Player.MainPlayer.transform.position;
             m_attackPos += new Vector3(0, 1.5f, 0);

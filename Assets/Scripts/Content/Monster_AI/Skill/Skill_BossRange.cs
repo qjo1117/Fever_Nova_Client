@@ -24,7 +24,7 @@ public class Skill_BossRange : Interface_Skill
         string _animationFileName = "Shooting-Fire-Rifle2", string _effectFileName = Path.Fire_Particle)
     {
         m_object = _object.GetComponent<Interface_Enemy>();
-        m_animator = m_object.GetComponent<Animator>();
+        m_animator = m_object.GetComponent<MyAnimator>();
         m_id = _id;
         m_coolTime = _cooltime;
         m_coolDown = 0;
@@ -54,7 +54,11 @@ public class Skill_BossRange : Interface_Skill
         if (!m_isSkillEnd)
         {
             m_object.transform.LookAt(new Vector3(Managers.Game.Player.MainPlayer.transform.position.x, 0, Managers.Game.Player.MainPlayer.transform.position.z));
-            SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
+            m_animator.FlagClear();
+            m_animator.SetAnimationSpeed_Second(AI.Enemy_AniState.Boss_PistolAttack, m_skillPlayTime);
+            m_animator.SetBool(AI.Enemy_AniParametar.Boss_PistolAttackFlag, true);
+
+            //SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
 
             CreateBullet(m_object.transform.forward);
             CreateBullet(m_object.transform.forward + m_object.transform.right);

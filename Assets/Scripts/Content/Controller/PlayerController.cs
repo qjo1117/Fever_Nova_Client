@@ -42,6 +42,10 @@ public class PlayerController : MonoBehaviour
 
     private Vector3             m_move = Vector3.zero;
     private Vector3             m_animMove = Vector3.zero;
+
+    // AniMove 보간 위함
+    private Vector3             m_prevAnimMove = Vector3.zero;
+
     private float               m_inputPress = 0.0f;
     private Vector3             m_mousePos = Vector3.zero;
     private float               m_aiming = 0.0f;
@@ -68,7 +72,7 @@ public class PlayerController : MonoBehaviour
     // 컴포넌트 맵핑
     private Bomb                m_bomb = null;
     private Rigidbody           m_rigid = null;
-    private Animator            m_anim = null;
+    private MyAnimator          m_anim = null;
     private Transform           m_handler = null;
 
 
@@ -134,7 +138,7 @@ public class PlayerController : MonoBehaviour
             m_rigid.useGravity = false;
         }
 
-        m_anim = GetComponent<Animator>();
+        m_anim = GetComponent<MyAnimator>();
         m_handler = Util.FindChild(gameObject, "@Handler", true).transform;
 
         m_goal = Managers.UI.Root.GetComponentInChildren<UI_Goal>();
@@ -203,7 +207,7 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateState()
 	{
-        m_anim.SetFloat("Aiming", m_aiming);
+        m_anim.SetFloat(Player_AniParametar.AimingFloat, m_aiming);
 
         switch (m_state) {
             case PlayerState.Evasion:
@@ -223,11 +227,11 @@ public class PlayerController : MonoBehaviour
 
     public void IdleUpdate()
 	{
-        m_animMove.x = 0.0f;
-        m_animMove.z = 0.0f;
+        m_prevAnimMove.x = m_animMove.x = 0.0f;
+        m_prevAnimMove.z = m_animMove.z = 0.0f;
 
-        m_anim.SetFloat("MoveX", m_animMove.x);
-        m_anim.SetFloat("MoveZ", m_animMove.z);
+        m_anim.SetFloat(Player_AniParametar.MoveXFloat, m_animMove.x);
+        m_anim.SetFloat(Player_AniParametar.MoveZFloat, m_animMove.z);
     }
 
     // Player 기준으로 마우스가 앞에 있으면 앞을 보게 만들어야한다.
@@ -245,8 +249,15 @@ public class PlayerController : MonoBehaviour
             m_animMove.z = l_direction.z * m_inputPress;
         }
 
-        m_anim.SetFloat("MoveX", m_animMove.x);
-        m_anim.SetFloat("MoveZ", m_animMove.z);
+        // 플레이어 Move Animation 좀더 부드럽게 전환하기 위한 보간
+        m_prevAnimMove.x = Mathf.Lerp(m_prevAnimMove.x, m_animMove.x, 0.1f);
+        m_prevAnimMove.z = Mathf.Lerp(m_prevAnimMove.z, m_animMove.z, 0.1f);
+
+        m_anim.SetFloat(Player_AniParametar.MoveXFloat, m_prevAnimMove.x);
+        m_anim.SetFloat(Player_AniParametar.MoveZFloat, m_prevAnimMove.z);
+
+        //m_anim.SetFloat("MoveX", m_animMove.x);
+        //m_anim.SetFloat("MoveZ", m_animMove.z);
     }
 
     public void EvasionState()
@@ -332,20 +343,22 @@ public class PlayerController : MonoBehaviour
         if (Managers.Input.GetKeyDown(UserKey.Shoot) == true) {
             m_shotDelay = 0.0f;
             if (m_isCanJump == true) {
-                m_anim.CrossFade("GunJump", 0.15f);
+                m_anim.SetTrigger(Player_AniParametar.JumpTrigger);
+                m_anim.GetTransitionFromAnyState(Player_AniState.GunJump, "Move Layer").offset = 0.15f;
+                //m_anim.CrossFade("GunJump", 0.15f);
             }
             else {
-                m_anim.SetBool("Shot", true);
+                m_anim.SetBool(Player_AniParametar.ShotFlag, true);
             }
         }
 
         m_shotDelay += Time.deltaTime;
         if (m_shotDelay > m_shotMaxDelay) {
-            m_anim.SetBool("Shot", false);
+            m_anim.SetBool(Player_AniParametar.ShotFlag, false);
             return;
         }
 
-        m_anim.SetFloat("Fire", m_shotDelay);
+        m_anim.SetFloat(Player_AniParametar.FireFloat, m_shotDelay);
 
         // 현재 폭탄을 가지고 있지 않는다면 넘어가자.
         if (m_bomb == null) {
@@ -441,7 +454,8 @@ public class PlayerController : MonoBehaviour
 		}
 
 		if (Managers.Input.GetKeyDown(UserKey.Evasion) == true && m_state == PlayerState.Run) {
-            m_anim.Play("Player-Evasion");
+            m_anim.SetTrigger(Player_AniParametar.EnvaisionTrigger);
+            //m_anim.Play("Player_Evasion");
             m_move *= 2.0f;
             m_rigid.AddForce(m_move * m_statTable.dodgeSpeed * 350.0f);
 			m_evasionTime = 0.0f;

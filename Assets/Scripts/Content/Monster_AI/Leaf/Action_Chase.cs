@@ -9,7 +9,7 @@ public class Action_Chase : BT_Action
     public Action_Chase(GameObject _object, float _ChaseMoveSpeed)
     {
         m_object = _object.GetComponent<Interface_Enemy>();
-        m_animator = m_object.GetComponent<Animator>();
+        m_animator = m_object.GetComponent<MyAnimator>();
         m_ChaseMoveSpeed = _ChaseMoveSpeed;
     }
 
@@ -20,10 +20,11 @@ public class Action_Chase : BT_Action
 
     private AI.State Chase()
     {
+        // 다시 Chase 함수가 호출됬을시, Chase Animation이 진행중일 경우 (전 Tick에 Chase가 호출되었을경우)
         if (!m_object.m_isPlayingChaseAnimation)
         {
-            m_animator.speed = 1;
-            m_animator.CrossFade("Move", 0.15f);
+            m_animator.AnimationSpeedReset();
+            m_animator.SetBool(AI.Enemy_AniParametar.MoveFlag, true);
             m_object.m_isPlayingChaseAnimation = true;
         }
 

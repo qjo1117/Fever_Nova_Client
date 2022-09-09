@@ -24,7 +24,7 @@ public class Skill_Bombarment : Interface_Skill
         int _totalSkillCount)
     {
         m_object = _object.GetComponent<Interface_Enemy>();
-        m_animator = m_object.GetComponent<Animator>();
+        m_animator = m_object.GetComponent<MyAnimator>();
         m_id = _id;
         m_coolTime = _coolTime;
         m_coolDown = 0;
@@ -99,7 +99,11 @@ public class Skill_Bombarment : Interface_Skill
         m_circleForTotalRadius.SetActive(true);
         m_circleForCurrentRadius.SetActive(true);
         m_isSkillStart = true;
-        SetAnimation(AnimationCrouch, 0.15f, 3);
+
+        m_animator.SetAnimationSpeed_Second(AI.Enemy_AniState.Boss_Idle_Crouch, 3.0f);
+        m_animator.SetBool(AI.Enemy_AniParametar.Boss_Idle_CrouchFlag, true);
+
+        //SetAnimation(AnimationCrouch, 0.15f, 3);
 
         Managers.Resource.Destroy(m_circleForTotalRadius.gameObject, 3.0f);
         Managers.Resource.Destroy(m_circleForCurrentRadius.gameObject, 3.0f);
