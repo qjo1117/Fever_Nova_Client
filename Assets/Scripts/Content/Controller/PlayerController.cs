@@ -207,6 +207,10 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateState()
 	{
+        if(m_anim==null)
+        {
+            m_anim = gameObject.GetComponent<MyAnimator>();
+        }
         m_anim.SetFloat(Player_AniParametar.AimingFloat, m_aiming);
 
         switch (m_state) {

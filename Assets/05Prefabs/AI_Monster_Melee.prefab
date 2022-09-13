@@ -1428,7 +1428,7 @@ GameObject:
   - component: {fileID: 7470939990474441892}
   - component: {fileID: 607647269136320563}
   - component: {fileID: 7695655129965534275}
-  - component: {fileID: -5823630040142338507}
+  - component: {fileID: 4186680670193128702}
   m_Layer: 7
   m_Name: AI_Monster_Melee
   m_TagString: Untagged
@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
---- !u!114 &-5823630040142338507
+--- !u!114 &4186680670193128702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1576,11 +1576,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8803706161486506943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb42a7168e810c1479d97d65f0b734c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b811ce3555c3a24f93da4cd57a14550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultAnimationSpeed: 1
-  m_playerId: -1
+  m_playerId: 1035
   m_subjectType: 1
   m_enemysubjectType: 0
 --- !u!1 &8803707410526770031

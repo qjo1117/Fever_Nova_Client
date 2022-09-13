@@ -61,44 +61,42 @@ public class Skill_Melee : Interface_Skill
             }
             m_particle.Play();
 
-            /*
-            //����Ʈ �Ŵ��� ������ ����
-            if (m_particle == null)
-            {
-                m_particle = Managers.Resource.Instantiate(m_effectFileName, m_object.transform).GetComponent<ParticleSystem>();
-
-                //��ġ ����
-                Vector3 vec = m_object.transform.position + m_object.transform.forward;
-                //vec = new Vector3(vec.x, vec.y + 2, vec.z);
-                vec.y += 2.0f;
-                m_particle.transform.position = vec;
-
-                //ȸ�� ȸ����
-                m_particle.transform.Rotate(Quaternion.FromToRotation(m_particle.transform.forward,
-                    m_object.transform.forward).eulerAngles);
-
-                m_particle.Stop();
-
-                var l_particle = m_particle.GetComponent<ParticleSystem>().main;
-                l_particle.duration = m_skillPlayTime;
-                l_particle.startLifetime = m_skillPlayTime;
-
-            }
-            m_particle.Play();
-
-            m_animator.SetAnimationSpeed_Second(AI.Enemy_AniState.NormalAttack, m_skillPlayTime);
-            m_animator.GetTransitionFromState(AI.Enemy_AniState.Idle, AI.Enemy_AniState.NormalAttack).offset = 0.15f;
-            m_animator.SetBool(AI.Enemy_AniParametar.AttackFlag, true);
-
-            //SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
-            m_isSkillEnd = true;
-
-            m_hitId.Clear();
         }
+        //����Ʈ �Ŵ��� ������ ����
+        if (m_particle == null)
+        {
+            m_particle = Managers.Resource.Instantiate(m_effectFileName, m_object.transform).GetComponent<ParticleSystem>();
+
+            //��ġ ����
+            Vector3 vec = m_object.transform.position + m_object.transform.forward;
+            //vec = new Vector3(vec.x, vec.y + 2, vec.z);
+            vec.y += 2.0f;
+            m_particle.transform.position = vec;
+
+            //ȸ�� ȸ����
+            m_particle.transform.Rotate(Quaternion.FromToRotation(m_particle.transform.forward,
+                m_object.transform.forward).eulerAngles);
+
+            m_particle.Stop();
+
+            var l_particle = m_particle.GetComponent<ParticleSystem>().main;
+            l_particle.duration = m_skillPlayTime;
+            l_particle.startLifetime = m_skillPlayTime;
+
+        }
+        m_particle.Play();
+
+        m_animator.SetAnimationSpeed_Second(AI.Enemy_AniState.NormalAttack, m_skillPlayTime);
+        m_animator.GetTransitionFromState(AI.Enemy_AniState.Idle, AI.Enemy_AniState.NormalAttack).offset = 0.15f;
+        m_animator.SetBool(AI.Enemy_AniParametar.AttackFlag, true);
+
+        //SetAnimation(m_animationFileName, 0.15f, m_skillPlayTime);
+        m_isSkillEnd = true;
+
+        m_hitId.Clear();
 
         m_timeCheck += Time.deltaTime;
 
-        
         if ((int)m_skillPlayTime * 5 == (int)(m_timeCheck * 10)
             //Managers.Effect.GetHitTiming(m_particle)
             )
@@ -130,7 +128,6 @@ public class Skill_Melee : Interface_Skill
         return AI.State.RUNNING;
     }
 
-    //���� ���� Ÿ�� Ž��
     void FindTarget()
     {
         GameObject l_player = Managers.Game.Player.MainPlayer.gameObject;
@@ -161,5 +158,3 @@ public class Skill_Melee : Interface_Skill
         return false;
     }
 }
-
-
