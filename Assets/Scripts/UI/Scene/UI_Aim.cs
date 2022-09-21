@@ -6,6 +6,7 @@ public class UI_Aim : UI_Scene
 {
     #region º¯¼ö
     private Camera m_mainCam;
+    private UI_BombJumpRange m_bombJumpRange;
     #endregion
 
     public override void Init()

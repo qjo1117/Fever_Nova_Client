@@ -87,7 +87,6 @@ public class PlayerController : MonoBehaviour
 
     // --------- player hp bar ---------
     private UI_PlayerHPBar      m_playerHPBar = null;
-    private UI_BombRange        m_bombRange = null;
     #endregion
 
     #region 프로퍼티
@@ -329,7 +328,7 @@ public class PlayerController : MonoBehaviour
                 m_isCanJump = true;
             }
             else {
-                m_isCanJump = false; 
+                m_isCanJump = false;
             }
             float l_explosionRange = m_explosionRange * m_explosionRange;
             if (l_magnitude >= l_explosionRange) {

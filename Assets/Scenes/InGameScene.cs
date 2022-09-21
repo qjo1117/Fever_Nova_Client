@@ -43,10 +43,7 @@ public class InGameScene : BaseScene
         Managers.Resource.RegisterPoolGameObject(Path.UI_Aim, l_count);
 
         Managers.Resource.RegisterPoolGameObject(Path.UI_BombJumpRange, l_count);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_BombJumpArrow, l_count);
-        Managers.Resource.RegisterPoolGameObject(Path.UI_BombRange, l_count);
 
-        Managers.Resource.RegisterPoolGameObject(Path.UI_BombDropPoint, l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_BossMonsterHPBar, l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_PlayerHPBar, l_count);
         Managers.Resource.RegisterPoolGameObject(Path.UI_Goal, l_count);
@@ -91,13 +88,6 @@ public class InGameScene : BaseScene
 
         UI_BombJumpRange l_bombJumpRange = Managers.UI.ShowSceneUI<UI_BombJumpRange>("UI_BombJumpRange");
         l_bombJumpRange.RangeRadius = 12.0f;
-
-        UI_BombRange l_bombRange = Managers.UI.ShowSceneUI<UI_BombRange>("UI_BombRange");
-        l_bombRange.RangeRadius = 5.0f;
-
-        UI_BombDropPoint l_dropPoint = Managers.UI.ShowSceneUI<UI_BombDropPoint>("UI_BombDropPoint");
-        l_dropPoint.BombRange = l_bombRange;
-        l_dropPoint.BombJumpRange = l_bombJumpRange;
     }
 
 

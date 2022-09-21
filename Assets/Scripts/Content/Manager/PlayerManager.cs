@@ -110,9 +110,8 @@ public class PlayerManager : MonoBehaviour
             m_mainPlayer.PlayerHPBar = l_playerHPBar;
 
             // MainPlayer전용 UI셋팅
-            UI_BombDropPoint l_bombRange = Managers.UI.Root.GetComponentInChildren<UI_BombDropPoint>();
-            l_bombRange.BombJumpRange.RangeRadius = m_jumpRange;
-            l_bombRange.BombRange.RangeRadius = m_explosionRange;
+            UI_BombJumpRange l_jumpRange = Managers.UI.Root.GetComponentInChildren<UI_BombJumpRange>();
+            l_jumpRange.RangeRadius = m_jumpRange;
         }
 
         l_player.Init();
